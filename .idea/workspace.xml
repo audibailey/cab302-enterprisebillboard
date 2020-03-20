@@ -25,14 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="refactor: Implement CI as per Maven and BitBucket specifications.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bitbucket-pipelines.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bitbucket-pipelines.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/viewer/viewerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/viewer/viewerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/viewer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +206,7 @@
       <option name="presentableId" value="Default" />
       <updated>1584345888208</updated>
       <workItem from="1584678076584" duration="3275000" />
-      <workItem from="1584682110411" duration="7780000" />
+      <workItem from="1584682110411" duration="8233000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -269,7 +264,28 @@
       <option name="project" value="LOCAL" />
       <updated>1584691470710</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="refactor: Reimplement CI as per Maven and BitBucket specifications.">
+      <created>1584691674834</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1584691674834</updated>
+    </task>
+    <task id="LOCAL-00010" summary="refactor: Add official IntelliJ gitignore contents.">
+      <created>1584691721140</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1584691721140</updated>
+    </task>
+    <task id="LOCAL-00011" summary="chore: IntelliJ automagic project files.">
+      <created>1584691794570</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1584691794570</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,9 +328,11 @@
     <MESSAGE value="Automagically altered file from IntelliJ." />
     <MESSAGE value="Add verbosity to the CI pipeline results." />
     <MESSAGE value="chore: IntelliJ automagic file altering and generation." />
-    <MESSAGE value="chore: IntelliJ automagic project files." />
     <MESSAGE value="refactor: Implement CI as per Maven and BitBucket specifications." />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: Implement CI as per Maven and BitBucket specifications." />
+    <MESSAGE value="refactor: Reimplement CI as per Maven and BitBucket specifications." />
+    <MESSAGE value="refactor: Add official IntelliJ gitignore contents." />
+    <MESSAGE value="chore: IntelliJ automagic project files." />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: IntelliJ automagic project files." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -335,10 +353,14 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584687694337" />
-    <state x="57" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584691651860">
+    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584691794476">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="57" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691651860" />
+    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
+    <state x="526" y="332" key="GitRewordDialog" timestamp="1584691778310">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="526" y="332" key="GitRewordDialog/0.23.1440.797@0.23.1440.797" timestamp="1584691778310" />
     <state width="1398" height="153" key="GridCell.Tab.0.bottom" timestamp="1584690641242">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
@@ -383,10 +405,10 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="602" y="344" key="VCS.EditChangelistDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682915182" />
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1584683382724">
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1584691895155">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584683382724" />
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584691895155" />
     <state x="432" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1584678671022">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
