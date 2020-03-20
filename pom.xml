@@ -5,21 +5,47 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>30221</groupId>
-    <artifactId>30221</artifactId>
+    <artifactId>MajorAssessment</artifactId>
+
     <version>1.0-SNAPSHOT</version>
+
+    <name>MajorAssessment</name>
+    <description>The CAB302 Major Assessment</description>
+
+    <organization>
+        <name>Group 21</name>
+    </organization>
+
+    <inceptionYear>2020</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>n10245065</id>
+            <name>Perdana Bailey</name>
+            <email>perdana.bailey@connect.qut.edu.au</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>13</maven.compiler.source>
-        <maven.compiler.target>13</maven.compiler.target>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>13</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <junit-platform.version>5.6.0</junit-platform.version>
     </properties>
 
     <dependencies>
-        <!-- junit 5, unit test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-platform.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.4.2</version>
+            <version>${junit-platform.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -29,11 +55,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>13</source>
-                    <target>13</target>
-                </configuration>
+                <version>3.8.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M4</version>
             </plugin>
         </plugins>
     </build>
