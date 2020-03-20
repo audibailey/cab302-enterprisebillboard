@@ -19,26 +19,14 @@
     <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/ci-test" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:ci-test" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="Automagic IntelliJ-ism.">
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="refactor: Implement CI as per Maven and BitBucket specifications.">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_4_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_4_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_4_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_4_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/30221.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bitbucket-pipelines.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bitbucket-pipelines.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Main.java" afterDir="false" />
@@ -223,7 +211,7 @@
       <option name="presentableId" value="Default" />
       <updated>1584345888208</updated>
       <workItem from="1584678076584" duration="3275000" />
-      <workItem from="1584682110411" duration="7452000" />
+      <workItem from="1584682110411" duration="7780000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -274,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1584683346374</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="chore: IntelliJ automagic project files.">
+      <created>1584691470710</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1584691470710</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,7 +291,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/ci-test" />
+                        <option value="ci-test" />
                       </list>
                     </value>
                   </entry>
@@ -316,7 +311,10 @@
     <MESSAGE value="Add support for Maven based CI using Bitbucket Pipelines." />
     <MESSAGE value="Automagically altered file from IntelliJ." />
     <MESSAGE value="Add verbosity to the CI pipeline results." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add verbosity to the CI pipeline results." />
+    <MESSAGE value="chore: IntelliJ automagic file altering and generation." />
+    <MESSAGE value="chore: IntelliJ automagic project files." />
+    <MESSAGE value="refactor: Implement CI as per Maven and BitBucket specifications." />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: Implement CI as per Maven and BitBucket specifications." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -337,10 +335,10 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584687694337" />
-    <state x="57" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584690946101">
+    <state x="57" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584691651860">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="57" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584690946101" />
+    <state x="57" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691651860" />
     <state width="1398" height="153" key="GridCell.Tab.0.bottom" timestamp="1584690641242">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
