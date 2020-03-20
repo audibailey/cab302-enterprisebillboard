@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="Add some QOL improvements to the repository.">
-      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_0_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_4_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_4_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_4_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_4_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_1_1.xml" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="Alter files to support an example for tests.">
       <change afterPath="$PROJECT_DIR$/bitbucket-pipelines.yml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/viewer/viewerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/30221.iml" beforeDir="false" afterPath="$PROJECT_DIR$/30221.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/viewer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/viewer/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,18 +152,59 @@
       <option name="presentableId" value="Default" />
       <updated>1584345888208</updated>
       <workItem from="1584678076584" duration="3275000" />
-      <workItem from="1584682110411" duration="411000" />
+      <workItem from="1584682110411" duration="700000" />
     </task>
+    <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
+      <created>1584682537545</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1584682537545</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Automatically generated/altered files for QOL improvements and CI support.">
+      <created>1584682671176</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584682671176</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Alter files to support an example for tests.">
+      <created>1584682766718</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1584682766718</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add some QOL improvements to the repository." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add some QOL improvements to the repository." />
+    <MESSAGE value="Automated files generated/altered to add QOL improvements and CI support." />
+    <MESSAGE value="Automatically generated/altered files for QOL improvements and CI support." />
+    <MESSAGE value="Alter files to support an example for tests." />
+    <option name="LAST_COMMIT_MESSAGE" value="Alter files to support an example for tests." />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="605" y="291" key="#Notifications" timestamp="1584682609958">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="605" y="291" key="#Notifications/0.23.1440.797@0.23.1440.797" timestamp="1584682609958" />
     <state x="208" y="23" key="#Project_Structure" timestamp="1584681851392">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
@@ -173,10 +218,10 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584680349666" />
-    <state x="287" y="23" key="CommitChangelistDialog2" timestamp="1584682509280">
+    <state x="287" y="23" key="CommitChangelistDialog2" timestamp="1584682766560">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="287" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584682509280" />
+    <state x="287" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584682766560" />
     <state width="1398" height="203" key="GridCell.Tab.0.bottom" timestamp="1584682096965">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
