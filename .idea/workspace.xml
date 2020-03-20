@@ -19,10 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="Alter files to support an example for tests.">
-      <change afterPath="$PROJECT_DIR$/bitbucket-pipelines.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitbucket-pipelines.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bitbucket-pipelines.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +151,7 @@
       <option name="presentableId" value="Default" />
       <updated>1584345888208</updated>
       <workItem from="1584678076584" duration="3275000" />
-      <workItem from="1584682110411" duration="700000" />
+      <workItem from="1584682110411" duration="1047000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -175,7 +174,21 @@
       <option name="project" value="LOCAL" />
       <updated>1584682766718</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add support for Maven based CI using Bitbucket Pipelines.">
+      <created>1584682856946</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1584682856946</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Automagically altered file from IntelliJ.">
+      <created>1584682899653</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1584682899653</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,7 +210,9 @@
     <MESSAGE value="Automated files generated/altered to add QOL improvements and CI support." />
     <MESSAGE value="Automatically generated/altered files for QOL improvements and CI support." />
     <MESSAGE value="Alter files to support an example for tests." />
-    <option name="LAST_COMMIT_MESSAGE" value="Alter files to support an example for tests." />
+    <MESSAGE value="Add support for Maven based CI using Bitbucket Pipelines." />
+    <MESSAGE value="Automagically altered file from IntelliJ." />
+    <option name="LAST_COMMIT_MESSAGE" value="Automagically altered file from IntelliJ." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -218,10 +233,10 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584680349666" />
-    <state x="287" y="23" key="CommitChangelistDialog2" timestamp="1584682766560">
+    <state x="287" y="23" key="CommitChangelistDialog2" timestamp="1584682899553">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="287" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584682766560" />
+    <state x="287" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584682899553" />
     <state width="1398" height="203" key="GridCell.Tab.0.bottom" timestamp="1584682096965">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
@@ -262,9 +277,25 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="208" y="23" key="SettingsEditor/0.23.1440.797@0.23.1440.797" timestamp="1584681723067" />
+    <state x="602" y="344" key="VCS.EditChangelistDialog" timestamp="1584682915182">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="602" y="344" key="VCS.EditChangelistDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682915182" />
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1584683061813">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584683061813" />
     <state x="432" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1584678671022">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="432" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.23.1440.797@0.23.1440.797" timestamp="1584678671022" />
+    <state x="511" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584683011569">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="511" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1584683011569" />
+    <state x="485" y="317" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1584682963083">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="485" y="317" key="git4idea.remote.GitConfigureRemotesDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682963083" />
   </component>
 </project>
