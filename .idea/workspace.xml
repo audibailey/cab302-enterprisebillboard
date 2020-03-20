@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="Add some QOL improvements to the repository.">
+      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bitbucket-pipelines.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/viewer/viewerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/30221.iml" beforeDir="false" afterPath="$PROJECT_DIR$/30221.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/viewer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/viewer/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +33,24 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Perdana Bailey" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="ProjectId" id="1ZCbBgjiFG91VVcxQF5dRnrFkO5" />
   <component name="ProjectLevelVcsManager">
@@ -28,14 +58,37 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Server">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="client.Main" />
       <module name="30221" />
@@ -94,30 +147,56 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584345888208</updated>
+      <workItem from="1584678076584" duration="3275000" />
+      <workItem from="1584682110411" duration="411000" />
     </task>
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add some QOL improvements to the repository." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add some QOL improvements to the repository." />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="310" y="116" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584346051659">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="208" y="23" key="#Project_Structure" timestamp="1584681851392">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="208" y="23" key="#Project_Structure/0.23.1440.797@0.23.1440.797" timestamp="1584681851392" />
+    <state x="0" y="123" width="1440" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584681875029">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="310" y="116" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1707.920@0.0.1707.920" timestamp="1584346051659" />
-    <state width="1664" height="242" key="GridCell.Tab.0.bottom" timestamp="1584346379173">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="0" y="123" width="1440" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1584681875029" />
+    <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1584680349666">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584680349666" />
+    <state x="287" y="23" key="CommitChangelistDialog2" timestamp="1584682509280">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="287" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584682509280" />
+    <state width="1398" height="203" key="GridCell.Tab.0.bottom" timestamp="1584682096965">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1664" height="242" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1584346379173" />
-    <state width="1664" height="242" key="GridCell.Tab.0.center" timestamp="1584346379173">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1398" height="203" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1584682096965" />
+    <state width="1398" height="203" key="GridCell.Tab.0.center" timestamp="1584682096965">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1664" height="242" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1584346379173" />
-    <state width="1664" height="242" key="GridCell.Tab.0.left" timestamp="1584346379173">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1398" height="203" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1584682096965" />
+    <state width="1398" height="203" key="GridCell.Tab.0.left" timestamp="1584682096964">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1664" height="242" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1584346379173" />
-    <state width="1664" height="242" key="GridCell.Tab.0.right" timestamp="1584346379173">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1398" height="203" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1584682096964" />
+    <state width="1398" height="203" key="GridCell.Tab.0.right" timestamp="1584682096965">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1664" height="242" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1584346379173" />
+    <state width="1398" height="203" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1584682096965" />
     <state width="1664" height="300" key="GridCell.Tab.1.bottom" timestamp="1584346309857">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
@@ -134,5 +213,13 @@
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state width="1664" height="300" key="GridCell.Tab.1.right/0.0.1707.920@0.0.1707.920" timestamp="1584346309857" />
+    <state x="208" y="23" key="SettingsEditor" timestamp="1584681723067">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="208" y="23" key="SettingsEditor/0.23.1440.797@0.23.1440.797" timestamp="1584681723067" />
+    <state x="432" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1584678671022">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="432" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.23.1440.797@0.23.1440.797" timestamp="1584678671022" />
   </component>
 </project>
