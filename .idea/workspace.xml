@@ -25,10 +25,10 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="chore: Update developer information.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MajorAssessment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +67,6 @@
     </option>
     <option name="importingSettings">
       <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
         <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
     </option>
@@ -179,11 +178,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in MajorAssessment" />
+        <item itemvalue="Application.Client" />
+        <item itemvalue="Application.Viewer" />
         <item itemvalue="Application.Server" />
         <item itemvalue="Android JUnit.viewerTest" />
-        <item itemvalue="JUnit.All in MajorAssessment" />
-        <item itemvalue="Application.Viewer" />
-        <item itemvalue="Application.Client" />
       </list>
     </recent_temporary>
   </component>
@@ -199,6 +198,7 @@
       <updated>1584345888208</updated>
       <workItem from="1584678076584" duration="3275000" />
       <workItem from="1584682110411" duration="8233000" />
+      <workItem from="1584930657369" duration="631000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -300,12 +300,12 @@
                   </entry>
                 </map>
               </option>
-              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add some QOL improvements to the repository." />
@@ -342,32 +342,37 @@
     </state>
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1707.920@0.0.1707.920" timestamp="1584707124137" />
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584687694337" />
-    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584691794476">
-      <screen x="0" y="23" width="1440" height="797" />
+    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584931241309">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1584931241309" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
     <state x="526" y="332" key="GitRewordDialog" timestamp="1584691778310">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="526" y="332" key="GitRewordDialog/0.23.1440.797@0.23.1440.797" timestamp="1584691778310" />
-    <state width="1664" height="242" key="GridCell.Tab.0.bottom" timestamp="1584707546562">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1398" height="185" key="GridCell.Tab.0.bottom" timestamp="1584930932495">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="185" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584930932495" />
     <state width="1664" height="242" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1664" height="242" key="GridCell.Tab.0.center" timestamp="1584707546562">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1398" height="185" key="GridCell.Tab.0.center" timestamp="1584930932494">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="185" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1584930932494" />
     <state width="1664" height="242" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1664" height="242" key="GridCell.Tab.0.left" timestamp="1584707546562">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1398" height="185" key="GridCell.Tab.0.left" timestamp="1584930932493">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="185" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1584930932493" />
     <state width="1664" height="242" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1664" height="242" key="GridCell.Tab.0.right" timestamp="1584707546562">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1398" height="185" key="GridCell.Tab.0.right" timestamp="1584930932494">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state width="1398" height="185" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1584930932494" />
     <state width="1664" height="242" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
     <state width="1664" height="300" key="GridCell.Tab.1.bottom" timestamp="1584707542560">
