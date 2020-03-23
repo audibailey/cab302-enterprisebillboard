@@ -24,6 +24,24 @@
             <name>Perdana Bailey</name>
             <email>perdana.bailey@connect.qut.edu.au</email>
         </developer>
+
+        <developer>
+            <id>n10315071</id>
+            <name>Hieu Nghia Huynh</name>
+            <email>hieunghia.huynh@connect.qut.edu.au</email>
+        </developer>
+
+        <developer>
+            <id>n10212361</id>
+            <name>Jamie Martin</name>
+            <email>jamie.martin@connect.qut.edu.au</email>
+        </developer>
+
+        <developer>
+            <id>n10209921</id>
+            <name>Trevor Waturuocha</name>
+            <email>trevor.waturuocha@connect.qut.edu.au</email>
+        </developer>
     </developers>
 
     <properties>
