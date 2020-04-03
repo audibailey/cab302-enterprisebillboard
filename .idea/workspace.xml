@@ -25,19 +25,14 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="chore: Update developer information.">
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added database handling package.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/database/DB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MajorAssessment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ErrorTreeViewConfiguration">
-    <option name="autoscrollToSource" value="true" />
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -199,6 +194,7 @@
       <workItem from="1584678076584" duration="3275000" />
       <workItem from="1584682110411" duration="8233000" />
       <workItem from="1584930657369" duration="631000" />
+      <workItem from="1585914403325" duration="217000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -320,7 +316,8 @@
     <MESSAGE value="refactor: Reimplement CI as per Maven and BitBucket specifications." />
     <MESSAGE value="refactor: Add official IntelliJ gitignore contents." />
     <MESSAGE value="chore: IntelliJ automagic project files." />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: IntelliJ automagic project files." />
+    <MESSAGE value="feat: Added database handling package." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Added database handling package." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -342,10 +339,10 @@
     </state>
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1707.920@0.0.1707.920" timestamp="1584707124137" />
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584687694337" />
-    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584931241309">
+    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1585914583070">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1584931241309" />
+    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1585914583070" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
     <state x="526" y="332" key="GitRewordDialog" timestamp="1584691778310">
       <screen x="0" y="23" width="1440" height="797" />
