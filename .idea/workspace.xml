@@ -26,18 +26,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="chore: Update developer information.">
+      <change afterPath="$PROJECT_DIR$/src/test/java/xml/Billboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/xml/ClientTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/xml/ServerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/xml/StatusCodes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MajorAssessment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ErrorTreeViewConfiguration">
-    <option name="autoscrollToSource" value="true" />
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -80,6 +78,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
@@ -308,6 +307,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Add some QOL improvements to the repository." />
     <MESSAGE value="Automated files generated/altered to add QOL improvements and CI support." />
     <MESSAGE value="Automatically generated/altered files for QOL improvements and CI support." />
