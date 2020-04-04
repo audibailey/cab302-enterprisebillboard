@@ -53,6 +53,16 @@ public class DB {
         sqlStatement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
         sqlStatement.executeUpdate("USE " + databaseName);
 
+        //Create user table
+        PreparedStatement create = this.database.prepareStatement("CREATE TABLE IF NOT EXISTS user(userID int NOT NULL,username varchar(255),password varchar(255),salted varchar(255),createBillboard BOOLEAN,editBillboard BOOLEAN,scheduleBillboard BOOLEAN,editUsers BOOLEAN, PRIMARY KEY(userID))");
+        create.executeUpdate();
+        //Create billboard table
+        create = this.database.prepareStatement("CREATE TABLE IF NOT EXISTS billboard(billboardID int NOT NULL,userID int NOT NULL, billboardName varchar(255), message varchar(255), textColor varchar(255), backgroundColor varchar(255),picture LONGTEXT,information varchar(255),locked BOOLEAN, PRIMARY KEY(billboardID),FOREIGN KEY(userID) REFERENCES user(userID))");
+        create.executeUpdate();
+
+        //Create schedule table
+        create = this.database.prepareStatement("CREATE TABLE IF NOT EXISTS schedule(scheduleID int NOT NULL, billboardID int NOT NULL, startTime DATETIME, duration TIME NOT NULL, minuteInterval int, PRIMARY KEY(scheduleID), FOREIGN KEY(billboardID) REFERENCES billboard(billboardID))");
+        create.executeUpdate();
         // End the SQL statement
         sqlStatement.close();
 
