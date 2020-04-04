@@ -25,12 +25,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added database handling package.">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/server/database/DBTest.java" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Re-add the common package from another branch, for consistency.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MajorAssessment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/database/DB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/DB.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +38,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -220,7 +217,7 @@
       <workItem from="1584682110411" duration="8233000" />
       <workItem from="1584930657369" duration="631000" />
       <workItem from="1585914403325" duration="217000" />
-      <workItem from="1585994943433" duration="5859000" />
+      <workItem from="1585994943433" duration="9772000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -299,7 +296,42 @@
       <option name="project" value="LOCAL" />
       <updated>1584691794570</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="test: Add a basic database handler test.">
+      <created>1586001783558</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1586001783558</updated>
+    </task>
+    <task id="LOCAL-00013" summary="refactor: Changed the way creation of a new database object works.">
+      <created>1586001877774</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1586001877774</updated>
+    </task>
+    <task id="LOCAL-00014" summary="chore: Add mysql dependancy for maven.">
+      <created>1586001941470</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1586001941470</updated>
+    </task>
+    <task id="LOCAL-00015" summary="chore: IntelliJ automagical change of files.">
+      <created>1586001967582</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1586001967582</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat: Re-add the common package from another branch, for consistency.">
+      <created>1586007627987</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1586007627987</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,7 +375,12 @@
     <MESSAGE value="refactor: Add official IntelliJ gitignore contents." />
     <MESSAGE value="chore: IntelliJ automagic project files." />
     <MESSAGE value="feat: Added database handling package." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Added database handling package." />
+    <MESSAGE value="test: Add a basic database handler test." />
+    <MESSAGE value="refactor: Changed the way creation of a new database object works." />
+    <MESSAGE value="chore: Add mysql dependancy for maven." />
+    <MESSAGE value="chore: IntelliJ automagical change of files." />
+    <MESSAGE value="feat: Re-add the common package from another branch, for consistency." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Re-add the common package from another branch, for consistency." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -365,42 +402,46 @@
     <state x="231" y="36" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1585997981083" />
     <state x="310" y="116" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1707.920@0.0.1707.920" timestamp="1584346051659" />
     <state x="0" y="123" width="1440" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1584690534128" />
+    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser" timestamp="1586006572237">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1586006572237" />
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1584707124137">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1707.920@0.0.1707.920" timestamp="1584707124137" />
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584687694337" />
-    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1585914583070">
+    <state x="268" y="42" width="936" height="797" key="CommitChangelistDialog2" timestamp="1586007627848">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1585914583070" />
+    <state x="268" y="42" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1586007627848" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
     <state x="526" y="332" key="GitRewordDialog" timestamp="1584691778310">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="526" y="332" key="GitRewordDialog/0.23.1440.797@0.23.1440.797" timestamp="1584691778310" />
-    <state width="1398" height="233" key="GridCell.Tab.0.bottom" timestamp="1586001521433">
+    <state width="1398" height="233" key="GridCell.Tab.0.bottom" timestamp="1586007589942">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="233" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1586001521433" />
+    <state width="1398" height="233" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1586007589942" />
     <state width="1664" height="242" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1398" height="233" key="GridCell.Tab.0.center" timestamp="1586001521432">
+    <state width="1398" height="233" key="GridCell.Tab.0.center" timestamp="1586007589940">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="233" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1586001521432" />
+    <state width="1398" height="233" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1586007589940" />
     <state width="1664" height="242" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1398" height="233" key="GridCell.Tab.0.left" timestamp="1586001521431">
+    <state width="1398" height="233" key="GridCell.Tab.0.left" timestamp="1586007589940">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="233" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1586001521431" />
+    <state width="1398" height="233" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1586007589940" />
     <state width="1664" height="242" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1398" height="233" key="GridCell.Tab.0.right" timestamp="1586001521432">
+    <state width="1398" height="233" key="GridCell.Tab.0.right" timestamp="1586007589941">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="233" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1586001521432" />
+    <state width="1398" height="233" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1586007589941" />
     <state width="1664" height="242" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
     <state width="1398" height="153" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
     <state width="1664" height="300" key="GridCell.Tab.1.bottom" timestamp="1584707542560">
@@ -428,18 +469,20 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="602" y="344" key="VCS.EditChangelistDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682915182" />
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1584691895155">
-      <screen x="0" y="23" width="1440" height="797" />
+    <state x="320" y="156" key="Vcs.Push.Dialog.v2" timestamp="1586001981344">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="320" y="156" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1586001981344" />
     <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584691895155" />
     <state x="512" y="344" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1584707213544">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="512" y="344" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1707.920@0.0.1707.920" timestamp="1584707213544" />
     <state x="432" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.23.1440.797@0.23.1440.797" timestamp="1584678671022" />
-    <state x="511" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584683011569">
-      <screen x="0" y="23" width="1440" height="797" />
+    <state x="511" y="360" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586005947621">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="511" y="360" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1586005947621" />
     <state x="511" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1584683011569" />
     <state x="485" y="317" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1584682963083">
       <screen x="0" y="23" width="1440" height="797" />
