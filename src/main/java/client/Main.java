@@ -53,8 +53,15 @@ public class Main {
         frame.setJMenuBar(demo.createMenuBar());
         frame.setContentPane(demo.createContentPane());
 
-        // Display the window.
-        frame.setSize(300, 100);
+        // Display the window.//Get the screen size
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+
+        frame.setSize(1200, 600);
+        int x = (screenSize.width - frame.getWidth()) / 2;
+        int y = (screenSize.height - frame.getHeight()) / 2;
+        //Set the new frame location
+        frame.setLocation(x, y);
         frame.setVisible(true);
     }
 
