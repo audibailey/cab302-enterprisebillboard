@@ -3,8 +3,17 @@ package viewer;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class consists of the Billboard Viewer handler.
+ * All methods that manage and create the GUI are present in this file.
+ *
+ * @author Trevor Waturuocha
+ * @author Jamie Martin
+ */
 public class Main {
-    // Class to create and display GUI
+    /**
+     * Create the Billboard Viewer GUI and show it.
+     */
     private static void createAndShowGUI () {
         JFrame frame = new JFrame("Billboard Viewer"); // Constructing Billboard Viewer frame
 
@@ -28,7 +37,9 @@ public class Main {
         frame.setVisible (true); // Show frame
     }
 
-    // Main class to run GUI Application
+    /**
+     * Main class to run GUI Application and socket interface
+     */
     public static void main(String[] args) throws InterruptedException {
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
