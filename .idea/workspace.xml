@@ -26,7 +26,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Re-add the common package from another branch, for consistency.">
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/DB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/DB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/database/DBTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/database/DBTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -414,6 +417,10 @@
     </state>
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1707.920@0.0.1707.920" timestamp="1584707124137" />
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584687694337" />
+    <state x="2610" y="246" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586065099248">
+      <screen x="1920" y="0" width="1920" height="999" />
+    </state>
+    <state x="2610" y="246" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586065099248" />
     <state x="268" y="42" width="936" height="797" key="CommitChangelistDialog2" timestamp="1586007627848">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
