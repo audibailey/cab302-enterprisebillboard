@@ -3,6 +3,7 @@ package server.database;
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -265,7 +266,7 @@ public class DB {
                     "messageColor, picture, backgroundColor," +
                     " information, informationColor, locked)" +
                     "VALUES( " + billboard.userID + "," + billboard.name + "," +
-                    billboard.message + "," + billboard.messageColor + "," + billboard.picture + "," +
+                    billboard.message + "," + billboard.messageColor + "," + Arrays.toString(billboard.picture) + "," +
                     billboard.backgroundColor + "," + billboard.information + "," + billboard.informationColor +
                     "," + billboard.locked + ")";
 
@@ -278,7 +279,7 @@ public class DB {
                 }
             } else {
                 query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
-                    ", picture = " + billboard.picture + ", backgroundColor = " + billboard.backgroundColor +
+                    ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
                     ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
                     "WHERE billboard.name = " + billboardName;
                 int checked = sqlStatement.executeUpdate(query);
