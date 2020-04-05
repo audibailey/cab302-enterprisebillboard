@@ -8,8 +8,7 @@ import server.database.*;
 public class DBTest {
 
     DB testDB;
-
-/*    @BeforeEach
+    @BeforeEach
     public void createDatabase() throws Exception {
         this.testDB = new DB();
     }
@@ -18,5 +17,4 @@ public class DBTest {
     public void testClose() throws Exception {
         this.testDB.closeConnection();
     }
-*/
 }
