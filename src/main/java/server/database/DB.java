@@ -1,8 +1,6 @@
 package server.database;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
@@ -27,13 +25,11 @@ public class DB {
      * If the DBMS doesn't have the database, create the database and update
      * the object to use that database as the connection as well as populate it.
      *
-     * @throws SQLException: this exception is just a pass-through
+     * @throws Exception: this exception is just a pass-through
      */
     public DB() throws Exception {
-        // Set the JDBC driver
-        // Class.forName("com.mysql.cj.jdbc.Driver");
-        // this wasn't working for me? ^
 
+        // Configure the database from the prop file
         Properties props = getProps();
         String url = props.getProperty("jdbc.url");
         String schema = props.getProperty("jdbc.schema");
@@ -49,21 +45,20 @@ public class DB {
      * Gets the properties from db.props for the database connection;
      *
      * @return Properties: the required properties to connect to the database
+     * @throws Exception: this exception is just a pass-through
      */
-    private Properties getProps() {
+    private Properties getProps() throws Exception {
+
+        // Initialize variables
         Properties props = new Properties();
-        FileInputStream in = null;
+        FileInputStream in;
 
-        try {
-            in = new FileInputStream("./db.props");
-            props.load(in);
-            in.close();
-        } catch (FileNotFoundException e) {
-            System.err.println(e);
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+        // Read the props file into the properties object
+        in = new FileInputStream("./db.props");
+        props.load(in);
+        in.close();
 
+        // Return the properties object
         return props;
     }
 
@@ -135,11 +130,10 @@ public class DB {
     /**
      * Selects a billboard in the database based off billboard name.
      *
-     * @param billboardName: the name of the billboard
-     * @return Billboard: the requested billboard from the database
+     * @param billboardName : the name of the billboard
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
-    /*public Billboard getBillboard(String billboardName) throws Exception {
+    public void getBillboard(String billboardName) throws Exception {
 
         // Query the database for the billboard
         Statement sqlStatement = this.database.createStatement();
@@ -157,14 +151,13 @@ public class DB {
                 int billboardID = result.getInt("billboardID");
 
                 //billboard = new Billboard(billboardID, ...)
-                return billboard;
             }
 
         } else {
             throw new Exception("No results.");
         }
 
-    }*/
+    }
 
     /**
      * Closes the connection to the database.
