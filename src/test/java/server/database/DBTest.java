@@ -11,10 +11,7 @@ public class DBTest {
 
     @BeforeEach
     public void createDatabase() throws Exception {
-        this.testDB = new DB("jdbc:mysql://localhost:3306",
-            "root",
-            "password",
-            "cab302");
+        this.testDB = new DB();
     }
 
     @Test
