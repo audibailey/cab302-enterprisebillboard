@@ -5,13 +5,13 @@ package common;
  *
  * @author Perdana Bailey
  * @author Kevin Huynh
- * @author Jamie Martinn
+ * @author Jamie Martin
  */
 public class User implements IUser {
     /**
      * The variables of the object User
      */
-    private int userID;
+    private int id;
     private String username;
     private String password;
     private boolean canCreateBillboard;
@@ -23,7 +23,7 @@ public class User implements IUser {
     /**
      * User object constructor
      *
-     * @param userID
+     * @param id
      * @param username
      * @param canCreateBillboard
      * @param canEditBillboard
@@ -31,8 +31,8 @@ public class User implements IUser {
      * @param canEditUser
      * @param canViewBillboard
      */
-    public User(int userID, String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser, boolean canViewBillboard) {
-        this.userID = userID;
+    public User(int id, String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser, boolean canViewBillboard) {
+        this.id = id;
         this.username = username;
         this.canCreateBillboard = canCreateBillboard;
         this.canEditBillboard = canEditBillboard;
@@ -48,5 +48,14 @@ public class User implements IUser {
      */
     public void changePassword(String newPass) {
         this.password = newPass;
+    }
+
+    /**
+     * Try login with the password for this user.
+     *
+     * @param pass, the password input
+     */
+    public boolean tryLogin(String pass) {
+        return this.password == pass;
     }
 }

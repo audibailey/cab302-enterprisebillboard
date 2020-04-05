@@ -1,35 +1,42 @@
 package common;
 
-import java.sql.Time;
 import java.time.Duration;
+import java.util.Date;
 
-
+/**
+ * This class consists of the Schedule object and its associated methods.
+ *
+ * @author Jamie Martin
+ */
 public class Schedule {
     /**
-     * The variables of the object Schedule
+     * The variables of the object schedule
      */
-    private int scheduleID;
-    private int billboardID;
+    int id;
+    private int billboardId;
+    private Date startTime;
     private Duration duration;
-    private Time startTime;
-    private int minuteInterval;
+    private Duration interval;
+
 
     /**
-     * User object constructor
+     * Schedule object constructor
      *
-     * @param scheduleID
-     * @param billboardID
+     * @param id
+     * @param billboardId
      * @param startTime
      * @param duration
-     * @param minuteInterval
+     * @param interval
      */
-
-    public Schedule(int scheduleID, int billboardID, Time startTime, Duration duration, int minuteInterval) {
-        this.scheduleID = scheduleID;
-        this.billboardID = billboardID;
-        this.duration = duration;
+    public Schedule(int id,
+                    int billboardId,
+                    Date startTime,
+                    Duration duration,
+                    Duration interval) {
+        this.id = id;
+        this.billboardId = billboardId;
         this.startTime = startTime;
-        this.minuteInterval = minuteInterval;
-
+        this.duration = duration;
+        this.interval = interval;
     }
 }
