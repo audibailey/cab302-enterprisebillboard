@@ -2,6 +2,8 @@ package server.database;
 
 import java.io.FileInputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import common.*;
@@ -100,10 +102,11 @@ public class DB {
                 "userID int NOT NULL," +
                 "billboardName varchar(255), " +
                 "message varchar(255), " +
-                "textColor varchar(255), " +
-                "backgroundColor varchar(255)," +
+                "messageColor varchar(7), " +
                 "picture LONGTEXT," +
+                "backgroundColor varchar(7)," +
                 "information varchar(255)," +
+                "informationColor varchar(7)," +
                 "locked BOOLEAN, " +
                 "PRIMARY KEY(billboardID)," +
                 "FOREIGN KEY(userID) REFERENCES user(userID))"
@@ -133,30 +136,161 @@ public class DB {
      * @param billboardName : the name of the billboard
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
-    public void getBillboard(String billboardName) throws Exception {
+    public Billboard getBillboard(String billboardName) throws Exception {
+        // Billboard to be returned
+        Billboard billboard = null;
 
         // Query the database for the billboard
         Statement sqlStatement = this.database.createStatement();
-        boolean fetchResult = sqlStatement.execute(
-            "SELECT * FROM BILLBOARD WHERE BILLBOARD.name = " + billboardName
-        );
+        String query = "SELECT * FROM BILLBOARD WHERE BILLBOARD.name = " + billboardName;
+        boolean fetchResult = sqlStatement.execute(query);
         sqlStatement.close();
 
         // Check if there was a result
         if (fetchResult) {
             // Use the result of the database to create billboard object
-            ResultSet result = sqlStatement.getResultSet();
+            ResultSet result = sqlStatement.executeQuery(query);
             while (result.next()) {
-                Billboard billboard = null;
-                int billboardID = result.getInt("billboardID");
 
-                //billboard = new Billboard(billboardID, ...)
+                int billboardID = result.getInt("billboardID");
+                String name = result.getString("billboardName");
+                String message = result.getString("message");
+                String messageColor = result.getString("textColor");
+                byte[] picture = result.getBytes("picture");
+                String backgroundColor = result.getString("backgroundColor");
+                String information = result.getString("information");
+                String informationColor = result.getString("informationColor");
+                boolean locked = result.getBoolean("locked");
+                int userID = result.getInt("userID");
+                billboard = new Billboard(billboardID,
+                    name,
+                    message,
+                    messageColor,
+                    picture,
+                    backgroundColor,
+                    information,
+                    informationColor,
+                    locked,
+                    userID);
             }
 
         } else {
             throw new Exception("No results.");
         }
+        return billboard;
+    }
 
+    /**
+     * Selects all billboards in the database.
+     *
+     * @throws Exception: this exception is a pass-through exception with a no results extended exception
+     */
+    public List<Billboard> getBillboard(boolean lock) throws Exception {
+        // Billboard to be returned
+        List<Billboard> billboard = new ArrayList<>();
+        Billboard temp;
+        // Query the database for the billboard
+        Statement sqlStatement = this.database.createStatement();
+        String query = "SELECT * FROM BILLBOARD WHERE Billboard.locked = " + lock;
+        boolean fetchResult = sqlStatement.execute(query);
+        sqlStatement.close();
+
+        // Check if there was a result
+        if (fetchResult) {
+            // Use the result of the database to create billboard object
+            ResultSet result = sqlStatement.executeQuery(query);
+            while (result.next()) {
+                int billboardID = result.getInt("billboardID");
+                String name = result.getString("billboardName");
+                String message = result.getString("message");
+                String messageColor = result.getString("textColor");
+                byte[] picture = result.getBytes("picture");
+                String backgroundColor = result.getString("backgroundColor");
+                String information = result.getString("information");
+                String informationColor = result.getString("informationColor");
+                boolean locked = result.getBoolean("locked");
+                int userID = result.getInt("userID");
+                temp = new Billboard(billboardID,
+                    name,
+                    message,
+                    messageColor,
+                    picture,
+                    backgroundColor,
+                    information,
+                    informationColor,
+                    locked,
+                    userID);
+                billboard.add(temp);
+            }
+
+        } else {
+            throw new Exception("No results.");
+        }
+        return billboard;
+    }
+
+    public String deleteBillboard(String billboardName) throws Exception {
+        // Query the database for the billboard
+        Statement sqlStatement = this.database.createStatement();
+        String query = "DELETE FROM billboard WHERE billboard.name = " + billboardName;
+        int fetchResult = sqlStatement.executeUpdate(query);
+        sqlStatement.close();
+
+        // Check if there was any rows affected in the database
+        if (fetchResult == 1) {
+            return "Billboard deleted";
+        } else {
+            throw new Exception("No billboard with such name in database");
+        }
+    }
+
+    public String upsertBillboard(String billboardName, Billboard billboard) throws Exception {
+
+
+        // Query the database for the billboard
+        Statement sqlStatement = this.database.createStatement();
+
+        //Try to select the billboard first to check if it's in the database or not
+        String query = "SELECT * FROM billboard WHERE billboard.name = " + billboardName;
+
+        boolean fetchResult = sqlStatement.execute(query);
+        sqlStatement.close();
+
+        // Check if there was a result
+        if (fetchResult) {
+            ResultSet existedBillboard = sqlStatement.executeQuery(query);
+            if (existedBillboard == null) {
+                query = "INSERT INTO billboard " +
+                    "(userID, billboardName, message, " +
+                    "messageColor, picture, backgroundColor," +
+                    " information, informationColor, locked)" +
+                    "VALUES( " + billboard.userID + "," + billboard.name + "," +
+                    billboard.message + "," + billboard.messageColor + "," + billboard.picture + "," +
+                    billboard.backgroundColor + "," + billboard.information + "," + billboard.informationColor +
+                    "," + billboard.locked + ")";
+
+                boolean check = sqlStatement.execute(query);
+
+                if (check) {
+                    return "Insert successfully";
+                } else {
+                    throw new Exception("Error in insert");
+                }
+            } else {
+                query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
+                    ", picture = " + billboard.picture + ", backgroundColor = " + billboard.backgroundColor +
+                    ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
+                    "WHERE billboard.name = " + billboardName;
+                int checked = sqlStatement.executeUpdate(query);
+                if (checked > 0) {
+                    return "Update successfully";
+                } else {
+                    throw new Exception("Error in updating");
+                }
+            }
+        } else {
+            throw new Exception("No billboard with such name in database");
+        }
     }
 
     /**
