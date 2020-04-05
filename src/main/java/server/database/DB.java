@@ -129,7 +129,7 @@ public class DB {
         sqlStatement.close();
 
         // Set the new handler to the new database
-        this.database = DriverManager.getConnection(url + "/" + databaseName, username, password);
+        this.database = DriverManager.getConnection(url + "/" + schema, username, password);
     }
 
     /**
