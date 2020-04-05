@@ -16,7 +16,7 @@ public class Billboard implements IBillboard {
     private String message;
     private String messageColor;
     private byte[] picture;
-    private String pictureColor;
+    private String backgroundColor;
     private String information;
     private String informationColor;
     private boolean locked;
@@ -30,7 +30,7 @@ public class Billboard implements IBillboard {
      * @param message
      * @param messageColor
      * @param picture
-     * @param pictureColor
+     * @param backgroundColor
      * @param information
      * @param informationColor
      * @param locked
@@ -41,7 +41,7 @@ public class Billboard implements IBillboard {
                      String message,
                      String messageColor,
                      byte[] picture,
-                     String pictureColor,
+                     String backgroundColor,
                      String information,
                      String informationColor,
                      boolean locked,
@@ -51,7 +51,7 @@ public class Billboard implements IBillboard {
         this.message = message;
         this.messageColor = messageColor;
         this.picture = picture;
-        this.pictureColor = pictureColor;
+        this.backgroundColor = backgroundColor;
         this.information = information;
         this.informationColor = informationColor;
         this.locked = locked;
