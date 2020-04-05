@@ -1,6 +1,8 @@
 package server.database;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,103 +34,219 @@ public class DB {
      */
     public DB() throws Exception {
 
+        Properties props = null;
+
         // Configure the database from the prop file
-        Properties props = getProps();
+        try {
+            props = getProps();
+        } catch (IOException e) {
+            throw new IOException("Failed to get db.props values.", e);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Failed to get db.props.values.");
+        }
+
         String url = props.getProperty("jdbc.url");
         String schema = props.getProperty("jdbc.schema");
         String username = props.getProperty("jdbc.username");
         String password = props.getProperty("jdbc.password");
 
         // Connect to the DBMS and populate the schema
-        this.database = DriverManager.getConnection(url, username, password);
-        populateSchema(url, username, password, schema);
+        try {
+            this.database = DriverManager.getConnection(url, username, password);
+            createDatabase(url, username, password, schema);
+            populateSchema();
+        } catch (SQLException e) {
+            throw new SQLException("Failed to connect to database and migrate it.", e);
+        }
+
     }
 
     /**
-     * Gets the properties from db.props for the database connection;
+     * Gets the properties from db.props for the database connection.
      *
      * @return Properties: the required properties to connect to the database
-     * @throws Exception: this exception is just a pass-through
+     * @throws IOException:          Thrown when props file not found or when unable to read props file or close prop file stream
+     * @throws NullPointerException: Thrown when props file stream is empty
      */
-    private Properties getProps() throws Exception {
+    private Properties getProps() throws IOException, NullPointerException {
 
         // Initialize variables
         Properties props = new Properties();
-        FileInputStream in;
+        FileInputStream in = null;
 
         // Read the props file into the properties object
-        in = new FileInputStream("./db.props");
-        props.load(in);
-        in.close();
+        try {
+            in = new FileInputStream("./db.props");
+            props.load(in);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("db.props not in root of directory.");
+        } catch (IOException e) {
+            throw new IOException("Error reading db.props.", e);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("No configuration information in db.props file.");
+        } finally {
+            // Close file stream
+            try {
+                in.close();
+            } catch (IOException e) {
+                throw new IOException("Error closing db.props.", e);
+            } catch (NullPointerException e) {
+                throw new NullPointerException("Error closing db.props. db.props doesn't exist anymore.");
+            }
+        }
 
         // Return the properties object
         return props;
     }
 
     /**
-     * Creates the database, populates the database and switches the connection to use the database;
+     * Creates the database, and switches the connection to use the database.
      *
-     * @param url:          the DBMS url. Example: jdbc:mysql://127.0.0.1
-     * @param username:     the DBMS password
-     * @param password:     the DBMS password
-     * @param schema:       the database name/schema
-     * @throws SQLException: this exception is just a pass-through
+     * @param url:      the DBMS url. Example: jdbc:mysql://127.0.0.1
+     * @param username: the DBMS password
+     * @param password: the DBMS password
+     * @param schema:   the database name/schema
+     * @throws SQLException
      */
-    private void populateSchema(String url, String username, String password, String schema) throws SQLException {
-        // Create an SQL statement
-        Statement sqlStatement = this.database.createStatement();
+    private void createDatabase(String url, String username, String password, String schema) throws SQLException {
+        Statement sqlStatement = null;
+        try {
+            // Create statement
+            sqlStatement = this.database.createStatement();
 
-        // Create and test new database
-        sqlStatement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + schema);
-        sqlStatement.executeUpdate("USE " + schema);
-
-        // Create user table
-        sqlStatement.executeUpdate(
-            "CREATE TABLE IF NOT EXISTS user(" +
-                "userID int NOT NULL," +
-                "username varchar(255)," +
-                "password varchar(255)," +
-                "salted varchar(255)," +
-                "createBillboard BOOLEAN," +
-                "editBillboard BOOLEAN," +
-                "scheduleBillboard BOOLEAN," +
-                "editUsers BOOLEAN, " +
-                "PRIMARY KEY(userID))"
-        );
-
-        // Create billboard table
-        sqlStatement.executeUpdate(
-            "CREATE TABLE IF NOT EXISTS billboard(" +
-                "billboardID int NOT NULL," +
-                "userID int NOT NULL," +
-                "billboardName varchar(255), " +
-                "message varchar(255), " +
-                "messageColor varchar(7), " +
-                "picture LONGTEXT," +
-                "backgroundColor varchar(7)," +
-                "information varchar(255)," +
-                "informationColor varchar(7)," +
-                "locked BOOLEAN, " +
-                "PRIMARY KEY(billboardID)," +
-                "FOREIGN KEY(userID) REFERENCES user(userID))"
-        );
-
-        // Create schedule table
-        sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS schedule(" +
-            "scheduleID int NOT NULL," +
-            "billboardID int NOT NULL," +
-            "startTime DATETIME," +
-            "duration TIME NOT NULL," +
-            "minuteInterval int," +
-            "PRIMARY KEY(scheduleID)," +
-            "FOREIGN KEY(billboardID) REFERENCES billboard(billboardID))"
-        );
-
-        // End the SQL statement
-        sqlStatement.close();
+            // Create and test new database
+            sqlStatement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + schema);
+            sqlStatement.executeUpdate("USE " + schema);
+        } catch (SQLTimeoutException e) {
+            throw new SQLTimeoutException("Failed to create database, took too long.", e);
+        } catch (SQLException e) {
+            throw new SQLException("Failed to create database.", e);
+        } finally {
+            try {
+                sqlStatement.close();
+            } catch (SQLException e) {
+                throw new SQLException("Failed to close connection to database after making database", e);
+            }
+        }
 
         // Set the new handler to the new database
-        this.database = DriverManager.getConnection(url + "/" + schema, username, password);
+        try {
+            this.database = DriverManager.getConnection(url + "/" + schema, username, password);
+        } catch (SQLException e) {
+            throw new SQLException("Failed to connect to the newly created database.", e);
+        }
+    }
+
+    /**
+     * Populates the database schema.
+     *
+     * @throws SQLException: this exception is just a
+     */
+    private void populateSchema() throws SQLException {
+        Statement sqlStatement = null;
+
+        try {
+            // Create statement
+            sqlStatement = this.database.createStatement();
+
+            // Create user table
+            sqlStatement.executeUpdate(
+                "CREATE TABLE IF NOT EXISTS user(" +
+                    "userID int NOT NULL," +
+                    "username varchar(255)," +
+                    "password varchar(255)," +
+                    "salted varchar(255)," +
+                    "createBillboard BOOLEAN," +
+                    "editBillboard BOOLEAN," +
+                    "scheduleBillboard BOOLEAN," +
+                    "editUsers BOOLEAN, " +
+                    "PRIMARY KEY(userID))"
+            );
+        } catch (SQLTimeoutException e) {
+            throw new SQLTimeoutException("Failed to create user table, took too long.", e);
+        } catch (SQLException e) {
+            throw new SQLException("Failed to create user table.", e);
+        } finally {
+            try {
+                sqlStatement.close();
+            } catch (SQLException e) {
+                throw new SQLException("Failed to close connection to database after making user table.", e);
+            }
+        }
+
+        try {
+            // Create statement
+            sqlStatement = this.database.createStatement();
+
+            // Create billboard table
+            sqlStatement.executeUpdate(
+                "CREATE TABLE IF NOT EXISTS billboard(" +
+                    "billboardID int NOT NULL," +
+                    "userID int NOT NULL," +
+                    "billboardName varchar(255), " +
+                    "message varchar(255), " +
+                    "textColor varchar(255), " +
+                    "backgroundColor varchar(255)," +
+                    "picture LONGTEXT," +
+                    "information varchar(255)," +
+                    "locked BOOLEAN, " +
+                    "PRIMARY KEY(billboardID)," +
+                    "FOREIGN KEY(userID) REFERENCES user(userID))"
+            );
+        } catch (SQLTimeoutException e) {
+            throw new SQLTimeoutException("Failed to create billboard table, took too long.", e);
+        } catch (SQLException e) {
+            throw new SQLException("Failed to create billboard table", e);
+        } finally {
+            try {
+                sqlStatement.close();
+            } catch (SQLException e) {
+                throw new SQLException("Failed to close connection to database after making billboard table.", e);
+            }
+        }
+
+
+        try {
+            // Create statement
+            sqlStatement = this.database.createStatement();
+            // Create billboard table
+            sqlStatement.executeUpdate(
+                "CREATE TABLE IF NOT EXISTS billboard(" +
+                    "billboardID int NOT NULL," +
+                    "userID int NOT NULL," +
+                    "billboardName varchar(255), " +
+                    "message varchar(255), " +
+                    "messageColor varchar(7), " +
+                    "picture LONGTEXT," +
+                    "backgroundColor varchar(7)," +
+                    "information varchar(255)," +
+                    "informationColor varchar(7)," +
+                    "locked BOOLEAN, " +
+                    "PRIMARY KEY(billboardID)," +
+                    "FOREIGN KEY(userID) REFERENCES user(userID))"
+            );
+
+            // Create schedule table
+            sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS schedule(" +
+                "scheduleID int NOT NULL," +
+                "billboardID int NOT NULL," +
+                "startTime DATETIME," +
+                "duration TIME NOT NULL," +
+                "minuteInterval int," +
+                "PRIMARY KEY(scheduleID)," +
+                "FOREIGN KEY(billboardID) REFERENCES billboard(billboardID))"
+            );
+        } catch (SQLTimeoutException e) {
+            throw new SQLTimeoutException("Failed to create schedule table, took too long.", e);
+        } catch (SQLException e) {
+            throw new SQLException("Failed to create schedule table", e);
+        } finally {
+            try {
+                sqlStatement.close();
+            } catch (SQLException e) {
+                throw new SQLException("Failed to close connection to database after making schedule table.", e);
+            }
+        }
     }
 
     /**
@@ -247,7 +365,6 @@ public class DB {
 
     public String upsertBillboard(String billboardName, Billboard billboard) throws Exception {
 
-
         // Query the database for the billboard
         Statement sqlStatement = this.database.createStatement();
 
@@ -301,6 +418,10 @@ public class DB {
      * @throws SQLException, this exception is just a pass-through
      */
     public void closeConnection() throws SQLException {
-        this.database.close();
+        try {
+            this.database.close();
+        } catch (SQLException e) {
+            throw new SQLException("Failed to close connection to database!", e);
+        }
     }
 }
