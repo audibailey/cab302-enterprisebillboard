@@ -26,10 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Billboard and User interfaces for both common and server">
+      <change afterPath="$PROJECT_DIR$/src/main/java/common/Schedule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MajorAssessment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/DB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/DB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/database/DBTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/database/DBTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/Billboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/Billboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/IUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/IUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +41,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -104,14 +106,14 @@
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jamie\Documents\GitHub\cab302majorassessment" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/test/java" />
       <recent name="$PROJECT_DIR$/src/main/java" />
       <recent name="$PROJECT_DIR$/src/test" />
       <recent name="$PROJECT_DIR$/src" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\jamie\Documents\GitHub\cab302majorassessment" />
     </key>
   </component>
   <component name="RunManager" selected="Android JUnit.DBTest">
