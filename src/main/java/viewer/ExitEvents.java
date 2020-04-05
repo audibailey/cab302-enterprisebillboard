@@ -6,7 +6,12 @@ package viewer;
 import javax.swing.*;
 import java.awt.event.*;
 
-// Class for event listening
+/**
+ * This class consists of the Exit Events for the Viewer.
+ * It listens for mouse click and escape actions to close the application
+ *
+ * @author Trevor Waturuocha
+ */
 public class ExitEvents extends JFrame {
     public static class MouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
