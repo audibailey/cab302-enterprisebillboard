@@ -1,6 +1,8 @@
 package server.database;
 
+import java.io.FileInputStream;
 import java.sql.*;
+import java.util.Properties;
 
 import common.*;
 
@@ -23,19 +25,41 @@ public class DB {
      * If the DBMS doesn't have the database, create the database and update
      * the object to use that database as the connection as well as populate it.
      *
-     * @param url:          the DBMS url. Example: jdbc:mysql://127.0.0.1
-     * @param username:     the DBMS username
-     * @param password:     the DBMS password
-     * @param databaseName: the database name
-     * @throws SQLException: this exception is just a pass-through
+     * @throws Exception: this exception is just a pass-through
      */
-    public DB(String url, String username, String password, String databaseName) throws Exception {
-        // Set the JDBC driver
-        Class.forName("com.mysql.cj.jdbc.Driver");
+    public DB() throws Exception {
+
+        // Configure the database from the prop file
+        Properties props = getProps();
+        String url = props.getProperty("jdbc.url");
+        String schema = props.getProperty("jdbc.schema");
+        String username = props.getProperty("jdbc.username");
+        String password = props.getProperty("jdbc.password");
 
         // Connect to the DBMS and populate the schema
         this.database = DriverManager.getConnection(url, username, password);
-        populateSchema(url, username, password, databaseName);
+        populateSchema(url, username, password, schema);
+    }
+
+    /**
+     * Gets the properties from db.props for the database connection;
+     *
+     * @return Properties: the required properties to connect to the database
+     * @throws Exception: this exception is just a pass-through
+     */
+    private Properties getProps() throws Exception {
+
+        // Initialize variables
+        Properties props = new Properties();
+        FileInputStream in;
+
+        // Read the props file into the properties object
+        in = new FileInputStream("./db.props");
+        props.load(in);
+        in.close();
+
+        // Return the properties object
+        return props;
     }
 
     /**
@@ -44,16 +68,16 @@ public class DB {
      * @param url:          the DBMS url. Example: jdbc:mysql://127.0.0.1
      * @param username:     the DBMS password
      * @param password:     the DBMS password
-     * @param databaseName: the database name
+     * @param schema:       the database name/schema
      * @throws SQLException: this exception is just a pass-through
      */
-    private void populateSchema(String url, String username, String password, String databaseName) throws SQLException {
+    private void populateSchema(String url, String username, String password, String schema) throws SQLException {
         // Create an SQL statement
         Statement sqlStatement = this.database.createStatement();
 
         // Create and test new database
-        sqlStatement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
-        sqlStatement.executeUpdate("USE " + databaseName);
+        sqlStatement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + schema);
+        sqlStatement.executeUpdate("USE " + schema);
 
         // Create user table
         sqlStatement.executeUpdate(
@@ -100,17 +124,16 @@ public class DB {
         sqlStatement.close();
 
         // Set the new handler to the new database
-        this.database = DriverManager.getConnection(url + "/" + databaseName, username, password);
+        this.database = DriverManager.getConnection(url + "/" + schema, username, password);
     }
 
     /**
      * Selects a billboard in the database based off billboard name.
      *
-     * @param billboardName: the name of the billboard
-     * @return Billboard: the requested billboard from the database
+     * @param billboardName : the name of the billboard
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
-    public Billboard getBillboard(String billboardName) throws Exception {
+    public void getBillboard(String billboardName) throws Exception {
 
         // Query the database for the billboard
         Statement sqlStatement = this.database.createStatement();
@@ -128,7 +151,6 @@ public class DB {
                 int billboardID = result.getInt("billboardID");
 
                 //billboard = new Billboard(billboardID, ...)
-                return billboard;
             }
 
         } else {

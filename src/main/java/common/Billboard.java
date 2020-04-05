@@ -1,8 +1,5 @@
 package common;
 
-import java.time.Duration;
-import java.util.Date;
-
 /**
  * This class consists of the billboard object and its associated methods.
  *
@@ -11,45 +8,53 @@ import java.util.Date;
  * @author Jamie Martin
  */
 public class Billboard implements IBillboard {
-
     /**
      * The variables of the object billboard
      */
-    private int billboardID;
+    private int id;
     private String name;
     private String message;
-    private byte[] img;
+    private String messageColor;
+    private byte[] picture;
+    private String pictureColor;
     private String information;
+    private String informationColor;
     private boolean locked;
-    private Date startTime;
-    private Duration duration;
-    private Duration interval;
     private int userID;
 
     /**
      * Billboard object constructor
      *
-     * @param billboardID
+     * @param id
      * @param name
      * @param message
-     * @param img
+     * @param messageColor
+     * @param picture
+     * @param pictureColor
      * @param information
+     * @param informationColor
      * @param locked
-     * @param startTime
-     * @param duration
-     * @param interval
      * @param userID
      */
-    public Billboard(int billboardID, String name, String message, byte[] img, String information, boolean locked, Date startTime, Duration duration, Duration interval, int userID) {
-        this.billboardID = billboardID;
+    public Billboard(int id,
+                     String name,
+                     String message,
+                     String messageColor,
+                     byte[] picture,
+                     String pictureColor,
+                     String information,
+                     String informationColor,
+                     boolean locked,
+                     int userID) {
+        this.id = id;
         this.name = name;
         this.message = message;
-        this.img = img;
+        this.messageColor = messageColor;
+        this.picture = picture;
+        this.pictureColor = pictureColor;
         this.information = information;
+        this.informationColor = informationColor;
         this.locked = locked;
-        this.startTime = startTime;
-        this.duration = duration;
-        this.interval = interval;
         this.userID = userID;
     }
 }
