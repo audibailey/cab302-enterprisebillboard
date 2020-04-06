@@ -11,14 +11,14 @@ public class User implements IUser {
     /**
      * The variables of the object User
      */
-    private int id;
-    private String username;
-    private String password;
-    private boolean canCreateBillboard;
-    private boolean canEditBillboard;
-    private boolean canScheduleBillboard;
-    private boolean canEditUser;
-    private boolean canViewBillboard;
+    public int id;
+    public String username;
+    public String password;
+    public boolean canCreateBillboard;
+    public boolean canEditBillboard;
+    public boolean canScheduleBillboard;
+    public boolean canEditUser;
+    public boolean canViewBillboard;
 
     /**
      * User object constructor
@@ -56,6 +56,6 @@ public class User implements IUser {
      * @param pass, the password input
      */
     public boolean tryLogin(String pass) {
-        return this.password == pass;
+        return this.password.equals(pass);
     }
 }
