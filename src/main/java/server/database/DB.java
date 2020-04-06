@@ -182,17 +182,19 @@ public class DB {
             // Create billboard table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS billboard(" +
-                    "billboardID int NOT NULL," +
+                    "ID int NOT NULL," +
                     "userID int NOT NULL," +
-                    "billboardName varchar(255), " +
+                    "name varchar(255), " +
                     "message varchar(255), " +
-                    "textColor varchar(255), " +
-                    "backgroundColor varchar(255)," +
+                    "messageColor varchar(7), " +
                     "picture LONGTEXT," +
+                    "backgroundColor varchar(7)," +
                     "information varchar(255)," +
+                    "informationColor varchar(7)," +
                     "locked BOOLEAN, " +
-                    "PRIMARY KEY(billboardID)," +
-                    "FOREIGN KEY(userID) REFERENCES user(ID))"
+                    "PRIMARY KEY(ID)," +
+                    "CONSTRAINT FK_UserBillboard FOREIGN KEY (userID)" +
+                    "REFERENCES user(ID)"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create billboard table, took too long.", e);
@@ -224,7 +226,8 @@ public class DB {
                     "informationColor varchar(7)," +
                     "locked BOOLEAN, " +
                     "PRIMARY KEY(ID)," +
-                    "FOREIGN KEY(userID) REFERENCES user(ID))"
+                    "CONSTRAINT FK_UserBillboard FOREIGN KEY (userID)" +
+                    "REFERENCES User(ID)"
             );
 
             // Create schedule table
@@ -542,6 +545,92 @@ public class DB {
         }
     }
 
+    /**
+     * Create a user if it's not in the database.
+     *
+     * @param user : a user object with contents in it
+     * @throws Exception: this exception is a pass-through exception with a no results extended exception
+     */
+    public String createUser(User user) throws Exception {
+
+        // Query the database for the billboard
+        Statement sqlStatement = this.database.createStatement();
+
+        //Try to select the billboard first to check if it's in the database or not
+        String query = "SELECT * FROM user WHERE user.username = " + user.username;
+
+        boolean fetchResult = sqlStatement.execute(query);
+        sqlStatement.close();
+
+        // Check if there was a result
+        if (fetchResult) {
+            ResultSet existedUser = sqlStatement.executeQuery(query);
+            if (existedUser == null) {
+                query = "INSERT INTO billboard " +
+                    "(username, password, createBillboard, editBillboard, " +
+                    " scheduleBillboard, editUsers, viewBillboard)" +
+                    "VALUES( " + user.username + "," + user.password + ',' + user.canCreateBillboard + "," +
+                    user.canEditBillboard + "," + user.canScheduleBillboard + "," +
+                    user.canEditUser + "," + user.canViewBillboard + "," + ")";
+
+                boolean check = sqlStatement.execute(query);
+                if (check) {
+                    return "Insert successfully";
+                } else {
+                    throw new Exception("Error in insert");
+                }
+            }
+        } else {
+            throw new Exception("No user with such name in database");
+        }
+        return ("Error has occured");
+    }
+
+//    /**
+//     * Set user's permissions.
+//     *
+//     * @param username : Username of the target
+//     * @param canCreateBillboard : true if user has permission to create billboard
+//     * @param canEditBillboard : true if user has permission to create billboard
+//     * @param canScheduleBillboard : true if user has permission to create billboard
+//     * @param canEditUser: true if user has permission to create billboard
+//     * @param canViewBillboard : true if user has permission to create billboard
+//     * @throws Exception: this exception is a pass-through exception with a no results extended exception
+//     */
+//    public String setPermission(String username,
+//                                boolean canCreateBillboard,
+//                                boolean  canEditBillboard,
+//                                boolean canScheduleBillboard,
+//                                boolean canEditUser,
+//                                boolean canViewBillboard) throws Exception {
+//
+//        // Query the database for the billboard
+//        Statement sqlStatement = this.database.createStatement();
+//
+//        //Try to select the billboard first to check if it's in the database or not
+//        String query = "SELECT * FROM user WHERE user.username = " + username;
+//
+//        boolean fetchResult = sqlStatement.execute(query);
+//        sqlStatement.close();
+//
+//        // Check if there was a result
+//        if (fetchResult) {
+//            ResultSet existedBillboard = sqlStatement.executeQuery(query);
+//            if (existedBillboard == null) {
+//                query = "";
+//
+//                boolean check = sqlStatement.execute(query);
+//                if (check) {
+//                    return "Insert successfully";
+//                } else {
+//                    throw new Exception("Error in insert");
+//                }
+//            }
+//        } else {
+//            throw new Exception("No billboard with such name in database");
+//        }
+//        return ("Error has occured");
+//    }
 
     /**
      * Closes the connection to the database.

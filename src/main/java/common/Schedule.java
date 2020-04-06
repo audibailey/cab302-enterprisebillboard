@@ -12,11 +12,11 @@ public class Schedule {
     /**
      * The variables of the object schedule
      */
-    int id;
-    private int billboardId;
-    private Date startTime;
-    private Duration duration;
-    private Duration interval;
+    public int id;
+    public int billboardId;
+    public Date startTime;
+    public Duration duration;
+    public Duration interval;
 
 
     /**
