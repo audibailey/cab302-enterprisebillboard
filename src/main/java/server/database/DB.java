@@ -463,36 +463,21 @@ public class DB {
      * @param billboard      : a billboard object with contents in it
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
-    public String editBillboard(String billboardName, Billboard billboard) throws Exception {
+    public void edit(String billboardName, Billboard billboard) throws Exception {
 
         // Query the database for the billboard
         Statement sqlStatement = this.database.createStatement();
 
         //Try to select the billboard first to check if it's in the database or not
-        String query = "SELECT * FROM billboard WHERE billboard.name = " + billboardName;
-
-        boolean fetchResult = sqlStatement.execute(query);
-        sqlStatement.close();
-
-        // Check if there was a result
-        if (fetchResult) {
-            ResultSet existedBillboard = sqlStatement.executeQuery(query);
-            if (existedBillboard == null) {
-                query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
-                    ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
-                    ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
-                    "WHERE billboard.name = " + billboardName;
-                int checked = sqlStatement.executeUpdate(query);
-                if (checked > 0) {
-                    return "Update successfully";
-                } else {
-                    throw new Exception("Error in updating");
-                }
-            }
-        } else {
-            throw new Exception("No billboard with such name in database");
+        String query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
+            ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
+            ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
+            "WHERE billboard.name = " + billboardName;
+        int checked = sqlStatement.executeUpdate(query);
+        if (checked == 0) {
+            throw new Exception("Error in updating");
         }
-        return "Error when editing";
+        sqlStatement.close();
     }
     //User functions
 
@@ -560,152 +545,35 @@ public class DB {
             throw new Exception("No user with such name in database");
         }
     }
+
     /**
      * Create a user if it's not in the database.
      *
      * @param user : a user object with contents in it
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
-    public String createUser(User user) throws Exception {
+    public void createUser(User user) throws Exception {
 
         // Query the database for the billboard
         Statement sqlStatement = this.database.createStatement();
 
         //Try to select the billboard first to check if it's in the database or not
-        String query = "SELECT * FROM user WHERE user.username = " + user.username;
+        String query = "INSERT INTO billboard " +
+            "(username, password, createBillboard, editBillboard, " +
+            " scheduleBillboard, editUsers, viewBillboard)" +
+            "VALUES( " + user.username + "," + user.password + ',' + user.canCreateBillboard + "," +
+            user.canEditBillboard + "," + user.canScheduleBillboard + "," +
+            user.canEditUser + "," + user.canViewBillboard + "," + ")";
 
-        boolean fetchResult = sqlStatement.execute(query);
+        boolean check = sqlStatement.execute(query);
+        if (!check) {
+            throw new Exception("Error in insert");
+        }
         sqlStatement.close();
 
-        // Check if there was a result
-        if (fetchResult) {
-            ResultSet existedUser = sqlStatement.executeQuery(query);
-            if (existedUser == null) {
-                query = "INSERT INTO billboard " +
-                    "(username, password, createBillboard, editBillboard, " +
-                    " scheduleBillboard, editUsers, viewBillboard)" +
-                    "VALUES( " + user.username + "," + user.password + ',' + user.canCreateBillboard + "," +
-                    user.canEditBillboard + "," + user.canScheduleBillboard + "," +
-                    user.canEditUser + "," + user.canViewBillboard + "," + ")";
-
-                boolean check = sqlStatement.execute(query);
-                if (check) {
-                    return "Insert successfully";
-                } else {
-                    throw new Exception("Error in insert");
-                }
-            }
-        } else {
-            throw new Exception("No user with such name in database");
-        }
-        return ("Error has occured");
     }
-//
-//    /**
-//     * Set user's permissions.
-//     *
-//     * @param username : Username of the target
-//     * @param canCreateBillboard : true if user has permission to create billboard
-//     * @param canEditBillboard : true if user has permission to create billboard
-//     * @param canScheduleBillboard : true if user has permission to create billboard
-//     * @param canEditUser: true if user has permission to create billboard
-//     * @param canViewBillboard : true if user has permission to create billboard
-//     * @throws Exception: this exception is a pass-through exception with a no results extended exception
-//     */
-//    public String setPermission(String username,
-//                                boolean canCreateBillboard,
-//                                boolean  canEditBillboard,
-//                                boolean canScheduleBillboard,
-//                                boolean canEditUser,
-//                                boolean canViewBillboard) throws Exception {
-//
-//        // Query the database for the billboard
-//        Statement sqlStatement = this.database.createStatement();
-//
-//        //Try to select the billboard first to check if it's in the database or not
-//        String query = "SELECT * FROM user WHERE user.username = " + username;
-//
-//        boolean fetchResult = sqlStatement.execute(query);
-//        sqlStatement.close();
-//
-//        // Check if there was a result
-//        if (fetchResult) {
-//            ResultSet existedBillboard = sqlStatement.executeQuery(query);
-//            if (existedBillboard == null) {
-//                query = "";
-//
-//                boolean check = sqlStatement.execute(query);
-//                if (check) {
-//                    return "Insert successfully";
-//                } else {
-//                    throw new Exception("Error in insert");
-//                }
-//            }
-//        } else {
-//            throw new Exception("No billboard with such name in database");
-//        }
-//        return ("Error has occured");
-//    }
-
 
     //Schedule functions
-
-    /**
-     * Schedule a billboard's start time and duration, etc..
-     *
-     * @param user : a user object with contents in it
-     * @throws Exception: this exception is a pass-through exception with a no results extended exception
-     */
-    public String scheduleBillboard(String billboardName,
-                                    Date startTime,
-                                    Duration duration,
-                                    Duration interval) throws Exception {
-
-        // Query the database for the billboard
-        Statement sqlStatement = this.database.createStatement();
-
-        //Try to select the billboard first to check if it's in the database or not
-        String query = "SELECT * FROM schedule WHERE schedule.billboardName = " + billboardName;
-
-        boolean fetchResult = sqlStatement.execute(query);
-        sqlStatement.close();
-
-        // Check if there was a result
-        if (fetchResult) {
-            ResultSet existedBillboard = sqlStatement.executeQuery(query);
-            if (existedBillboard == null) {
-                query = "INSERT INTO billboard " +
-                    "(userID, name, message, " +
-                    "messageColor, picture, backgroundColor," +
-                    " information, informationColor, locked)" +
-                    "VALUES( " + billboard.userID + "," + billboard.name + "," +
-                    billboard.message + "," + billboard.messageColor + "," + Arrays.toString(billboard.picture) + "," +
-                    billboard.backgroundColor + "," + billboard.information + "," + billboard.informationColor +
-                    "," + billboard.locked + ")";
-
-                boolean check = sqlStatement.execute(query);
-
-                if (check) {
-                    return "Insert successfully";
-                } else {
-                    throw new Exception("Error in insert");
-                }
-            } else {
-                query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
-                    ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
-                    ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
-                    "WHERE billboard.name = " + billboardName;
-                int checked = sqlStatement.executeUpdate(query);
-                if (checked > 0) {
-                    return "Update successfully";
-                } else {
-                    throw new Exception("Error in updating");
-                }
-            }
-        } else {
-            throw new Exception("No billboard with such name in database");
-        }
-    }
 
     /**
      * Closes the connection to the database.
