@@ -13,7 +13,7 @@ public class Schedule {
      * The variables of the object schedule
      */
     public int id;
-    public int billboardId;
+    public int billboardName;
     public Date startTime;
     public Duration duration;
     public Duration interval;
@@ -23,18 +23,18 @@ public class Schedule {
      * Schedule object constructor
      *
      * @param id
-     * @param billboardId
+     * @param billboardName
      * @param startTime
      * @param duration
      * @param interval
      */
     public Schedule(int id,
-                    int billboardId,
+                    int billboardName,
                     Date startTime,
                     Duration duration,
                     Duration interval) {
         this.id = id;
-        this.billboardId = billboardId;
+        this.billboardName = billboardName;
         this.startTime = startTime;
         this.duration = duration;
         this.interval = interval;
