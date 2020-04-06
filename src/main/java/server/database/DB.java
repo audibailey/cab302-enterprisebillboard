@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,7 @@ public class DB {
      *
      * @throws Exception: this exception is just a pass-through
      */
+
     public DB() throws Exception {
 
         Properties props = null;
@@ -194,7 +196,7 @@ public class DB {
                     "locked BOOLEAN, " +
                     "PRIMARY KEY(ID)," +
                     "CONSTRAINT FK_UserBillboard FOREIGN KEY (userID)" +
-                    "REFERENCES user(ID)"
+                    "REFERENCES user(ID))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create billboard table, took too long.", e);
@@ -227,18 +229,19 @@ public class DB {
                     "locked BOOLEAN, " +
                     "PRIMARY KEY(ID)," +
                     "CONSTRAINT FK_UserBillboard FOREIGN KEY (userID)" +
-                    "REFERENCES User(ID)"
+                    "REFERENCES User(ID))"
             );
 
             // Create schedule table
             sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS schedule(" +
                 "ID int NOT NULL," +
-                "billboardID int NOT NULL," +
+                "billboardName int NOT NULL," +
                 "startTime DATETIME," +
                 "duration TIME NOT NULL," +
                 "minuteInterval int," +
                 "PRIMARY KEY(ID)," +
-                "FOREIGN KEY(billboardID) REFERENCES billboard(ID))"
+                "CONSTRAINT FK_billboard FOREIGN KEY(billboardName) " +
+                "REFERENCES billboard(name))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create schedule table, took too long.", e);
@@ -424,13 +427,43 @@ public class DB {
     }
 
     /**
-     * Create a billboard if it's not in the database or edit a billboard if it's already exists.
+     * Create a billboard if it's not in the database
      *
      * @param billboardName: the name of the billboard
      * @param billboard      : a billboard object with contents in it
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
-    public String upsertBillboard(String billboardName, Billboard billboard) throws Exception {
+    public void insert(String billboardName, Billboard billboard) throws Exception {
+
+        // Query the database for the billboard
+        Statement sqlStatement = this.database.createStatement();
+
+        //Try to select the billboard first to check if it's in the database or not
+        String query = "INSERT INTO billboard " +
+            "(userID, name, message, " +
+            "messageColor, picture, backgroundColor," +
+            " information, informationColor, locked)" +
+            "VALUES( " + billboard.userID + "," + billboard.name + "," +
+            billboard.message + "," + billboard.messageColor + "," + Arrays.toString(billboard.picture) + "," +
+            billboard.backgroundColor + "," + billboard.information + "," + billboard.informationColor +
+            "," + billboard.locked + ")";
+
+        boolean check = sqlStatement.execute(query);
+
+        if (!check) {
+            throw new Exception("Error in insert");
+        }
+
+    }
+
+    /**
+     * Create a billboard if it's not in the database
+     *
+     * @param billboardName: the name of the billboard
+     * @param billboard      : a billboard object with contents in it
+     * @throws Exception: this exception is a pass-through exception with a no results extended exception
+     */
+    public String editBillboard(String billboardName, Billboard billboard) throws Exception {
 
         // Query the database for the billboard
         Statement sqlStatement = this.database.createStatement();
@@ -445,23 +478,6 @@ public class DB {
         if (fetchResult) {
             ResultSet existedBillboard = sqlStatement.executeQuery(query);
             if (existedBillboard == null) {
-                query = "INSERT INTO billboard " +
-                    "(userID, name, message, " +
-                    "messageColor, picture, backgroundColor," +
-                    " information, informationColor, locked)" +
-                    "VALUES( " + billboard.userID + "," + billboard.name + "," +
-                    billboard.message + "," + billboard.messageColor + "," + Arrays.toString(billboard.picture) + "," +
-                    billboard.backgroundColor + "," + billboard.information + "," + billboard.informationColor +
-                    "," + billboard.locked + ")";
-
-                boolean check = sqlStatement.execute(query);
-
-                if (check) {
-                    return "Insert successfully";
-                } else {
-                    throw new Exception("Error in insert");
-                }
-            } else {
                 query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
                     ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
                     ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
@@ -476,8 +492,8 @@ public class DB {
         } else {
             throw new Exception("No billboard with such name in database");
         }
+        return "Error when editing";
     }
-
     //User functions
 
     /**
@@ -544,7 +560,6 @@ public class DB {
             throw new Exception("No user with such name in database");
         }
     }
-
     /**
      * Create a user if it's not in the database.
      *
@@ -585,7 +600,7 @@ public class DB {
         }
         return ("Error has occured");
     }
-
+//
 //    /**
 //     * Set user's permissions.
 //     *
@@ -631,6 +646,66 @@ public class DB {
 //        }
 //        return ("Error has occured");
 //    }
+
+
+    //Schedule functions
+
+    /**
+     * Schedule a billboard's start time and duration, etc..
+     *
+     * @param user : a user object with contents in it
+     * @throws Exception: this exception is a pass-through exception with a no results extended exception
+     */
+    public String scheduleBillboard(String billboardName,
+                                    Date startTime,
+                                    Duration duration,
+                                    Duration interval) throws Exception {
+
+        // Query the database for the billboard
+        Statement sqlStatement = this.database.createStatement();
+
+        //Try to select the billboard first to check if it's in the database or not
+        String query = "SELECT * FROM schedule WHERE schedule.billboardName = " + billboardName;
+
+        boolean fetchResult = sqlStatement.execute(query);
+        sqlStatement.close();
+
+        // Check if there was a result
+        if (fetchResult) {
+            ResultSet existedBillboard = sqlStatement.executeQuery(query);
+            if (existedBillboard == null) {
+                query = "INSERT INTO billboard " +
+                    "(userID, name, message, " +
+                    "messageColor, picture, backgroundColor," +
+                    " information, informationColor, locked)" +
+                    "VALUES( " + billboard.userID + "," + billboard.name + "," +
+                    billboard.message + "," + billboard.messageColor + "," + Arrays.toString(billboard.picture) + "," +
+                    billboard.backgroundColor + "," + billboard.information + "," + billboard.informationColor +
+                    "," + billboard.locked + ")";
+
+                boolean check = sqlStatement.execute(query);
+
+                if (check) {
+                    return "Insert successfully";
+                } else {
+                    throw new Exception("Error in insert");
+                }
+            } else {
+                query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
+                    ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
+                    ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
+                    "WHERE billboard.name = " + billboardName;
+                int checked = sqlStatement.executeUpdate(query);
+                if (checked > 0) {
+                    return "Update successfully";
+                } else {
+                    throw new Exception("Error in updating");
+                }
+            }
+        } else {
+            throw new Exception("No billboard with such name in database");
+        }
+    }
 
     /**
      * Closes the connection to the database.
