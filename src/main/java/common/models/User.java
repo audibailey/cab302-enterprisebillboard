@@ -1,4 +1,4 @@
-package common;
+package common.models;
 
 /**
  * This class consists of the user object and its associated methods.
@@ -7,7 +7,7 @@ package common;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-public class User implements IUser {
+public class User {
     /**
      * The variables of the object User
      */
@@ -19,6 +19,10 @@ public class User implements IUser {
     public boolean canScheduleBillboard;
     public boolean canEditUser;
     public boolean canViewBillboard;
+
+    public User() {
+
+    }
 
     /**
      * User object constructor
@@ -57,5 +61,23 @@ public class User implements IUser {
      */
     public boolean tryLogin(String pass) {
         return this.password.equals(pass);
+    }
+
+    /**
+     * Parses the XML string and returns a User object
+     * @param xml
+     * @return
+     */
+    public static User fromXML(String xml) {
+        return new User();
+    }
+
+    /**
+     * Parses the Object and returns an XML String
+     * @param u
+     * @return
+     */
+    public static String fromObject(User u) {
+        return "";
     }
 }

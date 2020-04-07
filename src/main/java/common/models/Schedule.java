@@ -1,4 +1,4 @@
-package common;
+package common.models;
 
 import java.time.Duration;
 import java.util.Date;
@@ -18,6 +18,9 @@ public class Schedule {
     public Duration duration;
     public Duration interval;
 
+    public Schedule() {
+
+    }
 
     /**
      * Schedule object constructor
@@ -38,5 +41,23 @@ public class Schedule {
         this.startTime = startTime;
         this.duration = duration;
         this.interval = interval;
+    }
+
+    /**
+     * Parses the XML String and returns a new Schedule Object
+     * @param xml
+     * @return
+     */
+    public static Schedule fromXML(String xml) {
+        return new Schedule();
+    }
+
+    /**
+     * Parses the Object and returns an XML String
+     * @param s
+     * @return
+     */
+    public static String fromObject(Schedule s) {
+        return "";
     }
 }
