@@ -1,4 +1,4 @@
-package common;
+package common.models;
 
 /**
  * This class consists of the billboard object and its associated methods.
@@ -7,7 +7,7 @@ package common;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-public class Billboard implements IBillboard {
+public class Billboard {
     /**
      * The variables of the object billboard
      */
@@ -21,6 +21,10 @@ public class Billboard implements IBillboard {
     public String informationColor;
     public boolean locked;
     public int userID;
+
+    public Billboard() {
+
+    }
 
     /**
      * Billboard object constructor
@@ -56,6 +60,24 @@ public class Billboard implements IBillboard {
         this.informationColor = informationColor;
         this.locked = locked;
         this.userID = userID;
+    }
+
+    /**
+     * Parses the XML string and returns a Billboard object
+     * @param xml
+     * @return Billboard
+     */
+    public static Billboard fromXML(String xml) {
+        return new Billboard();
+    }
+
+    /**
+     * Parses the Object and returns an XML string from it
+     * @param b
+     * @return String
+     */
+    public static String fromObject(Billboard b) {
+        return "";
     }
 
 }
