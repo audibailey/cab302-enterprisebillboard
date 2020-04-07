@@ -1,15 +1,18 @@
 package server.database.schedule;
 
-import common.Schedule;
+import common.models.Schedule;
 import server.database.ObjectHandler;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class ScheduleHandler extends ObjectHandler<Schedule> {
+public class ScheduleHandler implements ObjectHandler<Schedule> {
+    Connection connection;
 
-    public ScheduleHandler(Connection connection) { super(connection); }
+    public ScheduleHandler(Connection connection) {
+        this.connection = connection;
+    }
 
     public Optional<Schedule> get(String name) throws Exception {
         return Optional.empty();

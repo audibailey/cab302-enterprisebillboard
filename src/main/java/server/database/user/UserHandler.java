@@ -1,6 +1,6 @@
 package server.database.user;
 
-import common.User;
+import common.models.User;
 import server.database.ObjectHandler;
 
 import java.sql.Connection;
@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserHandler extends ObjectHandler<User> {
+public class UserHandler implements ObjectHandler<User> {
+    Connection connection;
 
     public UserHandler(Connection connection) {
-        super(connection);
+        this.connection = connection;
     }
 
     /**

@@ -5,18 +5,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ObjectHandler<T> {
-    protected Connection connection;
+public interface ObjectHandler<T> {
+    Optional<T> get(String name) throws Exception;
 
-    public ObjectHandler(Connection connection) { this.connection = connection; }
+    List<T> getAll() throws Exception;
 
-    protected abstract Optional<T> get(String name) throws Exception;
+    void insert(T t) throws Exception;
 
-    protected abstract List<T> getAll() throws Exception;
+    void update(T t) throws Exception;
 
-    protected abstract void insert(T t) throws Exception;
-
-    protected abstract void update(T t) throws Exception;
-
-    protected abstract void delete(T t) throws Exception;
+    void delete(T t) throws Exception;
 }

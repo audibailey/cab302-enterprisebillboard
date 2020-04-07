@@ -1,6 +1,9 @@
 package server.database;
 
+import server.database.billboard.BillboardHandler;
+import server.database.schedule.ScheduleHandler;
 import server.database.schema.Schema;
+import server.database.user.UserHandler;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,7 +13,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionFactory {
+public class DataService {
+    private Connection connection;
+    public BillboardHandler billboards;
+    public UserHandler users;
+    public ScheduleHandler schedules;
+
+    /**
+     * Generates a Dataservice Instance
+     * @throws IOException
+     */
+    public DataService() throws IOException {
+        this.connection = getConnection();
+        this.billboards = new BillboardHandler(connection);
+        this.users = new UserHandler(connection);
+        this.schedules = new ScheduleHandler(connection);
+    }
+
     /**
      * Get a connection to database
      *

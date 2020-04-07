@@ -1,4 +1,4 @@
-package server.database;
+package garbage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Properties;
 
 import common.*;
+import common.models.Billboard;
+import common.models.User;
 
 /**
  * This class consists of the database handler. All methods that require direct access

@@ -1,10 +1,9 @@
 package server.database;
 
-import common.Billboard;
+import common.models.Billboard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import server.database.*;
 import server.database.billboard.BillboardHandler;
 
 import java.sql.Connection;

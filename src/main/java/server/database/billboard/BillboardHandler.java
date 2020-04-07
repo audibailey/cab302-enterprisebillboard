@@ -1,6 +1,6 @@
 package server.database.billboard;
 
-import common.Billboard;
+import common.models.Billboard;
 import server.database.ObjectHandler;
 
 import java.sql.Connection;
@@ -11,10 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class BillboardHandler extends ObjectHandler<Billboard> {
+public class BillboardHandler implements ObjectHandler<Billboard> {
+    Connection connection;
 
     public BillboardHandler(Connection connection) {
-        super(connection);
+        this.connection = connection;
     }
 
     /**
