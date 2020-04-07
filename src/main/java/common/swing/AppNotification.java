@@ -1,4 +1,4 @@
-package common;
+package common.swing;
 
 import javax.swing.*;
 

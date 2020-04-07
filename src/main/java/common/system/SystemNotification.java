@@ -1,4 +1,4 @@
-package common;
+package common.system;
 
 import java.awt.*;
 import java.io.IOException;
