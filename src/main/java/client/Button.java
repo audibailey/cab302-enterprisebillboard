@@ -3,9 +3,9 @@ package client;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 
-import common.*;
+import common.swing.AppNotification;
+import common.system.SystemNotification;
 
 public class Button extends JButton {
     public Button() {
