@@ -1,45 +1,32 @@
 package server.database.schedule;
 
 import common.Schedule;
-import server.database.DBHandler;
+import server.database.ObjectHandler;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class scheduleHandler implements DBHandler<Schedule> {
-    private static Connection dbconn;
+public class ScheduleHandler extends ObjectHandler<Schedule> {
 
-    public scheduleHandler(Connection connection) {
-        this.dbconn = connection;
-    }
+    public ScheduleHandler(Connection connection) { super(connection); }
 
-    @Override
     public Optional<Schedule> get(String name) throws Exception {
         return Optional.empty();
     }
 
-    @Override
     public List<Schedule> getAll() throws Exception {
         return null;
     }
 
-    @Override
     public void insert(Schedule schedule) throws Exception {
 
     }
 
-    @Override
     public void update(Schedule schedule) throws Exception {
 
     }
 
-    @Override
     public void delete(Schedule schedule) {
 
     }

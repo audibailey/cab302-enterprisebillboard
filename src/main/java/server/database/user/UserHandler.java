@@ -1,8 +1,7 @@
 package server.database.user;
 
-import common.Billboard;
 import common.User;
-import server.database.DBHandler;
+import server.database.ObjectHandler;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class userHandler implements DBHandler<User> {
-    private static Connection dbconn;
+public class UserHandler extends ObjectHandler<User> {
 
-    public userHandler(Connection connection) {
-        this.dbconn = connection;
+    public UserHandler(Connection connection) {
+        super(connection);
     }
 
     /**
@@ -27,7 +25,7 @@ public class userHandler implements DBHandler<User> {
      */
     public Optional<User> get(String userName) throws Exception {
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "SELECT * FROM USER WHERE user.name = " + userName;
         boolean fetchResult = sqlStatement.execute(query);
         User temp = null;
@@ -75,7 +73,7 @@ public class userHandler implements DBHandler<User> {
         List<User> users = new ArrayList<>();
         User temp;
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "SELECT * FROM user";
         boolean fetchResult = sqlStatement.execute(query);
         sqlStatement.close();
@@ -109,10 +107,9 @@ public class userHandler implements DBHandler<User> {
         return users;
     }
 
-    @Override
     public void insert(User user) throws Exception {
 
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "INSERT INTO user " +
             "(username, password, createBillboard, editBillboard, " +
             " scheduleBillboard, editUsers, viewBillboard)" +
@@ -126,7 +123,6 @@ public class userHandler implements DBHandler<User> {
         }
     }
 
-    @Override
     public void update(User user) throws Exception {
 
     }
@@ -139,7 +135,7 @@ public class userHandler implements DBHandler<User> {
      */
     public void delete(User user) throws Exception {
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "DELETE FROM user WHERE user.username = " + user.username;
         int fetchResult = sqlStatement.executeUpdate(query);
         sqlStatement.close();

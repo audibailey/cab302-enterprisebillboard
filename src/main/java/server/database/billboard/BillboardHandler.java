@@ -1,23 +1,20 @@
 package server.database.billboard;
 
 import common.Billboard;
-import common.User;
-import server.database.DBHandler;
+import server.database.ObjectHandler;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class billboardHandler implements DBHandler<Billboard> {
-    private static Connection dbconn;
+public class BillboardHandler extends ObjectHandler<Billboard> {
 
-    public billboardHandler(Connection connection) {
-        this.dbconn = connection;
+    public BillboardHandler(Connection connection) {
+        super(connection);
     }
 
     /**
@@ -30,7 +27,7 @@ public class billboardHandler implements DBHandler<Billboard> {
         List<Billboard> billboard = new ArrayList<>();
         Billboard temp;
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "SELECT * FROM BILLBOARD WHERE Billboard.locked = " + lock;
         boolean fetchResult = sqlStatement.execute(query);
 
@@ -83,7 +80,7 @@ public class billboardHandler implements DBHandler<Billboard> {
         Billboard billboard = null;
 
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "SELECT * FROM BILLBOARD WHERE billboard.name = " + billboardName;
         boolean fetchResult = sqlStatement.execute(query);
 
@@ -135,7 +132,7 @@ public class billboardHandler implements DBHandler<Billboard> {
         List<Billboard> billboard = new ArrayList<>();
         Billboard temp;
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "SELECT * FROM billboard";
         boolean fetchResult = sqlStatement.execute(query);
         sqlStatement.close();
@@ -184,7 +181,7 @@ public class billboardHandler implements DBHandler<Billboard> {
     public void insert(Billboard billboard) throws Exception {
 
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
 
         String query = "INSERT INTO billboard " +
             "(userID, name, message, " +
@@ -205,7 +202,7 @@ public class billboardHandler implements DBHandler<Billboard> {
 
     public void update(Billboard billboard) throws Exception {
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
 
         String query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
             ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
@@ -225,7 +222,7 @@ public class billboardHandler implements DBHandler<Billboard> {
      */
     public void delete(Billboard billboard) throws Exception {
         // Query the database for the billboard
-        Statement sqlStatement = dbconn.createStatement();
+        Statement sqlStatement = connection.createStatement();
         String query = "DELETE FROM billboard WHERE billboard.name = " + billboard.name;
         int fetchResult = sqlStatement.executeUpdate(query);
         sqlStatement.close();

@@ -1,6 +1,6 @@
 package server.database;
 
-import server.database.schema.schema;
+import server.database.schema.Schema;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,8 +35,8 @@ public class ConnectionFactory {
 
         try {
             Connection pre_dbconn = DriverManager.getConnection(url, username, password);
-            Connection new_dbconn = schema.createDatabase(pre_dbconn, url, username, password, db);
-            schema.populateSchema(new_dbconn);
+            Connection new_dbconn = Schema.createDatabase(pre_dbconn, url, username, password, db);
+            Schema.populateSchema(new_dbconn);
 
             return new_dbconn;
         } catch (SQLException ex) {

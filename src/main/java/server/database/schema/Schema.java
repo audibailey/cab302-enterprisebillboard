@@ -2,7 +2,7 @@ package server.database.schema;
 
 import java.sql.*;
 
-public class schema {
+public class Schema {
 
     /**
      * Creates the database, and switches the connection to use the database.
