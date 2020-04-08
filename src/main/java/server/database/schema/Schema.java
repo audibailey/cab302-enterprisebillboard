@@ -61,11 +61,6 @@ public class Schema {
                     "username varchar(255)," +
                     "password varchar(255)," +
                     "salted varchar(255)," +
-                    "createBillboard BOOLEAN," +
-                    "editBillboard BOOLEAN," +
-                    "scheduleBillboard BOOLEAN," +
-                    "editUsers BOOLEAN, " +
-                    "viewBillboard BOOLEAN, " +
                     "PRIMARY KEY(ID))"
             );
         } catch (SQLTimeoutException e) {
@@ -79,6 +74,35 @@ public class Schema {
                 throw new SQLException("Failed to close connection to database after making user table.", e);
             }
         }
+
+        try {
+            // Create statement
+            sqlStatement = connection.createStatement();
+
+            // Create user permission table
+            sqlStatement.executeUpdate(
+                "CREATE TABLE IF NOT EXISTS userPermissions(" +
+                    "username varchar(255) NOT NULL," +
+                    "createBillboard BOOLEAN," +
+                    "editBillboard BOOLEAN," +
+                    "scheduleBillboard BOOLEAN," +
+                    "editUsers BOOLEAN, " +
+                    "viewBillboard BOOLEAN, " +
+                    "PRIMARY KEY(userID)," +
+                    "FOREIGN KEY (username) REFERENCES user(username)"
+            );
+        } catch (SQLTimeoutException e) {
+            throw new SQLTimeoutException("Failed to create user's permissions table, took too long.", e);
+        } catch (SQLException e) {
+            throw new SQLException("Failed to create user's permissions table.", e);
+        } finally {
+            try {
+                sqlStatement.close();
+            } catch (SQLException e) {
+                throw new SQLException("Failed to close connection to database after making user table.", e);
+            }
+        }
+
 
         try {
             // Create statement

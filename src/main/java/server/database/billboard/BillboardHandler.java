@@ -175,7 +175,6 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     /**
      * Create a billboard if it's not in the database
      *
-     * @param billboardName: the name of the billboard
      * @param billboard      : a billboard object with contents in it
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
@@ -211,14 +210,14 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             "WHERE name = " + billboard.name;
         int checked = sqlStatement.executeUpdate(query);
         if (checked == 0) {
-            throw new Exception("Error in updating");
+            throw new Exception("Error in updating billboard");
         }
     }
 
     /**
      * Delete a billboard base on billboardName
      *
-     * @param billboardName: the name of the billboard
+     * @param billboard: the content of the billboard
      * @throws Exception: this exception is a pass-through exception with a no results extended exception
      */
     public void delete(Billboard billboard) throws Exception {
