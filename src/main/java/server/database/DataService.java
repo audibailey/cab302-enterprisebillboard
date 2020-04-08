@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.Properties;
 
 public class DataService {
@@ -21,14 +22,19 @@ public class DataService {
 
     /**
      * Generates a Dataservice Instance
+     *
      * @throws IOException
      */
-    public DataService() throws IOException {
-        this.connection = getConnection();
+    public DataService(boolean debug) throws IOException {
+        if (!debug) {
+            this.connection = getConnection();
+        }
+
         this.billboards = new BillboardHandler(connection);
         this.users = new UserHandler(connection);
         this.schedules = new ScheduleHandler(connection);
     }
+
 
     /**
      * Get a connection to database
