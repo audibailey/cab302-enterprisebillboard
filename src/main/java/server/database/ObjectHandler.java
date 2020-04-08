@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface ObjectHandler<T> {
     Optional<T> get(String name) throws Exception;
 
-    List<T> getAll() throws Exception;
+    //Optional<List<T>> getAll() throws Exception;
 
-    void insert(T t) throws Exception;
+    //boolean insert(T t) throws Exception;
 
-    void update(T t) throws Exception;
+    //int update(T t) throws Exception;
 
-    void delete(T t) throws Exception;
+    //int delete(T t) throws Exception;
 }

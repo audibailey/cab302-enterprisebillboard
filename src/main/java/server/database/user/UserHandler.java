@@ -18,47 +18,51 @@ public class UserHandler implements ObjectHandler<User> {
         this.connection = connection;
     }
 
-//    /**
-//     * Selects a user in the database based off user name.
-//     *
-//     * @param userName: the name of the user
-//     * @return
-//     * @throws Exception: this exception is a pass-through exception with a no results extended exception
-//     */
-//    public Optional<User> get(String userName) throws Exception {
-//        // Query the database for the billboard
-//        Statement sqlStatement = connection.createStatement();
-//        String query = "SELECT * FROM USER WHERE user.name = " + userName;
-//
-//        boolean fetchResult = sqlStatement.execute(query);
-//        User temp = null;
-//
-//        // Check if there was a result
-//        if (fetchResult) {
-//            // Use the result of the database to create billboard object
-//            ResultSet result = sqlStatement.executeQuery(query);
-//            while (result.next()) {
-//
-//                int ID = result.getInt("ID");
-//                String username = result.getString("username");
-//                String password = result.getString("password");
-//                boolean canCreateBillboard = result.getBoolean("createBillboard");
-//                boolean canEditBillboard = result.getBoolean("editBillboard");
-//                boolean canScheduleBillboard = result.getBoolean("scheduleBillboard");
-//                boolean canEditUser = result.getBoolean("editUsers");
-//                boolean canViewBillboard = result.getBoolean("viewBillboard");
-//                temp = new User(ID, username);
-//                sqlStatement.close();
-//
-//            }
-//
-//        } else {
-//            sqlStatement.close();
-//            throw new Exception("No results.");
-//        }
-//
-//        return Optional.ofNullable(temp);
-//    }
+    /**
+     * Selects a billboard in the database based off billboard name.
+     *
+     * @param billboardName : the name of the billboard
+     * @return
+     * @throws Exception: this exception is a pass-through exception with a no results extended exception
+     */
+    public Optional<User> get(String userName) throws Exception {
+        if (connection != null) {
+            // Query the database for the billboard
+            Statement sqlStatement = connection.createStatement();
+            String query = "SELECT * FROM USER WHERE user.name = " + userName;
+            boolean fetchResult = sqlStatement.execute(query);
+            User temp = null;
+
+            // Check if there was a result
+            if (fetchResult) {
+                // Use the result of the database to create billboard object
+                ResultSet result = sqlStatement.executeQuery(query);
+                while (result.next()) {
+
+                    int ID = result.getInt("ID");
+                    String username = result.getString("username");
+                    String password = result.getString("password");
+                    boolean canCreateBillboard = result.getBoolean("createBillboard");
+                    boolean canEditBillboard = result.getBoolean("editBillboard");
+                    boolean canScheduleBillboard = result.getBoolean("scheduleBillboard");
+                    boolean canEditUser = result.getBoolean("editUsers");
+                    boolean canViewBillboard = result.getBoolean("viewBillboard");
+                    temp = new User(ID,
+                        username);
+                    sqlStatement.close();
+
+                }
+
+            } else {
+                sqlStatement.close();
+                throw new Exception("No results.");
+            }
+
+            return Optional.ofNullable(temp);
+        } else {
+            return Optional.empty();
+        }
+    }
 
     /**
      * Get user permissions
