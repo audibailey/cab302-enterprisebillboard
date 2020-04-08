@@ -1,5 +1,8 @@
 package common.models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * This class consists of the billboard object and its associated methods.
  *
@@ -62,8 +65,30 @@ public class Billboard {
         this.userID = userID;
     }
 
+    public Billboard(
+        String name,
+        String message,
+        String messageColor,
+        byte[] picture,
+        String backgroundColor,
+        String information,
+        String informationColor,
+        boolean locked,
+        int userID) {
+        this.name = name;
+        this.message = message;
+        this.messageColor = messageColor;
+        this.picture = picture;
+        this.backgroundColor = backgroundColor;
+        this.information = information;
+        this.informationColor = informationColor;
+        this.locked = locked;
+        this.userID = userID;
+    }
+
     /**
      * Parses the XML string and returns a Billboard object
+     *
      * @param xml
      * @return Billboard
      */
@@ -73,11 +98,28 @@ public class Billboard {
 
     /**
      * Parses the Object and returns an XML string from it
+     *
      * @param b
      * @return String
      */
     public static String fromObject(Billboard b) {
         return "";
+    }
+
+    public static Billboard fromSQL(ResultSet rs) throws SQLException {
+        Billboard temp = new Billboard(
+            rs.getInt("ID"),
+            rs.getString("name"),
+            rs.getString("message"),
+            rs.getString("messageColor"),
+            rs.getBytes("picture"),
+            rs.getString("backgroundColor"),
+            rs.getString("information"),
+            rs.getString("informationColor"),
+            rs.getBoolean("locked"),
+            rs.getInt("userID"));
+
+        return temp;
     }
 
 }
