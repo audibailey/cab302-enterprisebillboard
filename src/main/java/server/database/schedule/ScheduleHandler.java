@@ -1,9 +1,16 @@
 package server.database.schedule;
 
+import com.mysql.cj.xdevapi.SqlStatement;
+import common.models.Billboard;
 import common.models.Schedule;
 import server.database.ObjectHandler;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,80 +21,68 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         this.connection = connection;
     }
 
-    public Optional<Schedule> get(String name) throws Exception {
-        return Optional.empty();
-    }
+//    public Optional<Schedule> get(String name) throws Exception {
+//        return Optional.empty();
+//    }
 
     public List<Schedule> getAll() throws Exception {
-        return null;
+        // Billboard to be returned
+        List<Schedule> schedules = new ArrayList<>();
+        Schedule temp;
+        // Query the database for the billboard
+        Statement sqlStatement = connection.createStatement();
+        String query = "SELECT * FROM schedule";
+        boolean fetchResult = sqlStatement.execute(query);
+        sqlStatement.close();
+
+        // Check if there was a result
+        if (fetchResult) {
+            // Use the result of the database to create billboard object
+            ResultSet result = sqlStatement.executeQuery(query);
+            while (result.next()) {
+                int scheduleID = result.getInt("ID");
+                String billboardName = result.getString("billboardName");
+                Date startTime = result.getTime("startTime");
+                int duration = result.getInt("duration");
+                int interval = result.getInt("interval");
+                temp = new Schedule(scheduleID, billboardName, startTime, duration, interval);
+                schedules.add(temp);
+            }
+
+        } else {
+            throw new Exception("No results.");
+        }
+        return schedules;
     }
 
-    public void insert(Schedule schedule) throws Exception {
-
+    public void scheduleBillboard(Schedule schedule) throws Exception {
+        Statement sqlStatement = connection.createStatement();
+        String query = "INSERT INTO schedule" +
+            "(billboardName, startTime, duration, minuteInterval)" +
+            "VALUES( " + schedule.billboardName + "," + schedule.startTime + "," +
+            schedule.duration + "," + schedule.interval + ")";
+        int fetchResult = sqlStatement.executeUpdate(query);
+        if (fetchResult == 0) {
+            throw new Exception("Error in inserting schedule");
+        }
     }
 
-    public void update(Schedule schedule) throws Exception {
-
-    }
-
-    public void delete(Schedule schedule) {
-
-    }
-
-    /**
-     * Schedule a billboard's start time and duration, etc..
-     *
-     * @param user : a user object with contents in it
-     * @throws Exception: this exception is a pass-through exception with a no results extended exception
-     */
-//    public String insert(String billboardName,
-//                                    Date startTime,
-//                                    Duration duration,
-//                                    Duration interval) throws Exception {
+//    public void update(Schedule schedule) throws Exception {
 //
-//        // Query the database for the billboard
-//        Statement sqlStatement = dbconn.createStatement();
-//
-//        //Try to select the billboard first to check if it's in the database or not
-//        String query = "SELECT * FROM schedule WHERE schedule.billboardName = " + billboardName;
-//
-//        boolean fetchResult = sqlStatement.execute(query);
-//        sqlStatement.close();
-//
-//        // Check if there was a result
-//        if (fetchResult) {
-//            ResultSet existedBillboard = sqlStatement.executeQuery(query);
-//            if (existedBillboard == null) {
-//                query = "INSERT INTO billboard " +
-//                    "(userID, name, message, " +
-//                    "messageColor, picture, backgroundColor," +
-//                    " information, informationColor, locked)" +
-//                    "VALUES( " + billboard.userID + "," + billboard.name + "," +
-//                    billboard.message + "," + billboard.messageColor + "," + Arrays.toString(billboard.picture) + "," +
-//                    billboard.backgroundColor + "," + billboard.information + "," + billboard.informationColor +
-//                    "," + billboard.locked + ")";
-//
-//                boolean check = sqlStatement.execute(query);
-//
-//                if (check) {
-//                    return "Insert successfully";
-//                } else {
-//                    throw new Exception("Error in insert");
-//                }
-//            } else {
-//                query = "UPDATE billboard SET message = " + billboard.message + ", messageColor =" + billboard.messageColor +
-//                    ", picture = " + Arrays.toString(billboard.picture) + ", backgroundColor = " + billboard.backgroundColor +
-//                    ", information = " + billboard.information + ", informationColor = " + billboard.informationColor + ", locked =" + billboard.locked +
-//                    "WHERE billboard.name = " + billboardName;
-//                int checked = sqlStatement.executeUpdate(query);
-//                if (checked > 0) {
-//                    return "Update successfully";
-//                } else {
-//                    throw new Exception("Error in updating");
-//                }
-//            }
-//        } else {
-//            throw new Exception("No billboard with such name in database");
-//        }
 //    }
+
+    public void deleteFromSchedule(Schedule schedule) throws Exception {
+        Statement sqlStatement = connection.createStatement();
+        String query = "DELETE FROM SCHEDULE WHERE schedule.billboardName = " + schedule.billboardName;
+        int fetchResult = sqlStatement.executeUpdate(query);
+        sqlStatement.close();
+
+        // Check if there was any rows affected in the database
+        if (fetchResult == 0) {
+            throw new Exception("No billboard with such name in database");
+        }
+    }
 }
+
+
+
