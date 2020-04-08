@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 	    // write your code here
 
-        DataService dataService = new DataService();
+        DataService dataService = new DataService(true);
 
         dataService.billboards.getAll();
         dataService.users.getAll();
