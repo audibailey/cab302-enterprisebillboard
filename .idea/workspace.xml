@@ -26,23 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="refactor: Reimplemented database handler based on DAO.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/common/models/Request.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/common/models/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/common/models/UserPermissions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/Billboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Billboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/IBillboard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/ISchedule.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/IUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/DataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/DB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/garbage/DB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/ObjectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/ObjectHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/database/billboard/BillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/billboard/BillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/database/user/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/user/UserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/database/DBTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/database/DBTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -440,10 +429,11 @@
     <state x="231" y="36" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1585997981083" />
     <state x="310" y="116" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1707.920@0.0.1707.920" timestamp="1584346051659" />
     <state x="0" y="123" width="1440" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1584690534128" />
-    <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser" timestamp="1586179078914">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="569" y="158" key="#com.intellij.ide.util.MemberChooser" timestamp="1586328561114">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="533" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1586179078914" />
+    <state x="569" y="158" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1586328561114" />
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1584707124137">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

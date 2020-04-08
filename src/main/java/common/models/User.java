@@ -14,11 +14,6 @@ public class User {
     public int id;
     public String username;
     public String password;
-    public boolean canCreateBillboard;
-    public boolean canEditBillboard;
-    public boolean canScheduleBillboard;
-    public boolean canEditUser;
-    public boolean canViewBillboard;
 
     public User() {
 
@@ -29,20 +24,10 @@ public class User {
      *
      * @param id
      * @param username
-     * @param canCreateBillboard
-     * @param canEditBillboard
-     * @param canScheduleBillboard
-     * @param canEditUser
-     * @param canViewBillboard
      */
-    public User(int id, String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser, boolean canViewBillboard) {
+    public User(int id, String username) {
         this.id = id;
         this.username = username;
-        this.canCreateBillboard = canCreateBillboard;
-        this.canEditBillboard = canEditBillboard;
-        this.canScheduleBillboard = canScheduleBillboard;
-        this.canEditUser = canEditUser;
-        this.canViewBillboard = canViewBillboard;
     }
 
     /**
