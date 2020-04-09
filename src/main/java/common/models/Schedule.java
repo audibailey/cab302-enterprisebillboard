@@ -8,6 +8,7 @@ import java.util.Date;
 /**
  * This class consists of the Schedule object and its associated methods.
  *
+ * @author Perdana Bailey
  * @author Jamie Martin
  */
 public class Schedule {
@@ -27,11 +28,11 @@ public class Schedule {
     /**
      * Schedule object constructor
      *
-     * @param id
-     * @param billboardName
-     * @param startTime
-     * @param duration
-     * @param interval
+     * @param id:            schedules id.
+     * @param billboardName: schedules billboard name.
+     * @param startTime:     schedules billboard starting time.
+     * @param duration:      schedules billboard duration.
+     * @param interval:      schedules billboard interval.
      */
     public Schedule(int id,
                     String billboardName,
@@ -46,23 +47,32 @@ public class Schedule {
     }
 
     /**
-     * Parses the XML String and returns a new Schedule Object
-     * @param xml
-     * @return
+     * Parses the XML string and returns a Schedule object.
+     *
+     * @param xml: the xml to be converted as a string.
+     * @return Schedule: the Schedule object after converting from XML.
      */
     public static Schedule fromXML(String xml) {
         return new Schedule();
     }
 
     /**
-     * Parses the Object and returns an XML String
-     * @param s
-     * @return
+     * Parses the Schedule object and returns an XML string from it.
+     *
+     * @param schedule: the schedule to be converted to an XML string.
+     * @return String: the XML after converting from schedule object.
      */
-    public static String toXML(Schedule s) {
+    public static String toXML(Schedule schedule) {
         return "";
     }
 
+    /**
+     * Parses the SQL result set and returns a schedule object.
+     *
+     * @param rs: the result set from an SQL SELECT query.
+     * @return Schedule: the schedule object after converting from SQL.
+     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
+     */
     public static Schedule fromSQL(ResultSet rs) throws SQLException {
         return new Schedule(
             rs.getInt("id"),

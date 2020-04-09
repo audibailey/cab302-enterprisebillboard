@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 public class Permissions {
     /**
-     * The variables of the object User
+     * The variables of the object Permissions
      */
     public int id;
     public String username;
@@ -23,19 +23,23 @@ public class Permissions {
     public boolean canViewBillboard;
 
 
+    /**
+     * An empty constructor just for creating the object.
+     */
     public Permissions() {
 
     }
 
     /**
-     * User object constructor
+     * Permissions object constructor
      *
-     * @param username
-     * @param canCreateBillboard
-     * @param canEditBillboard
-     * @param canScheduleBillboard
-     * @param canEditUser
-     * @param canViewBillboard
+     * @param id:                   permissions id.
+     * @param username:             permissions username.
+     * @param canCreateBillboard:   permissions canCreateBillboard permission.
+     * @param canEditBillboard:     permissions canEditBillboard permission.
+     * @param canScheduleBillboard: permissions canScheduleBillboard permission.
+     * @param canEditUser:          permissions canEditUser permission.
+     * @param canViewBillboard:     permissions canViewBillboard permission.
      */
     public Permissions(int id, String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser, boolean canViewBillboard) {
         this.id = id;
@@ -48,25 +52,32 @@ public class Permissions {
     }
 
     /**
-     * Parses the XML string and returns a Permissions object
+     * Parses the XML string and returns a Permissions object.
      *
-     * @param xml
-     * @return Permissions
+     * @param xml: the xml to be converted as a string.
+     * @return Permissions: the permissions object after converting from XML.
      */
     public static Permissions fromXML(String xml) {
         return new Permissions();
     }
 
     /**
-     * Parses the Object and returns an XML string from it
+     * Parses the Permissions object and returns an XML string from it.
      *
-     * @param b
-     * @return String
+     * @param permissions: the object to be converted to an XML string.
+     * @return String: the XML after converting from permissions object.
      */
-    public static String toXML(Billboard b) {
+    public static String toXML(Permissions permissions) {
         return "";
     }
 
+    /**
+     * Parses the SQL result set and returns a permissions object.
+     *
+     * @param rs: the result set from an SQL SELECT query.
+     * @return Billboard: the permissions object after converting from SQL.
+     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
+     */
     public static Permissions fromSQL(ResultSet rs) throws SQLException {
         return new Permissions(
             rs.getInt("id"),
