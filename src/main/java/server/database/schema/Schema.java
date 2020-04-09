@@ -57,8 +57,8 @@ public class Schema {
             // Create user table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS USERS(" +
-                    "id int NOT NULL AUTO_INCREMENT," +
-                    "username varchar(255)," +
+                    "id int NOT NULL AUTO_INCREMENT UNIQUE," +
+                    "username varchar(255) UNIQUE," +
                     "password varchar(255)," +
                     "salt varchar(255)," +
                     "PRIMARY KEY(id))"
@@ -82,15 +82,16 @@ public class Schema {
             // Create user permission table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS PERMISSIONS(" +
-                    "id int NOT NULL," +
-                    "username varchar(255) NOT NULL," +
+                    "id int NOT NULL UNIQUE," +
+                    "username varchar(255) NOT NULL UNIQUE," +
                     "canCreateBillboard BOOLEAN," +
                     "canEditBillboard BOOLEAN," +
                     "canScheduleBillboard BOOLEAN," +
                     "canEditUsers BOOLEAN, " +
                     "canViewBillboard BOOLEAN, " +
                     "PRIMARY KEY(id)," +
-                    "FOREIGN KEY (id) REFERENCES USERS(id)"
+                    "CONSTRAINT FK_USERPERMID FOREIGN KEY (id) REFERENCES USERS(id)," +
+                    "CONSTRAINT FK_USERPERMUNAME FOREIGN KEY (username) REFERENCES USERS(username))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create user's permissions table, took too long.", e);
@@ -112,9 +113,9 @@ public class Schema {
             // Create billboard table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS BILLBOARDS(" +
-                    "id int NOT NULL AUTO_INCREMENT," +
+                    "id int NOT NULL AUTO_INCREMENT UNIQUE," +
                     "userId int NOT NULL," +
-                    "name varchar(255), " +
+                    "name varchar(255) UNIQUE, " +
                     "message varchar(255), " +
                     "messageColor varchar(7), " +
                     "picture LONGTEXT," +
@@ -144,13 +145,13 @@ public class Schema {
 
             // Create schedule table
             sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS SCHEDULES(" +
-                "id int NOT NULL AUTO_INCREMENT," +
-                "billboardName varchar(255) NOT NULL," +
-                "startTime DATETIME," +
+                "id int NOT NULL AUTO_INCREMENT UNIQUE," +
+                "billboardName varchar(255) NOT NULL UNIQUE," +
+                "startTime DATETIME NOT NULL," +
                 "duration int NOT NULL," +
-                "interval int," +
+                "`interval` int NOT NULL," +
                 "PRIMARY KEY(id)," +
-                "CONSTRAINT FK_BillboardSchedule FOREIGN KEY(billboardName) REFERENCES billboard(name))"
+                "CONSTRAINT FK_BillboardSchedule FOREIGN KEY (billboardName) REFERENCES BILLBOARDS(name))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create schedule table, took too long.", e);
