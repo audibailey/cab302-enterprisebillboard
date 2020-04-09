@@ -117,7 +117,7 @@ public class UserHandler implements ObjectHandler<User> {
     /**
      * List all users in the database.
      *
-     * @throws Exception: this exception is a pass-through exception with a no results extended exception
+     * @throws SQLException: this exception returns when there is an issue fetching data from the database.
      */
     public List<User> getAll() throws SQLException {
         // User's list to be returned
@@ -170,6 +170,7 @@ public class UserHandler implements ObjectHandler<User> {
             // Clean up query
             sqlStatement.close();
         } else {
+            // Emulate auto increment ID
             user.id = MockDBNum;
             this.MockDB.add(user);
             MockDBNum++;
@@ -190,10 +191,10 @@ public class UserHandler implements ObjectHandler<User> {
             Statement sqlStatement = connection.createStatement();
 
             // Create a query that updates the user and execute the query
-            String query = "UPDATE users SET password =" +
+            String query = "UPDATE USERS SET password = '" +
                 user.password +
-                ", salt =" + user.salt +
-                " WHERE ID = " + user.id;
+                "', salt ='" + user.salt +
+                "' WHERE ID = " + user.id;
 
             sqlStatement.executeUpdate(query);
 
