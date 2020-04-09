@@ -48,7 +48,7 @@ public class UserHandler implements ObjectHandler<User> {
 
             Statement sqlStatement = connection.createStatement();
 
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM USERS WHERE USERS.id = " + id);
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM USERS WHERE id = " + id);
 
             while (result.next()) {
                 return Optional.of(User.fromSQL(result));
