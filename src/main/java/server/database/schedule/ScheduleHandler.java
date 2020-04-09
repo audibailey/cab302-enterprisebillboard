@@ -28,6 +28,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     }
 
     /**
+     * Get schedule base on ID
      *
      * @param id
      * @return
@@ -59,6 +60,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     }
 
     /**
+     * List all the schedule
      *
      * @return
      * @throws Exception
@@ -83,15 +85,19 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     }
 
     /**
-     *
+     *Insert a schedule into database
      * @param schedule
      * @throws Exception
      */
     public void insert(Schedule schedule) throws Exception {
         if (this.connection != null) {
             Statement sqlStatement = connection.createStatement();
-
-            sqlStatement.executeUpdate("");
+            String query = "INSERT INTO SCHEDULE" +
+                "(id, billboardName, startTime, duration, interval)" +
+                "VALUES( " + schedule.id + "," + schedule.billboardName + "," +
+                schedule.startTime + "," + schedule.duration + "," + schedule.interval
+                + ")";
+            sqlStatement.executeUpdate(query);
 
             sqlStatement.close();
         } else {
@@ -100,15 +106,18 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     }
 
     /**
-     *
+     *Update the schedule
      * @param schedule
      * @throws Exception
      */
     public void update(Schedule schedule) throws Exception {
         if (this.connection != null) {
             Statement sqlStatement = connection.createStatement();
-
-            sqlStatement.executeUpdate("");
+            String query = "UPDATE SCHEDULE SET startTime =" + schedule.startTime +
+                ", duration =" + schedule.duration +
+                ", interval =" + schedule.interval +
+                "WHERE schedule.billboardName = " + schedule.billboardName;
+            sqlStatement.executeUpdate(query);
 
             sqlStatement.close();
         } else {
@@ -120,8 +129,9 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         }
     }
 
+
     /**
-     *
+     * Delete a schedule base on billboard name
      * @param schedule
      * @throws Exception
      */
@@ -129,7 +139,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         if (this.connection != null) {
             Statement sqlStatement = connection.createStatement();
 
-            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE id = " + schedule.id);
+            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE schedules.billboardName = " + schedule.billboardName);
 
             sqlStatement.close();
         } else {
