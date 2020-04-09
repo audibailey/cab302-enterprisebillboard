@@ -105,20 +105,20 @@ public class Billboard {
     /**
      * Parses the XML string and returns a Billboard object.
      *
-     * @param xml
-     * @return Billboard
+     * @param xml: the xml to be converted as a string.
+     * @return Billboard: the billboard object after converting from XML.
      */
     public static Billboard fromXML(String xml) {
         return new Billboard();
     }
 
     /**
-     * Parses the Object and returns an XML string from it.
+     * Parses the Billboard and returns an XML string from it.
      *
-     * @param b
-     * @return String
+     * @param billboard: the billboard to be converted to an XML string.
+     * @return String: the XML after converting from billboard object.
      */
-    public static String toXML(Billboard b) {
+    public static String toXML(Billboard billboard) {
         return "";
     }
 
