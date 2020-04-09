@@ -1,15 +1,17 @@
 package server.database.users;
 
-import common.models.Billboard;
 import common.models.User;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import server.database.DataService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -88,58 +90,132 @@ public class UserTests {
 
     }
 
-//    @Test
-//    public void GetAllUsers() throws Exception {
-//        List<User> controlUsers = new ArrayList<User>();
-//        User user = new User(1, "Username", "pass", "salt");
-//        User user1 = new User(2, "Username2", "pass", "salt");
-//        User user2 = new User(3, "Username3", "pass", "salt");
-//        User user3 = new User(4, "Username4", "pass", "salt");
-//        dataService.users.insert(user);
-//        dataService.users.insert(user1);
-//        dataService.users.insert(user2);
-//        dataService.users.insert(user3);
-//        controlUsers.add(user);
-//        controlUsers.add(user1);
-//        controlUsers.add(user2);
-//        controlUsers.add(user3);
-//
-//        List<User> result = dataService.users.getAll();
-//        assertTrue(controlUsers.containsAll(dataService.users.getAll()));
-//
-//    }
-//
-//    @Test
-//    public void InsertNewUser() throws Exception {
-//        List<User> controlUsers = new ArrayList<User>();
-//        User user = new User(5, "Jamie", "Password", "Salt");
-//        dataService.users.insert(user);
-//        controlUsers.add(user);
-//        assertTrue(controlUsers.containsAll(dataService.users.getAll()));
-//    }
-//
-//    @Test
-//    public void UpdateExistingUser() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void DeleteNewUser() throws Exception {
-//        List<User> controlUsers = new ArrayList<User>();
-//        User user = new User(4, "User5", "Password", "Salt");
-//        dataService.users.insert(user);
-//
-//        // Retrieve the testing billboard then delete it
-//        Optional<User> ToDeleteUser = dataService.users.get(4);
-//        if (ToDeleteUser.isPresent()) {
-//            dataService.users.delete(ToDeleteUser.get());
-//
-//            // Attempt to retrieve the testing billboard and ensure nothing is returned
-//            Optional<User> DeletedUser = dataService.users.get(4);
-//            assertTrue(DeletedUser.isEmpty());
-//        } else {
-//            fail("Error fetching to be deleted billboard.");
-//        }
-//    }
+    /**
+     * Tests getting all users from the database.
+     *
+     * @throws Exception: this exception returns when there is an issue fetching data from the database.
+     */
+    @Test
+    public void GetAllUsers() throws Exception {
+        // Create some testing users
+        User TestUserOne = new User("Username1", "pass", "salt");
+        User TestUserTwo = new User("Username2", "pass", "salt");
+        User TestUserThree = new User("Username3", "pass", "salt");
+        User TestUserFour = new User("Username4", "pass", "salt");
 
+        // Insert the testing users into the database
+        dataService.users.insert(TestUserOne);
+        dataService.users.insert(TestUserTwo);
+        dataService.users.insert(TestUserThree);
+        dataService.users.insert(TestUserFour);
+
+        // Create the array to test against based on the testing users
+        List<User> ControlUsers = new ArrayList<User>();
+        ControlUsers.add(TestUserOne);
+        ControlUsers.add(TestUserTwo);
+        ControlUsers.add(TestUserThree);
+        ControlUsers.add(TestUserFour);
+
+        // Retrieve the testing users
+        List<User> ListUsers = dataService.users.getAll();
+        assertEquals(
+            ControlUsers.stream().map(user -> user.username).collect(Collectors.toList()),
+            ListUsers.stream().map(user -> user.username).collect(Collectors.toList())
+        );
+
+        // Cleanup and delete all the users
+        List<User> DeleteListUsers = dataService.users.getAll();
+        List<User> UserDeleteList = new ArrayList<User>(DeleteListUsers);
+        for (User user : UserDeleteList) {
+            dataService.users.delete(user);
+        }
+    }
+
+    /**
+     * Tests adding a user to the database.
+     *
+     * @throws Exception: this exception returns when there is an issue inserting data into the database.
+     */
+    @Test
+    public void AddUserTest() throws Exception {
+        // Create a testing user and insert it into the database
+        User TestUser = new User("Username1", "Password", "Salt");
+        dataService.users.insert(TestUser);
+
+        // Retrieve the testing user
+        Optional<User> InsertedUser = dataService.users.get("Username1");
+        if (InsertedUser.isPresent()) {
+            assertEquals(InsertedUser.get().username, TestUser.username);
+            dataService.users.delete(InsertedUser.get());
+        } else {
+            fail("Error fetching user.");
+        }
+    }
+
+    /**
+     * Tests changing a users property in the database.
+     *
+     * @throws Exception: this exception returns when there is an issue changing data in the database.
+     */
+    @Test
+    public void UpdateExistingUser() throws Exception {
+        // Create a testing user and insert it into the database
+        User TestUser = new User("Username1", "Password", "Salt");
+        dataService.users.insert(TestUser);
+
+        // Retrieve the testing user then update its password
+        Optional<User> EditUser = dataService.users.get("Username1");
+        if (EditUser.isPresent()) {
+            EditUser.get().password = "Password2";
+            dataService.users.update(EditUser.get());
+        } else {
+            fail("Error fetching testing User.");
+        }
+
+        // Retrieve the testing user and test if the password was changed then delete it
+        Optional<User> NewUser = dataService.users.get("Username1");
+        if (NewUser.isPresent()) {
+            assertEquals(NewUser.get().password, EditUser.get().password);
+            dataService.users.delete(NewUser.get());
+        } else {
+            fail("Error fetching changed User.");
+        }
+    }
+
+    /**
+     * Tests deleting a user in the database.
+     *
+     * @throws Exception: this exception returns when there is an issue deleting data in the database.
+     */
+    @Test
+    public void DeleteNewUser() throws Exception {
+        // Create a testing User
+        User TestUser = new User("Username1", "Password", "Salt");
+
+        // Insert the testing user into the database
+        dataService.users.insert(TestUser);
+
+        // Retrieve the testing user then delete it
+        Optional<User> ToDeleteUser = dataService.users.get("Username1");
+        if (ToDeleteUser.isPresent()) {
+            dataService.users.delete(ToDeleteUser.get());
+
+            // Attempt to retrieve the testing user and ensure nothing is returned
+            Optional<User> DeletedUser = dataService.users.get("Username1");
+            assertTrue(DeletedUser.isEmpty());
+        } else {
+            fail("Error fetching to be deleted User.");
+        }
+    }
+
+
+    /**
+     * Disconnects from the database.
+     *
+     * @throws Exception: this exception returns when there is an issue disconnecting from the database.
+     */
+    @AfterAll
+    public static void DisconnectDatabase() throws Exception {
+        dataService.closeConnection();
+    }
 }
