@@ -1,6 +1,7 @@
 package server.database;
 
 import server.database.billboard.BillboardHandler;
+import server.database.permissions.PermissionsHandler;
 import server.database.schedule.ScheduleHandler;
 import server.database.schema.Schema;
 import server.database.user.UserHandler;
@@ -19,6 +20,7 @@ public class DataService {
     public BillboardHandler billboards;
     public UserHandler users;
     public ScheduleHandler schedules;
+    public PermissionsHandler permissions;
 
     /**
      * Generates a Dataservice Instance
@@ -33,6 +35,7 @@ public class DataService {
         this.billboards = new BillboardHandler(connection);
         this.users = new UserHandler(connection);
         this.schedules = new ScheduleHandler(connection);
+        this.permissions = new PermissionsHandler(connection);
     }
 
 
