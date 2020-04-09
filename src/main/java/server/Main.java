@@ -12,7 +12,7 @@ public class Main {
         DataService dataService = new DataService(true);
 
         dataService.billboards.getAll();
-        dataService.users.getAll();
+        //dataService.users.getAll();
         dataService.schedules.getAll();
 
         // Billboard.fromObject(dataService.billboards.get("Billboard 1"));
