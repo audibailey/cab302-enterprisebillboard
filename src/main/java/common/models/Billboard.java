@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 public class Billboard {
     /**
-     * The variables of the object billboard
+     * The variables of the object billboard.
      */
     public int id;
     public String name;
@@ -25,23 +25,26 @@ public class Billboard {
     public boolean locked;
     public int userID;
 
+    /**
+     * An empty constructor just for creating the object.
+     */
     public Billboard() {
 
     }
 
     /**
-     * Billboard object constructor
+     * Billboard object constructor with an id.
      *
-     * @param id
-     * @param name
-     * @param message
-     * @param messageColor
-     * @param picture
-     * @param backgroundColor
-     * @param information
-     * @param informationColor
-     * @param locked
-     * @param userID
+     * @param id:               database billboard ID as an int.
+     * @param name:             billboard name as a string.
+     * @param message:          billboard message as a string.
+     * @param messageColor:     billboard message colour as a string.
+     * @param picture:          billboard picture as a byte array.
+     * @param backgroundColor:  billboard background colour as a string.
+     * @param information:      billboard information as a string.
+     * @param informationColor: billboard information colour as a string.
+     * @param locked:           billboard scheduled as a boolean.
+     * @param userID:           owner ID as an int.
      */
     public Billboard(int id,
                      String name,
@@ -65,6 +68,19 @@ public class Billboard {
         this.userID = userID;
     }
 
+    /**
+     * Billboard object constructor without an id.
+     *
+     * @param name:             billboard name as a string.
+     * @param message:          billboard message as a string.
+     * @param messageColor:     billboard message colour as a string.
+     * @param picture:          billboard picture as a byte array.
+     * @param backgroundColor:  billboard background colour as a string.
+     * @param information:      billboard information as a string.
+     * @param informationColor: billboard information colour as a string.
+     * @param locked:           billboard scheduled as a boolean.
+     * @param userID:           owner ID as an int.
+     */
     public Billboard(
         String name,
         String message,
@@ -87,7 +103,7 @@ public class Billboard {
     }
 
     /**
-     * Parses the XML string and returns a Billboard object
+     * Parses the XML string and returns a Billboard object.
      *
      * @param xml
      * @return Billboard
@@ -97,7 +113,7 @@ public class Billboard {
     }
 
     /**
-     * Parses the Object and returns an XML string from it
+     * Parses the Object and returns an XML string from it.
      *
      * @param b
      * @return String
@@ -106,8 +122,15 @@ public class Billboard {
         return "";
     }
 
+    /**
+     * Parses the SQL result set and returns a Billboard object.
+     *
+     * @param rs: the result set from an SQL SELECT query.
+     * @return Billboard: the billboard object after converting from SQL.
+     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
+     */
     public static Billboard fromSQL(ResultSet rs) throws SQLException {
-        Billboard temp = new Billboard(
+        return new Billboard(
             rs.getInt("ID"),
             rs.getString("name"),
             rs.getString("message"),
@@ -118,8 +141,6 @@ public class Billboard {
             rs.getString("informationColor"),
             rs.getBoolean("locked"),
             rs.getInt("userID"));
-
-        return temp;
     }
 
 }
