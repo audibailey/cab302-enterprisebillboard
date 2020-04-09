@@ -1,5 +1,7 @@
 package server.database.users;
 
+import common.models.Billboard;
+import common.models.Permissions;
 import common.models.User;
 import server.database.DataService;
 
@@ -207,7 +209,6 @@ public class UserTests {
             fail("Error fetching to be deleted User.");
         }
     }
-
 
     /**
      * Disconnects from the database.
