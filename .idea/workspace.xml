@@ -25,10 +25,10 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="chore: Add PermissionsTests">
-      <change afterPath="$PROJECT_DIR$/src/test/java/server/database/users/PermissionsTests.java" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/database/users/UserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/database/users/UserTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -399,7 +399,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586436370273</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="chore: Add PermissionsTests">
+      <created>1586438653879</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1586438653880</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -508,11 +515,11 @@
     <state x="691" y="257" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586299894151" />
     <state x="2610" y="246" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586065099248" />
     <state x="518" y="222" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1586178530237" />
-    <state x="286" y="13" width="936" height="797" key="CommitChangelistDialog2" timestamp="1586438626109">
+    <state x="286" y="13" width="936" height="797" key="CommitChangelistDialog2" timestamp="1586442006717">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="244" y="56" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1586436370162" />
-    <state x="286" y="13" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586438626109" />
+    <state x="286" y="13" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586442006717" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
     <state x="100" y="100" width="1240" height="700" key="DiffContextDialog" timestamp="1586432760842">
       <screen x="0" y="0" width="1440" height="900" />
@@ -608,11 +615,11 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="602" y="344" key="VCS.EditChangelistDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682915182" />
-    <state x="320" y="156" key="Vcs.Push.Dialog.v2" timestamp="1586436396787">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="341" y="143" key="Vcs.Push.Dialog.v2" timestamp="1586438663373">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="320" y="156" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1586436396787" />
-    <state x="341" y="143" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1586177779591" />
+    <state x="341" y="143" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1586438663373" />
     <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584691895155" />
     <state x="516" y="235" key="chooseDestDirectoryDialog" timestamp="1586179749003">
       <screen x="0" y="0" width="1440" height="900" />
