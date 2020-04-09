@@ -27,8 +27,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="refactor: Add Schedulehandler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/permissions/PermissionsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/permissions/PermissionsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/user/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/user/UserHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
