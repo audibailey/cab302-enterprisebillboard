@@ -25,9 +25,9 @@ public class DataService {
     /**
      * Generates a Dataservice Instance
      *
-     * @throws IOException
+     * @throws Exception: thrown when unable to connect to database;
      */
-    public DataService(boolean debug) throws IOException {
+    public DataService(boolean debug) throws Exception {
         if (!debug) {
             this.connection = getConnection();
         }
@@ -43,8 +43,9 @@ public class DataService {
      * Get a connection to database
      *
      * @return Connection object
+     * @throws Exception: thrown when unable to configure database connection from props.
      */
-    public static Connection getConnection() throws IOException {
+    public static Connection getConnection() throws Exception {
         Properties props = null;
 
         // Configure the database from the prop file
@@ -75,9 +76,9 @@ public class DataService {
     /**
      * Gets the properties from db.props for the database connection.
      *
-     * @return Properties: the required properties to connect to the database
-     * @throws IOException           :          Thrown when props file not found or when unable to read props file or close prop file stream
-     * @throws NullPointerException: Thrown when props file stream is empty
+     * @return Properties: the required properties to connect to the database.
+     * @throws IOException:          thrown when props file not found or when unable to read props file or close prop file stream.
+     * @throws NullPointerException: thrown when props file stream is empty.
      */
     private static Properties getProps() throws IOException, NullPointerException {
 
@@ -108,5 +109,16 @@ public class DataService {
 
         // Return the properties object
         return props;
+    }
+
+    /**
+     * This closes an active database connection.
+     *
+     * @throws SQLException: thrown when unable to close connection to database.
+     */
+    public void closeConnection() throws SQLException {
+        if (connection != null) {
+            connection.close();
+        }
     }
 }
