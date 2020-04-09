@@ -1,11 +1,10 @@
-package client;
+package client.components;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import common.swing.AppNotification;
-import common.system.SystemNotification;
+import common.system.Notification;
 
 public class Button extends JButton {
     public Button() {
@@ -16,9 +15,9 @@ public class Button extends JButton {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                AppNotification.display("Hello", "World!", JOptionPane.INFORMATION_MESSAGE);
+                common.swing.Notification.display("Hello", "World!", JOptionPane.INFORMATION_MESSAGE);
                 try {
-                    SystemNotification.display("Hello", "test", TrayIcon.MessageType.ERROR);
+                    Notification.display("Hello", "test", TrayIcon.MessageType.ERROR);
                 } catch (AWTException ex) {
                     ex.printStackTrace();
                 }
