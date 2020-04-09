@@ -19,7 +19,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     Connection connection;
 
     // This is the mock "database" used for testing
-    List<Schedule> mockdb = new ArrayList<Schedule>();
+    List<Schedule> MockDB = new ArrayList<Schedule>();
 
     public ScheduleHandler(Connection connection) {
         this.connection = connection;
@@ -38,7 +38,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             Statement sqlStatement = connection.createStatement();
 
             // Use the result of the database to create billboard object
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE schedules.id = " + id);
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE id = " + id);
 
             while (result.next()) {
                 return Optional.of(Schedule.fromSQL(result));
@@ -46,7 +46,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             sqlStatement.close();
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
-            for (Schedule s : this.mockdb) {
+            for (Schedule s : this.MockDB) {
                 if (s.id == id) {
                     return Optional.of(s);
                 }
@@ -74,7 +74,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             }
             sqlStatement.close();
         } else {
-            schedules = this.mockdb;
+            schedules = this.MockDB;
         }
 
         return schedules;
@@ -93,7 +93,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            this.MockDB.add(schedule);
         }
     }
 
@@ -110,7 +110,11 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            for (Schedule mockSchedule : this.MockDB) {
+                if (mockSchedule.id == schedule.id) {
+                    mockSchedule = schedule;
+                }
+            }
         }
     }
 
@@ -123,11 +127,11 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         if (this.connection != null) {
             Statement sqlStatement = connection.createStatement();
 
-            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE schedules.id = " + schedule.id);
+            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE id = " + schedule.id);
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            this.MockDB.remove(schedule);
         }
     }
 }

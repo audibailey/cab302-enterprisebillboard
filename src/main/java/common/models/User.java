@@ -29,13 +29,11 @@ public class User {
      * @param username
      * @param password
      * @param salt
-     * @param perms
      */
-    public User(String username, String password, String salt, UserPermissions perms) {
+    public User(String username, String password, String salt) {
         this.username = username;
         this.password = password;
         this.salt = salt;
-        this.userPermissions = perms;
     }
 
     /**
@@ -45,7 +43,6 @@ public class User {
      * @param username
      * @param password
      * @param salt
-     * @param perms
      */
     public User(int id, String username, String password, String salt) {
         this.id = id;

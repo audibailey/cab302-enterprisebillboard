@@ -11,12 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class is responsible for all the permissions object interactions with the database.
+ *
+ * @author Perdana Bailey
+ * @author Kevin Huynh
+ * @author Jamie Martin
+ */
 public class PermissionsHandler implements ObjectHandler<Permissions> {
     Connection connection;
 
     // This is the mock "database" used for testing
-    List<Permissions> mockdb = new ArrayList<Permissions>();
+    List<Permissions> MockDB = new ArrayList<Permissions>();
 
+    /**
+     * The PermissionsHandler Constructor.
+     *
+     * @param connection: This is the database connection from DataService.java.
+     */
     public PermissionsHandler(Connection connection) {
         this.connection = connection;
     }
@@ -40,7 +52,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             }
             sqlStatement.close();
         } else {
-            for (Permissions p : this.mockdb) {
+            for (Permissions p : this.MockDB) {
                 if (p.id == id) {
                     return Optional.of(p);
                 }
@@ -73,7 +85,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             sqlStatement.close();
         } else {
             // Loop through and find the permissions with the lock status and add to billboards
-            permissions = this.mockdb;
+            permissions = this.MockDB;
         }
 
         return permissions;
@@ -93,7 +105,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            this.MockDB.add(permissions);
         }
     }
 
@@ -110,7 +122,11 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            for (Permissions mockPermissions : this.MockDB) {
+                if (mockPermissions.id == permissions.id) {
+                    mockPermissions = permissions;
+                }
+            }
         }
     }
 
@@ -129,7 +145,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            this.MockDB.remove(permissions);
         }
     }
 }

@@ -59,7 +59,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             sqlStatement.close();
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
-            for (Billboard billboard : this.mockdb) {
+            for (Billboard billboard : this.MockDB) {
                 if (billboard.id == id) {
                     return Optional.of(billboard);
                 }
@@ -128,7 +128,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             }
             sqlStatement.close();
         } else {
-            billboards = this.mockdb;
+            billboards = this.MockDB;
         }
 
       return billboards;
@@ -198,7 +198,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
 
             sqlStatement.executeUpdate(query);
         } else {
-            mockdb.add(billboard);
+            MockDB.add(billboard);
         }
     }
 
@@ -223,8 +223,8 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             sqlStatement.executeUpdate(query);
         } else {
             // Loop through mock database and find the billboard to update, then update it and return true.
-            for (Billboard mockBillboard : this.mockdb) {
-                if (mockBillboard.name.equals(billboard.name)) {
+            for (Billboard mockBillboard : this.MockDB) {
+                if (mockBillboard.id  == billboard.id) {
                     mockBillboard = billboard;
                 }
             }
@@ -248,7 +248,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             sqlStatement.executeUpdate(query);
         } else {
             // Delete billboard
-            mockdb.remove(billboard);
+            MockDB.remove(billboard);
         }
     }
 }
