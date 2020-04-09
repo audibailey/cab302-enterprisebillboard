@@ -97,28 +97,28 @@ public class BillboardTests {
         dataService.billboards.insert(BillboardThree);
         dataService.billboards.insert(BillboardFour);
 
-        // Retrieve the testing billboards that aren't locked
-        Optional<List<Billboard>> ListBillboards = dataService.billboards.getAll(false);
-        ListBillboards.ifPresentOrElse(billboards -> {
-                // Test the retrieved billboards names against the control billboards names
-                assertEquals(
-                    ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
-                    ListBillboards.get().stream().map(billboard -> billboard.name).collect(Collectors.toList())
-                );
-            }, Assertions::fail
-        );
-
-        // Cleanup and delete all the billboards
-        Optional<List<Billboard>> DeleteListBillboards = dataService.billboards.getAll();
-        List<Billboard> ListBillboardsDeleted;
-        if (DeleteListBillboards.isPresent()) {
-            ListBillboardsDeleted = new ArrayList<>(DeleteListBillboards.get());
-            for (Billboard billboard : ListBillboardsDeleted) {
-                dataService.billboards.delete(billboard);
-            }
-        } else {
-            fail("Error cleaning up.");
-        }
+//        // Retrieve the testing billboards that aren't locked
+//        List<Billboard> ListBillboards = dataService.billboards.getAll(false);
+//        ListBillboards.ifPresentOrElse(billboards -> {
+//                // Test the retrieved billboards names against the control billboards names
+//                assertEquals(
+//                    ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
+//                    ListBillboards.get().stream().map(billboard -> billboard.name).collect(Collectors.toList())
+//                );
+//            }, Assertions::fail
+//        );
+//
+//        // Cleanup and delete all the billboards
+//        Optional<List<Billboard>> DeleteListBillboards = dataService.billboards.getAll();
+//        List<Billboard> ListBillboardsDeleted;
+//        if (DeleteListBillboards.isPresent()) {
+//            ListBillboardsDeleted = new ArrayList<>(DeleteListBillboards.get());
+//            for (Billboard billboard : ListBillboardsDeleted) {
+//                dataService.billboards.delete(billboard);
+//            }
+//        } else {
+//            fail("Error cleaning up.");
+//        }
     }
 
     /**
@@ -185,27 +185,27 @@ public class BillboardTests {
         dataService.billboards.insert(BillboardFour);
 
         // Retrieve the testing billboards that are locked
-        Optional<List<Billboard>> ListBillboards = dataService.billboards.getAll(true);
-        ListBillboards.ifPresentOrElse(billboards -> {
-                // Test the retrieved billboards names against the control billboards names
-                assertEquals(
-                    ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
-                    ListBillboards.get().stream().map(billboard -> billboard.name).collect(Collectors.toList())
-                );
-            }, Assertions::fail
-        );
-
-        // Cleanup and delete all the billboards
-        Optional<List<Billboard>> DeleteListBillboards = dataService.billboards.getAll();
-        List<Billboard> ListBillboardsDeleted;
-        if (DeleteListBillboards.isPresent()) {
-            ListBillboardsDeleted = new ArrayList<>(DeleteListBillboards.get());
-            for (Billboard billboard : ListBillboardsDeleted) {
-                dataService.billboards.delete(billboard);
-            }
-        } else {
-            fail("Error cleaning up.");
-        }
+//        Optional<List<Billboard>> ListBillboards = dataService.billboards.getAll(true);
+//        ListBillboards.ifPresentOrElse(billboards -> {
+//                // Test the retrieved billboards names against the control billboards names
+//                assertEquals(
+//                    ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
+//                    ListBillboards.get().stream().map(billboard -> billboard.name).collect(Collectors.toList())
+//                );
+//            }, Assertions::fail
+//        );
+//
+//        // Cleanup and delete all the billboards
+//        Optional<List<Billboard>> DeleteListBillboards = dataService.billboards.getAll();
+//        List<Billboard> ListBillboardsDeleted;
+//        if (DeleteListBillboards.isPresent()) {
+//            ListBillboardsDeleted = new ArrayList<>(DeleteListBillboards.get());
+//            for (Billboard billboard : ListBillboardsDeleted) {
+//                dataService.billboards.delete(billboard);
+//            }
+//        } else {
+//            fail("Error cleaning up.");
+//        }
     }
 
 
@@ -280,27 +280,27 @@ public class BillboardTests {
         dataService.billboards.insert(BillboardFour);
 
         // Retrieve the testing billboards
-        Optional<List<Billboard>> ListBillboards = dataService.billboards.getAll();
-        ListBillboards.ifPresentOrElse(billboards -> {
-                // Test the retrieved billboards names against the control billboards names
-                assertEquals(
-                    ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
-                    ListBillboards.get().stream().map(billboard -> billboard.name).collect(Collectors.toList())
-                );
-            }, Assertions::fail
-        );
-
-        // Cleanup and delete all the billboards
-        Optional<List<Billboard>> DeleteListBillboards = dataService.billboards.getAll();
-        List<Billboard> ListBillboardsDeleted;
-        if (DeleteListBillboards.isPresent()) {
-            ListBillboardsDeleted = new ArrayList<>(DeleteListBillboards.get());
-            for (Billboard billboard : ListBillboardsDeleted) {
-                dataService.billboards.delete(billboard);
-            }
-        } else {
-            fail("Error cleaning up.");
-        }
+//        Optional<List<Billboard>> ListBillboards = dataService.billboards.getAll();
+//        ListBillboards.ifPresentOrElse(billboards -> {
+//                // Test the retrieved billboards names against the control billboards names
+//                assertEquals(
+//                    ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
+//                    ListBillboards.get().stream().map(billboard -> billboard.name).collect(Collectors.toList())
+//                );
+//            }, Assertions::fail
+//        );
+//
+//        // Cleanup and delete all the billboards
+//        Optional<List<Billboard>> DeleteListBillboards = dataService.billboards.getAll();
+//        List<Billboard> ListBillboardsDeleted;
+//        if (DeleteListBillboards.isPresent()) {
+//            ListBillboardsDeleted = new ArrayList<>(DeleteListBillboards.get());
+//            for (Billboard billboard : ListBillboardsDeleted) {
+//                dataService.billboards.delete(billboard);
+//            }
+//        } else {
+//            fail("Error cleaning up.");
+//        }
     }
 
     /**
