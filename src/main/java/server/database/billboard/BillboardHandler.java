@@ -1,8 +1,5 @@
 package server.database.billboard;
 
-import common.models.Billboard;
-import server.database.ObjectHandler;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import common.models.Billboard;
+import server.database.ObjectHandler;
 
 /**
  * This class is responsible for all the billboard object interactions with the database.
@@ -24,7 +24,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     Connection connection;
 
     // This is the mock "database" used for testing
-    List<Billboard> mockdb = new ArrayList<Billboard>();
+    List<Billboard> MockDB = new ArrayList<Billboard>();
 
     /**
      * The BillboardHandler Constructor.
@@ -74,7 +74,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
      *
      * @param billboardName: this is the requested billboard name
      * @return Optional<Billboard>: this returns the billboard or an optional empty value.
-     * @throws SQLException: this exception returns when there is an issue fetching data from the database.
+     * @throws SQLException: this exception is thrown when there is an issue fetching data from the database.
      */
     public Optional<Billboard> get(String billboardName) throws SQLException {
         // Check that it's not in testing mode
@@ -93,7 +93,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             sqlStatement.close();
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
-            for (Billboard billboard : this.mockdb) {
+            for (Billboard billboard : this.MockDB) {
                 if (billboard.name.equals(billboardName)) {
                     return Optional.of(billboard);
                 }
@@ -128,7 +128,6 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             }
             sqlStatement.close();
         } else {
-            // Loop through and find the billboard with the lock status and add to billboards
             billboards = this.mockdb;
         }
 
@@ -139,7 +138,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
      * Selects all billboards in the database dependant on if the billboard has been scheduled or not (locked).
      *
      * @param lock: this is the boolean that determines the type of billboard to return.
-     * @return Optional<List < Billboard>>: this returns the list of billboards requested or a optional empty value.
+     * @return List < Billboard>: this returns the list of billboards requested or a optional empty value.
      * @throws SQLException: this exception returns when there is an issue fetching data from the database.
      */
     public List<Billboard> getAll(boolean lock) throws Exception {
@@ -161,7 +160,11 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             }
         } else {
             // Loop through and find the billboard with the lock status and add to billboards
-            billboards = this.mockdb;
+            for (Billboard b : this.MockDB) {
+                if (b.locked = lock) {
+                    billboards.add(b);
+                }
+            }
         }
 
         return billboards;
@@ -232,7 +235,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
      * Delete a billboard from the database.
      *
      * @param billboard: this is the requested billboard to delete.
-     * @throws SQLException:
+     * @throws SQLException: this exception is thrown when there is an issue deleting data from the database.
      */
     public void delete(Billboard billboard) throws SQLException {
         // Check that it's not in testing mode

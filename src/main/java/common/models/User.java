@@ -26,8 +26,26 @@ public class User {
     /**
      * User object constructor
      *
+     * @param username
+     * @param password
+     * @param salt
+     * @param perms
+     */
+    public User(String username, String password, String salt, UserPermissions perms) {
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.userPermissions = perms;
+    }
+
+    /**
+     * User object constructor
+     *
      * @param id
      * @param username
+     * @param password
+     * @param salt
+     * @param perms
      */
     public User(int id, String username, String password, String salt) {
         this.id = id;
@@ -35,6 +53,7 @@ public class User {
         this.password = password;
         this.salt = salt;
     }
+
 
     /**
      * Change the password of the user
@@ -65,6 +84,7 @@ public class User {
 
     /**
      * Parses the Object and returns an XML String
+     *
      * @param u
      * @return
      */
