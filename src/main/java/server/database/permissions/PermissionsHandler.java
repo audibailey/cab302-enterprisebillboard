@@ -45,7 +45,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
         if (this.connection != null) {
             Statement sqlStatement = connection.createStatement();
 
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM PERMISSIONS WHERE permissions.id = " + id);
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM PERMISSIONS WHERE id = " + id);
 
             while (result.next()) {
                 return Optional.of(Permissions.fromSQL(result));
@@ -141,7 +141,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             // Query the database for the billboard
             Statement sqlStatement = connection.createStatement();
 
-            sqlStatement.executeUpdate("DELETE FROM PERMISSIONS WHERE permissions.id =" + permissions.id);
+            sqlStatement.executeUpdate("DELETE FROM PERMISSIONS WHERE id =" + permissions.id);
 
             sqlStatement.close();
         } else {
