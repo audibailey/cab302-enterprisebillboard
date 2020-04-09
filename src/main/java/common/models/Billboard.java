@@ -23,7 +23,7 @@ public class Billboard {
     public String information;
     public String informationColor;
     public boolean locked;
-    public int userID;
+    public int userId;
 
     public Billboard() {
 
@@ -41,7 +41,7 @@ public class Billboard {
      * @param information
      * @param informationColor
      * @param locked
-     * @param userID
+     * @param userId
      */
     public Billboard(int id,
                      String name,
@@ -52,7 +52,7 @@ public class Billboard {
                      String information,
                      String informationColor,
                      boolean locked,
-                     int userID) {
+                     int userId) {
         this.id = id;
         this.name = name;
         this.message = message;
@@ -62,7 +62,7 @@ public class Billboard {
         this.information = information;
         this.informationColor = informationColor;
         this.locked = locked;
-        this.userID = userID;
+        this.userId = userId;
     }
 
     public Billboard(
@@ -74,7 +74,7 @@ public class Billboard {
         String information,
         String informationColor,
         boolean locked,
-        int userID) {
+        int userId) {
         this.name = name;
         this.message = message;
         this.messageColor = messageColor;
@@ -83,7 +83,7 @@ public class Billboard {
         this.information = information;
         this.informationColor = informationColor;
         this.locked = locked;
-        this.userID = userID;
+        this.userId = userId;
     }
 
     /**
@@ -102,13 +102,13 @@ public class Billboard {
      * @param b
      * @return String
      */
-    public static String fromObject(Billboard b) {
+    public static String toXML(Billboard b) {
         return "";
     }
 
     public static Billboard fromSQL(ResultSet rs) throws SQLException {
-        Billboard temp = new Billboard(
-            rs.getInt("ID"),
+        return new Billboard(
+            rs.getInt("id"),
             rs.getString("name"),
             rs.getString("message"),
             rs.getString("messageColor"),
@@ -117,9 +117,7 @@ public class Billboard {
             rs.getString("information"),
             rs.getString("informationColor"),
             rs.getBoolean("locked"),
-            rs.getInt("userID"));
-
-        return temp;
+            rs.getInt("userId"));
     }
 
 }
