@@ -83,6 +83,7 @@ public class Schema {
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS PERMISSIONS(" +
                     "id int NOT NULL," +
+                    "username varchar(255) NOT NULL," +
                     "canCreateBillboard BOOLEAN," +
                     "canEditBillboard BOOLEAN," +
                     "canScheduleBillboard BOOLEAN," +
