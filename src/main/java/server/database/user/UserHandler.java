@@ -106,18 +106,22 @@ public class UserHandler implements ObjectHandler<User> {
     public List<User> getAll() throws Exception {
         // User's list to be returned
         List<User> users = new ArrayList<>();
+        if (this.connection != null) {
 
-        // Query the database for the billboard
-        Statement sqlStatement = connection.createStatement();
+            // Query the database for the billboard
+            Statement sqlStatement = connection.createStatement();
 
-        // Use the result of the database to create billboard object
-        ResultSet result = sqlStatement.executeQuery("SELECT * FROM USERS");
+            // Use the result of the database to create billboard object
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM USERS");
 
-        while (result.next()) {
-            users.add(User.fromSQL(result));
+            while (result.next()) {
+                users.add(User.fromSQL(result));
+            }
+
+            sqlStatement.close();
+        } else {
+            users = this.MockDB;
         }
-
-        sqlStatement.close();
 
         return users;
     }

@@ -1,20 +1,22 @@
 package server.database.schedule;
 
-import com.mysql.cj.xdevapi.SqlStatement;
-import common.models.Billboard;
-import common.models.Permissions;
 import common.models.Schedule;
 import server.database.ObjectHandler;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class is responsible for all the schedule object interactions with the database.
+ *
+ * @author Perdana Bailey
+ * @author Kevin Huynh
+ * @author Jamie Martin
+ */
 public class ScheduleHandler implements ObjectHandler<Schedule> {
     Connection connection;
 
