@@ -56,12 +56,12 @@ public class Schema {
 
             // Create user table
             sqlStatement.executeUpdate(
-                "CREATE TABLE IF NOT EXISTS user(" +
-                    "ID int NOT NULL," +
+                "CREATE TABLE IF NOT EXISTS USERS(" +
+                    "id int NOT NULL," +
                     "username varchar(255)," +
                     "password varchar(255)," +
-                    "salted varchar(255)," +
-                    "PRIMARY KEY(ID))"
+                    "salt varchar(255)," +
+                    "PRIMARY KEY(id))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create user table, took too long.", e);
@@ -81,15 +81,16 @@ public class Schema {
 
             // Create user permission table
             sqlStatement.executeUpdate(
-                "CREATE TABLE IF NOT EXISTS userPermissions(" +
+                "CREATE TABLE IF NOT EXISTS PERMISSIONS(" +
+                    "id int NOT NULL," +
                     "username varchar(255) NOT NULL," +
-                    "createBillboard BOOLEAN," +
-                    "editBillboard BOOLEAN," +
-                    "scheduleBillboard BOOLEAN," +
-                    "editUsers BOOLEAN, " +
-                    "viewBillboard BOOLEAN, " +
-                    "PRIMARY KEY(userID)," +
-                    "FOREIGN KEY (username) REFERENCES user(username)"
+                    "canCreateBillboard BOOLEAN," +
+                    "canEditBillboard BOOLEAN," +
+                    "canScheduleBillboard BOOLEAN," +
+                    "canEditUsers BOOLEAN, " +
+                    "canViewBillboard BOOLEAN, " +
+                    "PRIMARY KEY(id)," +
+                    "FOREIGN KEY (id) REFERENCES USERS(id)"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create user's permissions table, took too long.", e);
@@ -110,9 +111,9 @@ public class Schema {
 
             // Create billboard table
             sqlStatement.executeUpdate(
-                "CREATE TABLE IF NOT EXISTS billboard(" +
-                    "ID int NOT NULL," +
-                    "userID int NOT NULL," +
+                "CREATE TABLE IF NOT EXISTS BILLBOARDS(" +
+                    "id int NOT NULL," +
+                    "userId int NOT NULL," +
                     "name varchar(255), " +
                     "message varchar(255), " +
                     "messageColor varchar(7), " +
@@ -121,8 +122,8 @@ public class Schema {
                     "information varchar(255)," +
                     "informationColor varchar(7)," +
                     "locked BOOLEAN, " +
-                    "PRIMARY KEY(ID)," +
-                    "CONSTRAINT FK_UserBillboard FOREIGN KEY (userID) REFERENCES user(ID))"
+                    "PRIMARY KEY(id)," +
+                    "CONSTRAINT FK_UserBillboard FOREIGN KEY (userId) REFERENCES USERS(id))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create billboard table, took too long.", e);
@@ -142,14 +143,14 @@ public class Schema {
             sqlStatement = connection.createStatement();
 
             // Create schedule table
-            sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS schedule(" +
-                "ID int NOT NULL," +
+            sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS SCHEDULES(" +
+                "id int NOT NULL," +
                 "billboardName varchar(255) NOT NULL," +
                 "startTime DATETIME," +
                 "duration int NOT NULL," +
-                "minuteInterval int," +
-                "PRIMARY KEY(ID)," +
-                "CONSTRAINT FK_FOREIGN KEY(billboardName) REFERENCES billboard(name))"
+                "interval int," +
+                "PRIMARY KEY(id)," +
+                "CONSTRAINT FK_FOREIGN KEY(billboardName) REFERENCES BILLBOARDS(name))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create schedule table, took too long.", e);

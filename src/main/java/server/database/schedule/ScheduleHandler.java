@@ -2,6 +2,7 @@ package server.database.schedule;
 
 import com.mysql.cj.xdevapi.SqlStatement;
 import common.models.Billboard;
+import common.models.Permissions;
 import common.models.Schedule;
 import server.database.ObjectHandler;
 
@@ -17,69 +18,116 @@ import java.util.Optional;
 public class ScheduleHandler implements ObjectHandler<Schedule> {
     Connection connection;
 
+    // This is the mock "database" used for testing
+    List<Schedule> mockdb = new ArrayList<Schedule>();
+
     public ScheduleHandler(Connection connection) {
         this.connection = connection;
     }
 
-//    public Optional<Schedule> get(String name) throws Exception {
-//        return Optional.empty();
-//    }
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Optional<Schedule> get(int id) throws Exception {
+        // Check that it's not in testing mode
+        if (this.connection != null) {
+            // Query the database for the billboard
+            Statement sqlStatement = connection.createStatement();
 
-    public List<Schedule> getAll() throws Exception {
-        // Billboard to be returned
-        List<Schedule> schedules = new ArrayList<>();
-        Schedule temp;
-        // Query the database for the billboard
-        Statement sqlStatement = connection.createStatement();
-        String query = "SELECT * FROM schedule";
-        boolean fetchResult = sqlStatement.execute(query);
-        sqlStatement.close();
-
-        // Check if there was a result
-        if (fetchResult) {
             // Use the result of the database to create billboard object
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE schedules.id = " + id);
+
+            while (result.next()) {
+                return Optional.of(Schedule.fromSQL(result));
+            }
+            sqlStatement.close();
+        } else {
+            // Loop through and find the billboard with the requested name or return an optional empty value
+            for (Schedule s : this.mockdb) {
+                if (s.id == id) {
+                    return Optional.of(s);
+                }
+            }
+        }
+        // If it fails to get a result, return Optional empty
+        return Optional.empty();
+    }
+
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<Schedule> getAll() throws Exception {
+        List<Schedule> schedules = new ArrayList<>();
+        // Check that it's not in testing mode
+        if (this.connection != null) {
+            Statement sqlStatement = connection.createStatement();
+            String query = "SELECT * FROM SCHEDULES";
+
             ResultSet result = sqlStatement.executeQuery(query);
             while (result.next()) {
-                int scheduleID = result.getInt("ID");
-                String billboardName = result.getString("billboardName");
-                Date startTime = result.getTime("startTime");
-                int duration = result.getInt("duration");
-                int interval = result.getInt("interval");
-                temp = new Schedule(scheduleID, billboardName, startTime, duration, interval);
-                schedules.add(temp);
+                schedules.add(Schedule.fromSQL(result));
             }
-
+            sqlStatement.close();
         } else {
-            throw new Exception("No results.");
+            schedules = this.mockdb;
         }
+
         return schedules;
     }
 
-    public void scheduleBillboard(Schedule schedule) throws Exception {
-        Statement sqlStatement = connection.createStatement();
-        String query = "INSERT INTO schedule" +
-            "(billboardName, startTime, duration, minuteInterval)" +
-            "VALUES( " + schedule.billboardName + "," + schedule.startTime + "," +
-            schedule.duration + "," + schedule.interval + ")";
-        int fetchResult = sqlStatement.executeUpdate(query);
-        if (fetchResult == 0) {
-            throw new Exception("Error in inserting schedule");
+    /**
+     *
+     * @param schedule
+     * @throws Exception
+     */
+    public void insert(Schedule schedule) throws Exception {
+        if (this.connection != null) {
+            Statement sqlStatement = connection.createStatement();
+
+            sqlStatement.executeUpdate("");
+
+            sqlStatement.close();
+        } else {
+            // use mockdb
         }
     }
 
-//    public void update(Schedule schedule) throws Exception {
-//
-//    }
+    /**
+     *
+     * @param schedule
+     * @throws Exception
+     */
+    public void update(Schedule schedule) throws Exception {
+        if (this.connection != null) {
+            Statement sqlStatement = connection.createStatement();
 
-    public void deleteFromSchedule(Schedule schedule) throws Exception {
-        Statement sqlStatement = connection.createStatement();
-        String query = "DELETE FROM SCHEDULE WHERE schedule.billboardName = " + schedule.billboardName;
-        int fetchResult = sqlStatement.executeUpdate(query);
-        sqlStatement.close();
+            sqlStatement.executeUpdate("");
 
-        // Check if there was any rows affected in the database
-        if (fetchResult == 0) {
-            throw new Exception("No billboard with such name in database");
+            sqlStatement.close();
+        } else {
+            // use mockdb
+        }
+    }
+
+    /**
+     *
+     * @param schedule
+     * @throws Exception
+     */
+    public void delete(Schedule schedule) throws Exception {
+        if (this.connection != null) {
+            Statement sqlStatement = connection.createStatement();
+
+            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE schedules.id = " + schedule.id);
+
+            sqlStatement.close();
+        } else {
+            // use mockdb
         }
     }
 }
