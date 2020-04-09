@@ -24,7 +24,7 @@ public class Request {
      * @param r
      * @return String
      */
-    public static String fromObject(Request r) {
+    public static String toXML(Request r) {
         return "";
     }
 }

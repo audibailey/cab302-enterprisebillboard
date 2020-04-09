@@ -1,5 +1,8 @@
 package common.models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * This class consists of the user object and its associated methods.
  *
@@ -14,6 +17,7 @@ public class User {
     public int id;
     public String username;
     public String password;
+    public String salt;
 
     public User() {
 
@@ -25,9 +29,11 @@ public class User {
      * @param id
      * @param username
      */
-    public User(int id, String username) {
+    public User(int id, String username, String password, String salt) {
         this.id = id;
         this.username = username;
+        this.password = password;
+        this.salt = salt;
     }
 
     /**
@@ -62,7 +68,15 @@ public class User {
      * @param u
      * @return
      */
-    public static String fromObject(User u) {
+    public static String toXML(User u) {
         return "";
+    }
+
+    public static User fromSQL(ResultSet rs) throws SQLException {
+        return new User(
+            rs.getInt("id"),
+            rs.getString("username"),
+            rs.getString("password"),
+            rs.getString("salt"));
     }
 }
