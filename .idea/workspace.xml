@@ -26,8 +26,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="refactor: Add Schedulehandler">
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/database/permissions/PermissionsHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Billboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Billboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Response.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Schedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/UserPermissions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Permissions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/DataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/DataService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/ObjectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/ObjectHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/billboard/BillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/billboard/BillboardHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/database/user/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/user/UserHandler.java" afterDir="false" />
@@ -454,6 +463,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="756" y="379" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586231680432" />
+    <state x="312" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586398686599">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="312" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586398686599" />
     <state x="691" y="257" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586299894151">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
