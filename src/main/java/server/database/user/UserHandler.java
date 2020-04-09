@@ -1,9 +1,8 @@
 package server.database.user;
 
-import common.models.Permissions;
+import common.models.Billboard;
 import common.models.User;
 import server.database.ObjectHandler;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import common.models.Billboard;
-import common.models.UserPermissions;
 
 /**
  * This class is responsible for all the user object interactions with the database.
@@ -30,7 +27,7 @@ public class UserHandler implements ObjectHandler<User> {
     List<User> MockDB = new ArrayList<User>();
 
     /**
-     * The UserdHandler Constructor.
+     * The UserHandler Constructor.
      *
      * @param connection: This is the database connection from DataService.java.
      */
@@ -71,41 +68,34 @@ public class UserHandler implements ObjectHandler<User> {
 
     /** Selects a User in the database based off the username.
      *
-     * @param UserName: this is the requested user username.
+     * @param username: this is the requested user username.
      * @return Optional<User>: this returns the user or an optional empty value.
      * @throws SQLException: this exception is thrown when there is an issue fetching data from the database.
      */
-    public Optional<User> get(String UserName) throws SQLException {
+    public Optional<User> get(String username) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
             // Attempt to query the database
-            try (Statement sqlStatement = this.connection.createStatement()) {
-                // Create a query that selects billboards based on the name and execute the query
-                String query = "SELECT * FROM USERS WHERE USERS.username = '" + UserName + "'";
-                ResultSet result = sqlStatement.executeQuery(query);
+            Statement sqlStatement = this.connection.createStatement();
+            // Create a query that selects billboards based on the name and execute the query
+            String query = "SELECT * FROM USERS WHERE username = '" + username + "'";
+            ResultSet result = sqlStatement.executeQuery(query);
 
-                // Use the result of the database query to create billboard object and return it
-                while (result.next()) {
-                    return Optional.of(User.fromSQL(result));
-                }
-
-                // If it fails to get a result, return Optional empty
-                return Optional.empty();
-            } catch (SQLException e) {
-                // Throw an exception
-                throw new SQLException(String.format("Failed to fetch billboard from database. Error: %s.", e.toString()));
+            // Use the result of the database query to create billboard object and return it
+            while (result.next()) {
+                return Optional.of(User.fromSQL(result));
             }
+            sqlStatement.close();
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
             for (User user : this.MockDB) {
-                if (user.username.equals(UserName)) {
+                if (user.username.equals(username)) {
                     return Optional.of(user);
                 }
             }
-
-            return Optional.empty();
         }
 
+        return Optional.empty();
     }
 
     /**
@@ -138,16 +128,20 @@ public class UserHandler implements ObjectHandler<User> {
      * @throws Exception
      */
     public void insert(User user) throws Exception {
-        Statement sqlStatement = connection.createStatement();
+        if (this.connection != null) {
+            Statement sqlStatement = connection.createStatement();
 
-        sqlStatement.executeUpdate(
+            sqlStatement.executeUpdate(
             "INSERT INTO USERS " +
                  "(username, password, salt)" +
                  "VALUES( " + user.username +
                  "," + user.password +
                  "," + user.salt + ")");
 
-        sqlStatement.close();
+            sqlStatement.close();
+        } else {
+            this.MockDB.add(user);
+        }
     }
 
     /**
@@ -163,7 +157,11 @@ public class UserHandler implements ObjectHandler<User> {
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            for (User mockUser : this.MockDB) {
+                if (mockUser.id == user.id) {
+                    mockUser = user;
+                }
+            }
         }
     }
 
@@ -177,11 +175,11 @@ public class UserHandler implements ObjectHandler<User> {
         if (this.connection != null) {
             Statement sqlStatement = connection.createStatement();
 
-            sqlStatement.executeUpdate("DELETE FROM USERS WHERE USERS.id = " + user.id);
+            sqlStatement.executeUpdate("DELETE FROM USERS WHERE id = " + user.id);
 
             sqlStatement.close();
         } else {
-            // use mockdb
+            this.MockDB.remove(user);
         }
     }
 }
