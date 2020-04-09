@@ -23,7 +23,7 @@ public class Response {
      * @param r
      * @return
      */
-    public static String fromObject(Response r) {
+    public static String toXML(Response r) {
         return "";
     }
 }

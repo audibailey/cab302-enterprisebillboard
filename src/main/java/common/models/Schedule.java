@@ -1,5 +1,7 @@
 package common.models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Date;
 
@@ -57,7 +59,16 @@ public class Schedule {
      * @param s
      * @return
      */
-    public static String fromObject(Schedule s) {
+    public static String toXML(Schedule s) {
         return "";
+    }
+
+    public static Schedule fromSQL(ResultSet rs) throws SQLException {
+        return new Schedule(
+            rs.getInt("id"),
+            rs.getString("billboardName"),
+            rs.getTime("startTime"),
+            rs.getInt("duration"),
+            rs.getInt("interval"));
     }
 }
