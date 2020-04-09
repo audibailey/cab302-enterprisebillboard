@@ -57,7 +57,7 @@ public class Schema {
             // Create user table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS USERS(" +
-                    "id int NOT NULL," +
+                    "id int NOT NULL AUTO_INCREMENT," +
                     "username varchar(255)," +
                     "password varchar(255)," +
                     "salt varchar(255)," +
@@ -83,7 +83,6 @@ public class Schema {
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS PERMISSIONS(" +
                     "id int NOT NULL," +
-                    "username varchar(255) NOT NULL," +
                     "canCreateBillboard BOOLEAN," +
                     "canEditBillboard BOOLEAN," +
                     "canScheduleBillboard BOOLEAN," +
@@ -112,7 +111,7 @@ public class Schema {
             // Create billboard table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS BILLBOARDS(" +
-                    "id int NOT NULL," +
+                    "id int NOT NULL AUTO_INCREMENT," +
                     "userId int NOT NULL," +
                     "name varchar(255), " +
                     "message varchar(255), " +
@@ -144,13 +143,13 @@ public class Schema {
 
             // Create schedule table
             sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS SCHEDULES(" +
-                "id int NOT NULL," +
+                "id int NOT NULL AUTO_INCREMENT," +
                 "billboardName varchar(255) NOT NULL," +
                 "startTime DATETIME," +
                 "duration int NOT NULL," +
                 "interval int," +
                 "PRIMARY KEY(id)," +
-                "CONSTRAINT FK_FOREIGN KEY(billboardName) REFERENCES BILLBOARDS(name))"
+                "CONSTRAINT FK_BillboardSchedule FOREIGN KEY(billboardName) REFERENCES billboard(name))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create schedule table, took too long.", e);
