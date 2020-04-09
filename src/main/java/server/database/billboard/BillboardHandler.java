@@ -36,7 +36,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     }
 
     /**
-     * Selects a billboard in the database based off the billboard name.
+     * Selects a billboard in the database based off the billboard id.
      *
      * @param id: this is the requested billboard id
      * @return Optional<Billboard>: this returns the billboard or an optional empty value.
@@ -45,18 +45,25 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     public Optional<Billboard> get(int id) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
+            // Initialise the return value
+            Optional<Billboard> ReturnedValue = Optional.empty();
+
             // Attempt to query the database
             Statement sqlStatement = this.connection.createStatement();
             // Create a query that selects billboards based on the name and execute the query
-            String query = "SELECT * FROM BILLBOARD WHERE billboard.id = '" + id + "'";
+            String query = "SELECT * FROM BILLBOARDS WHERE billboard.id = '" + id + "'";
 
             ResultSet result = sqlStatement.executeQuery(query);
 
             // Use the result of the database query to create billboard object and return it
             while (result.next()) {
-                return Optional.of(Billboard.fromSQL(result));
+                ReturnedValue = Optional.of(Billboard.fromSQL(result));
             }
+
+            // Clean up query
             sqlStatement.close();
+
+            return ReturnedValue;
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
             for (Billboard billboard : this.MockDB) {
@@ -64,9 +71,10 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
                     return Optional.of(billboard);
                 }
             }
+
+            // If it fails to get a result, return Optional empty
+            return Optional.empty();
         }
-        // If it fails to get a result, return Optional empty
-        return Optional.empty();
     }
 
     /**
@@ -79,18 +87,25 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     public Optional<Billboard> get(String billboardName) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
+            // Initialise the return value
+            Optional<Billboard> ReturnedValue = Optional.empty();
+
             // Attempt to query the database
             Statement sqlStatement = this.connection.createStatement();
             // Create a query that selects billboards based on the name and execute the query
-            String query = "SELECT * FROM BILLBOARD WHERE billboard.name = '" + billboardName + "'";
+            String query = "SELECT * FROM BILLBOARDS WHERE name = '" + billboardName + "'";
 
             ResultSet result = sqlStatement.executeQuery(query);
 
             // Use the result of the database query to create billboard object and return it
             while (result.next()) {
-                return Optional.of(Billboard.fromSQL(result));
+                ReturnedValue = Optional.of(Billboard.fromSQL(result));
             }
+
+            // Clean up query
             sqlStatement.close();
+
+            return ReturnedValue;
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
             for (Billboard billboard : this.MockDB) {
@@ -98,9 +113,10 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
                     return Optional.of(billboard);
                 }
             }
+
+            // If it fails to get a result, return Optional empty
+            return Optional.empty();
         }
-        // If it fails to get a result, return Optional empty
-        return Optional.empty();
     }
 
     /**
@@ -118,7 +134,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             // Attempt to query the database
             Statement sqlStatement = this.connection.createStatement();
             // Create a query that selects billboards based on the lock and execute the query
-            String query = "SELECT * FROM BILLBOARD";
+            String query = "SELECT * FROM BILLBOARDS";
 
             ResultSet result = sqlStatement.executeQuery(query);
 
@@ -126,6 +142,8 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             while (result.next()) {
                 billboards.add(Billboard.fromSQL(result));
             }
+
+            // Clean up query
             sqlStatement.close();
         } else {
             billboards = this.MockDB;
@@ -150,7 +168,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             // Attempt to query the database
             Statement sqlStatement = this.connection.createStatement();
             // Create a query that selects billboards based on the lock and execute the query
-            String query = "SELECT * FROM billboard WHERE billboard.locked = " + lock;
+            String query = "SELECT * FROM BILLBOARDS WHERE locked = " + lock;
 
             ResultSet result = sqlStatement.executeQuery(query);
 
@@ -158,10 +176,13 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             while (result.next()) {
                 billboards.add(Billboard.fromSQL(result));
             }
+
+            // Clean up query
+            sqlStatement.close();
         } else {
             // Loop through and find the billboard with the lock status and add to billboards
             for (Billboard b : this.MockDB) {
-                if (b.locked = lock) {
+                if (b.locked == lock) {
                     billboards.add(b);
                 }
             }
@@ -181,22 +202,25 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
         if (this.connection != null) {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
-            // Create a query that inserts the billboard and executes the query, return if the query executed
-            String query = "INSERT INTO billboard " +
+            // Create a query that inserts the billboard and executes the query
+            String query = "INSERT INTO BILLBOARDS " +
                 "(userId, name, message, " +
                 "messageColor, picture, backgroundColor," +
                 " information, informationColor, locked)" +
                 "VALUES(" + billboard.userId +
-                "," + billboard.name +
-                "," +  billboard.message +
-                "," + billboard.messageColor +
-                "," + Arrays.toString(billboard.picture) +
-                "," + billboard.backgroundColor +
-                "," + billboard.information +
-                "," + billboard.informationColor +
-                "," + billboard.locked + ")";
+                ",'" + billboard.name +
+                "','" + billboard.message +
+                "','" + billboard.messageColor +
+                "','" + Arrays.toString(billboard.picture) +
+                "','" + billboard.backgroundColor +
+                "','" + billboard.information +
+                "','" + billboard.informationColor +
+                "'," + billboard.locked + ")";
 
             sqlStatement.executeUpdate(query);
+
+            // Clean up query
+            sqlStatement.close();
         } else {
             MockDB.add(billboard);
         }
@@ -215,14 +239,17 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             Statement sqlStatement = connection.createStatement();
 
             // Create a query that inserts the billboard and executes the query, return if the query executed
-            String query = "UPDATE billboard SET name = '" + billboard.name + "', message = '" + billboard.message + "', messageColor ='" + billboard.messageColor +
+            String query = "UPDATE BILLBOARDS SET name = '" + billboard.name + "', message = '" + billboard.message + "', messageColor ='" + billboard.messageColor +
                 "', picture = '" + Arrays.toString(billboard.picture) + "', backgroundColor = '" + billboard.backgroundColor +
                 "', information = '" + billboard.information + "', informationColor = '" + billboard.informationColor + "', locked =" + billboard.locked +
                 " WHERE ID = " + billboard.id;
 
             sqlStatement.executeUpdate(query);
+
+            // Clean up query
+            sqlStatement.close();
         } else {
-            // Loop through mock database and find the billboard to update, then update it and return true.
+            // Loop through mock database and find the billboard to update, then update it
             for (Billboard mockBillboard : this.MockDB) {
                 if (mockBillboard.id  == billboard.id) {
                     mockBillboard = billboard;
@@ -242,10 +269,12 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
         if (this.connection != null) {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
-            // Create a query that inserts the billboard and executes the query, return if the query executed
-            String query = "DELETE FROM billboard WHERE ID = " + billboard.id;
-
+            // Create a query that deletes the billboard and executes the query
+            String query = "DELETE FROM BILLBOARDS WHERE ID = " + billboard.id;
             sqlStatement.executeUpdate(query);
+
+            // Cleans up query
+            sqlStatement.close();
         } else {
             // Delete billboard
             MockDB.remove(billboard);
