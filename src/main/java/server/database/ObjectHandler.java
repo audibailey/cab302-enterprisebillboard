@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ObjectHandler<T> {
-    Optional<T> get(String name) throws Exception;
+    //Optional<T> get(String name) throws Exception;
 
     //Optional<List<T>> getAll() throws Exception;
 

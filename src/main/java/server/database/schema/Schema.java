@@ -57,10 +57,10 @@ public class Schema {
             // Create user table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS user(" +
-                    "ID int NOT NULL," +
+                    "ID int NOT NULL AUTO_INCREMENT," +
                     "username varchar(255)," +
                     "password varchar(255)," +
-                    "salted varchar(255)," +
+                    "salt varchar(255)," +
                     "PRIMARY KEY(ID))"
             );
         } catch (SQLTimeoutException e) {
@@ -81,15 +81,15 @@ public class Schema {
 
             // Create user permission table
             sqlStatement.executeUpdate(
-                "CREATE TABLE IF NOT EXISTS userPermissions(" +
-                    "username varchar(255) NOT NULL," +
+                "CREATE TABLE IF NOT EXISTS userpermissions(" +
+                    "userID INT NOT NULL," +
                     "createBillboard BOOLEAN," +
                     "editBillboard BOOLEAN," +
                     "scheduleBillboard BOOLEAN," +
                     "editUsers BOOLEAN, " +
                     "viewBillboard BOOLEAN, " +
                     "PRIMARY KEY(userID)," +
-                    "FOREIGN KEY (username) REFERENCES user(username)"
+                    "FOREIGN KEY (userID) REFERENCES user(ID))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create user's permissions table, took too long.", e);
@@ -111,7 +111,7 @@ public class Schema {
             // Create billboard table
             sqlStatement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS billboard(" +
-                    "ID int NOT NULL," +
+                    "ID int NOT NULL auto_increment," +
                     "userID int NOT NULL," +
                     "name varchar(255), " +
                     "message varchar(255), " +
@@ -149,7 +149,7 @@ public class Schema {
                 "duration int NOT NULL," +
                 "minuteInterval int," +
                 "PRIMARY KEY(ID)," +
-                "CONSTRAINT FK_FOREIGN KEY(billboardName) REFERENCES billboard(name))"
+                "CONSTRAINT FK_BillboardSchedule FOREIGN KEY(billboardName) REFERENCES billboard(name))"
             );
         } catch (SQLTimeoutException e) {
             throw new SQLTimeoutException("Failed to create schedule table, took too long.", e);
