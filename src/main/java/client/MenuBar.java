@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MenuBar extends JMenuBar {
+    private JMenu logout;
+
     Color bgColor=Color.WHITE;
 
     public void setColor(Color color) {
@@ -11,11 +13,13 @@ public class MenuBar extends JMenuBar {
     }
 
     public MenuBar() {
-        add(new JMenu("Billboards"));
-        add(new JMenu("Schedules"));
-        add(new JMenu("Users"));
         add(Box.createHorizontalGlue());
-        add(new JMenu("Logout"));
+        logout = new JMenu("Logout");
+        add(logout);
+    }
+
+    public JMenu getLogout() {
+        return logout;
     }
 
     @Override
