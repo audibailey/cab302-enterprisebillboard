@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginFrame extends JFrame implements ActionListener {
+public class Login extends JFrame implements ActionListener {
 
     Container container = getContentPane();
     JLabel usernameLabel = new JLabel("USERNAME");
@@ -15,13 +15,15 @@ public class LoginFrame extends JFrame implements ActionListener {
     JPasswordField password = new JPasswordField(15);
     JButton login = new JButton("LOGIN");
 
-    public LoginFrame() {
+    public Login() {
         setTitle("Billboard Control Panel: Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayoutManager();
         addComponentsToContainer();
         setLocationAndSize();
+        // Set the listener for the login button and make it the default button for enter press
         login.addActionListener(this);
+        getRootPane().setDefaultButton(login);
         setResizable(false);
         setVisible(true);
     }
@@ -79,8 +81,8 @@ public class LoginFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (username.getText().equalsIgnoreCase("admin") //&& passwordField.getPassword().toString().equalsIgnoreCase("admin")
         ) {
-            Main.createAndShowMainGUI();
             dispose();
+            Main.createAndShowClient();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Username or Password");
         }
