@@ -37,9 +37,9 @@ public class BillboardTests {
         dataService = new DataService(true);
 
         // Create the test user and save its ID
-        User MasterUser = new User("Jamie", "Password", "Salt");
+        User MasterUser = new User("Username1", "Password", "Salt");
         dataService.users.insert(MasterUser);
-        Optional<User> DatabasedUser = dataService.users.get("Jamie");
+        Optional<User> DatabasedUser = dataService.users.get("Username1");
         DatabasedUser.ifPresent(user -> UserID = user.id);
     }
 
