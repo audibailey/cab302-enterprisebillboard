@@ -1,10 +1,5 @@
 package server.database.users;
 
-import common.models.Billboard;
-import common.models.Permissions;
-import common.models.User;
-import server.database.DataService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import common.models.User;
+import server.database.DataService;
 
 /**
  * Test class for the user database handler
@@ -68,7 +66,7 @@ public class UserTests {
 
 
     /**
-     * Tests getting a billboard from the database using user name.
+     * Tests getting a user from the database using user name.
      *
      * @throws Exception: this exception returns when there is an issue fetching data from the database.
      */
@@ -89,7 +87,6 @@ public class UserTests {
         } else {
             fail("Error fetching billboard.");
         }
-
     }
 
     /**
