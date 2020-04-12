@@ -66,7 +66,7 @@ public class Permissions implements Serializable {
             rs.getBoolean("canCreateBillboard"),
             rs.getBoolean("canEditBillboard"),
             rs.getBoolean("canScheduleBillboard"),
-            rs.getBoolean("canEditUser"),
+            rs.getBoolean("canEditUsers"),
             rs.getBoolean("canViewBillboard"));
     }
 }
