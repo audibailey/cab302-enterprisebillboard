@@ -51,7 +51,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             // Attempt to query the database
             Statement sqlStatement = this.connection.createStatement();
             // Create a query that selects billboards based on the name and execute the query
-            String query = "SELECT * FROM BILLBOARDS WHERE billboard.id = '" + id + "'";
+            String query = "SELECT * FROM BILLBOARDS WHERE id = '" + id + "'";
 
             ResultSet result = sqlStatement.executeQuery(query);
 
