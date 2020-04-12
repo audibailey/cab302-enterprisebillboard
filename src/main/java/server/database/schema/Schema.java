@@ -147,9 +147,9 @@ public class Schema {
             sqlStatement.executeUpdate("CREATE TABLE IF NOT EXISTS SCHEDULES(" +
                 "id int NOT NULL AUTO_INCREMENT UNIQUE," +
                 "billboardName varchar(255) NOT NULL UNIQUE," +
-                "startTime DATETIME NOT NULL," +
+                "startTime TIMESTAMP NOT NULL," +
                 "duration int NOT NULL," +
-                "interval int NOT NULL," +
+                "`interval` int NOT NULL," +
                 "PRIMARY KEY(id)," +
                 "CONSTRAINT FK_BillboardSchedule FOREIGN KEY (billboardName) REFERENCES BILLBOARDS(name))"
             );
