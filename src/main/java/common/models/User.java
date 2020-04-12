@@ -1,5 +1,6 @@
 package common.models;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-public class User {
+public class User implements Serializable {
     /**
      * The variables of the object User
      */
@@ -71,26 +72,6 @@ public class User {
      */
     public boolean tryLogin(String pass) {
         return this.password.equals(pass);
-    }
-
-    /**
-     * Parses the XML string and returns a User object.
-     *
-     * @param xml: the xml to be converted as a string.
-     * @return User: the User object after converting from XML.
-     */
-    public static User fromXML(String xml) {
-        return new User();
-    }
-
-    /**
-     * Parses the User object and returns an XML string from it.
-     *
-     * @param user: the user to be converted to an XML string.
-     * @return String: the XML after converting from user object.
-     */
-    public static String toXML(User user) {
-        return "";
     }
 
     /**

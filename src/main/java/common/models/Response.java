@@ -1,29 +1,15 @@
 package common.models;
 
-public class Response {
+import java.io.Serializable;
+import java.util.List;
+
+public class Response<T> implements Serializable {
     // Obvs these need fixing up
     String error;
-    String data;
+    List<T> data;
 
-    public Response() {
-
-    }
-
-    /**
-     * Parses the XMl string and returns a new Response
-     * @param xml
-     * @return Response
-     */
-    public static Response fromXML(String xml) {
-        return new Response();
-    }
-
-    /**
-     * Parses the Object and returns an XML String
-     * @param r
-     * @return
-     */
-    public static String toXML(Response r) {
-        return "";
+    public Response(List<T> data, String error) {
+        this.error = error;
+        this.data = data;
     }
 }

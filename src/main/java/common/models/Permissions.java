@@ -1,5 +1,6 @@
 package common.models;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-public class Permissions {
+public class Permissions implements Serializable {
     /**
      * The variables of the object Permissions
      */
@@ -49,26 +50,6 @@ public class Permissions {
         this.canScheduleBillboard = canScheduleBillboard;
         this.canEditUser = canEditUser;
         this.canViewBillboard = canViewBillboard;
-    }
-
-    /**
-     * Parses the XML string and returns a Permissions object.
-     *
-     * @param xml: the xml to be converted as a string.
-     * @return Permissions: the permissions object after converting from XML.
-     */
-    public static Permissions fromXML(String xml) {
-        return new Permissions();
-    }
-
-    /**
-     * Parses the Permissions object and returns an XML string from it.
-     *
-     * @param permissions: the object to be converted to an XML string.
-     * @return String: the XML after converting from permissions object.
-     */
-    public static String toXML(Permissions permissions) {
-        return "";
     }
 
     /**

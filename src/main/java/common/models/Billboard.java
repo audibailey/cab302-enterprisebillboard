@@ -1,5 +1,6 @@
 package common.models;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-public class Billboard {
+public class Billboard implements Serializable {
     /**
      * The variables of the object billboard.
      */
@@ -100,26 +101,6 @@ public class Billboard {
         this.informationColor = informationColor;
         this.locked = locked;
         this.userId = userId;
-    }
-
-    /**
-     * Parses the XML string and returns a Billboard object.
-     *
-     * @param xml: the xml to be converted as a string.
-     * @return Billboard: the billboard object after converting from XML.
-     */
-    public static Billboard fromXML(String xml) {
-        return new Billboard();
-    }
-
-    /**
-     * Parses the Billboard and returns an XML string from it.
-     *
-     * @param billboard: the billboard to be converted to an XML string.
-     * @return String: the XML after converting from billboard object.
-     */
-    public static String toXML(Billboard billboard) {
-        return "";
     }
 
     /**
