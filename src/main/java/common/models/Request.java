@@ -1,30 +1,17 @@
 package common.models;
 
-public class Request {
+import java.io.Serializable;
+import java.util.List;
+
+public class Request<T> implements Serializable {
     // Obvs these need fixing up
     String route;
     String method;
-    String data;
+    List<T> data;
 
-    public Request() {
-
-    }
-
-    /**
-     * Parses the XMl string and returns a new Request
-     * @param xml
-     * @return Request
-     */
-    public static Request fromXML(String xml) {
-        return new Request();
-    }
-
-    /**
-     * Parses the Object and returns an XML string
-     * @param r
-     * @return String
-     */
-    public static String toXML(Request r) {
-        return "";
+    public Request(String route, String method, List<T> data) {
+        this.route = route;
+        this.method = method;
+        this.data = data;
     }
 }

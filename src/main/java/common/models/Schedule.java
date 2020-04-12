@@ -1,5 +1,6 @@
 package common.models;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
@@ -11,7 +12,7 @@ import java.util.Date;
  * @author Perdana Bailey
  * @author Jamie Martin
  */
-public class Schedule {
+public class Schedule implements Serializable {
     /**
      * The variables of the object schedule
      */
@@ -44,26 +45,6 @@ public class Schedule {
         this.startTime = startTime;
         this.duration = duration;
         this.interval = interval;
-    }
-
-    /**
-     * Parses the XML string and returns a Schedule object.
-     *
-     * @param xml: the xml to be converted as a string.
-     * @return Schedule: the Schedule object after converting from XML.
-     */
-    public static Schedule fromXML(String xml) {
-        return new Schedule();
-    }
-
-    /**
-     * Parses the Schedule object and returns an XML string from it.
-     *
-     * @param schedule: the schedule to be converted to an XML string.
-     * @return String: the XML after converting from schedule object.
-     */
-    public static String toXML(Schedule schedule) {
-        return "";
     }
 
     /**
