@@ -3,7 +3,7 @@ package common.models;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -18,7 +18,7 @@ public class Schedule implements Serializable {
      */
     public int id;
     public String billboardName;
-    public Date startTime;
+    public Instant startTime;
     public int duration;
     public int interval;
 
@@ -37,10 +37,29 @@ public class Schedule implements Serializable {
      */
     public Schedule(int id,
                     String billboardName,
-                    Date startTime,
+                    Instant startTime,
                     int duration,
                     int interval) {
         this.id = id;
+        this.billboardName = billboardName;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.interval = interval;
+    }
+
+    /**
+     * Schedule object constructor
+     *
+     * @param billboardName: schedules billboard name.
+     * @param startTime:     schedules billboard starting time.
+     * @param duration:      schedules billboard duration.
+     * @param interval:      schedules billboard interval.
+     */
+    public Schedule(
+        String billboardName,
+        Instant startTime,
+        int duration,
+        int interval) {
         this.billboardName = billboardName;
         this.startTime = startTime;
         this.duration = duration;
@@ -58,7 +77,7 @@ public class Schedule implements Serializable {
         return new Schedule(
             rs.getInt("id"),
             rs.getString("billboardName"),
-            rs.getTime("startTime"),
+            rs.getTime("startTime").toInstant(),
             rs.getInt("duration"),
             rs.getInt("interval"));
     }
