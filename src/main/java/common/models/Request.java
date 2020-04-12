@@ -5,12 +5,10 @@ import java.util.List;
 
 public class Request<T> implements Serializable {
     // Obvs these need fixing up
-    String route;
-    String method;
-    List<T> data;
+    public String method;
+    public T data;
 
-    public Request(String route, String method, List<T> data) {
-        this.route = route;
+    public Request(String method, T data) {
         this.method = method;
         this.data = data;
     }
