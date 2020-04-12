@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Response<T> implements Serializable {
     // Obvs these need fixing up
-    String error;
-    List<T> data;
+    public String error;
+    public List<T> data;
 
     public Response(List<T> data, String error) {
         this.error = error;
