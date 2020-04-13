@@ -25,9 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="refactor">
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/database/schedules/ScheduleTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/database/schedules/ScheduleTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/database/permissions/PermissionsTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/database/permissions/PermissionsTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,7 +413,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586693565750</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Add comments in ScheduleTests.java">
+      <created>1586744787079</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1586744787079</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,7 +451,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore: Add mysql dependancy for maven." />
     <MESSAGE value="chore: IntelliJ automagical change of files." />
     <MESSAGE value="feat: Re-add the common package from another branch, for consistency." />
     <MESSAGE value="refactor: Handled exceptions differently for the getProps function.&#10;style: Uncommented the DBTest.&#10;docs: various comment changes." />
@@ -469,7 +475,8 @@
     <MESSAGE value="chore: IntelliJ be IntelliJ." />
     <MESSAGE value="chore: Add PermissionsTests" />
     <MESSAGE value="fix: Major bug fixes." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Major bug fixes." />
+    <MESSAGE value="Add comments in ScheduleTests.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add comments in ScheduleTests.java" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -522,11 +529,11 @@
     <state x="691" y="257" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586299894151" />
     <state x="2610" y="246" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586065099248" />
     <state x="518" y="222" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1586178530237" />
-    <state x="286" y="13" width="936" height="797" key="CommitChangelistDialog2" timestamp="1586744773637">
+    <state x="286" y="13" width="936" height="797" key="CommitChangelistDialog2" timestamp="1586744784970">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="244" y="56" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1586693576174" />
-    <state x="286" y="13" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586744773637" />
+    <state x="286" y="13" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586744784970" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
     <state x="100" y="100" width="1240" height="700" key="DiffContextDialog" timestamp="1586693424324">
       <screen x="0" y="0" width="1440" height="900" />
@@ -622,20 +629,20 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="602" y="344" key="VCS.EditChangelistDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682915182" />
-    <state x="341" y="143" key="Vcs.Push.Dialog.v2" timestamp="1586438663373">
+    <state x="341" y="143" key="Vcs.Push.Dialog.v2" timestamp="1586744793136">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="320" y="156" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1586436396787" />
-    <state x="341" y="143" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1586438663373" />
+    <state x="341" y="143" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1586744793136" />
     <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584691895155" />
     <state x="516" y="235" key="chooseDestDirectoryDialog" timestamp="1586179749003">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="516" y="235" key="chooseDestDirectoryDialog/0.0.1440.900@0.0.1440.900" timestamp="1586179749003" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586743239732">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586749539351">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586743239732" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586749539351" />
     <state x="512" y="344" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1584707213544">
       <screen x="0" y="0" width="1707" height="920" />
     </state>

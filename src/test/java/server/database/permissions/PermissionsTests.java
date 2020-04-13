@@ -44,12 +44,14 @@ public class PermissionsTests {
      */
     @Test
     public void AddUserPermissionsTest() throws Exception {
-        //Create new permissions list
+        // Create new user and insert into the database
         User TestUser = new User("Username1", "Password", "Salt");
         dataService.users.insert(TestUser);
 
+        // Retrieve the testing user
         Optional<User> InsertedUser = dataService.users.get(TestUser.username);
         if (InsertedUser.isPresent()) {
+            // Create new permission list and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser.get().id, InsertedUser.get().username,
                 true,
                 true,
@@ -57,10 +59,13 @@ public class PermissionsTests {
                 false,
                 true);
             dataService.permissions.insert(TestPermissions);
+            // Retrieve the permission list
             Optional<Permissions> InsertedPermissions = dataService.permissions.get(InsertedUser.get().id);
             if (InsertedPermissions.isPresent()) {
+                // Test the user's edit billboard permission value against control edit billboard value
                 assertEquals(InsertedPermissions.get().canEditBillboard, TestPermissions.canEditBillboard);
 
+                // Clean up and delete permissions list + user
                 dataService.permissions.delete(InsertedPermissions.get());
                 dataService.users.delete(InsertedUser.get());
             } else {
@@ -79,15 +84,20 @@ public class PermissionsTests {
      */
     @Test
     public void GetAllUsersPermissions() throws Exception {
+        // Create the array to test against based on the testing users and permission lists
         List<User> ControlUsers = new ArrayList<User>();
         List<Permissions> ControlPermissions = new ArrayList<Permissions>();
 
+        // Create the first user and insert into the database
         User TestUser1 = new User("Username1", "Password", "Salt");
         dataService.users.insert(TestUser1);
+        // Add the user to control list
         ControlUsers.add(TestUser1);
 
+        //Retrieve the testing user
         Optional<User> InsertedUser1 = dataService.users.get(TestUser1.username);
         if (InsertedUser1.isPresent()) {
+            // Create a new permission list for the first user and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser1.get().id, InsertedUser1.get().username,
                 true,
                 true,
@@ -95,17 +105,21 @@ public class PermissionsTests {
                 false,
                 true);
             dataService.permissions.insert(TestPermissions);
+            // Add the permission to control list
             ControlPermissions.add(TestPermissions);
         } else {
             fail("Error fetching permissions");
         }
 
+        // Create the second user and insert into the database
         User TestUser2 = new User("Username2", "Password", "Salt");
         dataService.users.insert(TestUser2);
+        // Add the user to control list
         ControlUsers.add(TestUser2);
 
         Optional<User> InsertedUser2 = dataService.users.get(TestUser2.username);
         if (InsertedUser2.isPresent()) {
+            // Create a new permission list for the second user and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser2.get().id, InsertedUser2.get().username,
                 true,
                 true,
@@ -113,17 +127,20 @@ public class PermissionsTests {
                 true,
                 false);
             dataService.permissions.insert(TestPermissions);
+            // Add the permission to control list
             ControlPermissions.add(TestPermissions);
         } else {
             fail("Error fetching permissions");
         }
-
+        // Create the third user and insert into the database
         User TestUser3 = new User("Username3", "Password", "Salt");
         dataService.users.insert(TestUser3);
+        // Add the user to control list
         ControlUsers.add(TestUser3);
 
         Optional<User> InsertedUser3 = dataService.users.get(TestUser3.username);
         if (InsertedUser3.isPresent()) {
+            // Create a new permission list for the third user and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser3.get().id, InsertedUser3.get().username,
                 true,
                 true,
@@ -131,11 +148,13 @@ public class PermissionsTests {
                 false,
                 true);
             dataService.permissions.insert(TestPermissions);
+            // Add the permission to control list
             ControlPermissions.add(TestPermissions);
         } else {
             fail("Error fetching permissions");
         }
 
+        // Retrieve the testing permission lists
         List<Permissions> ListPermissions = dataService.permissions.getAll();
         assertEquals(
             ControlPermissions.stream().map(user -> user.username).collect(Collectors.toList()),
@@ -147,6 +166,7 @@ public class PermissionsTests {
             ListPermissions.stream().map(user -> user.canViewBillboard).collect(Collectors.toList())
         );
 
+        // Clean up and delete all permissions + users
         List<Permissions> DeleteListPermissions = dataService.permissions.getAll();
         List<Permissions> PermissionsDeleteList = new ArrayList<Permissions>(DeleteListPermissions);
         for (Permissions perms : PermissionsDeleteList) {
@@ -168,11 +188,14 @@ public class PermissionsTests {
      */
     @Test
     public void GetUserByUsername() throws Exception {
+        // Create a new user and insert into the database
         User TestUser1 = new User("Username1", "Password", "Salt");
         dataService.users.insert(TestUser1);
 
+        // Retrieve the testing user
         Optional<User> InsertedUser = dataService.users.get(TestUser1.username);
         if (InsertedUser.isPresent()) {
+            // Create new permission list and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser.get().id, InsertedUser.get().username,
                 true,
                 true,
@@ -187,11 +210,11 @@ public class PermissionsTests {
         // Retrieve the testing User
         Optional<Permissions> GotUser = dataService.permissions.get(InsertedUser.get().username);
         if (GotUser.isPresent()) {
-            // Test the retrieved User username against the control username
+            // Test the retrieved User edit billboard value against the control edit billboard value
             assertTrue(GotUser.get().canEditBillboard);
 
 
-            // Cleanup and delete the user
+            // Cleanup and delete the user + permissions
             Optional<User> DeletingUser = dataService.users.get(GotUser.get().username);
             if (DeletingUser.isPresent()) {
                 dataService.permissions.delete(GotUser.get());
@@ -212,11 +235,14 @@ public class PermissionsTests {
      */
     @Test
     public void GetUserByID() throws Exception {
+        // Create new user and insert into database
         User TestUser = new User("Username1", "Password", "Salt");
         dataService.users.insert(TestUser);
 
+        // Retrieve the testing user
         Optional<User> InsertedUser = dataService.users.get(TestUser.username);
         if (InsertedUser.isPresent()) {
+            // Create a new permission for the user and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser.get().id, InsertedUser.get().username,
                 true,
                 true,
@@ -260,8 +286,10 @@ public class PermissionsTests {
         User TestUser = new User("Username1", "Password", "Salt");
         dataService.users.insert(TestUser);
 
+        // Retrieve the testing user
         Optional<User> InsertedUser = dataService.users.get(TestUser.username);
         if (InsertedUser.isPresent()) {
+            // Create a new permission for the user and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser.get().id, InsertedUser.get().username,
                 true,
                 true,
@@ -273,14 +301,19 @@ public class PermissionsTests {
             fail("Error fetching permissions");
         }
 
+        // Retrieve the permissions list
         Optional<Permissions> ChangePermission = dataService.permissions.get(InsertedUser.get().id);
         if (ChangePermission.isPresent()) {
+            // Test if the User's edit user is false or not
             assertFalse(ChangePermission.get().canEditUser);
+            // Change the edit user's permission to true and update to the database
             ChangePermission.get().canEditUser = true;
             dataService.permissions.update(ChangePermission.get());
 
+            // Retrieve the permission after updated
             Optional<Permissions> ChangedPermission = dataService.permissions.get(InsertedUser.get().id);
             if (ChangedPermission.isPresent()) {
+                // TEst if the User's edit user is true or not
                 assertTrue(ChangedPermission.get().canEditUser);
 
                 // Cleanup and delete the user
@@ -311,8 +344,10 @@ public class PermissionsTests {
         // Create a testing User
         User TestUser = new User("Username1", "Password", "Salt");
         dataService.users.insert(TestUser);
+        // Retrieve the testing user
         Optional<User> InsertedUser = dataService.users.get(TestUser.username);
         if (InsertedUser.isPresent()) {
+            // Create a new permission for the user and insert into the database
             Permissions TestPermissions = new Permissions(InsertedUser.get().id, InsertedUser.get().username,
                 true,
                 true,
@@ -323,10 +358,12 @@ public class PermissionsTests {
         } else {
             fail("Error fetching permissions");
         }
-
+        // Retrieve the permission list
         Optional<Permissions> DeletePermission = dataService.permissions.get(InsertedUser.get().id);
         if (DeletePermission.isPresent()) {
+            // Delete the permission from the server
             dataService.permissions.delete(DeletePermission.get());
+            // Retrieve the user's permission after deleted and check if it's empty or not
             Optional<Permissions> DeletedPermission = dataService.permissions.get(InsertedUser.get().id);
             assertTrue(DeletedPermission.isEmpty());
 
