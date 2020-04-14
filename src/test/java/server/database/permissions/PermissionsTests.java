@@ -72,7 +72,7 @@ public class PermissionsTests {
                 fail("Error fetching permissions");
             }
         } else {
-            fail("Error fetching permissions");
+            fail("Error fetching user");
         }
 
     }
@@ -117,6 +117,7 @@ public class PermissionsTests {
         // Add the user to control list
         ControlUsers.add(TestUser2);
 
+        //Retrieve the second testing user
         Optional<User> InsertedUser2 = dataService.users.get(TestUser2.username);
         if (InsertedUser2.isPresent()) {
             // Create a new permission list for the second user and insert into the database
@@ -130,7 +131,7 @@ public class PermissionsTests {
             // Add the permission to control list
             ControlPermissions.add(TestPermissions);
         } else {
-            fail("Error fetching permissions");
+            fail("Error fetching user");
         }
         // Create the third user and insert into the database
         User TestUser3 = new User("Username3", "Password", "Salt");
@@ -138,6 +139,7 @@ public class PermissionsTests {
         // Add the user to control list
         ControlUsers.add(TestUser3);
 
+        //Retrieve the third testing user
         Optional<User> InsertedUser3 = dataService.users.get(TestUser3.username);
         if (InsertedUser3.isPresent()) {
             // Create a new permission list for the third user and insert into the database
@@ -151,11 +153,13 @@ public class PermissionsTests {
             // Add the permission to control list
             ControlPermissions.add(TestPermissions);
         } else {
-            fail("Error fetching permissions");
+            fail("Error fetching user");
         }
 
         // Retrieve the testing permission lists
         List<Permissions> ListPermissions = dataService.permissions.getAll();
+
+        // Ensure they are the same
         assertEquals(
             ControlPermissions.stream().map(user -> user.username).collect(Collectors.toList()),
             ListPermissions.stream().map(user -> user.username).collect(Collectors.toList())
@@ -204,7 +208,7 @@ public class PermissionsTests {
                 true);
             dataService.permissions.insert(TestPermissions);
         } else {
-            fail("Error fetching permissions");
+            fail("Error fetching user");
         }
 
         // Retrieve the testing User
@@ -223,7 +227,7 @@ public class PermissionsTests {
                 fail("Error fetching permissions");
             }
         } else {
-            fail("Error fetching billboard.");
+            fail("Error fetching user");
         }
 
     }
@@ -251,13 +255,13 @@ public class PermissionsTests {
                 true);
             dataService.permissions.insert(TestPermissions);
         } else {
-            fail("Error fetching permissions");
+            fail("Error fetching user");
         }
 
         // Retrieve the testing User
         Optional<Permissions> GotUser = dataService.permissions.get(InsertedUser.get().username);
         if (GotUser.isPresent()) {
-            // Test the retrieved User username against the control username
+            // Test the retrieved User permission
             assertTrue(GotUser.get().canEditBillboard);
 
 
@@ -270,7 +274,7 @@ public class PermissionsTests {
                 fail("Error fetching permissions");
             }
         } else {
-            fail("Error fetching billboard.");
+            fail("Error fetching user");
         }
 
     }
@@ -298,7 +302,7 @@ public class PermissionsTests {
                 true);
             dataService.permissions.insert(TestPermissions);
         } else {
-            fail("Error fetching permissions");
+            fail("Error fetching user");
         }
 
         // Retrieve the permissions list
@@ -313,7 +317,7 @@ public class PermissionsTests {
             // Retrieve the permission after updated
             Optional<Permissions> ChangedPermission = dataService.permissions.get(InsertedUser.get().id);
             if (ChangedPermission.isPresent()) {
-                // TEst if the User's edit user is true or not
+                // Test if the User's edit user is true or not
                 assertTrue(ChangedPermission.get().canEditUser);
 
                 // Cleanup and delete the user
@@ -322,7 +326,7 @@ public class PermissionsTests {
                     dataService.permissions.delete(ChangedPermission.get());
                     dataService.users.delete(DeletingUser.get());
                 } else {
-                    fail("Error fetching permissions");
+                    fail("Error fetching user");
                 }
 
             } else {
@@ -356,7 +360,7 @@ public class PermissionsTests {
                 true);
             dataService.permissions.insert(TestPermissions);
         } else {
-            fail("Error fetching permissions");
+            fail("Error fetching user");
         }
         // Retrieve the permission list
         Optional<Permissions> DeletePermission = dataService.permissions.get(InsertedUser.get().id);
@@ -372,7 +376,7 @@ public class PermissionsTests {
             if (DeletingUser.isPresent()) {
                 dataService.users.delete(DeletingUser.get());
             } else {
-                fail("Error fetching permissions");
+                fail("Error fetching user");
             }
 
         } else {
