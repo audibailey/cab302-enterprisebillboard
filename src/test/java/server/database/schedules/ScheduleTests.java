@@ -72,7 +72,6 @@ public class ScheduleTests {
 
         // Retrieve the testing Billboard
         Optional<Billboard> InsertedBillboard = dataService.billboards.get(BillboardOne.name);
-
         if (InsertedBillboard.isPresent()) {
             // Get the current time
             Instant TestDate = Instant.now();
@@ -147,7 +146,7 @@ public class ScheduleTests {
             dataService.schedules.insert(TestSchedule);
             ControlSchedules.add(TestSchedule);
         } else {
-            fail("Error fetching billboards");
+            fail("Error fetching billboard");
         }
 
         // Create the second testing billboard and insert it to the database
@@ -182,7 +181,7 @@ public class ScheduleTests {
             dataService.schedules.insert(TestSchedule);
             ControlSchedules.add(TestSchedule);
         } else {
-            fail("Error fetching billboards");
+            fail("Error fetching billboard");
         }
 
         // Create the third testing billboard and insert it to the database
@@ -217,7 +216,7 @@ public class ScheduleTests {
             dataService.schedules.insert(TestSchedule);
             ControlSchedules.add(TestSchedule);
         } else {
-            fail("Error fetching billboards");
+            fail("Error fetching billboard");
         }
         // Get all the schedules and save it to ListSchedules
         List<Schedule> ListSchedules = dataService.schedules.getAll();
@@ -266,7 +265,6 @@ public class ScheduleTests {
 
         // // Retrieve the testing Billboard
         Optional<Billboard> InsertedBillboard = dataService.billboards.get(BillboardOne.name);
-
         if (InsertedBillboard.isPresent()) {
             // Get the current time when creating the schedule
             Instant TestDate = Instant.now();
@@ -282,7 +280,7 @@ public class ScheduleTests {
             // Retrieve the schedule ID
             Optional<Schedule> InsertedSchedule = dataService.schedules.get(dataService.schedules.getAll().get(0).id);
             if (InsertedSchedule.isPresent()) {
-                // Test the retrieved ID against control ID
+                // Test the retrieved time against control time
                 assertEquals(TestDate.getEpochSecond(), InsertedSchedule.get().startTime.getEpochSecond());
 
                 // Clean up and delete the billboard + schedule
@@ -336,7 +334,7 @@ public class ScheduleTests {
             // Retrieve the testing schedule
             Optional<Schedule> ChangeSchedule = dataService.schedules.get(dataService.schedules.getAll().get(0).id);
             if (ChangeSchedule.isPresent()) {
-                // Test the retrieved schedule against the control schedule
+                // Test the retrieved time against the control time
                 assertEquals(ChangeSchedule.get().startTime.getEpochSecond(), TestDate.getEpochSecond());
                 // Change the duration of the schedule
                 ChangeSchedule.get().duration = 60;
@@ -417,11 +415,11 @@ public class ScheduleTests {
                 if (DeletingBillboard.isPresent()) {
                     dataService.billboards.delete(DeletingBillboard.get());
                 } else {
-                    fail("Error fetching permissions");
+                    fail("Error fetching billboard");
                 }
 
             } else {
-                fail("Error fetching permissions");
+                fail("Error fetching schedule");
             }
         } else {
             fail("Error fetching billboard");
