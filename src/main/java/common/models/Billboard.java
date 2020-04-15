@@ -1,8 +1,11 @@
 package common.models;
 
+import common.utils.RandomFactory;
+
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 
 /**
  * This class consists of the billboard object and its associated methods.
@@ -122,6 +125,25 @@ public class Billboard implements Serializable {
             rs.getString("informationColor"),
             rs.getBoolean("locked"),
             rs.getInt("userId"));
+    }
+
+    /**
+     * Generates a random billboard object with random variables
+     * @param userId: the id of the user creating the billboard
+     * @return a randomised billboard
+     */
+    public static Billboard Random(int userId) {
+        return new Billboard(
+            RandomFactory.String(),
+            RandomFactory.String(),
+            RandomFactory.Color(),
+            RandomFactory.Bytes(30),
+            RandomFactory.Color(),
+            RandomFactory.String(),
+            RandomFactory.Color(),
+            RandomFactory.Boolean(),
+            userId
+        );
     }
 
 }

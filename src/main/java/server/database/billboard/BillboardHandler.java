@@ -24,7 +24,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     Connection connection;
 
     // This is the mock "database" used for testing
-    List<Billboard> MockDB = new ArrayList<Billboard>();
+    List<Billboard> mockDB = new ArrayList<Billboard>();
 
     /**
      * The BillboardHandler Constructor.
@@ -66,7 +66,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             return ReturnedValue;
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
-            for (Billboard billboard : this.MockDB) {
+            for (Billboard billboard : this.mockDB) {
                 if (billboard.id == id) {
                     return Optional.of(billboard);
                 }
@@ -108,7 +108,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             return ReturnedValue;
         } else {
             // Loop through and find the billboard with the requested name or return an optional empty value
-            for (Billboard billboard : this.MockDB) {
+            for (Billboard billboard : this.mockDB) {
                 if (billboard.name.equals(billboardName)) {
                     return Optional.of(billboard);
                 }
@@ -146,7 +146,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             // Clean up query
             sqlStatement.close();
         } else {
-            billboards = this.MockDB;
+            billboards = this.mockDB;
         }
 
       return billboards;
@@ -181,7 +181,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             sqlStatement.close();
         } else {
             // Loop through and find the billboard with the lock status and add to billboards
-            for (Billboard b : this.MockDB) {
+            for (Billboard b : this.mockDB) {
                 if (b.locked == lock) {
                     billboards.add(b);
                 }
@@ -222,7 +222,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             // Clean up query
             sqlStatement.close();
         } else {
-            MockDB.add(billboard);
+            mockDB.add(billboard);
         }
     }
 
@@ -250,7 +250,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             sqlStatement.close();
         } else {
             // Loop through mock database and find the billboard to update, then update it
-            for (Billboard mockBillboard : this.MockDB) {
+            for (Billboard mockBillboard : this.mockDB) {
                 if (mockBillboard.id  == billboard.id) {
                     mockBillboard = billboard;
                 }
@@ -277,7 +277,28 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             sqlStatement.close();
         } else {
             // Delete billboard
-            MockDB.remove(billboard);
+            mockDB.remove(billboard);
+        }
+    }
+
+    /**
+     * Clears Billboard all entries in database for unit test cleanup.
+     *
+     * @throws SQLException: this exception is thrown when there is an issue deleting data from the database.
+     */
+    public void deleteAll() throws SQLException {
+        if (this.connection != null) {
+            // Attempt to query the database
+            Statement sqlStatement = connection.createStatement();
+            // Create a query that deletes the billboard and executes the query
+            String query = "DELETE FROM BILLBOARDS";
+            sqlStatement.executeUpdate(query);
+
+            // Cleans up query
+            sqlStatement.close();
+        } else {
+            // Delete all billboards
+            mockDB.clear();
         }
     }
 }

@@ -1,5 +1,7 @@
 package common.models;
 
+import common.utils.RandomFactory;
+
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,7 +57,6 @@ public class User implements Serializable {
         this.salt = salt;
     }
 
-
     /**
      * Change the password of the user
      *
@@ -87,5 +88,17 @@ public class User implements Serializable {
             rs.getString("username"),
             rs.getString("password"),
             rs.getString("salt"));
+    }
+
+    /**
+     * Generates a User object with random variables
+     * @return a randomised User object
+     */
+    public static User Random() {
+        return new User(
+            RandomFactory.String(),
+            RandomFactory.String(),
+            RandomFactory.String()
+        );
     }
 }
