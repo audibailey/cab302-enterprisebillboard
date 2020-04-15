@@ -1,5 +1,7 @@
 package common.models;
 
+import common.utils.RandomFactory;
+
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,5 +70,23 @@ public class Permissions implements Serializable {
             rs.getBoolean("canScheduleBillboard"),
             rs.getBoolean("canEditUsers"),
             rs.getBoolean("canViewBillboard"));
+    }
+
+    /**
+     * Generates a random permissions object with random variables
+     * @param id: the id of the user
+     * @param username: the user's username
+     * @return a randomised permissions object
+     */
+    public static Permissions Random(int id, String username) {
+        return new Permissions(
+            id,
+            username,
+            RandomFactory.Boolean(),
+            RandomFactory.Boolean(),
+            RandomFactory.Boolean(),
+            RandomFactory.Boolean(),
+            RandomFactory.Boolean()
+        );
     }
 }
