@@ -23,8 +23,8 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     Connection connection;
 
     // This is the mock "database" used for testing
-    List<Schedule> MockDB = new ArrayList<Schedule>();
-    int MockDBNum = 0;
+    List<Schedule> mockDB = new ArrayList<Schedule>();
+    int mockDBNum = 0;
 
     public ScheduleHandler(Connection connection) {
         this.connection = connection;
@@ -34,35 +34,75 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     /**
      * Get schedule from schedule ID.
      *
-     * @param ScheduleID: the id of the schedule.
+     * @param scheduleId: the id of the schedule.
      * @return Optional<Schedule>: this returns the billboard schedule or an optional empty value.
      * @throws SQLException: this exception is thrown when there is an issue fetching data from the database.
      */
-    public Optional<Schedule> get(int ScheduleID) throws SQLException {
+    public Optional<Schedule> get(int scheduleId) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
             // Initialise return value
-            Optional<Schedule> ReturnSchedule = Optional.empty();
+            Optional<Schedule> returnSchedule = Optional.empty();
 
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
 
             // Create a query that selects schedule based on the id and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE id = " + ScheduleID);
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE id = " + scheduleId);
 
             // Use the result of the database query to create the schedule object and save it
             while (result.next()) {
-                ReturnSchedule = Optional.of(Schedule.fromSQL(result));
+                returnSchedule = Optional.of(Schedule.fromSQL(result));
             }
 
             // Clean up query
             sqlStatement.close();
 
-            return ReturnSchedule;
+            return returnSchedule;
         } else {
             // Loop through and find the schedule with the requested ID or return an optional empty value
-            for (Schedule s : this.MockDB) {
-                if (s.id == ScheduleID) {
+            for (Schedule s : this.mockDB) {
+                if (s.id == scheduleId) {
+                    return Optional.of(s);
+                }
+            }
+
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Get schedule from billboard name.
+     *
+     * @param billboardName: the name of the billboard.
+     * @return Optional<Schedule>: this returns the billboard schedule or an optional empty value.
+     * @throws SQLException: this exception is thrown when there is an issue fetching data from the database.
+     */
+    public Optional<Schedule> get(String billboardName) throws SQLException {
+        // Check that it's not in testing mode
+        if (this.connection != null) {
+            // Initialise return value
+            Optional<Schedule> returnSchedule = Optional.empty();
+
+            // Attempt to query the database
+            Statement sqlStatement = connection.createStatement();
+
+            // Create a query that selects schedule based on the id and execute the query
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE billboardName = '" + billboardName + "'");
+
+            // Use the result of the database query to create the schedule object and save it
+            while (result.next()) {
+                returnSchedule = Optional.of(Schedule.fromSQL(result));
+            }
+
+            // Clean up query
+            sqlStatement.close();
+
+            return returnSchedule;
+        } else {
+            // Loop through and find the schedule with the requested ID or return an optional empty value
+            for (Schedule s : this.mockDB) {
+                if (s.billboardName == billboardName) {
                     return Optional.of(s);
                 }
             }
@@ -97,7 +137,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             // Clean up query
             sqlStatement.close();
         } else {
-            schedules = this.MockDB;
+            schedules = this.mockDB;
         }
 
         return schedules;
@@ -127,9 +167,9 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             sqlStatement.close();
         } else {
             // Emulate auto increment ID
-            schedule.id = MockDBNum;
-            this.MockDB.add(schedule);
-            MockDBNum++;
+            schedule.id = mockDBNum;
+            this.mockDB.add(schedule);
+            mockDBNum++;
         }
     }
 
@@ -157,7 +197,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             sqlStatement.close();
         } else {
             // Loop through mock database and find the schedule to update, then update it
-            for (Schedule mockSchedule : this.MockDB) {
+            for (Schedule mockSchedule : this.mockDB) {
                 if (mockSchedule.id == schedule.id) {
                     mockSchedule = schedule;
                 }
@@ -178,12 +218,33 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             Statement sqlStatement = connection.createStatement();
 
             // Create a query that deletes the schedule and executes the query
-            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE schedules.id = " + schedule.id);
+            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE id = " + schedule.id);
 
             // Clean up query
             sqlStatement.close();
         } else {
-            this.MockDB.remove(schedule);
+            this.mockDB.remove(schedule);
+        }
+    }
+
+    /**
+     * Clears all Schedule entries in database for unit test cleanup.
+     *
+     * @throws SQLException: this exception is thrown when there is an issue deleting data from the database.
+     */
+    public void deleteAll() throws SQLException {
+        if (this.connection != null) {
+            // Attempt to query the database
+            Statement sqlStatement = connection.createStatement();
+            // Create a query that deletes the billboard and executes the query
+            String query = "DELETE FROM SCHEDULES";
+            sqlStatement.executeUpdate(query);
+
+            // Cleans up query
+            sqlStatement.close();
+        } else {
+            // Delete all billboards
+            mockDB.clear();
         }
     }
 }

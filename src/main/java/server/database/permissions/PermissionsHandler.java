@@ -23,7 +23,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     Connection connection;
 
     // This is the mock "database" used for testing
-    List<Permissions> MockDB = new ArrayList<Permissions>();
+    List<Permissions> mockDB = new ArrayList<Permissions>();
 
     /**
      * The PermissionsHandler Constructor.
@@ -64,7 +64,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             return ReturnPermissions;
         } else {
             // Loop through and find the user permissions with the requested id or return an optional empty value
-            for (Permissions p : this.MockDB) {
+            for (Permissions p : this.mockDB) {
                 if (p.id == UserID) {
                     return Optional.of(p);
                 }
@@ -104,7 +104,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             return ReturnPermissions;
         } else {
             // Loop through and find the user permissions with the requested name or return an optional empty value
-            for (Permissions p : this.MockDB) {
+            for (Permissions p : this.mockDB) {
                 if (p.username.equals(username)) {
                     return Optional.of(p);
                 }
@@ -139,7 +139,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             // Clean up query
             sqlStatement.close();
         } else {
-            permissions = this.MockDB;
+            permissions = this.mockDB;
         }
 
         return permissions;
@@ -168,7 +168,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             // Clean up query
             sqlStatement.close();
         } else {
-            this.MockDB.add(permissions);
+            this.mockDB.add(permissions);
         }
     }
 
@@ -198,7 +198,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             sqlStatement.close();
         } else {
             // Loop through mock database and find the user permissions to update, then update it
-            for (Permissions mockPermissions : this.MockDB) {
+            for (Permissions mockPermissions : this.mockDB) {
                 if (mockPermissions.id == permissions.id) {
                     mockPermissions = permissions;
                 }
@@ -224,7 +224,28 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             // Clean up query
             sqlStatement.close();
         } else {
-            this.MockDB.remove(permissions);
+            this.mockDB.remove(permissions);
+        }
+    }
+
+    /**
+     * Clears all Permission entries in database for unit test cleanup.
+     *
+     * @throws SQLException: this exception is thrown when there is an issue deleting data from the database.
+     */
+    public void deleteAll() throws SQLException {
+        if (this.connection != null) {
+            // Attempt to query the database
+            Statement sqlStatement = connection.createStatement();
+            // Create a query that deletes the billboard and executes the query
+            String query = "DELETE FROM PERMISSIONS";
+            sqlStatement.executeUpdate(query);
+
+            // Cleans up query
+            sqlStatement.close();
+        } else {
+            // Delete all billboards
+            mockDB.clear();
         }
     }
 }
