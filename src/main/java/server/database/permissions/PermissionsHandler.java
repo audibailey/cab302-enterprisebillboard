@@ -237,7 +237,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
             // Create a query that deletes the billboard and executes the query
-            String query = "TRUNCATE TABLE PERMISSIONS";
+            String query = "DELETE FROM PERMISSIONS";
             sqlStatement.executeUpdate(query);
 
             // Cleans up query

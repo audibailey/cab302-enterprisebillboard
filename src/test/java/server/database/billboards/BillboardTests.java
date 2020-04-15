@@ -36,6 +36,8 @@ public class BillboardTests {
     @BeforeAll
     public static void ConnectToDatabase() throws Exception {
         dataService = new DataService(true);
+        dataService.billboards.deleteAll();
+        dataService.users.deleteAll();
 
         // Create the test user and save its ID
         User masterUser = User.Random();

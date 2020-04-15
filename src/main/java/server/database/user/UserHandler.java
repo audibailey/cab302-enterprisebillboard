@@ -241,7 +241,7 @@ public class UserHandler implements ObjectHandler<User> {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
             // Create a query that deletes the billboard and executes the query
-            String query = "TRUNCATE TABLE USERS";
+            String query = "DELETE FROM USERS";
             sqlStatement.executeUpdate(query);
 
             // Cleans up query

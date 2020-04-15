@@ -35,6 +35,8 @@ public class UserTests {
     @BeforeAll
     public static void ConnectToDatabase() throws Exception {
         dataService = new DataService(true);
+        dataService.permissions.deleteAll();
+        dataService.users.deleteAll();
     }
 
     /**

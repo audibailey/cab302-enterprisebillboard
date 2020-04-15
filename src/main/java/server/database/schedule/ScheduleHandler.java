@@ -88,7 +88,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             Statement sqlStatement = connection.createStatement();
 
             // Create a query that selects schedule based on the id and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE billboardName = " + billboardName);
+            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE billboardName = '" + billboardName + "'");
 
             // Use the result of the database query to create the schedule object and save it
             while (result.next()) {
@@ -218,7 +218,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             Statement sqlStatement = connection.createStatement();
 
             // Create a query that deletes the schedule and executes the query
-            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE schedules.id = " + schedule.id);
+            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE id = " + schedule.id);
 
             // Clean up query
             sqlStatement.close();
@@ -236,7 +236,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
             // Create a query that deletes the billboard and executes the query
-            String query = "TRUNCATE TABLE SCHEDULES";
+            String query = "DELETE FROM SCHEDULES";
             sqlStatement.executeUpdate(query);
 
             // Cleans up query
