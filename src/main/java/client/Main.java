@@ -1,6 +1,13 @@
 package client;
 
 import client.frames.*;
+import common.models.Billboard;
+import common.models.Request;
+import common.models.Response;
+import common.models.User;
+
+import java.io.*;
+import java.net.Socket;
 
 /**
  * This class consists of the Billboard Viewer handler.
@@ -24,9 +31,30 @@ public class Main {
     /**
      * Main class to run GUI Application and socket interface
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
+
+        Socket s = new Socket("localhost", 12345);
+
+        OutputStream o = s.getOutputStream();
+        InputStream i = s.getInputStream();
+
+        ObjectOutputStream oos = new ObjectOutputStream(o);
+        ObjectInputStream ois = new ObjectInputStream(i);
+
+        User u = User.Random();
+
+        Request<User> ur = new Request<>("PUT", u);
+
+        oos.writeObject(ur);
+        oos.flush();
+
+        ois.close();
+        oos.close();
+
+        s.close();
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowLogin();

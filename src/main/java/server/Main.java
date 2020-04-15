@@ -1,11 +1,11 @@
 package server;
 
-import common.models.Billboard;
-import common.models.Request;
-import common.models.Response;
-import common.models.User;
+import common.models.*;
 import server.database.DataService;
-import java.io.IOException;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +16,40 @@ public class Main {
 
         DataService dataService = new DataService(true);
 
-        dataService.billboards.getAll();
-        //dataService.users.getAll();
-        dataService.schedules.getAll();
-
-        // Billboard.fromObject(dataService.billboards.get("Billboard 1"));
-
-        new Response<User>(new ArrayList<User>(), null);
-        new Request<User>("POST", new User()).data.getClass();
+        ServerSocket ss = new ServerSocket(12345);
 
         while (true) {
-            System.out.println("Server");
-            Thread.sleep(1000);
+            Socket s = ss.accept();
+
+            System.out.println(s.getInetAddress());
+
+            ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+
+            Object o = ois.readObject();
+
+            if (o instanceof Request) {
+                Request r = (Request) o;
+
+                if (r.data instanceof User) {
+                    Request<User> ur = (Request<User>) o;
+
+                } else if (r.data instanceof Billboard) {
+                    Request<Billboard> br = (Request<Billboard>) o;
+
+                } else if (r.data instanceof Schedule) {
+                    Request<Schedule> sr = (Request<Schedule>) o;
+
+                } else if (r.data instanceof Permissions) {
+                    Request<Permissions> pr = (Request<Permissions>) o;
+
+                }
+            }
+
+            oos.close();
+            ois.close();
+
+            s.close();
         }
     }
 }
