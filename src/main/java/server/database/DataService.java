@@ -15,6 +15,13 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * Class that handles all the database interactions for the server.
+ *
+ * @author Jamie Martin
+ * @author Kevin Huynh
+ * @author Perdana Bailey
+ */
 public class DataService {
     private Connection connection;
     public BillboardHandler billboards;
