@@ -25,17 +25,34 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="chore: Update developer information.">
-      <change afterPath="$PROJECT_DIR$/src/test/java/xml/Billboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/xml/ClientTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/xml/ServerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/xml/StatusCodes.java" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Prepare">
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/components/Menu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/components/SelectableTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/components/SelectableTableModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/frames/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/frames/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/panels/BillboardPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/panels/PanelHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/panels/SchedulePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/panels/UserPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/common/swing/Notification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/common/system/Notification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/ExitEvents.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/ViewerPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MajorAssessment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/viewer/viewerTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="36" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -89,48 +106,43 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/common" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jamie\Documents\GitHub\cab302majorassessment\src\main\java\common" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="client.components" />
+      <recent name="client" />
+      <recent name="viewer" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jamie\Documents\GitHub\cab302majorassessment\src\main\resources" />
+      <recent name="C:\Users\jamie\Documents\GitHub\cab302majorassessment" />
+      <recent name="C:\Users\jamie\Documents\GitHub\cab302majorassessment\src\main\java\common" />
       <recent name="$PROJECT_DIR$/src/test/java" />
       <recent name="$PROJECT_DIR$/src/main/java" />
-      <recent name="$PROJECT_DIR$/src/test" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Server">
-    <configuration name="viewerTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MajorAssessment" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="viewer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="viewer" />
-      <option name="MAIN_CLASS_NAME" value="viewer.viewerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="client.Main" />
       <module name="MajorAssessment" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="client.*" />
+          <option name="PATTERN" value="client.frames.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -138,11 +150,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="server.Main" />
+    <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="client.frames.Login" />
       <module name="MajorAssessment" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="client.frames.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="client.MainFrame" />
+      <module name="MajorAssessment" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="client.frames.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -160,28 +189,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in MajorAssessment" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="viewer in MajorAssessment" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MajorAssessment" />
-      <option name="PACKAGE_NAME" value="" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="viewer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="viewer" />
       <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Android JUnit.viewerTest" />
-      <item itemvalue="Application.Server" />
+      <item itemvalue="Application.Login" />
       <item itemvalue="Application.Viewer" />
       <item itemvalue="Application.Client" />
-      <item itemvalue="JUnit.All in MajorAssessment" />
+      <item itemvalue="Application.MainFrame" />
+      <item itemvalue="JUnit.viewer in MajorAssessment" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in MajorAssessment" />
         <item itemvalue="Application.Client" />
+        <item itemvalue="Application.MainFrame" />
         <item itemvalue="Application.Viewer" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Android JUnit.viewerTest" />
+        <item itemvalue="JUnit.viewer in MajorAssessment" />
       </list>
     </recent_temporary>
   </component>
@@ -198,6 +232,8 @@
       <workItem from="1584678076584" duration="3275000" />
       <workItem from="1584682110411" duration="8233000" />
       <workItem from="1584930657369" duration="631000" />
+      <workItem from="1586931967159" duration="177000" />
+      <workItem from="1586934151706" duration="344000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -337,72 +373,132 @@
     </state>
     <state x="310" y="116" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1707.920@0.0.1707.920" timestamp="1584346051659" />
     <state x="0" y="123" width="1440" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1584690534128" />
+    <state x="3064" y="301" key="#com.intellij.ide.util.MemberChooser" timestamp="1586499379641">
+      <screen x="1920" y="0" width="1920" height="999" />
+    </state>
+    <state x="3064" y="301" key="#com.intellij.ide.util.MemberChooser/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586499379641" />
+    <state x="1144" y="313" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1586071697997" />
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1584707124137">
       <screen x="0" y="0" width="1707" height="920" />
     </state>
     <state x="403" y="109" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1707.920@0.0.1707.920" timestamp="1584707124137" />
     <state x="340" y="117" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1440.797@0.23.1440.797" timestamp="1584687694337" />
+    <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1586082276815">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586082276815" />
+    <state x="2634" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586505484009">
+      <screen x="1920" y="0" width="1920" height="999" />
+    </state>
+    <state x="2634" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586505484009" />
+    <state x="2610" y="256" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586505660237">
+      <screen x="1920" y="0" width="1920" height="999" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586146460545" />
+    <state x="2610" y="256" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586505660237" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2" timestamp="1584931241309">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1584931241309" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
+    <state width="439" height="466" key="DebuggerActiveHint" timestamp="1586504534721">
+      <screen x="1920" y="0" width="1920" height="999" />
+    </state>
+    <state width="439" height="466" key="DebuggerActiveHint/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586504534721" />
+    <state x="740" y="237" key="FileChooserDialogImpl" timestamp="1586068566205">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="237" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1586068566205" />
     <state x="526" y="332" key="GitRewordDialog" timestamp="1584691778310">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="526" y="332" key="GitRewordDialog/0.23.1440.797@0.23.1440.797" timestamp="1584691778310" />
-    <state width="1398" height="185" key="GridCell.Tab.0.bottom" timestamp="1584930932495">
+    <state width="1398" height="202" key="GridCell.Tab.0.bottom" timestamp="1586934489072">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="185" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584930932495" />
+    <state width="1877" height="321" key="GridCell.Tab.0.bottom/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586932143765" />
+    <state width="1877" height="212" key="GridCell.Tab.0.bottom/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601517" />
+    <state width="1398" height="202" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1586934489072" />
     <state width="1664" height="242" key="GridCell.Tab.0.bottom/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586081417445" />
     <state width="1398" height="153" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1398" height="185" key="GridCell.Tab.0.center" timestamp="1584930932494">
+    <state width="1398" height="202" key="GridCell.Tab.0.center" timestamp="1586934489070">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="185" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1584930932494" />
+    <state width="1877" height="321" key="GridCell.Tab.0.center/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586932143764" />
+    <state width="1877" height="212" key="GridCell.Tab.0.center/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601517" />
+    <state width="1398" height="202" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1586934489070" />
     <state width="1664" height="242" key="GridCell.Tab.0.center/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586081417444" />
     <state width="1398" height="153" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1398" height="185" key="GridCell.Tab.0.left" timestamp="1584930932493">
+    <state width="1398" height="202" key="GridCell.Tab.0.left" timestamp="1586934489070">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="185" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1584930932493" />
+    <state width="1877" height="321" key="GridCell.Tab.0.left/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586932143764" />
+    <state width="1877" height="212" key="GridCell.Tab.0.left/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601517" />
+    <state width="1398" height="202" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1586934489070" />
     <state width="1664" height="242" key="GridCell.Tab.0.left/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586081417444" />
     <state width="1398" height="153" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1398" height="185" key="GridCell.Tab.0.right" timestamp="1584930932494">
+    <state width="1398" height="202" key="GridCell.Tab.0.right" timestamp="1586934489071">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="185" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1584930932494" />
+    <state width="1877" height="321" key="GridCell.Tab.0.right/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586932143764" />
+    <state width="1877" height="212" key="GridCell.Tab.0.right/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601517" />
+    <state width="1398" height="202" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1586934489071" />
     <state width="1664" height="242" key="GridCell.Tab.0.right/0.0.1707.920@0.0.1707.920" timestamp="1584707546562" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586081417445" />
     <state width="1398" height="153" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1584690641242" />
-    <state width="1664" height="300" key="GridCell.Tab.1.bottom" timestamp="1584707542560">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1877" height="212" key="GridCell.Tab.1.bottom" timestamp="1586506601424">
+      <screen x="1920" y="0" width="1920" height="999" />
     </state>
+    <state width="1878" height="213" key="GridCell.Tab.1.bottom/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586149922655" />
+    <state width="1877" height="212" key="GridCell.Tab.1.bottom/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601424" />
     <state width="1664" height="300" key="GridCell.Tab.1.bottom/0.0.1707.920@0.0.1707.920" timestamp="1584707542560" />
-    <state width="1664" height="300" key="GridCell.Tab.1.center" timestamp="1584707542560">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1877" height="212" key="GridCell.Tab.1.center" timestamp="1586506601424">
+      <screen x="1920" y="0" width="1920" height="999" />
     </state>
+    <state width="1878" height="213" key="GridCell.Tab.1.center/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586149922655" />
+    <state width="1877" height="212" key="GridCell.Tab.1.center/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601424" />
     <state width="1664" height="300" key="GridCell.Tab.1.center/0.0.1707.920@0.0.1707.920" timestamp="1584707542560" />
-    <state width="1664" height="300" key="GridCell.Tab.1.left" timestamp="1584707542560">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1877" height="212" key="GridCell.Tab.1.left" timestamp="1586506601424">
+      <screen x="1920" y="0" width="1920" height="999" />
     </state>
+    <state width="1878" height="213" key="GridCell.Tab.1.left/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586149922655" />
+    <state width="1877" height="212" key="GridCell.Tab.1.left/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601424" />
     <state width="1664" height="300" key="GridCell.Tab.1.left/0.0.1707.920@0.0.1707.920" timestamp="1584707542560" />
-    <state width="1664" height="300" key="GridCell.Tab.1.right" timestamp="1584707542560">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state width="1877" height="212" key="GridCell.Tab.1.right" timestamp="1586506601424">
+      <screen x="1920" y="0" width="1920" height="999" />
     </state>
+    <state width="1878" height="213" key="GridCell.Tab.1.right/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586149922655" />
+    <state width="1877" height="212" key="GridCell.Tab.1.right/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586506601424" />
     <state width="1664" height="300" key="GridCell.Tab.1.right/0.0.1707.920@0.0.1707.920" timestamp="1584707542560" />
-    <state x="502" y="60" key="SettingsEditor" timestamp="1584707469181">
-      <screen x="0" y="0" width="1707" height="920" />
+    <state x="308" y="192" key="IDE.errors.dialog" timestamp="1586934369609">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="308" y="192" key="IDE.errors.dialog/0.0.1440.900@0.0.1440.900" timestamp="1586934369609" />
+    <state x="490" y="175" key="Maven.ArtifactSearchDialog" timestamp="1586147854133">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="490" y="175" key="Maven.ArtifactSearchDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586147854133" />
+    <state x="625" y="219" key="NewModule_or_Project.wizard" timestamp="1586068547810">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="625" y="219" key="NewModule_or_Project.wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1586068547810" />
+    <state x="565" y="68" key="SettingsEditor" timestamp="1586002871659">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="502" y="60" key="SettingsEditor/0.0.1707.920@0.0.1707.920" timestamp="1584707469181" />
+    <state x="565" y="68" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586002871659" />
     <state x="208" y="23" key="SettingsEditor/0.23.1440.797@0.23.1440.797" timestamp="1584687881157" />
     <state x="602" y="344" key="VCS.EditChangelistDialog" timestamp="1584682915182">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="602" y="344" key="VCS.EditChangelistDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682915182" />
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1584691895155">
-      <screen x="0" y="23" width="1440" height="797" />
+    <state x="320" y="156" key="Vcs.Push.Dialog.v2" timestamp="1586934402020">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="320" y="156" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1586934402020" />
     <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584691895155" />
     <state x="512" y="344" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1584707213544">
       <screen x="0" y="0" width="1707" height="920" />
@@ -413,6 +509,10 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="511" y="342" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1584683011569" />
+    <state x="368" y="245" key="git4idea.merge.GitMergeDialog" timestamp="1586934354911">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="368" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1586934354911" />
     <state x="485" y="317" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1584682963083">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
@@ -421,5 +521,14 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="114" y="44" key="new project wizard/0.23.1440.797@0.23.1440.797" timestamp="1584688890715" />
+    <state x="666" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1586932045031">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="666" y="277" key="refactoring.ChangeSignatureDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586932045031" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/cab302majorassessment$Client.ic" NAME="Client Coverage Results" MODIFIED="1586505622585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>client.frames.*</FILTER>
+    </SUITE>
   </component>
 </project>
