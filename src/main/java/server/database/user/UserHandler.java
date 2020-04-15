@@ -1,6 +1,5 @@
 package server.database.user;
 
-import common.models.Billboard;
 import common.models.User;
 import server.database.ObjectHandler;
 import java.sql.Connection;
@@ -24,7 +23,7 @@ public class UserHandler implements ObjectHandler<User> {
     Connection connection;
 
     // This is the mock "database" used for testing
-    List<User> MockDB = new ArrayList<User>();
+    List<User> mockDB = new ArrayList<User>();
     int MockDBNum = 0;
 
     /**
@@ -64,7 +63,7 @@ public class UserHandler implements ObjectHandler<User> {
             return ReturnUser;
         } else {
             // Loop through and find the user with the requested name or return an optional empty value
-            for (User u : this.MockDB) {
+            for (User u : this.mockDB) {
                 if (u.id == id) {
                     return Optional.of(u);
                 }
@@ -104,7 +103,7 @@ public class UserHandler implements ObjectHandler<User> {
             return ReturnUser;
         } else {
             // Loop through and find the user with the requested name or return an optional empty value
-            for (User user : this.MockDB) {
+            for (User user : this.mockDB) {
                 if (user.username.equals(username)) {
                     return Optional.of(user);
                 }
@@ -140,7 +139,7 @@ public class UserHandler implements ObjectHandler<User> {
             // Clean up query
             sqlStatement.close();
         } else {
-            users = this.MockDB;
+            users = this.mockDB;
         }
 
         return users;
@@ -172,7 +171,7 @@ public class UserHandler implements ObjectHandler<User> {
         } else {
             // Emulate auto increment ID
             user.id = MockDBNum;
-            this.MockDB.add(user);
+            this.mockDB.add(user);
             MockDBNum++;
         }
     }
@@ -202,7 +201,7 @@ public class UserHandler implements ObjectHandler<User> {
             sqlStatement.close();
         } else {
             // Loop through mock database and find the user to update, then update it
-            for (User mockUser : this.MockDB) {
+            for (User mockUser : this.mockDB) {
                 if (mockUser.id == user.id) {
                     mockUser = user;
                 }
@@ -229,7 +228,27 @@ public class UserHandler implements ObjectHandler<User> {
             // Clean up query
             sqlStatement.close();
         } else {
-            this.MockDB.remove(user);
+            this.mockDB.remove(user);
+        }
+    }
+
+    /**
+     * clears all entries in database for unit test cleanup
+     * @throws Exception
+     */
+    public void deleteAll() throws Exception {
+        if (this.connection != null) {
+            // Attempt to query the database
+            Statement sqlStatement = connection.createStatement();
+            // Create a query that deletes the billboard and executes the query
+            String query = "TRUNCATE TABLE USERS";
+            sqlStatement.executeUpdate(query);
+
+            // Cleans up query
+            sqlStatement.close();
+        } else {
+            // Delete all billboards
+            mockDB.clear();
         }
     }
 }

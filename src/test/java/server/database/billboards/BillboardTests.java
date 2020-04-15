@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import common.models.User;
+import common.utils.RandomFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ public class BillboardTests {
     private static DataService dataService;
 
     // Test users ID for use in billboard testing
-    private static int UserID;
+    private static int userId;
 
     /**
      * Connects to the database or a mock database.
@@ -37,10 +38,10 @@ public class BillboardTests {
         dataService = new DataService(true);
 
         // Create the test user and save its ID
-        User MasterUser = new User("Username1", "Password", "Salt");
-        dataService.users.insert(MasterUser);
-        Optional<User> DatabasedUser = dataService.users.get("Username1");
-        DatabasedUser.ifPresent(user -> UserID = user.id);
+        User masterUser = User.Random();
+        dataService.users.insert(masterUser);
+        Optional<User> dbUser = dataService.users.get(masterUser.username);
+        dbUser.ifPresent(user -> userId = user.id);
     }
 
     /**
@@ -51,77 +52,36 @@ public class BillboardTests {
     @Test
     public void GetUnlockedBillboardsTest() throws Exception {
         // Create some testing billboards
-        Billboard BillboardOne = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
-        Billboard BillboardTwo = new Billboard(
-            "Billboard2",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            true,
-            UserID
-        );
-        Billboard BillboardThree = new Billboard(
-            "Billboard3",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
-        Billboard BillboardFour = new Billboard(
-            "Billboard4",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
+        Billboard billboard1 = Billboard.Random(userId);
+        billboard1.locked = false;
+        Billboard billboard2 = Billboard.Random(userId);
+        billboard2.locked = true;
+        Billboard billboard3 = Billboard.Random(userId);
+        billboard3.locked = false;
+        Billboard billboard4 = Billboard.Random(userId);
+        billboard4.locked = false;
 
         // Create the array to test against based on the testing billboards
-        List<Billboard> ControlArray = new ArrayList<Billboard>();
-        ControlArray.add(BillboardOne);
-        ControlArray.add(BillboardThree);
-        ControlArray.add(BillboardFour);
+        List<Billboard> control = new ArrayList<Billboard>();
+        control.add(billboard1);
+        control.add(billboard3);
+        control.add(billboard4);
 
         // Insert the testing billboards into the database
-        dataService.billboards.insert(BillboardOne);
-        dataService.billboards.insert(BillboardTwo);
-        dataService.billboards.insert(BillboardThree);
-        dataService.billboards.insert(BillboardFour);
+        dataService.billboards.insert(billboard1);
+        dataService.billboards.insert(billboard2);
+        dataService.billboards.insert(billboard3);
+        dataService.billboards.insert(billboard4);
 
         // Retrieve the testing billboards that aren't locked
-        List<Billboard> ListBillboards = dataService.billboards.getAll(false);
+        List<Billboard> billboards = dataService.billboards.getAll(false);
         assertEquals(
-            ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
-            ListBillboards.stream().map(billboard -> billboard.name).collect(Collectors.toList())
+            control.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
+            billboards.stream().map(billboard -> billboard.name).collect(Collectors.toList())
         );
 
         // Cleanup and delete all the billboards
-        List<Billboard> DeleteListBillboards = dataService.billboards.getAll();
-        List<Billboard> BillboardDeleteList = new ArrayList<Billboard>(DeleteListBillboards);
-        for (Billboard billboard : BillboardDeleteList) {
-            dataService.billboards.delete(billboard);
-        }
-
+        dataService.billboards.deleteAll();
     }
 
     /**
@@ -132,76 +92,36 @@ public class BillboardTests {
     @Test
     public void GetLockedBillboardsTest() throws Exception {
         // Create some testing billboards
-        Billboard BillboardOne = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
-        Billboard BillboardTwo = new Billboard(
-            "Billboard2",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            true,
-            UserID
-        );
-        Billboard BillboardThree = new Billboard(
-            "Billboard3",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
-        Billboard BillboardFour = new Billboard(
-            "Billboard4",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
+        Billboard billboard1 = Billboard.Random(userId);
+        billboard1.locked = false;
+        Billboard billboard2 = Billboard.Random(userId);
+        billboard2.locked = true;
+        Billboard billboard3 = Billboard.Random(userId);
+        billboard3.locked = false;
+        Billboard billboard4 = Billboard.Random(userId);
+        billboard4.locked = false;
 
         // Create the array to test against based on the testing billboards
-        List<Billboard> ControlArray = new ArrayList<Billboard>();
-        ControlArray.add(BillboardTwo);
+        List<Billboard> control = new ArrayList<Billboard>();
+        control.add(billboard2);
 
         // Insert the testing billboards into the database
-        dataService.billboards.insert(BillboardOne);
-        dataService.billboards.insert(BillboardTwo);
-        dataService.billboards.insert(BillboardThree);
-        dataService.billboards.insert(BillboardFour);
+        dataService.billboards.insert(billboard1);
+        dataService.billboards.insert(billboard2);
+        dataService.billboards.insert(billboard3);
+        dataService.billboards.insert(billboard4);
 
         // Retrieve the testing billboards that are locked
-        List<Billboard> ListBillboards = dataService.billboards.getAll(true);
+        List<Billboard> billboards = dataService.billboards.getAll(true);
 
         // Test the retrieved billboards names against the control billboards names
         assertEquals(
-            ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
-            ListBillboards.stream().map(billboard -> billboard.name).collect(Collectors.toList())
+            control.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
+            billboards.stream().map(billboard -> billboard.name).collect(Collectors.toList())
         );
 
         // Cleanup and delete all the billboards
-        List<Billboard> DeleteListBillboards = dataService.billboards.getAll();
-        List<Billboard> BillboardDeleteList = new ArrayList<Billboard>(DeleteListBillboards);
-        for (Billboard billboard : BillboardDeleteList) {
-            dataService.billboards.delete(billboard);
-        }
+        dataService.billboards.deleteAll();
     }
 
 
@@ -213,79 +133,35 @@ public class BillboardTests {
     @Test
     public void GetAllBillboardsTest() throws Exception {
         // Create some testing billboards
-        Billboard BillboardOne = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
-        Billboard BillboardTwo = new Billboard(
-            "Billboard2",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            true,
-            UserID
-        );
-        Billboard BillboardThree = new Billboard(
-            "Billboard3",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
-        Billboard BillboardFour = new Billboard(
-            "Billboard4",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
+        Billboard billboard1 = Billboard.Random(userId);
+        Billboard billboard2 = Billboard.Random(userId);
+        Billboard billboard3 = Billboard.Random(userId);
+        Billboard billboard4 = Billboard.Random(userId);
 
         // Create the array to test against based on the testing billboards
-        List<Billboard> ControlArray = new ArrayList<Billboard>();
-        ControlArray.add(BillboardOne);
-        ControlArray.add(BillboardTwo);
-        ControlArray.add(BillboardThree);
-        ControlArray.add(BillboardFour);
+        List<Billboard> control = new ArrayList<Billboard>();
+        control.add(billboard1);
+        control.add(billboard2);
+        control.add(billboard3);
+        control.add(billboard4);
 
         // Insert the testing billboards into the database
-        dataService.billboards.insert(BillboardOne);
-        dataService.billboards.insert(BillboardTwo);
-        dataService.billboards.insert(BillboardThree);
-        dataService.billboards.insert(BillboardFour);
+        dataService.billboards.insert(billboard1);
+        dataService.billboards.insert(billboard2);
+        dataService.billboards.insert(billboard3);
+        dataService.billboards.insert(billboard4);
 
         // Retrieve the testing billboards
-        List<Billboard> ListBillboards = dataService.billboards.getAll();
+        List<Billboard> billboards = dataService.billboards.getAll();
 
         // Test the retrieved billboards names against the control billboards names
         assertEquals(
-            ControlArray.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
-            ListBillboards.stream().map(billboard -> billboard.name).collect(Collectors.toList())
+            control.stream().map(billboard -> billboard.name).collect(Collectors.toList()),
+            billboards.stream().map(billboard -> billboard.name).collect(Collectors.toList())
         );
 
         // Cleanup and delete all the billboards
-        List<Billboard> DeleteListBillboards = dataService.billboards.getAll();
-        List<Billboard> BillboardDeleteList = new ArrayList<Billboard>(DeleteListBillboards);
-        for (Billboard billboard : BillboardDeleteList) {
-            dataService.billboards.delete(billboard);
-        }
+        dataService.billboards.deleteAll();
     }
 
     /**
@@ -296,29 +172,19 @@ public class BillboardTests {
     @Test
     public void GetBillboardNameTest() throws Exception {
         // Create a testing billboard
-        Billboard TestBillboard = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
+        Billboard billboard = Billboard.Random(userId);
 
         // Insert the testing billboard into the database
-        dataService.billboards.insert(TestBillboard);
+        dataService.billboards.insert(billboard);
 
         // Retrieve the testing billboard
-        Optional<Billboard> GotBillboard = dataService.billboards.get("Billboard1");
-        if (GotBillboard.isPresent()) {
+        Optional<Billboard> gotBillboard = dataService.billboards.get(billboard.name);
+        if (gotBillboard.isPresent()) {
             // Test the retrieved billboard name against the control name
-            assertEquals(GotBillboard.get().name, "Billboard1");
+            assertEquals(gotBillboard.get().name, billboard.name);
 
             // Cleanup and delete the billboard
-            dataService.billboards.delete(GotBillboard.get());
+            dataService.billboards.delete(gotBillboard.get());
         } else {
             fail("Error fetching billboard.");
         }
@@ -333,35 +199,24 @@ public class BillboardTests {
     @Test
     public void GetBillboardIDTest() throws Exception {
         // Create a testing billboard and insert it into the database
-        Billboard TestBillboard = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
-        dataService.billboards.insert(TestBillboard);
+        Billboard billboard = Billboard.Random(userId);
+        dataService.billboards.insert(billboard);
 
         // Fetch the billboard and save the ID
-        AtomicInteger TestBillboardID = new AtomicInteger();
-        dataService.billboards.get("Billboard1").ifPresent(billboard -> TestBillboardID.set(billboard.id));
+        AtomicInteger billboardId = new AtomicInteger();
+        dataService.billboards.get(billboard.name).ifPresent(b -> billboardId.set(b.id));
 
         // Retrieve the testing billboard
-        Optional<Billboard> GotBillboard = dataService.billboards.get(TestBillboardID.get());
-        if (GotBillboard.isPresent()) {
+        Optional<Billboard> gotBillboard = dataService.billboards.get(billboardId.get());
+        if (gotBillboard.isPresent()) {
             // Test the retrieved billboard name against the control name
-            assertEquals(GotBillboard.get().name, "Billboard1");
+            assertEquals(gotBillboard.get().name, billboard.name);
 
             // Cleanup and delete the billboard
-            dataService.billboards.delete(GotBillboard.get());
+            dataService.billboards.delete(gotBillboard.get());
         } else {
             fail("Error fetching billboard.");
         }
-
     }
 
     /**
@@ -372,26 +227,16 @@ public class BillboardTests {
     @Test
     public void AddBillboardTest() throws Exception {
         // Create a testing billboard
-        Billboard TestBillboard = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
+        Billboard billboard = Billboard.Random(userId);
 
         // Insert the testing billboard into the database
-        dataService.billboards.insert(TestBillboard);
+        dataService.billboards.insert(billboard);
 
         // Retrieve the testing billboard
-        Optional<Billboard> InsertedBillboard = dataService.billboards.get("Billboard1");
-        if (InsertedBillboard.isPresent()) {
-            assertEquals(InsertedBillboard.get().name, "Billboard1");
-            dataService.billboards.delete(InsertedBillboard.get());
+        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
+        if (insertedBillboard.isPresent()) {
+            assertEquals(insertedBillboard.get().name, billboard.name);
+            dataService.billboards.delete(insertedBillboard.get());
         } else {
             fail("Error fetching billboard.");
         }
@@ -405,34 +250,26 @@ public class BillboardTests {
     @Test
     public void UpdateBillboardTest() throws Exception {
         // Create a testing billboard
-        Billboard TestBillboard = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
+        Billboard billboard = Billboard.Random(userId);
+        String newName = RandomFactory.String();
 
         // Insert the testing billboard into the database
-        dataService.billboards.insert(TestBillboard);
+        dataService.billboards.insert(billboard);
 
         // Retrieve the testing billboard then update its name
-        Optional<Billboard> EditBillboard = dataService.billboards.get("Billboard1");
-        if (EditBillboard.isPresent()) {
-            EditBillboard.get().name = "Billboard2";
-            dataService.billboards.update(EditBillboard.get());
+        Optional<Billboard> editBillboard = dataService.billboards.get(billboard.name);
+        if (editBillboard.isPresent()) {
+            editBillboard.get().name = newName;
+
+            dataService.billboards.update(editBillboard.get());
         } else {
             fail("Error fetching testing billboard.");
         }
 
         // Retrieve the testing billboard and test if the name was changed then delete it
-        Optional<Billboard> NewBillboard = dataService.billboards.get("Billboard2");
+        Optional<Billboard> NewBillboard = dataService.billboards.get(newName);
         if (NewBillboard.isPresent()) {
-            assertEquals(NewBillboard.get().name, "Billboard2");
+            assertEquals(NewBillboard.get().name, newName);
             dataService.billboards.delete(NewBillboard.get());
         } else {
             fail("Error fetching changed billboard.");
@@ -447,29 +284,19 @@ public class BillboardTests {
     @Test
     public void DeleteBillboardTest() throws Exception {
         // Create a testing billboard
-        Billboard TestBillboard = new Billboard(
-            "Billboard1",
-            "Test Message",
-            "blue",
-            "test".getBytes(),
-            "green",
-            "Test Information",
-            "red",
-            false,
-            UserID
-        );
+        Billboard billboard = Billboard.Random(userId);
 
         // Insert the testing billboard into the database
-        dataService.billboards.insert(TestBillboard);
+        dataService.billboards.insert(billboard);
 
         // Retrieve the testing billboard then delete it
-        Optional<Billboard> ToDeleteBillboard = dataService.billboards.get("Billboard1");
-        if (ToDeleteBillboard.isPresent()) {
-            dataService.billboards.delete(ToDeleteBillboard.get());
+        Optional<Billboard> toDeleteBillboard = dataService.billboards.get(billboard.name);
+        if (toDeleteBillboard.isPresent()) {
+            dataService.billboards.delete(toDeleteBillboard.get());
 
             // Attempt to retrieve the testing billboard and ensure nothing is returned
-            Optional<Billboard> DeletedBillboard = dataService.billboards.get("Billboard1");
-            assertTrue(DeletedBillboard.isEmpty());
+            Optional<Billboard> deletedBillboard = dataService.billboards.get(billboard.name);
+            assertTrue(deletedBillboard.isEmpty());
         } else {
             fail("Error fetching to be deleted billboard.");
         }
@@ -482,9 +309,9 @@ public class BillboardTests {
      */
     @AfterAll
     public static void DisconnectDatabase() throws Exception {
-        Optional<User> TestUser = dataService.users.get(UserID);
-        if (TestUser.isPresent()) {
-            dataService.users.delete(TestUser.get());
+        Optional<User> user = dataService.users.get(userId);
+        if (user.isPresent()) {
+            dataService.users.delete(user.get());
         }
 
         dataService.closeConnection();

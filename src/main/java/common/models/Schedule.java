@@ -1,5 +1,7 @@
 package common.models;
 
+import common.utils.RandomFactory;
+
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -80,5 +82,19 @@ public class Schedule implements Serializable {
             rs.getTimestamp("startTime").toInstant(),
             rs.getInt("duration"),
             rs.getInt("interval"));
+    }
+
+    /**
+     * Generates a random Schedule object with random variables
+     * @param billboardName: the name of the billboard
+     * @return a randomised schedule object
+     */
+    public static Schedule Random(String billboardName) {
+        return new Schedule(
+            billboardName,
+            RandomFactory.Instant(),
+            RandomFactory.Int(30),
+            RandomFactory.Int(60)
+        );
     }
 }
