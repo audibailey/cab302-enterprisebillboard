@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-public class User implements Serializable {
+public class User extends Object implements Serializable {
     /**
      * The variables of the object User
      */
