@@ -77,7 +77,7 @@ public class Schedule implements Serializable {
         return new Schedule(
             rs.getInt("id"),
             rs.getString("billboardName"),
-            rs.getTime("startTime").toInstant(),
+            rs.getTimestamp("startTime").toInstant(),
             rs.getInt("duration"),
             rs.getInt("interval"));
     }
