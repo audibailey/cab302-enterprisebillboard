@@ -290,7 +290,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
             // Create a query that deletes the billboard and executes the query
-            String query = "TRUNCATE TABLE BILLBOARDS";
+            String query = "DELETE FROM BILLBOARDS";
             sqlStatement.executeUpdate(query);
 
             // Cleans up query

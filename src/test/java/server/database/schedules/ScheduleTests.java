@@ -42,6 +42,9 @@ public class ScheduleTests {
     @BeforeAll
     public static void ConnectToDatabase() throws Exception {
         dataService = new DataService(true);
+        dataService.schedules.deleteAll();
+        dataService.billboards.deleteAll();
+        dataService.users.deleteAll();
 
         // Create the test user and save its ID
         User masterUser = User.Random();
@@ -67,11 +70,14 @@ public class ScheduleTests {
         if (insertedBillboard.isPresent()) {
             // Create a new schedule
             Schedule schedule = Schedule.Random(billboard.name);
+
+            assertEquals(schedule.billboardName, billboard.name);
+
             // Insert the new schedule to database
             dataService.schedules.insert(schedule);
 
             // Retrieve the testing billboard's name
-            Optional<Schedule> insertedSchedule = dataService.schedules.get(billboard.name);
+            Optional<Schedule> insertedSchedule = dataService.schedules.get(schedule.billboardName);
             if (insertedSchedule.isPresent()) {
                 // Test the retrieve start time against the control start time
                 assertEquals(schedule.startTime, insertedSchedule.get().startTime);
