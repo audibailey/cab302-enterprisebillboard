@@ -32,16 +32,16 @@ public class Main {
                 Request r = (Request) o;
 
                 if (r.data instanceof User) {
-                    Request<User> ur = (Request<User>) o;
+                    Request<User> ur = r;
 
                 } else if (r.data instanceof Billboard) {
-                    Request<Billboard> br = (Request<Billboard>) o;
+                    Request<Billboard> br = r;
 
                 } else if (r.data instanceof Schedule) {
-                    Request<Schedule> sr = (Request<Schedule>) o;
+                    Request<Schedule> sr = r;
 
                 } else if (r.data instanceof Permissions) {
-                    Request<Permissions> pr = (Request<Permissions>) o;
+                    Request<Permissions> pr = r;
 
                 }
             }
