@@ -228,10 +228,11 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     }
 
     /**
-     * clears all entries in database for unit test cleanup
-     * @throws Exception
+     * Clears all Schedule entries in database for unit test cleanup.
+     *
+     * @throws SQLException: this exception is thrown when there is an issue deleting data from the database.
      */
-    public void deleteAll() throws Exception {
+    public void deleteAll() throws SQLException {
         if (this.connection != null) {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();

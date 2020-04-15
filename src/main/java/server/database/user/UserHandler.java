@@ -233,10 +233,12 @@ public class UserHandler implements ObjectHandler<User> {
     }
 
     /**
-     * clears all entries in database for unit test cleanup
-     * @throws Exception
+     * Clears all User entries in database for unit test cleanup.
+     *
+     * @throws SQLException: this exception is thrown when there is an issue deleting data from the database.
      */
-    public void deleteAll() throws Exception {
+    public void deleteAll() throws SQLException {
+        // Check that it's not in testing mode
         if (this.connection != null) {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
