@@ -1,13 +1,36 @@
 package client;
 
+import client.frames.*;
+
+/**
+ * This class consists of the Billboard Viewer handler.
+ * All methods that manage and create the GUI are present in this file.
+ *
+ * @author Jamie Martin
+ * @author Trevor Waturuocha
+ */
 public class Main {
+    /**
+     * Create the Billboard Control Panel GUI and show it.
+     */
+    public static void createAndShowLogin() {
+        new Login();
+    }
 
-    public static void main(String[] args) throws InterruptedException {
-        // write your code here
+    public static void createAndShowClient() {
+        new Client();
+    }
 
-        while (true) {
-            System.out.println("Client");
-            Thread.sleep(1000);
-        }
+    /**
+     * Main class to run GUI Application and socket interface
+     */
+    public static void main(String[] args) {
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowLogin();
+            }
+        });
     }
 }
