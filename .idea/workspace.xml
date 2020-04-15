@@ -26,15 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Prepare">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MajorAssessment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MajorAssessment.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/xml/Billboard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/xml/ClientTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/xml/ServerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/xml/StatusCodes.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +217,7 @@
       <workItem from="1584930657369" duration="631000" />
       <workItem from="1586931967159" duration="177000" />
       <workItem from="1586934151706" duration="344000" />
-      <workItem from="1586936008452" duration="3330000" />
+      <workItem from="1586936008452" duration="3647000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
