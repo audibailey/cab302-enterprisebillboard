@@ -55,10 +55,6 @@ public class Main {
 
         s.close();
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowLogin();
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(() -> createAndShowLogin());
     }
 }
