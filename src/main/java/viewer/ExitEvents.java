@@ -18,9 +18,10 @@ public class ExitEvents extends JFrame {
             System.exit(0);
         }
     }
+
     public static class KeyListener extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode()==KeyEvent.VK_ESCAPE) {
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 System.exit(0);
             }
         }

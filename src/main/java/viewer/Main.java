@@ -14,7 +14,7 @@ public class Main {
     /**
      * Create the Billboard Viewer GUI and show it.
      */
-    private static void createAndShowGUI () {
+    private static void createAndShowGUI() {
         JFrame frame = new JFrame("Billboard Viewer"); // Constructing Billboard Viewer frame
 
         // Get the screen dimensions
@@ -33,8 +33,8 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set frame to exit on close
         frame.setExtendedState(Frame.MAXIMIZED_BOTH); // Setting frame size to maximise to full screen
         frame.setUndecorated(true); // Removing the frame title bar including default buttons
-        frame.setContentPane (new ViewerPanel ()); // Assigning Viewer panel to Viewer frame
-        frame.setVisible (true); // Show frame
+        frame.setContentPane(new ViewerPanel()); // Assigning Viewer panel to Viewer frame
+        frame.setVisible(true); // Show frame
     }
 
     /**

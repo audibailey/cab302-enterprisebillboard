@@ -1,7 +1,6 @@
 package client;
 
-import java.awt.*;
-import javax.swing.*;
+import client.frames.*;
 
 /**
  * This class consists of the Billboard Viewer handler.
@@ -14,32 +13,12 @@ public class Main {
     /**
      * Create the Billboard Control Panel GUI and show it.
      */
-    private static void createAndShowGUI() {
-        // Create and set up the window.
-        JFrame frame = new JFrame("Billboard Control Panel");
-        // Set frame to exit on close
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public static void createAndShowLogin() {
+        new Login();
+    }
 
-        // Create and set up the menu and content pane
-        frame.setJMenuBar(new MenuBar());
-        frame.setContentPane(new ContentPane());
-
-        // Get the screen dimensions
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = screenSize.width;
-        int height = screenSize.height;
-
-        // Display the window.
-        // Get the screen size
-        frame.setSize(width / 2, height / 2);
-
-        // Get the frame size for centering
-        int x = (width - frame.getWidth()) / 2;
-        int y = (height - frame.getHeight()) / 2;
-
-        // Set the new frame location and show GUI
-        frame.setLocation(x, y);
-        frame.setVisible(true);
+    public static void createAndShowClient() {
+        new Client();
     }
 
     /**
@@ -50,7 +29,7 @@ public class Main {
         // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                createAndShowLogin();
             }
         });
     }

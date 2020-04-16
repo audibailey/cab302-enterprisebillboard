@@ -11,7 +11,8 @@ import java.awt.*;
  */
 public class ViewerPanel extends JPanel {
     JLabel title; // Title label field
-    public ViewerPanel () {
+
+    public ViewerPanel() {
         super(new BorderLayout());
         // Adding title to panel
         title = new JLabel("Billboard Viewer"); // Constructing title label object
