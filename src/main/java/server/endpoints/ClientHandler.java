@@ -1,10 +1,11 @@
 package server.endpoints;
 
+import common.Method;
 import common.models.*;
 import server.database.DataService;
+import server.endpoints.billboard.BillboardHandler;
 
 import java.io.*;
-import java.time.Instant;
 
 public class ClientHandler implements Runnable {
 
@@ -21,10 +22,12 @@ public class ClientHandler implements Runnable {
         DataService dataService = null;
         ObjectInputStream ois = null;
         ObjectOutputStream oos = null;
+        BillboardHandler billboardHandler = null;
         try {
             ois = new ObjectInputStream(this.clientIn);
             oos = new ObjectOutputStream(this.clientOut);
             dataService = new DataService(true);
+            billboardHandler = new BillboardHandler(dataService);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,10 +43,12 @@ public class ClientHandler implements Runnable {
 
                 } else if (r.data instanceof Billboard) {
                     Request<Billboard> br = r;
-                    System.out.println(br.method);
-                    System.out.println(br.data.userId);
-                    if (br.method.equals("Insert")) {
-                        dataService.billboards.insert(br.data);
+                    billboardHandler.setRequest(br);
+
+                    for (Method m : Method.values()) {
+                        if (m == br.method) {
+                            Response<Billboard> b = m.run(billboardHandler);
+                        }
                     }
 
                 } else if (r.data instanceof Schedule) {
