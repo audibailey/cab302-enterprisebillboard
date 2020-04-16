@@ -35,26 +35,6 @@ public class Main {
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
 
-        Socket s = new Socket("localhost", 12345);
-
-        OutputStream o = s.getOutputStream();
-        InputStream i = s.getInputStream();
-
-        ObjectOutputStream oos = new ObjectOutputStream(o);
-        ObjectInputStream ois = new ObjectInputStream(i);
-
-        User u = User.Random();
-
-        Request<User> ur = new Request<>("PUT", u);
-
-        oos.writeObject(ur);
-        oos.flush();
-
-        ois.close();
-        oos.close();
-
-        s.close();
-
         javax.swing.SwingUtilities.invokeLater(() -> createAndShowLogin());
     }
 }
