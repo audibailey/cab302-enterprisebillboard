@@ -1,4 +1,4 @@
-package server;
+/*package server;
 
 import common.models.Billboard;
 import common.models.Request;
@@ -77,4 +77,4 @@ class ReceivedMessagesHandler implements Runnable {
         }
 
     }
-}
+}*/
