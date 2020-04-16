@@ -30,33 +30,29 @@ public class ClientHandler implements Runnable {
         }
 
         try {
-            while (true) {
-                // TODO: THIS DOESNT READ THEN EMPTY CAUSING A LOOP BOMB
-                Object o = ois.readObject();
+            Object o = ois.readObject();
 
-                if (o instanceof Request) {
-                    Request r = (Request) o;
+            if (o instanceof Request) {
+                Request r = (Request) o;
 
-                    if (r.data instanceof User) {
-                        Request<User> ur = r;
+                if (r.data instanceof User) {
+                    Request<User> ur = r;
 
-                    } else if (r.data instanceof Billboard) {
-                        Request<Billboard> br = r;
-                        System.out.println(br.method);
-                        System.out.println(br.data.userId);
-                        if (br.method.equals("Insert")) {
-                            dataService.billboards.insert(br.data);
-                        }
-
-                    } else if (r.data instanceof Schedule) {
-                        Request<Schedule> sr = r;
-
-                    } else if (r.data instanceof Permissions) {
-                        Request<Permissions> pr = r;
-
+                } else if (r.data instanceof Billboard) {
+                    Request<Billboard> br = r;
+                    System.out.println(br.method);
+                    System.out.println(br.data.userId);
+                    if (br.method.equals("Insert")) {
+                        dataService.billboards.insert(br.data);
                     }
+
+                } else if (r.data instanceof Schedule) {
+                    Request<Schedule> sr = r;
+
+                } else if (r.data instanceof Permissions) {
+                    Request<Permissions> pr = r;
+
                 }
-                Thread.sleep(100);
             }
         } catch (Exception e) {
             e.printStackTrace();
