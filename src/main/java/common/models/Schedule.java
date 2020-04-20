@@ -24,6 +24,9 @@ public class Schedule implements Serializable {
     public int duration;
     public int interval;
 
+    /**
+     * An empty constructor just for creating the object.
+     */
     public Schedule() {
 
     }
