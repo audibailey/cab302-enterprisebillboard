@@ -1,9 +1,6 @@
 package server.database.permissions;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -154,19 +151,28 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     public void insert(Permissions permissions) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
             // Create a query that adds the user and execute the query
-            String query = "INSERT INTO PERMISSIONS " +
-                "(id, username, canCreateBillboard, canEditBillboard, " +
-                "canScheduleBillboard, canEditUsers, canViewBillboard)" +
-                "VALUES( " + permissions.id + ",'" + permissions.username + "'," + permissions.canCreateBillboard + "," +
-                permissions.canEditBillboard + "," + permissions.canScheduleBillboard + "," + permissions.canEditUser + "," + permissions.canViewBillboard + ")";
-            sqlStatement.executeUpdate(query);
+
+            String query = "INSERT INTO PERMISSIONS (id, username, canCreateBillboard, " +
+                "canEditBillboard, canScheduleBillboard, canEditUsers, canViewBillboard) " +
+                "VALUES (?,?,?,?,?,?,?)";
+
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill in the parameters and execute query
+            pstmt.setInt(1, permissions.id);
+            pstmt.setString(2, permissions.username);
+            pstmt.setBoolean(3, permissions.canCreateBillboard);
+            pstmt.setBoolean(4, permissions.canEditBillboard);
+            pstmt.setBoolean(5, permissions.canScheduleBillboard);
+            pstmt.setBoolean(6, permissions.canEditUser);
+            pstmt.setBoolean(7, permissions.canViewBillboard);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             this.mockDB.add(permissions);
         }
@@ -181,21 +187,34 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     public void update(Permissions permissions) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
+
 
             // Create a query that updates the user permissions and execute the query
-            String query = "UPDATE PERMISSIONS SET canCreateBillboard = " +
-                permissions.canCreateBillboard +
-                ", canEditBillboard = " + permissions.canEditBillboard +
-                ", canScheduleBillboard = " + permissions.canScheduleBillboard +
-                ", canEditUsers = " + permissions.canEditUser +
-                ", canViewBillboard = " + permissions.canViewBillboard +
-                " WHERE ID = " + permissions.id;
-            sqlStatement.executeUpdate(query);
+//            String query = "UPDATE PERMISSIONS SET canCreateBillboard = " +
+//                permissions.canCreateBillboard +
+//                ", canEditBillboard = " + permissions.canEditBillboard +
+//                ", canScheduleBillboard = " + permissions.canScheduleBillboard +
+//                ", canEditUsers = " + permissions.canEditUser +
+//                ", canViewBillboard = " + permissions.canViewBillboard +
+//                " WHERE ID = " + permissions.id;
+            String query = "UPDATE PERMISSIONS SET " +
+                "canCreateBillboard = ?, canEditBillboard = ?, canScheduleBillboard = ?, " +
+                "canEditUsers = ?, canViewBillboard = ? WHERE ID =?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill in the parameters and execute query
+            pstmt.setBoolean(1, permissions.canCreateBillboard);
+            pstmt.setBoolean(2, permissions.canEditBillboard);
+            pstmt.setBoolean(3, permissions.canScheduleBillboard);
+            pstmt.setBoolean(4, permissions.canEditUser);
+            pstmt.setBoolean(5, permissions.canViewBillboard);
+            pstmt.setInt(6, permissions.id);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Loop through mock database and find the user permissions to update, then update it
             for (Permissions mockPermissions : this.mockDB) {
