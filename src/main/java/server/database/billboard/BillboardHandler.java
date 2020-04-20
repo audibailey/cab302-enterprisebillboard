@@ -125,7 +125,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
      * @return Optional<List < Billboard>>: this returns the list of billboards requested or a optional empty value.
      * @throws SQLException: this exception returns when there is an issue fetching data from the database.
      */
-    public List<Billboard> getAll() throws Exception {
+    public List<Billboard> getAll() throws SQLException {
         // Billboard to be returned
         List<Billboard> billboards = new ArrayList<>();
 
@@ -159,7 +159,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
      * @return List < Billboard>: this returns the list of billboards requested or a optional empty value.
      * @throws SQLException: this exception returns when there is an issue fetching data from the database.
      */
-    public List<Billboard> getAll(boolean lock) throws Exception {
+    public List<Billboard> getAll(boolean lock) throws SQLException {
         // Billboard to be returned
         List<Billboard> billboards = new ArrayList<>();
 
