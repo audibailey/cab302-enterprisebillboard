@@ -1,12 +1,14 @@
-/*package server;
+package server;
 
+import common.Status;
+import common.Methods;
 import common.models.Billboard;
 import common.models.Request;
+import common.models.Response;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class ClientTest {
 
@@ -34,14 +36,12 @@ public class ClientTest {
         System.out.println("Send messages: ");
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
-            Billboard bb = Billboard.Random(20);
-            Request<Billboard> req = new Request<Billboard>(
-                "Insert",
-                bb
+            Request<Boolean> req = new Request(
+                Methods.GET_BILLBOARDS,
+                sc.next(),
+                true
             );
             socketOut.writeObject(req);
-
-            // TODO: THIS DOESNT FLUSH
             socketOut.flush();
             socketOut.reset();
         }
@@ -61,13 +61,15 @@ class ReceivedMessagesHandler implements Runnable {
     @Override
     public void run() {
         try {
-            DataInputStream clientBufferedIn = new DataInputStream(new BufferedInputStream(this.server));
+            ObjectInputStream clientBufferedIn = new ObjectInputStream(this.server);
+            ;
 
-            int len = clientBufferedIn.readInt();
-            if (len > 0) {
-                byte[] message = new byte[len];
-                clientBufferedIn.readFully(message);
-                System.out.println(new String(message));
+            Object o = clientBufferedIn.readObject();
+            if (o instanceof Response) {
+                Response resp = (Response) o;
+                if (resp.status == Status.SUCCESS) {
+                    System.out.println(((List<Billboard>) resp.data).get(0).name);
+                }
             }
 
             Thread.sleep(100);
@@ -77,4 +79,4 @@ class ReceivedMessagesHandler implements Runnable {
         }
 
     }
-}*/
+}
