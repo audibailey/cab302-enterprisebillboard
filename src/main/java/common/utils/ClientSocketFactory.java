@@ -1,9 +1,7 @@
-package common.utils;
+/*package common.utils;
 
-import common.Method;
 import common.models.Request;
 import common.models.Response;
-import common.models.Status;
 import common.swing.Notification;
 
 import javax.swing.*;
@@ -60,4 +58,4 @@ public class ClientSocketFactory<T> {
         return res;
     }
 
-}
+}*/
