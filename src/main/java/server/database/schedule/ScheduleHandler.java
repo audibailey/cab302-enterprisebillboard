@@ -220,14 +220,20 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     public void delete(Schedule schedule) throws Exception {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
+
 
             // Create a query that deletes the schedule and executes the query
-            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE id = " + schedule.id);
+            String query = "DELETE FROM SCHEDULES WHERE id = ?";
 
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            pstmt.setInt(1, schedule.id);
+
+            pstmt.executeUpdate();
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             this.mockDB.remove(schedule);
         }

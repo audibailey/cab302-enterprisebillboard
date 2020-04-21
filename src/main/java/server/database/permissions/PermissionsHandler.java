@@ -190,13 +190,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
 
 
             // Create a query that updates the user permissions and execute the query
-//            String query = "UPDATE PERMISSIONS SET canCreateBillboard = " +
-//                permissions.canCreateBillboard +
-//                ", canEditBillboard = " + permissions.canEditBillboard +
-//                ", canScheduleBillboard = " + permissions.canScheduleBillboard +
-//                ", canEditUsers = " + permissions.canEditUser +
-//                ", canViewBillboard = " + permissions.canViewBillboard +
-//                " WHERE ID = " + permissions.id;
+
             String query = "UPDATE PERMISSIONS SET " +
                 "canCreateBillboard = ?, canEditBillboard = ?, canScheduleBillboard = ?, " +
                 "canEditUsers = ?, canViewBillboard = ? WHERE ID =?";
@@ -234,14 +228,19 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     public void delete(Permissions permissions) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Query the database
-            Statement sqlStatement = connection.createStatement();
+
 
             // Create a query that deletes the user permissions and executes the query
-            sqlStatement.executeUpdate("DELETE FROM PERMISSIONS WHERE id =" + permissions.id);
-
+            String query = "DELETE FROM PERMISSIONS WHERE id = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill in the parameters and execute query
+            pstmt.setInt(1, permissions.id);
+            pstmt.executeUpdate();
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             this.mockDB.remove(permissions);
         }

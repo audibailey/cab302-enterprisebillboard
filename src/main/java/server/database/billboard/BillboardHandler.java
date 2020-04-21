@@ -285,14 +285,20 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     public void delete(Billboard billboard) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
+
             // Create a query that deletes the billboard and executes the query
-            String query = "DELETE FROM BILLBOARDS WHERE ID = " + billboard.id;
-            sqlStatement.executeUpdate(query);
+            String query = "DELETE FROM BILLBOARDS WHERE ID = ?";
+
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setInt(1, billboard.id);
+            pstmt.executeUpdate();
 
             // Cleans up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Delete billboard
             mockDB.remove(billboard);
