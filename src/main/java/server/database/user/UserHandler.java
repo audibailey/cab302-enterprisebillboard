@@ -2,10 +2,8 @@ package server.database.user;
 
 import common.models.User;
 import server.database.ObjectHandler;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,10 +45,16 @@ public class UserHandler implements ObjectHandler<User> {
         if (this.connection != null) {
             // Initialise return value
             Optional<User> ReturnUser = Optional.empty();
-
+            // Create a query that updates the user and execute the query
+            String query = "SELECT * FROM USERS WHERE id = ?";
             // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM USERS WHERE id = " + id);
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setInt(1, id);
+
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the User object and return it
             while (result.next()) {
@@ -58,7 +62,7 @@ public class UserHandler implements ObjectHandler<User> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return ReturnUser;
         } else {
@@ -84,13 +88,16 @@ public class UserHandler implements ObjectHandler<User> {
         if (this.connection != null) {
             // Initialise return value
             Optional<User> ReturnUser = Optional.empty();
-
-            // Attempt to query the database
-            Statement sqlStatement = this.connection.createStatement();
-
             // Create a query that selects user based on the name and execute the query
-            String query = "SELECT * FROM USERS WHERE username = '" + username + "'";
-            ResultSet result = sqlStatement.executeQuery(query);
+            String query = "SELECT * FROM USERS WHERE username = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setString(1, username);
+
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the User object and return it
             while (result.next()) {
@@ -98,7 +105,7 @@ public class UserHandler implements ObjectHandler<User> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return ReturnUser;
         } else {
@@ -155,19 +162,21 @@ public class UserHandler implements ObjectHandler<User> {
 
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
             // Create a query that adds the user and execute the query
-            sqlStatement.executeUpdate(
-                "INSERT INTO USERS " +
-                    "(username, password, salt)" +
-                    "VALUES( '" + user.username +
-                    "','" + user.password +
-                    "','" + user.salt + "')");
+            String query = "INSERT INTO USERS (username, password, salt) VALUES (?,?,?)";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setString(1, user.username);
+            pstmt.setString(2, user.password);
+            pstmt.setString(3, user.salt);
+            // Execute
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Emulate auto increment ID
             user.id = MockDBNum;
@@ -186,19 +195,21 @@ public class UserHandler implements ObjectHandler<User> {
 
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
             // Create a query that updates the user and execute the query
-            String query = "UPDATE USERS SET password = '" +
-                user.password +
-                "', salt ='" + user.salt +
-                "' WHERE ID = " + user.id;
-
-            sqlStatement.executeUpdate(query);
+            String query = "UPDATE USERS SET username = ?, password = ?, salt = ? WHERE ID = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setString(1, user.username);
+            pstmt.setString(2, user.password);
+            pstmt.setString(3, user.salt);
+            pstmt.setInt(4, user.id);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Loop through mock database and find the user to update, then update it
             for (User mockUser : this.mockDB) {
@@ -219,14 +230,18 @@ public class UserHandler implements ObjectHandler<User> {
 
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
             // Create a query that deletes the user and executes the query
-            sqlStatement.executeUpdate("DELETE FROM USERS WHERE id = " + user.id);
+            String query = "DELETE FROM USERS WHERE id = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setInt(1, user.id);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             this.mockDB.remove(user);
         }
