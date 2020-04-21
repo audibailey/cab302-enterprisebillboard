@@ -7,6 +7,8 @@ package common;
  * @author Jamie Martin
  */
 public enum Methods {
+    LOGIN,
+
     GET_BILLBOARDS,
     POST_BILLBOARD,
     UPDATE_BILLBOARD,

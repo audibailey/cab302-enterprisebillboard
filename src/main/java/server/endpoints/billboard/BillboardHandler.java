@@ -2,9 +2,11 @@ package server.endpoints.billboard;
 
 
 import common.Status;
+import common.models.Billboard;
 import common.models.Request;
 import common.models.Response;
 import server.database.DataService;
+import server.middleware.MiddlewareHandler;
 
 /**
  * This class handles how the billboard endpoints interact with the billboard database handler
@@ -15,14 +17,16 @@ import server.database.DataService;
 public class BillboardHandler {
 
     DataService db;
+    MiddlewareHandler middlewareHandler;
 
     /**
      * The BillboardHandler Constructor.
      *
      * @param db: This is the DataService handler that connects the Endpoint to the database.
      */
-    public BillboardHandler(DataService db) {
+    public BillboardHandler(DataService db, MiddlewareHandler middlewareHandler) {
         this.db = db;
+        this.middlewareHandler = middlewareHandler;
     }
 
     /**
@@ -37,7 +41,6 @@ public class BillboardHandler {
     private <T> Response<?> get(T data) {
         // Check the object type
         if (data instanceof Boolean) {
-
             // Check if the request is listing locked or unlocked billboards
             if ((Boolean) data) {
                 // Fetch the locked billboards and return the response to the client
@@ -74,6 +77,16 @@ public class BillboardHandler {
             case GET_BILLBOARDS:
                 // This is the get function
                 return this.get(request.data);
+            case POST_BILLBOARD:
+                if (this.middlewareHandler.checkToken(request.token)) {
+                    if (this.middlewareHandler.checkCanViewBillboard(request.token)) {
+                        return this.get(request.data);
+                    } else {
+                        return new Response<>(Status.FAILED, "Invalid Request: Unauthorized.");
+                    }
+                } else {
+                    return new Response<>(Status.FAILED, "Invalid Request: Token invalid.");
+                }
             default:
                 return new Response<>();
         }

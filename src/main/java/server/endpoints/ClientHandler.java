@@ -6,6 +6,7 @@ import java.net.Socket;
 import common.Methods;
 import common.Status;
 import common.models.*;
+import server.middleware.MiddlewareHandler;
 
 /**
  * This class handles the how the server responds to the clients request.
@@ -63,6 +64,8 @@ public class ClientHandler implements Runnable {
 
                     // Route the request to the billboard sub handler and reply the response to the client
                     replyClient(this.endpointHandler.billboard.route(r));
+                } else if (r.method.equals(Methods.LOGIN)) {
+                    replyClient(this.endpointHandler.middlewareHandler.loginUser(r.data));
                 } else {
                     // Reply to the client that it was invalid request as the method was invalid
                     replyClient(new Response<>(Status.FAILED, "Invalid Request: Invalid method."));
@@ -71,6 +74,7 @@ public class ClientHandler implements Runnable {
                 // Reply to the client that it was not a request
                 replyClient(new Response<>(Status.FAILED, "Invalid Request: Unknown object received."));
             }
+
         } catch (Exception e) {
             // Print an error if reading the objects fail
             e.printStackTrace();
@@ -79,10 +83,10 @@ public class ClientHandler implements Runnable {
         // Close the connection as it is no longer needed
         try {
             this.client.close();
-            System.out.println("Closed the connection to the client.");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -98,10 +102,9 @@ public class ClientHandler implements Runnable {
             ObjectOutputStream socketOut = new ObjectOutputStream(this.client.getOutputStream());
             socketOut.writeObject(resp);
             socketOut.flush();
-
-            System.out.println("Wrote a response to client.");
+            System.out.println("Responded to " + this.client.getInetAddress());
         } catch (Exception e) {
-            System.out.println("Failed to reply to client.");
+            System.out.println("Failed to respond to " + this.client.getInetAddress());
         }
     }
 }
