@@ -41,7 +41,7 @@ public class ScheduleTests {
      */
     @BeforeAll
     public static void ConnectToDatabase() throws Exception {
-        dataService = new DataService(true);
+        dataService = new DataService(false);
         dataService.schedules.deleteAll();
         dataService.billboards.deleteAll();
         dataService.users.deleteAll();
