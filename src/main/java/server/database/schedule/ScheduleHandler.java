@@ -40,12 +40,16 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         if (this.connection != null) {
             // Initialise return value
             Optional<Schedule> returnSchedule = Optional.empty();
-
+            // Create a query that updates the user and execute the query
+            String query = "SELECT * FROM SCHEDULES WHERE id = ?";
             // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setInt(1, scheduleId);
             // Create a query that selects schedule based on the id and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE id = " + scheduleId);
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the schedule object and save it
             while (result.next()) {
@@ -53,7 +57,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return returnSchedule;
         } else {
@@ -80,12 +84,16 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         if (this.connection != null) {
             // Initialise return value
             Optional<Schedule> returnSchedule = Optional.empty();
-
+            // Create a query that updates the user and execute the query
+            String query = "SELECT * FROM SCHEDULES WHERE billboardName = ?";
             // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setString(1, billboardName);
             // Create a query that selects schedule based on the id and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE billboardName = '" + billboardName + "'");
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the schedule object and save it
             while (result.next()) {
@@ -93,7 +101,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return returnSchedule;
         } else {

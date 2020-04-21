@@ -1,5 +1,6 @@
 package server.database.billboard;
 
+import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,13 +45,16 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
         if (this.connection != null) {
             // Initialise the return value
             Optional<Billboard> ReturnedValue = Optional.empty();
-
-            // Attempt to query the database
-            Statement sqlStatement = this.connection.createStatement();
             // Create a query that selects billboards based on the name and execute the query
-            String query = "SELECT * FROM BILLBOARDS WHERE id = '" + id + "'";
+            String query = "SELECT * FROM BILLBOARDS WHERE id = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setInt(1, id);
 
-            ResultSet result = sqlStatement.executeQuery(query);
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create billboard object and return it
             while (result.next()) {
@@ -58,7 +62,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return ReturnedValue;
         } else {
@@ -86,13 +90,16 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
         if (this.connection != null) {
             // Initialise the return value
             Optional<Billboard> ReturnedValue = Optional.empty();
-
-            // Attempt to query the database
-            Statement sqlStatement = this.connection.createStatement();
             // Create a query that selects billboards based on the name and execute the query
-            String query = "SELECT * FROM BILLBOARDS WHERE name = '" + billboardName + "'";
+            String query = "SELECT * FROM BILLBOARDS WHERE name = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setString(1, billboardName);
 
-            ResultSet result = sqlStatement.executeQuery(query);
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create billboard object and return it
             while (result.next()) {
@@ -100,7 +107,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return ReturnedValue;
         } else {
@@ -161,13 +168,17 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
         List<Billboard> billboards = new ArrayList<>();
 
         // Check that it's not in testing mode
-        if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = this.connection.createStatement();
+        if (this.connection != null) {;
             // Create a query that selects billboards based on the lock and execute the query
-            String query = "SELECT * FROM BILLBOARDS WHERE locked = " + lock;
+            String query = "SELECT * FROM BILLBOARDS WHERE locked = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setBoolean(1, lock);
 
-            ResultSet result = sqlStatement.executeQuery(query);
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create billboard object and add it to the returned list
             while (result.next()) {
@@ -175,7 +186,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Loop through and find the billboard with the lock status and add to billboards
             for (Billboard b : this.mockDB) {
@@ -197,10 +208,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
     public void insert(Billboard billboard) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-
-
             // Create a query that inserts the billboard and executes the query
-
             String query = "INSERT INTO BILLBOARDS" +
                 "(userID, name, message," +
                 " messageColor, picture, backgroundColor," +
@@ -215,7 +223,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             pstmt.setString(2, billboard.name);
             pstmt.setString(3, billboard.message);
             pstmt.setString(4, billboard.messageColor);
-            pstmt.setBytes(5, billboard.picture);
+            pstmt.setBinaryStream(5, new ByteArrayInputStream(billboard.picture));
             pstmt.setString(6, billboard.backgroundColor);
             pstmt.setString(7, billboard.information);
             pstmt.setString(8, billboard.informationColor);
@@ -243,9 +251,9 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
 
             // Create a query that inserts the billboard
             String query = "UPDATE BILLBOARDS SET " +
-                "name = ?, message = ?, messageColor = ?," +
-                " picture =?, backgroundColor = ?, information =?," +
-                " informationColor =?, locked =? WHERE ID = ?";
+                "name = ?, message = ?, messageColor= ?," +
+                " picture = ?, backgroundColor = ?, information = ?," +
+                " informationColor = ?, locked = ? WHERE ID = ?";
             // Attempt to query the database
             PreparedStatement pstmt = connection.prepareStatement(query);
             // Clear all parameters before insert
@@ -254,7 +262,7 @@ public class BillboardHandler implements ObjectHandler<Billboard> {
             pstmt.setString(1, billboard.name);
             pstmt.setString(2, billboard.message);
             pstmt.setString(3, billboard.messageColor);
-            pstmt.setBytes(4, billboard.picture);
+            pstmt.setBinaryStream(4, new ByteArrayInputStream(billboard.picture));
             pstmt.setString(5, billboard.backgroundColor);
             pstmt.setString(6, billboard.information);
             pstmt.setString(7, billboard.informationColor);

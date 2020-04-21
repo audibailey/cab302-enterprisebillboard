@@ -118,7 +118,7 @@ public class Schema {
                     "name varchar(255) UNIQUE, " +
                     "message varchar(255), " +
                     "messageColor varchar(7), " +
-                    "picture LONGTEXT," +
+                    "picture BLOB," +
                     "backgroundColor varchar(7)," +
                     "information varchar(255)," +
                     "informationColor varchar(7)," +

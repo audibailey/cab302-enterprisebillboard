@@ -35,7 +35,7 @@ public class BillboardTests {
      */
     @BeforeAll
     public static void ConnectToDatabase() throws Exception {
-        dataService = new DataService(true);
+        dataService = new DataService(false);
         dataService.billboards.deleteAll();
         dataService.users.deleteAll();
 
