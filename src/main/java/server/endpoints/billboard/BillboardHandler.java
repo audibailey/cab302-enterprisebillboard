@@ -2,9 +2,12 @@ package server.endpoints.billboard;
 
 
 import common.Status;
+import common.models.Billboard;
 import common.models.Request;
 import common.models.Response;
 import server.database.DataService;
+
+import java.sql.SQLException;
 
 /**
  * This class handles how the billboard endpoints interact with the billboard database handler
@@ -48,15 +51,117 @@ public class BillboardHandler {
             }
         } else if (data instanceof Integer) {
             // get billboard using ID
-            return new Response<>();
+            return GetBillboardHandler.getBillboardsByID(this.db, (int) data);
         } else if (data instanceof String) {
             // get billboard using billboard name
-            return new Response<>();
+            return GetBillboardHandler.getBillboardsByName(this.db, (String) data);
         } else if (data == null) {
             // get all
-            return new Response<>();
+            return GetBillboardHandler.getAllBillboards(this.db);
         } else {
             // return an error response
+            return new Response<>(Status.FAILED, "Invalid Request: Unknown Get parameter.");
+        }
+    }
+
+    /**
+     * The Endpoint BillboardHandler post method, used to insert billboards into database
+     *
+     * @param data: This is used as the parameter for the method being used.
+     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
+     *              billboard.
+     * @return Response<?>: This is the response to send back to the client.
+     */
+
+    private <T> Response<?> post(T data) {
+        // Check the object data type
+        if (data instanceof Billboard) {
+            Billboard bb = (Billboard) data;
+            // Check the ID, if ID is not null -> continue else return error
+            if (bb.id > 0) {
+                //TODO: CHECK USER PERMISSIONS
+
+                // Check the name && userID -> make sure no other names and the user ID exists else return error
+                try {
+                    if (db.billboards.get(bb.name).isPresent() && db.users.get(bb.userId).isPresent()) {
+                        return PostBillboardHandler.insertBillboard(this.db, bb);
+                    } else {
+                        return new Response<>(Status.FAILED, "Invalid Request: Invalid name or user ID");
+                    }
+                } catch (SQLException e) {
+                    return new Response<>(Status.FAILED, e.getMessage());
+                }
+            } else {
+                return new Response<>(Status.FAILED, "Invalid Request: Invalid billboard ID.");
+            }
+        } else {
+            return new Response<>(Status.FAILED, "Invalid Request: Unknown POST parameter.");
+        }
+    }
+
+    /**
+     * The Endpoint BillboardHandler delete method, used to delete billboards from the database
+     *
+     * @param data: This is used as the parameter for the method being used.
+     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
+     *              billboard.
+     * @return Response<?>: This is the response to send back to the client.
+     */
+
+    private <T> Response<?> delete(T data) {
+        // Check the object data type
+        if (data instanceof Billboard) {
+            Billboard bb = (Billboard) data;
+            //Check the ID, if ID is larger than 0 -> continue else return error
+
+            if (bb.id > 0) {
+                //TODO: CHECK USER PERMISSIONS
+
+                // Check the schedule status, if it's not locked we can delete else return error
+                if (!bb.locked) {
+                    return DeleteBillboardHandler.deleteBillboard(this.db, bb);
+                } else {
+                    return new Response<>(Status.FAILED, "Invalid Request: Can't delete billboard  that is scheduled");
+                }
+            } else {
+                return new Response<>(Status.FAILED, "Invalid Request: Invalid billboard ID.");
+            }
+        } else {
+            return new Response<>(Status.FAILED, "Invalid Request: Unknown Get parameter.");
+        }
+    }
+
+    /**
+     * The Endpoint BillboardHandler update method, used to update billboards in the database
+     *
+     * @param data: This is used as the parameter for the method being used.
+     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
+     *              billboard.
+     * @return Response<?>: This is the response to send back to the client.
+     */
+    private <T> Response<?> update(T data) {
+        // Check the object data type
+        if (data instanceof Billboard) {
+            Billboard bb = (Billboard) data;
+            //Check the ID, if ID is larger than 0 -> continue else return error
+
+            if (bb.id > 0) {
+                //TODO: CHECK USER PERMISSIONS
+
+                // Check the schedule status, if it's not locked we can edit else return error
+                if (!bb.locked) {
+                    return DeleteBillboardHandler.deleteBillboard(this.db, bb);
+                } else {
+                    return new Response<>(
+                        Status.FAILED,
+                        "Invalid Request: Can't update billboard that is scheduled");
+                }
+
+            } else {
+                return new Response<>(Status.FAILED, "Invalid Request: Invalid billboard ID.");
+            }
+
+        } else {
             return new Response<>(Status.FAILED, "Invalid Request: Unknown Get parameter.");
         }
     }
