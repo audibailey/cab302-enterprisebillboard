@@ -1,6 +1,7 @@
 package server.endpoints.billboard;
 
 import java.util.List;
+import java.util.Optional;
 
 import common.models.Billboard;
 import common.models.Response;
@@ -12,6 +13,7 @@ import server.database.DataService;
  * for the client.
  *
  * @author Perdana Bailey
+ * @author Kevin Huynh
  */
 public class GetBillboardHandler {
 
@@ -61,4 +63,95 @@ public class GetBillboardHandler {
         }
     }
 
+    /**
+     * Fetch a billboard based on ID as a response.
+     *
+     * @param db: This is used to call the database handler.
+     * @return Response<?>: This is the response to send back to the client.
+     */
+
+    public static Response<?> getBillboardsByID(DataService db, int billboardID) {
+        // Attempt get the billboard by ID from the database
+        try {
+            Optional<Billboard> resultBillboard = db.billboards.get(billboardID);
+
+            if (resultBillboard.isPresent()) {
+                // Return a success with the billboard matched the ID
+                return new Response<>(
+                    Status.SUCCESS,
+                    resultBillboard
+                );
+            } else {
+                // Return a failed with the error message
+                return new Response<>(
+                    Status.FAILED,
+                    "No billboard found."
+                );
+            }
+
+
+        } catch (Exception e) {
+
+            // If an issue occurs return a failed with the error message as the exception
+            return new Response<>(Status.FAILED, e.getMessage());
+        }
+    }
+
+    /**
+     * Fetch a billboard based on name as a response.
+     *
+     * @param db: This is used to call the database handler.
+     * @return Response<?>: This is the response to send back to the client.
+     */
+
+    public static Response<?> getBillboardsByName(DataService db, String billboardName) {
+        // Attempt get the billboard by name from the database
+        try {
+            Optional<Billboard> resultBillboard = db.billboards.get(billboardName);
+
+            if (resultBillboard.isPresent()) {
+                // Return a success with the billboard matched the name
+                return new Response<>(
+                    Status.SUCCESS,
+                    resultBillboard
+                );
+            } else {
+                // Return a failed with the error message
+                return new Response<>(
+                    Status.FAILED,
+                    "No billboard found."
+                );
+            }
+
+
+        } catch (Exception e) {
+
+            // If an issue occurs return a failed with the error message as the exception
+            return new Response<>(Status.FAILED, e.getMessage());
+        }
+    }
+
+    /**
+     * Fetch a list of all billboards as a response.
+     *
+     * @param db: This is used to call the database handler.
+     * @return Response<?>: This is the response to send back to the client.
+     */
+
+    public static Response<?> getAllBillboards(DataService db) {
+        // Attempt to get the list of all billboards from the database
+        try {
+            List<Billboard> allBillboards = db.billboards.getAll();
+            // Return a success with the billboard matched the name
+            return new Response<>(
+                Status.SUCCESS,
+                allBillboards
+            );
+
+        } catch (Exception e) {
+
+            // If an issue occurs return a failed with the error message as the exception
+            return new Response<>(Status.FAILED, e.getMessage());
+        }
+    }
 }
