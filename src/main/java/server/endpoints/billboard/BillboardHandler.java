@@ -5,6 +5,7 @@ import common.Status;
 import common.models.Billboard;
 import common.models.Request;
 import common.models.Response;
+import common.models.User;
 import server.database.DataService;
 import server.middleware.MiddlewareHandler;
 
@@ -15,6 +16,7 @@ import java.sql.SQLException;
  * and the client.
  *
  * @author Perdana Bailey
+ * @author Kevin Huynh
  */
 public class BillboardHandler {
 
@@ -107,17 +109,21 @@ public class BillboardHandler {
      *              billboard.
      * @return Response<?>: This is the response to send back to the client.
      */
-    private <T> Response<?> delete(T data) {
+    private <T> Response<?> delete(T data, int perm) {
         // Check the object data type
         if (data instanceof Billboard) {
             Billboard bb = (Billboard) data;
             //Check the ID, if ID is larger than 0 -> continue else return error
             if (bb.id > 0) {
-                // Check the schedule status, if it's not locked we can delete else return error
-                if (!bb.locked) {
+                if (perm == 1) {
                     return DeleteBillboardHandler.deleteBillboard(this.db, bb);
                 } else {
-                    return new Response<>(Status.BAD_REQUEST, "Can't delete billboard that is scheduled");
+                    // Check the schedule status, if it's not locked we can delete else return error
+                    if (!bb.locked) {
+                        return DeleteBillboardHandler.deleteBillboard(this.db, bb);
+                    } else {
+                        return new Response<>(Status.BAD_REQUEST, "Can't delete billboard that is scheduled");
+                    }
                 }
             } else {
                 return new Response<>(Status.BAD_REQUEST, "Invalid billboard ID.");
@@ -135,20 +141,28 @@ public class BillboardHandler {
      *              billboard.
      * @return Response<?>: This is the response to send back to the client.
      */
-    private <T> Response<?> update(T data) {
+    private <T> Response<?> update(T data, int perm) {
         // Check the object data type
         if (data instanceof Billboard) {
             Billboard bb = (Billboard) data;
             //Check the ID, if ID is larger than 0 -> continue else return error
             if (bb.id > 0) {
-                // Check the schedule status, if it's not locked we can edit else return error
-                if (!bb.locked) {
-                    return DeleteBillboardHandler.deleteBillboard(this.db, bb);
-                } else {
-                    return new Response<>(
-                        Status.BAD_REQUEST,
-                        "Can't update billboard that is scheduled");
+                // If perm ==1 (user has editAll permission), update the billboard
+                if (perm == 1) {
+                    return UpdateBillboardHandler.updateBillboard(this.db, bb);
                 }
+                // Else user has createBillboard permission
+                else {
+                    // Check the schedule status, if it's not locked we can edit else return error
+                    if (!bb.locked) {
+                        return UpdateBillboardHandler.updateBillboard(this.db, bb);
+                    } else {
+                        return new Response<>(
+                            Status.BAD_REQUEST,
+                            "Can't update billboard that is scheduled");
+                    }
+                }
+
 
             } else {
                 return new Response<>(Status.BAD_REQUEST, "Invalid billboard ID.");
@@ -180,6 +194,48 @@ public class BillboardHandler {
                         return this.post(request.data);
                     } else {
                         return new Response<>(Status.UNAUTHORIZED, "User does not have permissions to post billboard.");
+                    }
+                } else {
+                    return new Response<>(Status.UNAUTHORIZED, "Token invalid.");
+                }
+            case DELETE_BILLBOARD:
+                // Check the token
+                if (this.middlewareHandler.checkToken(request.token)) {
+                    // Check if user is deleting their own billboard
+                    if (this.middlewareHandler.checkCanEditBillboard(request.token)) {
+
+                        return this.delete(request.data, 1);
+                    }
+                    // Check if user is deleting other's billboard
+                    else if (this.middlewareHandler.checkCanCreateBillboard(request.token)) {
+                        if (this.middlewareHandler.checkOwnBillboard(request.token, (Billboard) request.data)) {
+                            return this.delete(request.data, 2);
+                        } else {
+                            return new Response<>(Status.UNAUTHORIZED, "Can't delete other user's billboard");
+                        }
+                    } else {
+                        return new Response<>(Status.UNAUTHORIZED, "User does not have permissions to delete billboard.");
+                    }
+                } else {
+                    return new Response<>(Status.UNAUTHORIZED, "Token invalid.");
+                }
+            case UPDATE_BILLBOARD:
+                // Check the token
+                if (this.middlewareHandler.checkToken(request.token)) {
+                    // Check if user is updating their own billboard
+                    if (this.middlewareHandler.checkCanEditBillboard(request.token)) {
+
+                        return this.update(request.data, 1);
+                    }
+                    // Check if user is updating other's billboard
+                    else if (this.middlewareHandler.checkCanCreateBillboard(request.token)) {
+                        if (this.middlewareHandler.checkOwnBillboard(request.token, (Billboard) request.data)) {
+                            return this.update(request.data, 2);
+                        } else {
+                            return new Response<>(Status.UNAUTHORIZED, "Can't update other user's billboard");
+                        }
+                    } else {
+                        return new Response<>(Status.UNAUTHORIZED, "User does not have permissions to edit billboard.");
                     }
                 } else {
                     return new Response<>(Status.UNAUTHORIZED, "Token invalid.");

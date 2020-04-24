@@ -12,7 +12,7 @@ import server.database.DataService;
  * This class handles the delete function of billboard database handler and turns it into a response
  * for the client.
  *
- * @author audibailey
+ * @author Perdana Bailey
  * @author Kevin Huynh
  */
 public class DeleteBillboardHandler {
@@ -23,9 +23,9 @@ public class DeleteBillboardHandler {
      * @return Response<?>: This is the response to send back to the client.
      */
     public static Response<?> deleteBillboard(DataService db, Billboard bb) {
-        // Attempt to the list of locked billboards from the database
         try {
             db.billboards.delete(bb);
+            // Attempt to get the deleted billboard (should be empty)
             Optional<Billboard> deletedBillboard = db.billboards.get(bb.name);
 
             // Check if the billboard is still in the database or not
