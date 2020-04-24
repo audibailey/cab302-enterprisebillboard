@@ -62,7 +62,7 @@ public class BillboardHandler {
             return GetBillboardHandler.getAllBillboards(this.db);
         } else {
             // return an error response
-            return new Response<>(Status.FAILED, "Invalid Request: Unknown Get parameter.");
+            return new Response<>(Status.UNSUPPORTED_TYPE, "Unknown parameter received in data field.");
         }
     }
 
@@ -74,30 +74,28 @@ public class BillboardHandler {
      *              billboard.
      * @return Response<?>: This is the response to send back to the client.
      */
-
     private <T> Response<?> post(T data) {
         // Check the object data type
         if (data instanceof Billboard) {
             Billboard bb = (Billboard) data;
-            // Check the ID, if ID is not null -> continue else return error
+            // Check if there is an ID
             if (bb.id > 0) {
-                //TODO: CHECK USER PERMISSIONS
-
                 // Check the name && userID -> make sure no other names and the user ID exists else return error
                 try {
                     if (db.billboards.get(bb.name).isPresent() && db.users.get(bb.userId).isPresent()) {
                         return PostBillboardHandler.insertBillboard(this.db, bb);
                     } else {
-                        return new Response<>(Status.FAILED, "Invalid Request: Invalid name or user ID");
+                        return new Response<>(Status.BAD_REQUEST, "Billboard object user doesn't exist.");
                     }
                 } catch (SQLException e) {
-                    return new Response<>(Status.FAILED, e.getMessage());
+                    // TODO: Console Log this
+                    return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to add billboard to the database.");
                 }
             } else {
-                return new Response<>(Status.FAILED, "Invalid Request: Invalid billboard ID.");
+                return new Response<>(Status.BAD_REQUEST, "Billboard object contains ID.");
             }
         } else {
-            return new Response<>(Status.FAILED, "Invalid Request: Unknown POST parameter.");
+            return new Response<>(Status.UNSUPPORTED_TYPE, "Unknown parameter received in data field.");
         }
     }
 
@@ -109,27 +107,23 @@ public class BillboardHandler {
      *              billboard.
      * @return Response<?>: This is the response to send back to the client.
      */
-
     private <T> Response<?> delete(T data) {
         // Check the object data type
         if (data instanceof Billboard) {
             Billboard bb = (Billboard) data;
             //Check the ID, if ID is larger than 0 -> continue else return error
-
             if (bb.id > 0) {
-                //TODO: CHECK USER PERMISSIONS
-
                 // Check the schedule status, if it's not locked we can delete else return error
                 if (!bb.locked) {
                     return DeleteBillboardHandler.deleteBillboard(this.db, bb);
                 } else {
-                    return new Response<>(Status.FAILED, "Invalid Request: Can't delete billboard  that is scheduled");
+                    return new Response<>(Status.BAD_REQUEST, "Can't delete billboard that is scheduled");
                 }
             } else {
-                return new Response<>(Status.FAILED, "Invalid Request: Invalid billboard ID.");
+                return new Response<>(Status.BAD_REQUEST, "Invalid billboard ID.");
             }
         } else {
-            return new Response<>(Status.FAILED, "Invalid Request: Unknown Get parameter.");
+            return new Response<>(Status.UNSUPPORTED_TYPE, "Unknown parameter received in data field.");
         }
     }
 
@@ -146,25 +140,22 @@ public class BillboardHandler {
         if (data instanceof Billboard) {
             Billboard bb = (Billboard) data;
             //Check the ID, if ID is larger than 0 -> continue else return error
-
             if (bb.id > 0) {
-                //TODO: CHECK USER PERMISSIONS
-
                 // Check the schedule status, if it's not locked we can edit else return error
                 if (!bb.locked) {
                     return DeleteBillboardHandler.deleteBillboard(this.db, bb);
                 } else {
                     return new Response<>(
-                        Status.FAILED,
-                        "Invalid Request: Can't update billboard that is scheduled");
+                        Status.BAD_REQUEST,
+                        "Can't update billboard that is scheduled");
                 }
 
             } else {
-                return new Response<>(Status.FAILED, "Invalid Request: Invalid billboard ID.");
+                return new Response<>(Status.BAD_REQUEST, "Invalid billboard ID.");
             }
 
         } else {
-            return new Response<>(Status.FAILED, "Invalid Request: Unknown Get parameter.");
+            return new Response<>(Status.UNSUPPORTED_TYPE, "Unknown parameter received in data field.");
         }
     }
 
@@ -179,20 +170,22 @@ public class BillboardHandler {
         // Check the methods to determine which type of Endpoint BillboardHandler function is needed.
         switch (request.method) {
             case GET_BILLBOARDS:
-                // This is the get function
+                // This is the get function, it requires no middleware
                 return this.get(request.data);
             case POST_BILLBOARD:
+                // Check the token
                 if (this.middlewareHandler.checkToken(request.token)) {
+                    // Check the permissions
                     if (this.middlewareHandler.checkCanViewBillboard(request.token)) {
-                        return this.get(request.data);
+                        return this.post(request.data);
                     } else {
-                        return new Response<>(Status.FAILED, "Invalid Request: Unauthorized.");
+                        return new Response<>(Status.UNAUTHORIZED, "User does not have permissions to post billboard.");
                     }
                 } else {
-                    return new Response<>(Status.FAILED, "Invalid Request: Token invalid.");
+                    return new Response<>(Status.UNAUTHORIZED, "Token invalid.");
                 }
             default:
-                return new Response<>();
+                return new Response<>(Status.NOT_FOUND, "Route not found.");
         }
     }
 
