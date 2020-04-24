@@ -12,6 +12,7 @@ import server.database.DataService;
  * This class handles the update function of billboard database handler and turns it into a response
  * for the client.
  *
+ * @author audibailey
  * @author Kevin Huynh
  */
 public class UpdateBillboardHandler {
@@ -36,14 +37,14 @@ public class UpdateBillboardHandler {
                 );
             } else {
                 return new Response<>(
-                    Status.FAILED,
-                    "There was an error updating the billboard"
+                    Status.BAD_REQUEST,
+                    "Billboard does not exist."
                 );
             }
         } catch (Exception e) {
-
+            // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.FAILED, e.getMessage());
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to update billboard on the database.");
         }
     }
 }

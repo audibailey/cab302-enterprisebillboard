@@ -12,6 +12,7 @@ import server.database.DataService;
  * This class handles the delete function of billboard database handler and turns it into a response
  * for the client.
  *
+ * @author audibailey
  * @author Kevin Huynh
  */
 public class DeleteBillboardHandler {
@@ -36,14 +37,14 @@ public class DeleteBillboardHandler {
                 );
             } else {
                 return new Response<>(
-                    Status.FAILED,
+                    Status.INTERNAL_SERVER_ERROR,
                     "There was an error deleting the billboard"
                 );
             }
         } catch (Exception e) {
-
+            // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.FAILED, e.getMessage());
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to delete billboard from the database.");
         }
     }
 }
