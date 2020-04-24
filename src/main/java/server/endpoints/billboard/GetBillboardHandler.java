@@ -34,9 +34,9 @@ public class GetBillboardHandler {
                 lockedBillboards
             );
         } catch (Exception e) {
-
+            // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.FAILED, e.getMessage());
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get all locked billboards from the database.");
         }
     }
 
@@ -57,9 +57,9 @@ public class GetBillboardHandler {
                 unlockedBillboards
             );
         } catch (Exception e) {
-
+            // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.FAILED, e.getMessage());
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get all unlocked billboards from the database.");
         }
     }
 
@@ -84,16 +84,16 @@ public class GetBillboardHandler {
             } else {
                 // Return a failed with the error message
                 return new Response<>(
-                    Status.FAILED,
-                    "No billboard found."
+                    Status.BAD_REQUEST,
+                    "Billboard not Found."
                 );
             }
 
 
         } catch (Exception e) {
-
+            // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.FAILED, e.getMessage());
+            return new Response<>(Status.FAILED, "Failed to get billboard from the database.");
         }
     }
 
@@ -103,7 +103,6 @@ public class GetBillboardHandler {
      * @param db: This is used to call the database handler.
      * @return Response<?>: This is the response to send back to the client.
      */
-
     public static Response<?> getBillboardsByName(DataService db, String billboardName) {
         // Attempt get the billboard by name from the database
         try {
@@ -118,16 +117,16 @@ public class GetBillboardHandler {
             } else {
                 // Return a failed with the error message
                 return new Response<>(
-                    Status.FAILED,
-                    "No billboard found."
+                    Status.BAD_REQUEST,
+                    "Billboard not found."
                 );
             }
 
 
         } catch (Exception e) {
-
+            // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.FAILED, e.getMessage());
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get billboard from the database.");
         }
     }
 
@@ -149,9 +148,9 @@ public class GetBillboardHandler {
             );
 
         } catch (Exception e) {
-
+            // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.FAILED, e.getMessage());
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get all billboards from the database.");
         }
     }
 }
