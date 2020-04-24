@@ -45,6 +45,7 @@ public class ClientHandler implements Runnable {
         try {
             ois = new ObjectInputStream(this.client.getInputStream());
         } catch (Exception e) {
+            // TODO: Console Log this
             e.printStackTrace();
         }
 
@@ -68,15 +69,16 @@ public class ClientHandler implements Runnable {
                     replyClient(this.endpointHandler.middlewareHandler.loginUser(r.data));
                 } else {
                     // Reply to the client that it was invalid request as the method was invalid
-                    replyClient(new Response<>(Status.FAILED, "Invalid Request: Invalid method."));
+                    replyClient(new Response<>(Status.NOT_FOUND, "Route not found."));
                 }
             } else {
                 // Reply to the client that it was not a request
-                replyClient(new Response<>(Status.FAILED, "Invalid Request: Unknown object received."));
+                replyClient(new Response<>(Status.UNSUPPORTED_TYPE, "Invalid Request: Unknown object received."));
             }
 
         } catch (Exception e) {
             // Print an error if reading the objects fail
+            // TODO: Console Log this
             e.printStackTrace();
         }
 
@@ -84,6 +86,7 @@ public class ClientHandler implements Runnable {
         try {
             this.client.close();
         } catch (IOException e) {
+            // TODO: Console Log this
             e.printStackTrace();
         }
 
