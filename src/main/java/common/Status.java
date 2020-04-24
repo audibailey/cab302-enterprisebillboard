@@ -6,6 +6,16 @@ package common;
  * @author Perdana Bailey
  */
 public enum Status {
-    SUCCESS,
-    FAILED,
+    SUCCESS, // Generic Response
+    FAILED, // Generic Response
+
+    CREATED,
+
+    BAD_REQUEST,
+    UNSUPPORTED_TYPE,
+    UNAUTHORIZED,
+    INTERNAL_SERVER_ERROR,
+    FORBIDDEN,
+    METHOD_NOT_ALLOWED,
+    NOT_FOUND,
 }
