@@ -1,9 +1,6 @@
 package server.database.permissions;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,21 +34,26 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     /**
      * Select user permissions in the database based off id.
      *
-     * @param UserID: the id of the user.
+     * @param userId: the id of the user.
      * @return Optional<Permissions>: this returns the user permissions or an optional empty value.
      * @throws SQLException: this exception is thrown when there is an issue fetching data from the database.
      */
-    public Optional<Permissions> get(int UserID) throws SQLException {
+    public Optional<Permissions> get(int userId) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
             // Initialise return value
             Optional<Permissions> ReturnPermissions = Optional.empty();
-
+            // Create a query that gets the permission
+            String query = "SELECT * FROM PERMISSIONS WHERE id = ?";
             // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setInt(1, userId);
 
             // Create a query that selects user permissions based on the id and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM PERMISSIONS WHERE id = " + UserID);
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the permissions object and save it
             while (result.next()) {
@@ -59,13 +61,13 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return ReturnPermissions;
         } else {
             // Loop through and find the user permissions with the requested id or return an optional empty value
             for (Permissions p : this.mockDB) {
-                if (p.id == UserID) {
+                if (p.id == userId) {
                     return Optional.of(p);
                 }
             }
@@ -86,12 +88,17 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
         if (this.connection != null) {
             // Initialise return value
             Optional<Permissions> ReturnPermissions = Optional.empty();
-
+            // Create a query that updates the user and execute the query
+            String query = "SELECT * FROM PERMISSIONS WHERE username = ?";
             // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setString(1, username);
 
             // Create a query that selects user permissions based on the username and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM PERMISSIONS WHERE username = '" + username + "'");
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the permissions object
             while (result.next()) {
@@ -99,7 +106,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return ReturnPermissions;
         } else {
@@ -154,19 +161,28 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     public void insert(Permissions permissions) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
             // Create a query that adds the user and execute the query
-            String query = "INSERT INTO PERMISSIONS " +
-                "(id, username, canCreateBillboard, canEditBillboard, " +
-                "canScheduleBillboard, canEditUsers, canViewBillboard)" +
-                "VALUES( " + permissions.id + ",'" + permissions.username + "'," + permissions.canCreateBillboard + "," +
-                permissions.canEditBillboard + "," + permissions.canScheduleBillboard + "," + permissions.canEditUser + "," + permissions.canViewBillboard + ")";
-            sqlStatement.executeUpdate(query);
+
+            String query = "INSERT INTO PERMISSIONS (id, username, canCreateBillboard, " +
+                "canEditBillboard, canScheduleBillboard, canEditUsers, canViewBillboard) " +
+                "VALUES (?,?,?,?,?,?,?)";
+
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill in the parameters and execute query
+            pstmt.setInt(1, permissions.id);
+            pstmt.setString(2, permissions.username);
+            pstmt.setBoolean(3, permissions.canCreateBillboard);
+            pstmt.setBoolean(4, permissions.canEditBillboard);
+            pstmt.setBoolean(5, permissions.canScheduleBillboard);
+            pstmt.setBoolean(6, permissions.canEditUser);
+            pstmt.setBoolean(7, permissions.canViewBillboard);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             this.mockDB.add(permissions);
         }
@@ -181,21 +197,28 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     public void update(Permissions permissions) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
+
 
             // Create a query that updates the user permissions and execute the query
-            String query = "UPDATE PERMISSIONS SET canCreateBillboard = " +
-                permissions.canCreateBillboard +
-                ", canEditBillboard = " + permissions.canEditBillboard +
-                ", canScheduleBillboard = " + permissions.canScheduleBillboard +
-                ", canEditUsers = " + permissions.canEditUser +
-                ", canViewBillboard = " + permissions.canViewBillboard +
-                " WHERE ID = " + permissions.id;
-            sqlStatement.executeUpdate(query);
+
+            String query = "UPDATE PERMISSIONS SET " +
+                "canCreateBillboard = ?, canEditBillboard = ?, canScheduleBillboard = ?, " +
+                "canEditUsers = ?, canViewBillboard = ? WHERE ID =?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill in the parameters and execute query
+            pstmt.setBoolean(1, permissions.canCreateBillboard);
+            pstmt.setBoolean(2, permissions.canEditBillboard);
+            pstmt.setBoolean(3, permissions.canScheduleBillboard);
+            pstmt.setBoolean(4, permissions.canEditUser);
+            pstmt.setBoolean(5, permissions.canViewBillboard);
+            pstmt.setInt(6, permissions.id);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Loop through mock database and find the user permissions to update, then update it
             for (Permissions mockPermissions : this.mockDB) {
@@ -215,14 +238,19 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
     public void delete(Permissions permissions) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Query the database
-            Statement sqlStatement = connection.createStatement();
+
 
             // Create a query that deletes the user permissions and executes the query
-            sqlStatement.executeUpdate("DELETE FROM PERMISSIONS WHERE id =" + permissions.id);
-
+            String query = "DELETE FROM PERMISSIONS WHERE id = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill in the parameters and execute query
+            pstmt.setInt(1, permissions.id);
+            pstmt.executeUpdate();
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             this.mockDB.remove(permissions);
         }
@@ -238,8 +266,7 @@ public class PermissionsHandler implements ObjectHandler<Permissions> {
             // Attempt to query the database
             Statement sqlStatement = connection.createStatement();
             // Create a query that deletes the billboard and executes the query
-            String query = "DELETE FROM PERMISSIONS";
-            sqlStatement.executeUpdate(query);
+            sqlStatement.executeUpdate("DELETE FROM PERMISSIONS");
 
             // Cleans up query
             sqlStatement.close();
