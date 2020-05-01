@@ -187,26 +187,33 @@ public class MiddlewareHandler {
     }
 
     /**
-     * This function ensures the user with token is the same with the user in billboard
+     * This function ensures the user with the token is the same with the user created the billboard
      *
      * @param token: The supplied user token.
-     * @param bb     : The supplied billboard data
+     * @param data   : The supplied  data
      * @return boolean: The status of the users requested permission.
      */
-    public Boolean checkOwnBillboard(String token, Billboard bb) {
-        try {
-            // Fetch the user from the database and return it
-            Optional<User> fetchedUser = db.users.get(sessionTokens.get(token).getKey());
-            // Fetch the user base on billboard's ID
-            Optional<User> billboardUser = db.users.get(bb.userId);
+    public <T> Boolean checkOwnBillboard(String token, T data) {
+        // Check if data is a billboard
+        if (data instanceof Billboard) {
+            Billboard bb = (Billboard) data;
+            try {
+                // Fetch the user from the database and return it
+                Optional<User> fetchedUser = db.users.get(sessionTokens.get(token).getKey());
+                // Fetch the user base on billboard's ID
+                Optional<User> billboardUser = db.users.get(bb.userId);
 
-            // Return true if the user in billboard and user with the token is the same
-            return fetchedUser.equals(billboardUser);
+                // Return true if the user in billboard and user with the token is the same
+                return fetchedUser.equals(billboardUser);
 
-        } catch (Exception e) {
-            // TODO: Console Log this
+            } catch (Exception e) {
+                // TODO: Console Log this
+                return false;
+            }
+        } else {
             return false;
         }
+
     }
 
     /**

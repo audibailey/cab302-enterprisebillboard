@@ -72,7 +72,8 @@ public class BillboardHandler {
      * The Endpoint BillboardHandler post method, used to insert billboards into database
      *
      * @param data: This is used as the parameter for the method being used.
-     * @param <T>:  This generic is the billboard being inserted.
+     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
+     *              billboard.
      * @return Response<?>: This is the response to send back to the client.
      */
     private <T> Response<?> post(T data) {
@@ -104,7 +105,10 @@ public class BillboardHandler {
      * The Endpoint BillboardHandler delete method, used to delete billboards from the database
      *
      * @param data: This is used as the parameter for the method being used.
-     * @param <T>:  This generic is the billboard being deleted.
+     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
+     *              billboard.
+     * @param perm: This is used to determine the permission of a user. Perm = 1 when user have editBillboard
+     *              permission, perm = 2 when user doesn't have editBillboard permission
      * @return Response<?>: This is the response to send back to the client.
      */
     private <T> Response<?> delete(T data, int perm) {
@@ -135,7 +139,10 @@ public class BillboardHandler {
      * The Endpoint BillboardHandler update method, used to update billboards in the database
      *
      * @param data: This is used as the parameter for the method being used.
-     * @param <T>:  This generic is the billboard being updated and its new data.
+     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
+     *              billboard.
+     * @param perm  : This is used to determine the permission of a user. Perm = 1 when user have editBillboard
+     *              permission, perm = 2 when user doesn't have editBillboard permission
      * @return Response<?>: This is the response to send back to the client.
      */
     private <T> Response<?> update(T data, int perm) {
@@ -144,7 +151,7 @@ public class BillboardHandler {
             Billboard bb = (Billboard) data;
             //Check the ID, if ID is larger than 0 -> continue else return error
             if (bb.id > 0) {
-                // If perm == 1 (user has editAll permission), update the billboard
+                // If perm ==1 (user has editAll permission), update the billboard
                 if (perm == 1) {
                     return UpdateBillboardHandler.updateBillboard(this.db, bb);
                 }
@@ -205,7 +212,7 @@ public class BillboardHandler {
                     }
                     // Check if user is deleting other's billboard
                     else if (this.middlewareHandler.checkCanCreateBillboard(request.token)) {
-                        if (this.middlewareHandler.checkOwnBillboard(request.token, (Billboard) request.data)) {
+                        if (this.middlewareHandler.checkOwnBillboard(request.token, request.data)) {
                             return this.delete(request.data, 2);
                         } else {
                             return new Response<>(Status.UNAUTHORIZED, "Can't delete other user's billboard");
@@ -226,7 +233,7 @@ public class BillboardHandler {
                     }
                     // Check if user is updating other's billboard
                     else if (this.middlewareHandler.checkCanCreateBillboard(request.token)) {
-                        if (this.middlewareHandler.checkOwnBillboard(request.token, (Billboard) request.data)) {
+                        if (this.middlewareHandler.checkOwnBillboard(request.token, request.data)) {
                             return this.update(request.data, 2);
                         } else {
                             return new Response<>(Status.UNAUTHORIZED, "Can't update other user's billboard");
