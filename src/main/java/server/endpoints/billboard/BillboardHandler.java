@@ -72,8 +72,7 @@ public class BillboardHandler {
      * The Endpoint BillboardHandler post method, used to insert billboards into database
      *
      * @param data: This is used as the parameter for the method being used.
-     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
-     *              billboard.
+     * @param <T>:  This generic is the billboard being inserted.
      * @return Response<?>: This is the response to send back to the client.
      */
     private <T> Response<?> post(T data) {
@@ -105,8 +104,7 @@ public class BillboardHandler {
      * The Endpoint BillboardHandler delete method, used to delete billboards from the database
      *
      * @param data: This is used as the parameter for the method being used.
-     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
-     *              billboard.
+     * @param <T>:  This generic is the billboard being deleted.
      * @return Response<?>: This is the response to send back to the client.
      */
     private <T> Response<?> delete(T data, int perm) {
@@ -137,8 +135,7 @@ public class BillboardHandler {
      * The Endpoint BillboardHandler update method, used to update billboards in the database
      *
      * @param data: This is used as the parameter for the method being used.
-     * @param <T>:  This generic determines whether to retrieve a list of billboards or a single
-     *              billboard.
+     * @param <T>:  This generic is the billboard being updated and its new data.
      * @return Response<?>: This is the response to send back to the client.
      */
     private <T> Response<?> update(T data, int perm) {
@@ -147,7 +144,7 @@ public class BillboardHandler {
             Billboard bb = (Billboard) data;
             //Check the ID, if ID is larger than 0 -> continue else return error
             if (bb.id > 0) {
-                // If perm ==1 (user has editAll permission), update the billboard
+                // If perm == 1 (user has editAll permission), update the billboard
                 if (perm == 1) {
                     return UpdateBillboardHandler.updateBillboard(this.db, bb);
                 }

@@ -26,12 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added endpoints for UPdate + delete billboard. Fix some comments in handler files and add checkOwnBillboard function in MiddlewareHandler.java">
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UserHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/common/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/Methods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/EndpointHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/EndpointHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/BillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/BillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/DeleteBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/DeleteBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/PostBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/PostBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/UpdateBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/UpdateBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/middleware/MiddlewareHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/middleware/MiddlewareHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/ClientTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -362,12 +362,12 @@
                   </entry>
                 </map>
               </option>
-              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
