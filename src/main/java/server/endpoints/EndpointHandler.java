@@ -1,7 +1,9 @@
 package server.endpoints;
 
+import common.models.User;
 import server.database.DataService;
 import server.endpoints.billboard.BillboardHandler;
+import server.endpoints.user.UserHandler;
 import server.middleware.MiddlewareHandler;
 
 /**
@@ -11,8 +13,9 @@ import server.middleware.MiddlewareHandler;
  */
 public class EndpointHandler {
     private DataService db;
-    public BillboardHandler billboard;
     public MiddlewareHandler middlewareHandler;
+    public BillboardHandler billboard;
+    public UserHandler user;
 
     /**
      * Generates a Endpoint Handler Instance.
@@ -23,5 +26,6 @@ public class EndpointHandler {
         this.db = db;
         this.middlewareHandler = middlewareHandler;
         this.billboard = new BillboardHandler(this.db, this.middlewareHandler);
+        this.user = new UserHandler(this.db, this.middlewareHandler);
     }
 }

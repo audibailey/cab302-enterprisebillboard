@@ -70,7 +70,7 @@ public class ClientTest {
         Object o = ois.readObject();
         if (o instanceof Response) {
             Response resp = (Response) o;
-            if (resp.status == Status.SUCCESS) {
+            if (resp.status == Status.CREATED) {
                 System.out.println("Successfully logged in!");
                 System.out.println("Your token is: " + (String) resp.data);
                 token = (String) resp.data;
@@ -103,7 +103,7 @@ public class ClientTest {
                 System.out.println("Billboard 1 name: ");
                 System.out.println(((List<Billboard>) resp.data).get(0).name);
             } else {
-                System.out.println("Failed to get Billboard.");
+                System.out.println("Failed to post Billboard.");
                 System.out.println((String) resp.data);
             }
         }

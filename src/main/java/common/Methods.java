@@ -13,4 +13,9 @@ public enum Methods {
     POST_BILLBOARD,
     UPDATE_BILLBOARD,
     DELETE_BILLBOARD,
+
+    GET_USERS,
+    POST_USER,
+    UPDATE_USER,
+    DELETE_USER,
 }
