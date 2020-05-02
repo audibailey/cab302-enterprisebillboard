@@ -84,10 +84,10 @@ public class BillboardHandler {
             if (bb.id > 0) {
                 // Check the name && userID -> make sure no other names and the user ID exists else return error
                 try {
-                    if (db.billboards.get(bb.name).isPresent() && db.users.get(bb.userId).isPresent()) {
+                    if (db.billboards.get(bb.name).isEmpty() && db.users.get(bb.userId).isPresent()) {
                         return PostBillboardHandler.insertBillboard(this.db, bb);
                     } else {
-                        return new Response<>(Status.BAD_REQUEST, "Billboard object user doesn't exist.");
+                        return new Response<>(Status.BAD_REQUEST, "Billboard already exists or user doesn't exist.");
                     }
                 } catch (SQLException e) {
                     // TODO: Console Log this

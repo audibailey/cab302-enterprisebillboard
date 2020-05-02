@@ -1,38 +1,38 @@
-package server.endpoints.billboard;
+package server.endpoints.user;
 
 import java.util.Optional;
 
-import common.models.Billboard;
 import common.models.Response;
 import common.Status;
+import common.models.User;
 import server.database.DataService;
 
 /**
- * This class handles the post function of billboard database handler and turns it into a response
+ * This class handles the post function of user database handler and turns it into a response
  * for the client.
  *
- * @author // Attempt to the list of locked billboards from the database
+ * @author Perdana Bailey
  * @author Kevin Huynh
  */
-public class PostBillboardHandler {
+public class PostUserHandler {
     /**
      * Insert the billboard and return a response
      *
-     * @param db: This is used to call the database handler.
-     * @param bb: This is used to pass the billboard data
+     * @param db:   This is used to call the database handler.
+     * @param user: This is used to pass the user data
      * @return Response<?>: This is the response to send back to the client.
      */
-    public static Response<?> insertBillboard(DataService db, Billboard bb) {
+    public static Response<?> insertUser(DataService db, User user) {
         try {
-            db.billboards.insert(bb);
-            // Attempt to get the inserted billboard
-            Optional<Billboard> insertedBillboard = db.billboards.get(bb.name);
+            db.users.insert(user);
+            // Attempt to get the inserted user
+            Optional<User> insertedUser = db.users.get(user.username);
 
-            if (insertedBillboard.isPresent()) {
+            if (insertedUser.isPresent()) {
                 // Return success code
                 return new Response<>(
                     Status.SUCCESS,
-                    "Billboard successfully inserted."
+                    "User successfully inserted."
                 );
             } else {
                 return new Response<>(
