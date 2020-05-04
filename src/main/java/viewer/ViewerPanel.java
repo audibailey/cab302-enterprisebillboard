@@ -19,8 +19,8 @@ public class ViewerPanel {
     //Method to sort all billboard display components to display viewer. Pane parameter is used to add components to box layout
     public ViewerPanel(Container pane) throws IOException {
         //billboard.message = null;
-        billboard.picture = null;
-        billboard.information = null;
+        //billboard.picture = null;
+        //billboard.information = null;
         new Picture(billboard, pane);
         new Message(billboard, pane);
         new Information(billboard, pane);

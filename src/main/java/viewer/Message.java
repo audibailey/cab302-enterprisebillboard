@@ -5,33 +5,32 @@ import common.models.Billboard;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
+import java.io.IOException;
+
+/**
+ * This class consists of the message methods for the Billboard Viewer GUI.
+ * It sets up all message related contents to be displayed in the Viewer.
+ *
+ * @author Trevor Waturuocha
+ */
 
 public class Message extends JPanel {
     JLabel msgString;
     // Message class constructor. Takes billboard object and container to draw in as parameters.
-    public Message(Billboard billboard, Container container){
-        // Check if message string is not empty and information and picture are empty
+    public Message(Billboard billboard, Container container) throws IOException {
+        // Check if message string is not empty
         if (billboard.message != null && billboard.information == null && billboard.picture == null){
-            JLabel msg = new JLabel(billboard.message);
-            CalcMsgWidth(msg); // Formatting message for billboard width
-            msg.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally centering message text
-            container.add(Box.createVerticalGlue()); // To add padding to top of message
-            container.add(msg, BoxLayout.Y_AXIS); // Adding message to centre of container
-            container.add(Box.createVerticalGlue()); // To add padding to bottom of message
+            DrawMessage(billboard, container); // Drawing message
         }
-        // Check if message string and picture is not empty
-
-        // Check if message string and information are not empty and picture is empty
+        // Check if message string and picture byte array is not empty
+        if (billboard.message != null && billboard.information == null && billboard.picture != null){
+            DrawMessage(billboard, container); // Drawing message
+            new Picture(billboard, container).DrawPicture(billboard, container, 2, 3); // Drawing picture
+        }
+        // Check if message string and information are not empty
         if (billboard.message != null && billboard.information != null && billboard.picture == null){
-            JLabel msg = new JLabel(billboard.message);
-            CalcMsgWidth(msg); // Formatting message for billboard width
-            msg.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally centering message text
-            msg.setAlignmentY(Component.CENTER_ALIGNMENT); // Vertically centering message text
-            JLabel info = new JLabel(billboard.information); // Creating new centered label to store information text
-            new Information(billboard, container).FormatInfo(info); // Formatting information text
-            info.setAlignmentY(Component.CENTER_ALIGNMENT); // Vertically centering information text
-            container.add(msg); // Adding message to container
-            container.add(info); // Adding information to container
+            DrawMessage(billboard, container); // Drawing message
+            new Information(billboard, container).DrawInformation(billboard, container, 4, 2); // Drawing information
         }
         // Otherwise do nothing
     }
@@ -49,5 +48,15 @@ public class Message extends JPanel {
 
         // Set the final plain font size to use for the message label
         label.setFont(new Font(labelFont.getName(), Font.PLAIN, finalSize));
+    }
+
+    // Method to draw message. Takes billboard object and container to draw in as parameters.
+    public void DrawMessage(Billboard billboard, Container container){
+        JLabel msg = new JLabel(billboard.message); // Adding message string to label
+        CalcMsgWidth(msg); // Formatting message for billboard width
+        msg.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally centering message text
+        container.add(Box.createVerticalGlue()); // To add padding to top of message
+        container.add(msg); // Adding message to centre of container
+        container.add(Box.createVerticalGlue()); // To add padding to bottom of message
     }
 }
