@@ -2,6 +2,7 @@ package viewer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * This class consists of the Billboard Viewer handler.
@@ -14,7 +15,7 @@ public class Main {
     /**
      * Create the Billboard Viewer GUI and show it.
      */
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI() throws IOException {
         JFrame frame = new JFrame("Billboard Viewer"); // Constructing Billboard Viewer frame
 
         // Get the screen dimensions
@@ -33,7 +34,8 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set frame to exit on close
         frame.setExtendedState(Frame.MAXIMIZED_BOTH); // Setting frame size to maximise to full screen
         frame.setUndecorated(true); // Removing the frame title bar including default buttons
-        frame.setContentPane(new ViewerPanel()); // Assigning Viewer panel to Viewer frame
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        new ViewerPanel(frame); // Assigning ViewerPanel to Viewer frame
         frame.setVisible(true); // Show frame
     }
 
@@ -45,7 +47,11 @@ public class Main {
         // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                try {
+                    createAndShowGUI();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
