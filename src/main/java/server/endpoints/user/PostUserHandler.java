@@ -16,7 +16,7 @@ import server.database.DataService;
  */
 public class PostUserHandler {
     /**
-     * Insert the billboard and return a response
+     * Insert the user and return a response
      *
      * @param db:   This is used to call the database handler.
      * @param user: This is used to pass the user data
@@ -37,13 +37,13 @@ public class PostUserHandler {
             } else {
                 return new Response<>(
                     Status.INTERNAL_SERVER_ERROR,
-                    "Billboard did not insert."
+                    "User did not insert."
                 );
             }
         } catch (Exception e) {
             // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get insert billboard into the database.");
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get insert user into the database.");
         }
     }
 }

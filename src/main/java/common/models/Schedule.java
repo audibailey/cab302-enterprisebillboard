@@ -13,6 +13,7 @@ import java.util.Date;
  *
  * @author Perdana Bailey
  * @author Jamie Martin
+ * @author Kevin Huynh
  */
 public class Schedule implements Serializable {
     /**
@@ -21,6 +22,7 @@ public class Schedule implements Serializable {
     public int id;
     public String billboardName;
     public Instant startTime;
+    public Instant createTime; // Time when create the schedule
     public int duration;
     public int interval;
 
@@ -37,17 +39,20 @@ public class Schedule implements Serializable {
      * @param id:            schedules id.
      * @param billboardName: schedules billboard name.
      * @param startTime:     schedules billboard starting time.
+     * @param createTime:    schedules billboard creating time.
      * @param duration:      schedules billboard duration.
      * @param interval:      schedules billboard interval.
      */
     public Schedule(int id,
                     String billboardName,
                     Instant startTime,
+                    Instant createTime,
                     int duration,
                     int interval) {
         this.id = id;
         this.billboardName = billboardName;
         this.startTime = startTime;
+        this.createTime = createTime;
         this.duration = duration;
         this.interval = interval;
     }
@@ -58,11 +63,13 @@ public class Schedule implements Serializable {
      * @param billboardName: schedules billboard name.
      * @param startTime:     schedules billboard starting time.
      * @param duration:      schedules billboard duration.
+     * @param createTime:    schedules billboard create time.
      * @param interval:      schedules billboard interval.
      */
     public Schedule(
         String billboardName,
         Instant startTime,
+        Instant createTime,
         int duration,
         int interval) {
         this.billboardName = billboardName;
@@ -83,18 +90,21 @@ public class Schedule implements Serializable {
             rs.getInt("id"),
             rs.getString("billboardName"),
             rs.getTimestamp("startTime").toInstant(),
+            rs.getTimestamp("createTime").toInstant(),
             rs.getInt("duration"),
             rs.getInt("interval"));
     }
 
     /**
      * Generates a random Schedule object with random variables
-     * @param billboardName: the name of the billboard
-     * @return a randomised schedule object
+     *
+     * @param billboardName: the name of the billboard.
+     * @return a randomised schedule object.
      */
     public static Schedule Random(String billboardName) {
         return new Schedule(
             billboardName,
+            RandomFactory.Instant(),
             RandomFactory.Instant(),
             RandomFactory.Int(30),
             RandomFactory.Int(60)

@@ -24,9 +24,9 @@ public class DeleteUserHandler {
     public static Response<?> deleteUser(DataService db, User user) {
         try {
             db.users.delete(user);
-            // Attempt to get the deleted billboard (should be empty)
+            // Attempt to get the deleted user (should be empty)
             Optional<User> deletedUser = db.users.get(user.username);
-            // Check if the billboard is still in the database or not
+            // Check if the user is still in the database or not
             if (deletedUser.isEmpty()) {
                 // Return a success  message
                 return new Response<>(
@@ -37,7 +37,7 @@ public class DeleteUserHandler {
                 // Return a failed message
                 return new Response<>(
                     Status.INTERNAL_SERVER_ERROR,
-                    "There was an error deleting the billboard"
+                    "There was an error deleting the user"
                 );
             }
         } catch (Exception e) {

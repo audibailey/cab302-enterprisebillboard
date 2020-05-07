@@ -18,4 +18,10 @@ public enum Methods {
     POST_USER,
     UPDATE_USER,
     DELETE_USER,
+
+
+    GET_SCHEDULES,
+    POST_SCHEDULE,
+    UPDATE_SCHEDULE,
+    DELETE_SCHEDULE,
 }

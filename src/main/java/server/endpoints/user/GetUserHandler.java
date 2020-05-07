@@ -30,7 +30,7 @@ public class GetUserHandler {
             Optional<User> resultUser = db.users.get(userID);
 
             if (resultUser.isPresent()) {
-                // Return a success with the billboard matched the ID
+                // Return a success with the user matched the ID
                 return new Response<>(
                     Status.SUCCESS,
                     resultUser
@@ -63,7 +63,7 @@ public class GetUserHandler {
             Optional<User> resultUser = db.users.get(username);
 
             if (resultUser.isPresent()) {
-                // Return a success with the billboard matched the ID
+                // Return a success with the user matched the ID
                 return new Response<>(
                     Status.SUCCESS,
                     resultUser
@@ -93,7 +93,7 @@ public class GetUserHandler {
         // Attempt to get the list of all users from the database
         try {
             List<User> allUsers = db.users.getAll();
-            // Return a success with the billboard matched the name
+            // Return a success with the list of users
             return new Response<>(
                 Status.SUCCESS,
                 allUsers
@@ -102,7 +102,7 @@ public class GetUserHandler {
         } catch (Exception e) {
             // TODO: Console Log this
             // If an issue occurs return a failed with the error message as the exception
-            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get all billboards from the database.");
+            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to get all users from the database.");
         }
     }
 
