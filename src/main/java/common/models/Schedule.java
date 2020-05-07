@@ -74,6 +74,7 @@ public class Schedule implements Serializable {
         int interval) {
         this.billboardName = billboardName;
         this.startTime = startTime;
+        this.createTime = createTime;
         this.duration = duration;
         this.interval = interval;
     }
