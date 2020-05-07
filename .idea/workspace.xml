@@ -25,23 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added endpoints and handler for ScheduleHandler &#10;Fixed Schedule models + schema&#10;Fixed some comments in old files&#10;Deleted Update_Schedule and Update in ObjectHandler.java">
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/DeleteScheduleHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/GetScheduleHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/PostScheduleHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/ScheduleHandler.java" afterDir="false" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/Methods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/ObjectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/ObjectHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schedule/ScheduleHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/database/schema/Schema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/UpdateBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/UpdateBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/DeleteUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/DeleteUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/GetUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/GetUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/PostUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/PostUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UpdateUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UpdateUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UserHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,7 +349,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588421312140</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="feat: Added endpoints and handler for ScheduleHandler &#10;Fixed Schedule models + schema&#10;Fixed some comments in old files&#10;Deleted Update_Schedule and Update in ObjectHandler.java">
+      <created>1588855127069</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1588855127069</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -466,11 +459,11 @@
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1586936020972" />
     <state x="2610" y="256" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@1920.0.1920.999" timestamp="1586505660237" />
     <state x="518" y="231" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1587282379499" />
-    <state x="158" y="13" width="936" height="797" key="CommitChangelistDialog2" timestamp="1588855061214">
+    <state x="158" y="0" width="936" height="797" key="CommitChangelistDialog2" timestamp="1588855124150">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="414" y="67" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1587703383252" />
-    <state x="158" y="13" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1588855061214" />
+    <state x="158" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1588855124150" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
     <state width="439" height="466" key="DebuggerActiveHint" timestamp="1586504534721">
       <screen x="1920" y="0" width="1920" height="999" />
@@ -570,11 +563,11 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="602" y="344" key="VCS.EditChangelistDialog/0.23.1440.797@0.23.1440.797" timestamp="1584682915182" />
-    <state x="341" y="143" key="Vcs.Push.Dialog.v2" timestamp="1588421321748">
+    <state x="341" y="143" key="Vcs.Push.Dialog.v2" timestamp="1588855136264">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="320" y="156" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1586934402020" />
-    <state x="341" y="143" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1588421321748" />
+    <state x="341" y="143" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1588855136264" />
     <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1584691895155" />
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1588811719170">
       <screen x="0" y="0" width="1536" height="824" />

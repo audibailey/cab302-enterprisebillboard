@@ -11,7 +11,7 @@ public class Schema {
      * @param username: the DBMS password
      * @param password: the DBMS password
      * @param schema:   the database name/schema
-     * @throws SQLException
+     * @throws SQLException: Description
      */
     public static Connection createDatabase(Connection connection, String url, String username, String password, String schema) throws SQLException {
         Statement sqlStatement = null;
@@ -147,7 +147,7 @@ public class Schema {
                 "id int NOT NULL AUTO_INCREMENT UNIQUE," +
                 "billboardName varchar(255) NOT NULL UNIQUE," +
                 "startTime TIMESTAMP NOT NULL," +
-                "createTime TIMESTAMP NOT NULL" +
+                "createTime TIMESTAMP NOT NULL," +
                 "duration int NOT NULL," +
                 "`interval` int NOT NULL," +
                 "PRIMARY KEY(id)," +
