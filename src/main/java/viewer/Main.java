@@ -1,5 +1,7 @@
 package viewer;
 
+import common.models.Billboard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -15,8 +17,13 @@ public class Main {
     /**
      * Create the Billboard Viewer GUI and show it.
      */
-    private static void createAndShowGUI() throws IOException {
+    private static void createAndShowGUI(Billboard billboard) throws IOException {
         JFrame frame = new JFrame("Billboard Viewer"); // Constructing Billboard Viewer frame
+
+        // Check if billboard has a background colour attribute to add background colour
+        if(billboard.backgroundColor != null){
+            frame.getContentPane().setBackground(Color.decode(billboard.backgroundColor)); // Setting background colour
+        }
 
         // Get the screen dimensions
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -35,7 +42,7 @@ public class Main {
         frame.setExtendedState(Frame.MAXIMIZED_BOTH); // Setting frame size to maximise to full screen
         frame.setUndecorated(true); // Removing the frame title bar including default buttons
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        new ViewerPanel(frame); // Assigning ViewerPanel to Viewer frame
+        new ViewerPanel(frame, billboard); // Assigning ViewerPanel to Viewer frame
         frame.setVisible(true); // Show frame
     }
 
@@ -43,12 +50,20 @@ public class Main {
      * Main class to run GUI Application and socket interface
      */
     public static void main(String[] args) throws InterruptedException {
+        Billboard billboard = Billboard.Random(1); // Creating new random Billboard object for testing. Comment out each line to test an attribute.
+        //billboard.messageColor = null;
+        //billboard.informationColor = null;
+        //billboard.backgroundColor = null;
+        //billboard.message = null;
+        //billboard.picture = null;
+        //billboard.information = null;
+
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    createAndShowGUI();
+                    createAndShowGUI(billboard);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
