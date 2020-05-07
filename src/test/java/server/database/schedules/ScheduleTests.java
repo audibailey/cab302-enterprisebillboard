@@ -8,14 +8,12 @@ import java.util.stream.Collectors;
 
 import common.models.Billboard;
 import common.models.Schedule;
-import common.utils.RandomFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import common.models.Permissions;
 import common.models.User;
 import server.database.DataService;
 
@@ -211,60 +209,6 @@ public class ScheduleTests {
             fail("Error fetching billboard");
         }
 
-    }
-
-    /**
-     * Tests changing a schedule property in the database.
-     *
-     * @throws Exception: this exception returns when there is an issue changing data in the database.
-     */
-    @Test
-    public void UpdateExistingSchedule() throws Exception {
-        // Create testing Billboard and insert it into the database
-        Billboard billboard = Billboard.Random(userId);
-        dataService.billboards.insert(billboard);
-
-        // Retrieve the testing Billboard
-        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
-        if (insertedBillboard.isPresent()) {
-            // Create the new schedule
-            Schedule schedule = Schedule.Random(insertedBillboard.get().name);
-            // Insert the schedule into the database
-            dataService.schedules.insert(schedule);
-
-            // Retrieve the testing schedule
-            Optional<Schedule> toChangeSchedule = dataService.schedules.get(schedule.billboardName);
-            if (toChangeSchedule.isPresent()) {
-                // Test the retrieved time against the control time
-                assertEquals(toChangeSchedule.get().startTime, schedule.startTime);
-                // Change the duration of the schedule
-                int randomInt = RandomFactory.Int(60);
-                toChangeSchedule.get().duration = randomInt;
-                dataService.schedules.update(toChangeSchedule.get());
-                // Retrieve the testing schedule after updated
-                Optional<Schedule> changedSchedule = dataService.schedules.get(toChangeSchedule.get().id);
-                if (changedSchedule.isPresent()) {
-                    // Test if the new schedule's duration is the same as our change
-                    assertEquals(changedSchedule.get().duration, randomInt);
-
-                    // Clean up and delete schedule + billboard
-                    Optional<Schedule> DeletingSchedule = dataService.schedules.get(changedSchedule.get().id);
-                    if (DeletingSchedule.isPresent()) {
-                        dataService.schedules.delete(DeletingSchedule.get());
-                        dataService.billboards.delete(insertedBillboard.get());
-                    } else {
-                        fail("Error fetching schedule");
-                    }
-
-                } else {
-                    fail("Error fetching schedule");
-                }
-            } else {
-                fail("Error fetching schedule");
-            }
-        } else {
-            fail("Error fetching billboard");
-        }
     }
 
     /**
