@@ -43,6 +43,10 @@ public class Information extends JLabel {
     public void DrawInformation(Billboard billboard, Container container, int wFactor, int hFactor){
         JLabel info = new JLabel(billboard.information); // Creating new centered label to store information text
         FormatInfo(info, wFactor, hFactor); // Formatting information text
+        // Check if information string has an information colour attribute to add colour
+        if(billboard.informationColor != null){
+            info.setForeground(Color.decode(billboard.informationColor));
+        }
         container.add(Box.createVerticalGlue()); // To add padding to top of information
         container.add(info); // Adding message to container
         container.add(Box.createVerticalGlue()); // To add padding to bottom of information

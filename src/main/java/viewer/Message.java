@@ -14,7 +14,7 @@ import java.io.IOException;
  * @author Trevor Waturuocha
  */
 
-public class Message extends JPanel {
+public class Message extends JLabel {
     JLabel msgString;
     // Message class constructor. Takes billboard object and container to draw in as parameters.
     public Message(Billboard billboard, Container container) throws IOException {
@@ -32,6 +32,7 @@ public class Message extends JPanel {
             DrawMessage(billboard, container); // Drawing message
             new Information(billboard, container).DrawInformation(billboard, container, 4, 2); // Drawing information
         }
+
         // Otherwise do nothing
     }
 
@@ -54,6 +55,10 @@ public class Message extends JPanel {
     public void DrawMessage(Billboard billboard, Container container){
         JLabel msg = new JLabel(billboard.message); // Adding message string to label
         CalcMsgWidth(msg); // Formatting message for billboard width
+        // Check if message string has a message colour attribute to add colour
+        if(billboard.messageColor != null){
+            msg.setForeground(Color.decode(billboard.messageColor));
+        }
         msg.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally centering message text
         container.add(Box.createVerticalGlue()); // To add padding to top of message
         container.add(msg); // Adding message to centre of container

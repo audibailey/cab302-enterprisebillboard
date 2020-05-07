@@ -82,6 +82,7 @@ public class Picture extends JLabel {
         }
         ImageIcon pic = new ImageIcon(billboard.picture); // Storing image byte array in image icon
         JLabel picture = new JLabel(pic);
+
         picture.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally centering message text
         container.add(Box.createVerticalGlue()); // To add padding to top of picture
         container.add(picture); // Adding message to centre of container
