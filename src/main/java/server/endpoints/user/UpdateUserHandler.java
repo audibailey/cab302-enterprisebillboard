@@ -23,11 +23,12 @@ public class UpdateUserHandler {
      */
     public static Response<?> updateUser(DataService db, User user) {
         try {
+            // Get the user before update
             Optional<User> beforeUpdate = db.users.get(user.username);
             db.users.update(user);
-            // Attempt to get the deleted billboard (should be empty)
+            // Attempt to get the updated user
             Optional<User> updatedUser = db.users.get(user.username);
-            // Check if the billboard is still in the database or not
+            // Check if the user has been update or not
             if (!beforeUpdate.equals(updatedUser)) {
                 // Return a success  message
                 return new Response<>(
@@ -38,7 +39,7 @@ public class UpdateUserHandler {
                 // Return a failed message
                 return new Response<>(
                     Status.INTERNAL_SERVER_ERROR,
-                    "There was an error updating the billboard"
+                    "There was an error updating the user."
                 );
             }
         } catch (Exception e) {

@@ -138,7 +138,6 @@ public class Schema {
             }
         }
 
-
         try {
             // Create statement
             sqlStatement = connection.createStatement();
@@ -148,6 +147,7 @@ public class Schema {
                 "id int NOT NULL AUTO_INCREMENT UNIQUE," +
                 "billboardName varchar(255) NOT NULL UNIQUE," +
                 "startTime TIMESTAMP NOT NULL," +
+                "createTime TIMESTAMP NOT NULL" +
                 "duration int NOT NULL," +
                 "`interval` int NOT NULL," +
                 "PRIMARY KEY(id)," +

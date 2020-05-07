@@ -24,14 +24,15 @@ public class UpdateBillboardHandler {
      */
     public static Response<?> updateBillboard(DataService db, Billboard bb) {
         try {
+            // Get the billboard before updated
             Optional<Billboard> beforeUpdated = db.billboards.get(bb.name);
             db.billboards.update(bb);
             // Attempt to get the updated billboard
             Optional<Billboard> updatedBillboard = db.billboards.get(bb.name);
 
-            // Check if the billboard is still in the database or not
+            // Check if the billboard is updated or not
             if (!beforeUpdated.equals(updatedBillboard)) {
-                // Return a success with the list of locked billboards
+                // Return a success
                 return new Response<>(
                     Status.SUCCESS,
                     "Billboard successfully updated."
@@ -39,7 +40,7 @@ public class UpdateBillboardHandler {
             } else {
                 return new Response<>(
                     Status.BAD_REQUEST,
-                    "Billboard does not exist."
+                    "There was an error updating the billboard."
                 );
             }
         } catch (Exception e) {

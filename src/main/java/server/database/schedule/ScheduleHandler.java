@@ -1,6 +1,7 @@
 package server.database.schedule;
 
 import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -160,7 +161,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
 
             // Create a query that adds the schedule and execute the query
 
-            String query = "INSERT INTO SCHEDULES (billboardName, startTime, duration, `interval`) VALUES (?,?,?,?)";
+            String query = "INSERT INTO SCHEDULES (billboardName, startTime, createTime, duration, `interval`) VALUES (?,?,?,?,?)";
             // Attempt to query the database
             PreparedStatement pstmt = connection.prepareStatement(query);
             // Clear all parameters before insert
@@ -169,8 +170,9 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             // Fill in the parameters and execute query
             pstmt.setString(1, schedule.billboardName);
             pstmt.setTimestamp(2, java.sql.Timestamp.from(schedule.startTime));
-            pstmt.setInt(3, schedule.duration);
-            pstmt.setInt(4, schedule.interval);
+            pstmt.setTimestamp(3, java.sql.Timestamp.from(Instant.now()));
+            pstmt.setInt(4, schedule.duration);
+            pstmt.setInt(5, schedule.interval);
             pstmt.executeUpdate();
 
             // Clean up query
@@ -182,43 +184,6 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             mockDBNum++;
         }
     }
-
-    /**
-     * Update a schedule in the database.
-     *
-     * @param schedule: this is the requested schedule to update.
-     * @throws SQLException: this exception returns when there is an issue sending data to the database.
-     */
-    public void update(Schedule schedule) throws SQLException {
-        // Check that it's not in testing mode
-        if (this.connection != null) {
-
-            String query = "UPDATE SCHEDULES SET startTime = ?, duration = ?, `interval` = ? WHERE id = ?";
-            // Attempt to query the database
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            // Clear all parameters before insert
-            pstmt.clearParameters();
-
-            // Fill in the parameters and execute query
-
-            pstmt.setTimestamp(1, java.sql.Timestamp.from(schedule.startTime));
-            pstmt.setInt(2, schedule.duration);
-            pstmt.setInt(3, schedule.interval);
-            pstmt.setInt(4, schedule.id);
-            pstmt.executeUpdate();
-
-            // Clean up query
-            pstmt.close();
-        } else {
-            // Loop through mock database and find the schedule to update, then update it
-            for (Schedule mockSchedule : this.mockDB) {
-                if (mockSchedule.id == schedule.id) {
-                    mockSchedule = schedule;
-                }
-            }
-        }
-    }
-
 
     /**
      * Delete a schedule from the database.

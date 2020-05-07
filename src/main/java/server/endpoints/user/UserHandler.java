@@ -1,14 +1,11 @@
 package server.endpoints.user;
 
 import common.Status;
-import common.models.Billboard;
 import common.models.Request;
 import common.models.Response;
 import common.models.User;
 import server.database.DataService;
-import server.endpoints.billboard.GetBillboardHandler;
-import server.endpoints.billboard.PostBillboardHandler;
-import server.endpoints.billboard.UpdateBillboardHandler;
+
 import server.middleware.MiddlewareHandler;
 
 import java.sql.SQLException;
@@ -44,7 +41,6 @@ public class UserHandler {
      * @return Response<?>: This is the response to send back to the client.
      */
     private <T> Response<?> get(T data) {
-
         // Check the object type
         if (data instanceof Integer) {
             // get user using ID
@@ -115,7 +111,7 @@ public class UserHandler {
                     }
                 } catch (SQLException e) {
                     // TODO: Console Log this
-                    return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to add user to the database.");
+                    return new Response<>(Status.INTERNAL_SERVER_ERROR, "Failed to delete user from the database.");
                 }
             } else {
                 return new Response<>(Status.BAD_REQUEST, "Invalid user ID.");
@@ -167,7 +163,16 @@ public class UserHandler {
         // Check the methods to determine which type of Endpoint UserHandler function is needed.
         switch (request.method) {
             case GET_USERS:
-                return this.get(request.data);
+                if (this.middlewareHandler.checkToken(request.token)) {
+                    // Check the permission
+                    if (this.middlewareHandler.checkCanEditUser(request.token)) {
+                        return this.get(request.data);
+                    } else {
+                        return new Response<>(Status.UNAUTHORIZED, "User does not have permissions to get user.");
+                    }
+                } else {
+                    return new Response<>(Status.UNAUTHORIZED, "Token invalid.");
+                }
             case POST_USER:
                 // Check the token
                 if (this.middlewareHandler.checkToken(request.token)) {
