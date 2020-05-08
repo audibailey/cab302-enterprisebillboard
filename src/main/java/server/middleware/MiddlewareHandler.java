@@ -205,7 +205,6 @@ public class MiddlewareHandler {
 
                 // Return true if the user in billboard and user with the token is the same
                 return fetchedUser.equals(billboardUser);
-
             } catch (Exception e) {
                 // TODO: Console Log this
                 return false;
@@ -213,7 +212,34 @@ public class MiddlewareHandler {
         } else {
             return false;
         }
+    }
 
+    /**
+     * This function ensures the user with the token is the same with the user created the billboard
+     *
+     * @param token: The supplied user token.
+     * @param data   : The supplied  data
+     * @return boolean: The status of the users requested permission.
+     */
+    public <T> Boolean checkSameUser(String token, T data) {
+        // Check if data is a billboard
+        if (data instanceof Permissions) {
+            Permissions permissions = (Permissions) data;
+            try {
+                // Fetch the user from the database and return it
+                Optional<User> fetchedUser = db.users.get(sessionTokens.get(token).getKey());
+                // Fetch the user base on billboard's ID
+                Optional<User> billboardUser = db.users.get(permissions.username);
+
+                // Return true if the user in billboard and user with the token is the same
+                return fetchedUser.equals(billboardUser);
+            } catch (Exception e) {
+                // TODO: Console Log this
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -310,6 +336,7 @@ public class MiddlewareHandler {
             return false;
         }
     }
+
 
     /**
      * This function logs the user out by removing the token from the session and removing them

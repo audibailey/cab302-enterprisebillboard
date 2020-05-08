@@ -2,6 +2,7 @@ package server.endpoints.user;
 
 import java.util.Optional;
 
+import common.models.Permissions;
 import common.models.Response;
 import common.Status;
 import common.models.User;
@@ -23,11 +24,14 @@ public class DeleteUserHandler {
      */
     public static Response<?> deleteUser(DataService db, User user) {
         try {
+            Optional<Permissions> deletePerm = db.permissions.get(user.username);
+            db.permissions.delete(deletePerm.get());
             db.users.delete(user);
             // Attempt to get the deleted user (should be empty)
             Optional<User> deletedUser = db.users.get(user.username);
+            Optional<Permissions> deletedPermission = db.permissions.get(user.username);
             // Check if the user is still in the database or not
-            if (deletedUser.isEmpty()) {
+            if (deletedUser.isEmpty() && deletedPermission.isEmpty()) {
                 // Return a success  message
                 return new Response<>(
                     Status.SUCCESS,
