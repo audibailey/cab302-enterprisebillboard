@@ -25,17 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java">
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/GetPermissionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/PermissionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/PostPermissionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/UpdatePermissionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/Methods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/DeleteUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/DeleteUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UpdateUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UpdateUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/middleware/MiddlewareHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/middleware/MiddlewareHandler.java" afterDir="false" />
-    </list>
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -201,6 +191,7 @@
       <workItem from="1586936008452" duration="3647000" />
       <workItem from="1587019847118" duration="5408000" />
       <workItem from="1587354586099" duration="4670000" />
+      <workItem from="1589025763372" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
@@ -407,12 +398,12 @@
                   </entry>
                 </map>
               </option>
-              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
