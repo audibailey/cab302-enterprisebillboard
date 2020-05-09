@@ -1,6 +1,5 @@
 package server.database.schedules;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import common.models.User;
-import server.database.DataService;
 
 /**
  * Test class for the schedule database handler
@@ -27,7 +25,7 @@ import server.database.DataService;
 public class ScheduleTests {
 
     // The DataService used by all the tests, essentially a database connection.
-    private static DataService dataService;
+//    private static DataService dataService;
 
     // Test users ID for use in billboard testing
     private static int userId;
@@ -39,16 +37,16 @@ public class ScheduleTests {
      */
     @BeforeAll
     public static void ConnectToDatabase() throws Exception {
-        dataService = new DataService(true);
-        dataService.schedules.deleteAll();
-        dataService.billboards.deleteAll();
-        dataService.users.deleteAll();
-
-        // Create the test user and save its ID
-        User masterUser = User.Random();
-        dataService.users.insert(masterUser);
-        Optional<User> dbUser = dataService.users.get(masterUser.username);
-        dbUser.ifPresent(user -> userId = user.id);
+//        dataService = new DataService(true);
+//        dataService.schedules.deleteAll();
+//        dataService.billboards.deleteAll();
+//        dataService.users.deleteAll();
+//
+//        // Create the test user and save its ID
+//        User masterUser = User.Random();
+//        dataService.users.insert(masterUser);
+//        Optional<User> dbUser = dataService.users.get(masterUser.username);
+//        dbUser.ifPresent(user -> userId = user.id);
     }
 
     /**
@@ -58,37 +56,37 @@ public class ScheduleTests {
      */
     @Test
     public void AddBillboardScheduleTest() throws Exception {
-       // Create a testing billboard and insert it to the database
-        Billboard billboard = Billboard.Random(userId);
-
-        dataService.billboards.insert(billboard);
-
-        // Retrieve the testing Billboard
-        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
-        if (insertedBillboard.isPresent()) {
-            // Create a new schedule
-            Schedule schedule = Schedule.Random(billboard.name);
-
-            assertEquals(schedule.billboardName, billboard.name);
-
-            // Insert the new schedule to database
-            dataService.schedules.insert(schedule);
-
-            // Retrieve the testing billboard's name
-            Optional<Schedule> insertedSchedule = dataService.schedules.get(schedule.billboardName);
-            if (insertedSchedule.isPresent()) {
-                // Test the retrieve start time against the control start time
-                assertEquals(schedule.startTime, insertedSchedule.get().startTime);
-
-                // Cleanup and delete the schedule + billboard
-                dataService.schedules.delete(insertedSchedule.get());
-                dataService.billboards.delete(insertedBillboard.get());
-            } else {
-                fail("Error fetching schedule");
-            }
-        } else {
-            fail("Error fetching billboard");
-        }
+//       // Create a testing billboard and insert it to the database
+//        Billboard billboard = Billboard.Random(userId);
+//
+//        dataService.billboards.insert(billboard);
+//
+//        // Retrieve the testing Billboard
+//        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
+//        if (insertedBillboard.isPresent()) {
+//            // Create a new schedule
+//            Schedule schedule = Schedule.Random(billboard.name);
+//
+//            assertEquals(schedule.billboardName, billboard.name);
+//
+//            // Insert the new schedule to database
+//            dataService.schedules.insert(schedule);
+//
+//            // Retrieve the testing billboard's name
+//            Optional<Schedule> insertedSchedule = dataService.schedules.get(schedule.billboardName);
+//            if (insertedSchedule.isPresent()) {
+//                // Test the retrieve start time against the control start time
+//                assertEquals(schedule.startTime, insertedSchedule.get().startTime);
+//
+//                // Cleanup and delete the schedule + billboard
+//                dataService.schedules.delete(insertedSchedule.get());
+//                dataService.billboards.delete(insertedBillboard.get());
+//            } else {
+//                fail("Error fetching schedule");
+//            }
+//        } else {
+//            fail("Error fetching billboard");
+//        }
 
     }
 
@@ -99,79 +97,79 @@ public class ScheduleTests {
      */
     @Test
     public void GetAllBillboardSchedules() throws Exception {
-        // Create 2 control lists to compare with the test functions.
-        List<Billboard> controlBillboards = new ArrayList<Billboard>();
-        List<Schedule> controlSchedules = new ArrayList<Schedule>();
-
-        // Create a testing billboard and insert it to the database
-        Billboard billboard1 = Billboard.Random(userId);
-
-        dataService.billboards.insert(billboard1);
-        // Add the first billboard to control list
-        controlBillboards.add(billboard1);
-
-        // Retrieve the first testing billboard
-        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard1.name);
-        if (insertedBillboard.isPresent()) {
-            // Create a new schedule for the new billboard
-            Schedule schedule = Schedule.Random(insertedBillboard.get().name);
-            // Insert the schedule to the database and add the schedule to the control list
-            dataService.schedules.insert(schedule);
-            controlSchedules.add(schedule);
-        } else {
-            fail("Error fetching billboard");
-        }
-
-        // Create the second testing billboard and insert it to the database
-        Billboard billboard2 = Billboard.Random(userId);
-
-        dataService.billboards.insert(billboard2);
-        // Add the second billboard to control lists
-        controlBillboards.add(billboard2);
-
-        // Retrieve the second testing billboard
-        Optional<Billboard> insertedBillboard2 = dataService.billboards.get(billboard2.name);
-        if (insertedBillboard2.isPresent()) {
-            // Create the second schedule
-            Schedule schedule = Schedule.Random(billboard2.name);
-            // Insert the second schedule to the database and add the second schedule to control list
-            dataService.schedules.insert(schedule);
-            controlSchedules.add(schedule);
-        } else {
-            fail("Error fetching billboard");
-        }
-
-        // Create the third testing billboard and insert it to the database
-        Billboard billboard3 = Billboard.Random(userId);
-
-        dataService.billboards.insert(billboard3);
-        // Add the third billboard the control list
-        controlBillboards.add(billboard3);
-
-        // Retrieve the third testing billboard
-        Optional<Billboard> insertedBillboard3 = dataService.billboards.get(billboard3.name);
-        if (insertedBillboard3.isPresent()) {
-            // Create the third schedule
-            Schedule schedule = Schedule.Random(billboard3.name);
-            // Insert the third schedule and add the third schedule to control list
-            dataService.schedules.insert(schedule);
-            controlSchedules.add(schedule);
-        } else {
-            fail("Error fetching billboard");
-        }
-        // Get all the schedules and save it to ListSchedules
-        List<Schedule> schedules = dataService.schedules.getAll();
-
-        // Retrieve the testing schedules' start times and compare with control lists' results.
-        assertEquals(
-            controlSchedules.stream().map(schedule -> schedule.startTime.getEpochSecond()).collect(Collectors.toList()),
-            schedules.stream().map(schedule -> schedule.startTime.getEpochSecond()).collect(Collectors.toList())
-        );
-
-        // Clean up and delete all schedules
-        dataService.schedules.deleteAll();
-        // Clean up and delete all billboards
-        dataService.billboards.deleteAll();
+//        // Create 2 control lists to compare with the test functions.
+//        List<Billboard> controlBillboards = new ArrayList<Billboard>();
+//        List<Schedule> controlSchedules = new ArrayList<Schedule>();
+//
+//        // Create a testing billboard and insert it to the database
+//        Billboard billboard1 = Billboard.Random(userId);
+//
+//        dataService.billboards.insert(billboard1);
+//        // Add the first billboard to control list
+//        controlBillboards.add(billboard1);
+//
+//        // Retrieve the first testing billboard
+//        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard1.name);
+//        if (insertedBillboard.isPresent()) {
+//            // Create a new schedule for the new billboard
+//            Schedule schedule = Schedule.Random(insertedBillboard.get().name);
+//            // Insert the schedule to the database and add the schedule to the control list
+//            dataService.schedules.insert(schedule);
+//            controlSchedules.add(schedule);
+//        } else {
+//            fail("Error fetching billboard");
+//        }
+//
+//        // Create the second testing billboard and insert it to the database
+//        Billboard billboard2 = Billboard.Random(userId);
+//
+//        dataService.billboards.insert(billboard2);
+//        // Add the second billboard to control lists
+//        controlBillboards.add(billboard2);
+//
+//        // Retrieve the second testing billboard
+//        Optional<Billboard> insertedBillboard2 = dataService.billboards.get(billboard2.name);
+//        if (insertedBillboard2.isPresent()) {
+//            // Create the second schedule
+//            Schedule schedule = Schedule.Random(billboard2.name);
+//            // Insert the second schedule to the database and add the second schedule to control list
+//            dataService.schedules.insert(schedule);
+//            controlSchedules.add(schedule);
+//        } else {
+//            fail("Error fetching billboard");
+//        }
+//
+//        // Create the third testing billboard and insert it to the database
+//        Billboard billboard3 = Billboard.Random(userId);
+//
+//        dataService.billboards.insert(billboard3);
+//        // Add the third billboard the control list
+//        controlBillboards.add(billboard3);
+//
+//        // Retrieve the third testing billboard
+//        Optional<Billboard> insertedBillboard3 = dataService.billboards.get(billboard3.name);
+//        if (insertedBillboard3.isPresent()) {
+//            // Create the third schedule
+//            Schedule schedule = Schedule.Random(billboard3.name);
+//            // Insert the third schedule and add the third schedule to control list
+//            dataService.schedules.insert(schedule);
+//            controlSchedules.add(schedule);
+//        } else {
+//            fail("Error fetching billboard");
+//        }
+//        // Get all the schedules and save it to ListSchedules
+//        List<Schedule> schedules = dataService.schedules.getAll();
+//
+//        // Retrieve the testing schedules' start times and compare with control lists' results.
+//        assertEquals(
+//            controlSchedules.stream().map(schedule -> schedule.startTime.getEpochSecond()).collect(Collectors.toList()),
+//            schedules.stream().map(schedule -> schedule.startTime.getEpochSecond()).collect(Collectors.toList())
+//        );
+//
+//        // Clean up and delete all schedules
+//        dataService.schedules.deleteAll();
+//        // Clean up and delete all billboards
+//        dataService.billboards.deleteAll();
     }
 
     /**
@@ -181,33 +179,33 @@ public class ScheduleTests {
      */
     @Test
     public void GetScheduleByID() throws Exception {
-        // Create a billboard and insert to the database
-        Billboard billboard = Billboard.Random(userId);
-
-        dataService.billboards.insert(billboard);
-
-        // // Retrieve the testing Billboard
-        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
-        if (insertedBillboard.isPresent()) {
-            // Create a new schedule
-            Schedule schedule = Schedule.Random(insertedBillboard.get().name);
-            // Insert the first schedule to the database
-            dataService.schedules.insert(schedule);
-            // Retrieve the schedule ID
-            Optional<Schedule> InsertedSchedule = dataService.schedules.get(dataService.schedules.getAll().get(0).id);
-            if (InsertedSchedule.isPresent()) {
-                // Test the retrieved time against control time
-                assertEquals(schedule.startTime, InsertedSchedule.get().startTime);
-
-                // Clean up and delete the billboard + schedule
-                dataService.schedules.delete(InsertedSchedule.get());
-                dataService.billboards.delete(insertedBillboard.get());
-            } else {
-                fail("Error fetching schedule");
-            }
-        } else {
-            fail("Error fetching billboard");
-        }
+//        // Create a billboard and insert to the database
+//        Billboard billboard = Billboard.Random(userId);
+//
+//        dataService.billboards.insert(billboard);
+//
+//        // // Retrieve the testing Billboard
+//        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
+//        if (insertedBillboard.isPresent()) {
+//            // Create a new schedule
+//            Schedule schedule = Schedule.Random(insertedBillboard.get().name);
+//            // Insert the first schedule to the database
+//            dataService.schedules.insert(schedule);
+//            // Retrieve the schedule ID
+//            Optional<Schedule> InsertedSchedule = dataService.schedules.get(dataService.schedules.getAll().get(0).id);
+//            if (InsertedSchedule.isPresent()) {
+//                // Test the retrieved time against control time
+//                assertEquals(schedule.startTime, InsertedSchedule.get().startTime);
+//
+//                // Clean up and delete the billboard + schedule
+//                dataService.schedules.delete(InsertedSchedule.get());
+//                dataService.billboards.delete(insertedBillboard.get());
+//            } else {
+//                fail("Error fetching schedule");
+//            }
+//        } else {
+//            fail("Error fetching billboard");
+//        }
 
     }
 
@@ -218,40 +216,40 @@ public class ScheduleTests {
      */
     @Test
     public void DeleteNewBillboardSchedules() throws Exception {
-        // Create a new billboard and insert into the database
-        Billboard billboard = Billboard.Random(userId);
-        dataService.billboards.insert(billboard);
-
-        // Retrieve the testing billboard
-        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
-        if (insertedBillboard.isPresent()) {
-            // Create a new schedule
-            Schedule schedule = Schedule.Random(insertedBillboard.get().name);
-            //Insert the new schedule into the database
-            dataService.schedules.insert(schedule);
-
-            // Retrieve the testing schedule
-            Optional<Schedule> toDeleteSchedule = dataService.schedules.get(schedule.billboardName);
-            if (toDeleteSchedule.isPresent()) {
-                // Delete the schedule from the database
-                dataService.schedules.delete(toDeleteSchedule.get());
-                // Check if the schedule is deleted
-                Optional<Schedule> deletedSchedule = dataService.schedules.get(toDeleteSchedule.get().id);
-                assertTrue(deletedSchedule.isEmpty());
-
-                // Cleanup and delete the billboard
-                Optional<Billboard> toDeleteBillboard = dataService.billboards.get(insertedBillboard.get().id);
-                if (toDeleteBillboard.isPresent()) {
-                    dataService.billboards.delete(toDeleteBillboard.get());
-                } else {
-                    fail("Error fetching billboard");
-                }
-            } else {
-                fail("Error fetching schedule");
-            }
-        } else {
-            fail("Error fetching billboard");
-        }
+//        // Create a new billboard and insert into the database
+//        Billboard billboard = Billboard.Random(userId);
+//        dataService.billboards.insert(billboard);
+//
+//        // Retrieve the testing billboard
+//        Optional<Billboard> insertedBillboard = dataService.billboards.get(billboard.name);
+//        if (insertedBillboard.isPresent()) {
+//            // Create a new schedule
+//            Schedule schedule = Schedule.Random(insertedBillboard.get().name);
+//            //Insert the new schedule into the database
+//            dataService.schedules.insert(schedule);
+//
+//            // Retrieve the testing schedule
+//            Optional<Schedule> toDeleteSchedule = dataService.schedules.get(schedule.billboardName);
+//            if (toDeleteSchedule.isPresent()) {
+//                // Delete the schedule from the database
+//                dataService.schedules.delete(toDeleteSchedule.get());
+//                // Check if the schedule is deleted
+//                Optional<Schedule> deletedSchedule = dataService.schedules.get(toDeleteSchedule.get().id);
+//                assertTrue(deletedSchedule.isEmpty());
+//
+//                // Cleanup and delete the billboard
+//                Optional<Billboard> toDeleteBillboard = dataService.billboards.get(insertedBillboard.get().id);
+//                if (toDeleteBillboard.isPresent()) {
+//                    dataService.billboards.delete(toDeleteBillboard.get());
+//                } else {
+//                    fail("Error fetching billboard");
+//                }
+//            } else {
+//                fail("Error fetching schedule");
+//            }
+//        } else {
+//            fail("Error fetching billboard");
+//        }
 
     }
 
@@ -262,11 +260,11 @@ public class ScheduleTests {
      */
     @AfterAll
     public static void DisconnectDatabase() throws Exception {
-        Optional<User> user = dataService.users.get(userId);
-        if (user.isPresent()) {
-            dataService.users.delete(user.get());
-        }
-
-        dataService.closeConnection();
+//        Optional<User> user = dataService.users.get(userId);
+//        if (user.isPresent()) {
+//            dataService.users.delete(user.get());
+//        }
+//
+//        dataService.closeConnection();
     }
 }
