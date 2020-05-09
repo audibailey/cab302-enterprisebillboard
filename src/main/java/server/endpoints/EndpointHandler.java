@@ -1,10 +1,7 @@
 package server.endpoints;
 
-import common.models.User;
-import server.database.DataService;
 import server.endpoints.billboard.BillboardHandler;
 import server.endpoints.user.UserHandler;
-import server.middleware.MiddlewareHandler;
 
 /**
  * This class handles the multiple endpoints for the server.
@@ -12,20 +9,20 @@ import server.middleware.MiddlewareHandler;
  * @author Perdana Bailey
  */
 public class EndpointHandler {
-    private DataService db;
-    public MiddlewareHandler middlewareHandler;
-    public BillboardHandler billboard;
-    public UserHandler user;
-
-    /**
-     * Generates a Endpoint Handler Instance.
-     *
-     * @param db: This is the database connection the endpoints will use.
-     */
-    public EndpointHandler(DataService db, MiddlewareHandler middlewareHandler) {
-        this.db = db;
-        this.middlewareHandler = middlewareHandler;
-        this.billboard = new BillboardHandler(this.db, this.middlewareHandler);
-        this.user = new UserHandler(this.db, this.middlewareHandler);
-    }
+//    private DataService db;
+//    public MiddlewareHandler middlewareHandler;
+//    public BillboardHandler billboard;
+//    public UserHandler user;
+//
+//    /**
+//     * Generates a Endpoint Handler Instance.
+//     *
+//     * @param db: This is the database connection the endpoints will use.
+//     */
+//    public EndpointHandler(DataService db, MiddlewareHandler middlewareHandler) {
+//        this.db = db;
+//        this.middlewareHandler = middlewareHandler;
+//        this.billboard = new BillboardHandler(this.db, this.middlewareHandler);
+//        this.user = new UserHandler(this.db, this.middlewareHandler);
+//    }
 }
