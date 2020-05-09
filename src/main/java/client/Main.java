@@ -1,6 +1,7 @@
 package client;
 
 import client.frames.*;
+import common.models.Billboard;
 
 /**
  * This class consists of the Billboard Viewer handler.
@@ -21,6 +22,12 @@ public class Main {
         new Client();
     }
 
+    public static void runAll() {
+        new Login();
+        new Client();
+        new BillboardFrame(Billboard.Random(1));
+    }
+
     /**
      * Main class to run GUI Application and socket interface
      */
@@ -29,7 +36,8 @@ public class Main {
         // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowLogin();
+                // createAndShowLogin();
+                runAll();
             }
         });
     }
