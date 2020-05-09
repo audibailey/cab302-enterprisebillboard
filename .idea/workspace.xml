@@ -25,7 +25,15 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java" />
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/router/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/router/Router.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/services/PermissionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/services/PermissionsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/services/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/services/TokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/sql/Collection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/sql/Collection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/sql/SchemaBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/sql/SchemaBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/server/sql/StatementBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/sql/StatementBuilder.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -192,6 +200,7 @@
       <workItem from="1587019847118" duration="5408000" />
       <workItem from="1587354586099" duration="4670000" />
       <workItem from="1589025763372" duration="2000" />
+      <workItem from="1589025918461" duration="56000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
