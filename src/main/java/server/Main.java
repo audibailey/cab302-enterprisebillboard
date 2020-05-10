@@ -47,24 +47,24 @@ public class Main {
             .ADD_AUTH("/billboard/get", BillboardController.Get.class)
             .ADD_AUTH("/billboard/getbyid", BillboardController.GetById.class)
             .ADD_AUTH("/billboard/getbylock", BillboardController.GetByLock.class)
-            .ADD_AUTH("/billboard/insert", BillboardController.Insert.class)
+            .ADD_AUTH("/billboard/insert", Permission.canCreateBillboard.class, BillboardController.Insert.class)
             .ADD_AUTH("/billboard/update", BillboardController.Update.class)
             .ADD_AUTH("/billboard/delete", BillboardController.Delete.class)
             // Add User actions to router
-            .ADD_AUTH("/user/get", UserController.Get.class)
-            .ADD_AUTH("/user/getbyid", UserController.GetById.class)
-            .ADD_AUTH("/user/insert", UserController.Insert.class)
+            .ADD_AUTH("/user/get", Permission.canEditUser.class, UserController.Get.class)
+            .ADD_AUTH("/user/getbyid", Permission.canEditUser.class, UserController.GetById.class)
+            .ADD_AUTH("/user/insert", Permission.canEditUser.class, Permission.canEditUser.class, UserController.Insert.class)
             .ADD_AUTH("/user/update", UserController.Update.class)
-            .ADD_AUTH("/user/delete", UserController.Delete.class)
+            .ADD_AUTH("/user/delete", Permission.canEditUser.class, UserController.Delete.class)
             // Add Schedule actions to router
-            .ADD_AUTH("/schedule/get", ScheduleController.Get.class)
-            .ADD_AUTH("/schedule/getbyid", ScheduleController.GetById.class)
-            .ADD_AUTH("/schedule/insert", ScheduleController.Insert.class)
-            .ADD_AUTH("/schedule/delete", ScheduleController.Delete.class)
-             //Add Permission actions to router
+            .ADD_AUTH("/schedule/get", Permission.canScheduleBillboard.class, ScheduleController.Get.class)
+            .ADD_AUTH("/schedule/getbyid", Permission.canScheduleBillboard.class, ScheduleController.GetById.class)
+            .ADD_AUTH("/schedule/insert", Permission.canScheduleBillboard.class, ScheduleController.Insert.class)
+            .ADD_AUTH("/schedule/delete", Permission.canScheduleBillboard.class, ScheduleController.Delete.class)
+            //Add Permission actions to router
             .ADD_AUTH("/permission/get", PermissionController.Get.class)
             .ADD_AUTH("/permission/getbyid", PermissionController.GetById.class)
-            .ADD_AUTH("/permission/insert", PermissionController.Insert.class)
+            .ADD_AUTH("/permission/insert", Permission.canEditUser.class, PermissionController.Insert.class)
             .ADD_AUTH("/permission/update", PermissionController.Update.class);
 
         // Fetch the port from the props file

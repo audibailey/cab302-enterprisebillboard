@@ -7,9 +7,12 @@ import common.models.User;
 import common.router.*;
 import server.middleware.Permission;
 import server.router.*;
+import server.services.Session;
+import server.services.TokenService;
 import server.sql.CollectionFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PermissionController {
 
@@ -18,9 +21,28 @@ public class PermissionController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
 
-            return new Ok(res);
+            Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
+            if (session.isEmpty()) return new BadRequest("No valid session");
+
+            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+            if (perms.isEmpty()) return new BadRequest("No valid permissions");
+
+            Permissions permissions = perms.get();
+            if (permissions.canEditUser)
+            {
+                List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
+                return new Ok(res);
+            }
+            else
+            {
+                if (session.get().username == ((Permissions)req.body).username)
+                {
+                    List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
+                    return new Ok(res);
+                }
+            }
+            return new BadRequest("Can't view other users' permissions");
         }
     }
 
