@@ -14,11 +14,23 @@ import server.sql.CollectionFactory;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class acts as the controller with all the Actions related to the permissions request path.
+ *
+ * @author Jamie Martin
+ * @author Kevin Huynh
+ * @author Perdana Bailey
+ */
 public class PermissionController {
 
+    /**
+     * This Action is the get all Action for the permissions.
+     */
     public class Get extends Action {
+        // Generic Get action constructor.
         public Get() { }
 
+        // Override the execute to run the get function of the permissions collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
             List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
@@ -27,29 +39,49 @@ public class PermissionController {
         }
     }
 
+    /**
+     * This Action is the GetByID Action for the permissions.
+     */
     public class GetById extends Action {
+        // Generic GetById action constructor.
         public GetById() { }
 
+        // Override the execute to run the get function of the permissions collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
             String id = req.params.get("id");
-            if (id == null) return new BadRequest("Parameter required: id");
+            
+            // Ensure id field is not null.
+            if (id == null) {
+                return new BadRequest("Must specify a permission ID.");
+            }
 
-            List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> id == String.valueOf(x.id));
+            // Get list of permissions with the ID as specified. This should only return 1 permission.
+            List<Permissions> permissionsList = CollectionFactory.getInstance(Permissions.class).get(
+                permissions -> id.equals(String.valueOf(permissions.id))
+            );
 
-            return new Ok(res);
+            // Return a success IActionResult with the list of permissions.
+            return new Ok(permissionsList);
         }
     }
 
     public class Update extends Action {
+        // Generic Update action constructor.
         public Update() { }
 
+        // Override the execute to run the update function of the permissions collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (!(req.body instanceof Permissions)) new UnsupportedType(Permissions.class);
+            // Ensure the body is of type permissions.
+            if (req.body instanceof Permissions) {
+                // Attempt to update the permission in the database then return a success IActionResult.
+                CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
+                return new Ok();
+            }
 
-            CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
-            return new Ok();
+            // Return an error on incorrect body type.
+            return new UnsupportedType(Permissions.class);
         }
     }
 }

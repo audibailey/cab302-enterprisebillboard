@@ -28,8 +28,6 @@ public class SchemaBuilder {
     }
 
     public void build() throws Exception {
-
-
         for (var classType : classes) {
             // Create statement
             Statement sqlStatement = connection.createStatement();

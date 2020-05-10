@@ -22,12 +22,15 @@ public class User extends Object implements Serializable {
     @SQL(type="int NOT NULL AUTO_INCREMENT UNIQUE")
     @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
+
     @SQL(type="varchar(255) UNIQUE")
     @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String username;
+
     @SQL(type="varchar(255)")
     @SQLITE(type="VARCHAR(255)")
     public String password;
+
     @SQL(type="varchar(255)")
     @SQLITE(type="VARCHAR(255)")
     public String salt;
