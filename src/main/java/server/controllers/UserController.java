@@ -3,6 +3,7 @@ package server.controllers;
 import common.models.Permissions;
 import common.models.User;
 import common.router.*;
+import common.utils.RandomFactory;
 import server.router.*;
 import server.services.Session;
 import server.services.TokenService;
@@ -10,6 +11,9 @@ import server.sql.CollectionFactory;
 
 import java.util.List;
 import java.util.Optional;
+
+import static common.utils.HashingFactory.encodeHex;
+import static common.utils.HashingFactory.hashPassword;
 
 /**
  * This class acts as the controller with all the Actions related to the user request path.
@@ -76,15 +80,17 @@ public class UserController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type user.
-            if (req.body instanceof User) {
-                // TODO: Generate hash for database
-                // Attempt to insert the user into the database then return a success IActionResult.
-                CollectionFactory.getInstance(User.class).insert((User) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            // Return an error on incorrect body type.
-            return new UnsupportedType(User.class);
+            // Hash the password supplied and set the respective user objects for database insertion.
+            byte[] salt = RandomFactory.String().getBytes();
+            byte[] password = hashPassword(((User) req.body).password, salt, 64);
+            ((User) req.body).salt = encodeHex(salt);
+            ((User) req.body).password = encodeHex(password);
+
+            // Attempt to insert the user into the database then return a success IActionResult.
+            CollectionFactory.getInstance(User.class).insert((User) req.body);
+            return new Ok();
         }
     }
 
@@ -99,26 +105,34 @@ public class UserController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type user.
-            if (req.body instanceof User) {
-                // Attempt to update the user into the database then return a success IActionResult.
-                CollectionFactory.getInstance(User.class).update((User) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            // Return an error on incorrect body type.
-            return new UnsupportedType(User.class);
+            // Attempt to update the user into the database then return a success IActionResult.
+            CollectionFactory.getInstance(User.class).update((User) req.body);
+            return new Ok();
         }
     }
 
+    /**
+     * This Action is the UpdatePassword Action the users,
+     */
     public class UpdatePassword extends Action {
+        // Generic UpdatePassword action constructor.
         public UpdatePassword() { }
 
+        // Override the execute to run the update function of the user collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
+            // Ensure the body is of type user.
             if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            // TODO: UPDATE PASSWORD FUNCTION
-            // CollectionFactory.getInstance(User.class).update((User) req.body);
+            // Hash the password supplied and set the respective user objects for database insertion.
+            byte[] salt = RandomFactory.String().getBytes();
+            byte[] password = hashPassword(((User) req.body).password, salt, 64);
+            ((User) req.body).salt = encodeHex(salt);
+            ((User) req.body).password = encodeHex(password);
+
+            CollectionFactory.getInstance(User.class).update((User) req.body);
             return new Ok();
         }
     }
@@ -134,15 +148,12 @@ public class UserController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type user.
-            if (req.body instanceof User) {
-                // Attempt to delete the user and permission in the database then return a success IActionResult.
-                CollectionFactory.getInstance(Permissions.class).delete((Permissions) req.body);
-                CollectionFactory.getInstance(User.class).delete((User) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            // Return an error on incorrect body type.
-            return new UnsupportedType(User.class);
+            // Attempt to delete the user and permission in the database then return a success IActionResult.
+            CollectionFactory.getInstance(Permissions.class).delete((Permissions) req.body);
+            CollectionFactory.getInstance(User.class).delete((User) req.body);
+            return new Ok();
         }
     }
 }
