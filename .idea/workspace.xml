@@ -26,86 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java">
-      <change afterPath="$PROJECT_DIR$/src/main/java/common/router/Request.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/controllers/BillboardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/controllers/PermissionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/controllers/ScheduleController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/controllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/middleware/Authentication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/middleware/Permission.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/Methods.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/router/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Billboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Billboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Permissions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Permissions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Request.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Response.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/Status.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/common/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/SocketHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/auth/Auth.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/auth/Login.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/auth/Logout.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/billboard/Delete.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/billboard/Get.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/billboard/GetById.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/billboard/GetByLock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/billboard/Insert.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/billboard/Update.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/permission/Get.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/permission/GetById.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/permission/Insert.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/permission/Update.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/schedule/Delete.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/schedule/Get.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/schedule/GetById.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/schedule/Insert.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/user/Delete.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/user/Get.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/user/GetById.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/user/Insert.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/user/Update.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/BillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/BillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/DeleteBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/DeleteBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/GetBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/GetBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/PostBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/PostBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/UpdateBillboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/billboard/UpdateBillboardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/GetPermissionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/GetPermissionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/PermissionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/PermissionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/PostPermissionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/PostPermissionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/UpdatePermissionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/permission/UpdatePermissionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/DeleteScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/DeleteScheduleHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/GetScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/GetScheduleHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/PostScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/PostScheduleHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/ScheduleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/schedule/ScheduleHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/DeleteUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/DeleteUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/GetUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/GetUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/PostUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/PostUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UpdateUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UpdateUserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/endpoints/user/UserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/router/Action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/Request.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/router/Router.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/models/BadRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/router/BadRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/models/IActionResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/router/IActionResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/models/NotFound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/router/NotFound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/models/Ok.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/router/Ok.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/router/models/Unauthorised.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/common/router/Unauthorised.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/services/DataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/services/DataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/services/PermissionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/services/PermissionsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/services/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/services/TokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/sql/Collection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/sql/Collection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/sql/CollectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/sql/CollectionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/ClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/database/permissions/PermissionsTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/database/permissions/PermissionTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/router/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/router/Router.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/services/PermissionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/services/PermissionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/services/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/services/TokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/sql/Collection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/sql/Collection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/sql/SchemaBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/sql/SchemaBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/server/sql/StatementBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/server/sql/StatementBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/BillboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/controllers/BillboardController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +196,7 @@
       <workItem from="1587354586099" duration="4670000" />
       <workItem from="1589025763372" duration="2000" />
       <workItem from="1589025918461" duration="107000" />
-      <workItem from="1589068872983" duration="10470000" />
+      <workItem from="1589068872983" duration="11879000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
