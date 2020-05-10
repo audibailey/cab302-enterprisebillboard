@@ -63,7 +63,7 @@ public class TokenService {
         if (existingSession.isPresent()) return existingSession.get().token;
 
         // Generate new session and save it to sessions set
-        Session newSession = new Session(user.username);
+        Session newSession = new Session(user.id, user.username);
         sessions.add(newSession);
 
         return newSession.token;

@@ -1,11 +1,17 @@
 package server.controllers;
 
 import common.models.Billboard;
+import common.models.Permissions;
 import common.router.*;
+import server.middleware.Permission;
 import server.router.*;
+import server.services.Session;
+import server.services.TokenService;
+import server.sql.Collection;
 import server.sql.CollectionFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BillboardController {
 
@@ -80,8 +86,24 @@ public class BillboardController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             if (req.body instanceof Billboard) {
-                CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
-                return new Ok();
+                Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
+                if (session.isEmpty()) return new BadRequest("No valid session");
+
+                Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+                if (perms.isEmpty()) return new BadRequest("No valid perms");
+
+                Permissions permissions = perms.get();
+
+                if (permissions.canEditBillboard) {
+                    CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
+                    return new Ok();
+                } else {
+                    Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(b -> b.userId == session.get().userId).stream().findFirst();
+                    if (billboard.isEmpty()) return new BadRequest("User cannot delete this billboard");
+                    
+                    CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
+                    return new Ok();
+                }
             }
 
             return new UnsupportedType(Billboard.class);
