@@ -2,11 +2,16 @@ package server;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Optional;
 
+import common.models.Permissions;
 import common.router.*;
 import server.router.*;
 import common.router.BadRequest;
 import common.router.IActionResult;
+import server.services.Session;
+import server.services.TokenService;
+import server.sql.CollectionFactory;
 
 /**
  * This class handles the how the server responds to the clients request.

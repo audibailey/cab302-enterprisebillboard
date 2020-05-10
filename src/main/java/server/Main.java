@@ -55,8 +55,9 @@ public class Main {
             // Add User actions to router
             .ADD_AUTH("/user/get", Permission.canEditUser.class, UserController.Get.class)
             .ADD_AUTH("/user/getbyid", Permission.canEditUser.class, UserController.GetById.class)
-            .ADD_AUTH("/user/insert", Permission.canEditUser.class, Permission.canEditUser.class, UserController.Insert.class)
-            .ADD_AUTH("/user/update", UserController.Update.class)
+            .ADD_AUTH("/user/insert", Permission.canEditUser.class, UserController.Insert.class)
+            .ADD_AUTH("/user/update", Permission.canEditUser.class, UserController.Update.class)
+            .ADD_AUTH("/user/updatepassword", Permission.isSelf.class, UserController.UpdatePassword.class)
             .ADD_AUTH("/user/delete", Permission.canEditUser.class, UserController.Delete.class)
             // Add Schedule actions to router
             .ADD_AUTH("/schedule/get", Permission.canScheduleBillboard.class, ScheduleController.Get.class)
@@ -66,7 +67,6 @@ public class Main {
             //Add Permission actions to router
             .ADD_AUTH("/permission/get", PermissionController.Get.class)
             .ADD_AUTH("/permission/getbyid", PermissionController.GetById.class)
-            .ADD_AUTH("/permission/insert", Permission.canEditUser.class, PermissionController.Insert.class)
             .ADD_AUTH("/permission/update", PermissionController.Update.class);
 
         // Fetch the port from the props file

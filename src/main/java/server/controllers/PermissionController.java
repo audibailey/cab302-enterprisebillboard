@@ -21,21 +21,9 @@ public class PermissionController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
+            List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
 
-            Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
-            if (session.isEmpty()) return new BadRequest("No valid session");
-
-            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
-            if (perms.isEmpty()) return new BadRequest("No valid permissions");
-
-            Permissions permissions = perms.get();
-            if (permissions.canEditUser || session.get().username == ((Permissions)req.body).username)
-            {
-                List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
-                return new Ok(res);
-            }
-
-            return new BadRequest("Can't view other users' permissions");
+            return new Ok(res);
         }
     }
 
@@ -45,24 +33,11 @@ public class PermissionController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             String id = req.params.get("id");
+            if (id == null) return new BadRequest("Parameter required: id");
 
             List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> id == String.valueOf(x.id));
 
             return new Ok(res);
-        }
-    }
-
-    public class Insert extends Action {
-        public Insert() { }
-
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            if (req.body instanceof Permissions) {
-                CollectionFactory.getInstance(Permissions.class).insert((Permissions) req.body);
-                return new Ok();
-            }
-
-            return new UnsupportedType(Permissions.class);
         }
     }
 
@@ -71,12 +46,10 @@ public class PermissionController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (req.body instanceof Permissions) {
-                CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof Permissions)) new UnsupportedType(Permissions.class);
 
-            return new UnsupportedType(Permissions.class);
+            CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
+            return new Ok();
         }
     }
 }

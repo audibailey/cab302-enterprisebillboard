@@ -1,5 +1,8 @@
 package common.router;
 
+import common.models.Permissions;
+import server.services.Session;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -17,6 +20,8 @@ public class Request implements Serializable {
     public String path;
     public String token;
     public String ip;
+    public Session session;
+    public Permissions permissions;
     public HashMap<String, String> params;
     public Object body;
 
