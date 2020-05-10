@@ -6,7 +6,6 @@ import server.sql.CollectionFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.swing.text.html.Option;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -38,30 +37,15 @@ public class TokenService {
      * @param password: the attempted password
      * @return String token: null if failed, token if valid Session exists or new Session created.
      */
-    public String tryLogin(String username, String password) throws Exception {
-        // both are required
-        if (username == null || password == null) return null;
-
-        // Ensure user exists
-        Optional<User> optionalUser = CollectionFactory.getInstance(User.class).get(u -> u.username == username).stream().findFirst();
-        if (optionalUser.isEmpty()) return null;
-
-        User user = optionalUser.get();
-
-        // TODO: ENSURE PASSWORDY STUFF HERE IS CORRECT. Perhaps push salted to a method ie salted(password, salt) != user.password return null; continue otherwise
-
-        // Convert the users saved password and salt as a hex to a byte array for the hashing spec
+    public String tryLogin(User user, String password) throws Exception {
+        // Convert the users saved password and salt as a hex to a byte array
         byte[] storedPassword = decodeHex(user.password);
         byte[] userSalt = decodeHex(user.salt);
 
-        // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
-        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), userSalt, ITERATIONS, storedPassword.length * 8);
-          // Choose the cryptography standard for hashing
-        SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        // Attempt to create a hash based on the given password and the salt/password already in the database
+        byte[] testHash = hashPassword(password, userSalt, storedPassword.length);
 
-        // Attempt to hash the supplied password using the hashing standard and hashing spec
-        byte[] testHash = HashingStandard.generateSecret(HashingSpec).getEncoded();
-
+        // TODO: CHECK LEGITIMACY OF THIS
 //        // Ensure the hashes are the same
 //        int diff = storedPassword.length ^ testHash.length;
 //        for (int i = 0; i < storedPassword.length && i < testHash.length; i++) {
@@ -70,11 +54,12 @@ public class TokenService {
 //
 //        // if passwords aren't the same return null
 //        if (diff != 0) return null;
+
+        // Ensure the testHash is the same as the hash in the database
         if (!Arrays.equals(storedPassword, testHash)) return null;
-        // TODO: isn't Array.equals() essentially the same thing as above?
 
         // Checks if there is a valid session already and returns token if so
-        Optional<Session> existingSession = getSessionByUsername(username);
+        Optional<Session> existingSession = getSessionByUsername(user.username);
         if (existingSession.isPresent()) return existingSession.get().token;
 
         // Generate new session and save it to sessions set
@@ -82,8 +67,8 @@ public class TokenService {
         sessions.add(newSession);
 
         return newSession.token;
-        // TODO: I THINK COMMENTED BELOW CAN BE REMOVED
 
+        // TODO: Remove
         // Ensure the data type is a String
 //        if (data instanceof String) {
 //
@@ -101,7 +86,6 @@ public class TokenService {
 //                // Split
 //                parts = b64decoded.split(":");
 //            } catch (Exception e) {
-//                // TODO: Console Log this
 //                return new Response<>(
 //                    Status.INTERNAL_SERVER_ERROR,
 //                    "An error occurred decoding the login data received."
@@ -130,7 +114,6 @@ public class TokenService {
 //                    );
 //                }
 //            } catch (SQLException e) {
-//                // TODO: Console Log this
 //                return new Response<>(
 //                    Status.INTERNAL_SERVER_ERROR,
 //                    "An error occurred retrieving your username from the database."
@@ -139,7 +122,6 @@ public class TokenService {
 //
 
 //            } catch (Exception e) {
-//                // TODO: Console Log this
 //                return new Response<>(
 //                    Status.INTERNAL_SERVER_ERROR,
 //                    "An error occurred processing the hash of your password."
@@ -177,17 +159,19 @@ public class TokenService {
 //        }
     }
 
-    public byte[] salted(String password, byte[] salt) throws Exception {
-        // TODO: IDEALLY LIKE THIS?
-//        // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
-//        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), userSalt, ITERATIONS, storedPassword.length * 8);
-//        // Choose the cryptography standard for hashing
-//        SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-//
-//        // Attempt to hash the supplied password using the hashing standard and hashing spec
-//        byte[] testHash = HashingStandard.generateSecret(HashingSpec).getEncoded();
+    public Optional<User> checkUserExists(String username) throws Exception {
+        return CollectionFactory.getInstance(User.class).get(u -> u.username == username).stream().findFirst();
+    }
 
-        return new byte[0];
+    public byte[] hashPassword(String password, byte[] salt, int length) throws Exception {
+        // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
+        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, length * 8);
+        // Choose the cryptography standard for hashing
+        SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+
+        // Attempt to hash the supplied password using the hashing standard and hashing spec
+        return HashingStandard.generateSecret(HashingSpec).getEncoded();
+
     }
 
     /**
@@ -215,28 +199,47 @@ public class TokenService {
         return true;
     }
 
-    public Optional<Session> getSessionByUsername(String username) {
+    /**
+     * This function gets the session details by username.
+     *
+     * @param username: The username of the logged-in user.
+     * @return Optional<Session>: The Session object related to the logged-in user.
+     */
+    private Optional<Session> getSessionByUsername(String username) {
         return sessions.stream().filter(x -> x.username == username).findFirst();
     }
 
+    /**
+     * This function gets the session details by token.
+     *
+     * @param token: The token of the logged-in user.
+     * @return Optional<Session>: The Session object related to the logged-in user.
+     */
     public Optional<Session> getSessionByToken(String token) {
         return sessions.stream().filter(x -> x.token == token).findFirst();
     }
 
+    /**
+     * This function ensures the token is not expired.
+     *
+     * @param token: The token of the logged-in/ex-logged in user.
+     * @return boolean: True if expired, False is not expired.
+     */
     public boolean expired(String token) {
-        Optional<Session> session = sessions.stream().filter(x -> x.token == token).findFirst();
+        // Get the session information from the token.
+        Optional<Session> session = getSessionByToken(token);
 
-        // session is empty so logical equivalent of being expired
+        // Session is empty so logical equivalent of being expired.
         if (session.isEmpty()) return true;
 
-        // If session is expired remove session and return null
+        // If session is expired remove session and return true.
         if (session.get().expireTime.compareTo(LocalDateTime.now()) <= 0) {
             sessions.remove(session);
             return true;
         }
 
-        // If the session is present and valid
-        return true;
+        // If the session is present and valid.
+        return false;
     }
 
     /**

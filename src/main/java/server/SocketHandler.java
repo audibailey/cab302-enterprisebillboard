@@ -60,7 +60,7 @@ public class SocketHandler implements Runnable {
 
         } catch (Exception e) {
             // Print an error if reading the objects fail
-            replyClient(new BadRequest("Not a valid request"));
+            replyClient(new BadRequest("Invalid request."));
         }
 
         // Close the connection as it is no longer needed
