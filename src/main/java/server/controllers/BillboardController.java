@@ -47,7 +47,6 @@ public class BillboardController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             String id = req.params.get("id");
-            if (id == null) return new BadRequest("Parameter required: id");
 
             // Ensure ID field is not null.
             if (id == null) {
@@ -101,15 +100,12 @@ public class BillboardController {
         // Override the execute to run the insert function of the billboard collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
-            // Ensure the body is of type billboard.
-            if (req.body instanceof Billboard) {
-                // Attempt to insert the billboard into the database then return a success IActionResult.
-                CollectionFactory.getInstance(Billboard.class).insert((Billboard) req.body);
-                return new Ok();
-            }
-
             // Return an error on incorrect body type.
-            return new UnsupportedType(Billboard.class);
+            if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
+
+            // Attempt to insert the billboard into the database then return a success IActionResult.
+            CollectionFactory.getInstance(Billboard.class).insert((Billboard) req.body);
+            return new Ok();
         }
     }
 
@@ -122,8 +118,10 @@ public class BillboardController {
         // Override the execute to run the update function of the billboard collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
+            // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
 
+            // Attempt to update the billboard in the database then return a success IActionResult.
             CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
             return new Ok();
         }
@@ -138,8 +136,10 @@ public class BillboardController {
         // Override the execute to run the delete function of the billboard collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
+            // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
 
+            // Attempt to delete the billboard in the database then return a success IActionResult
             CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
             return new Ok();
         }

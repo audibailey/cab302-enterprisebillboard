@@ -33,9 +33,11 @@ public class PermissionController {
         // Override the execute to run the get function of the permissions collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
-            List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
+            // Get list of all billboards.
+            List<Permissions> permissionsList = CollectionFactory.getInstance(Permissions.class).get(x -> true);
 
-            return new Ok(res);
+            // Return a success IActionResult with the list of permissions.
+            return new Ok(permissionsList);
         }
     }
 
@@ -64,8 +66,12 @@ public class PermissionController {
             // Return a success IActionResult with the list of permissions.
             return new Ok(permissionsList);
         }
+
     }
 
+    /**
+     * This Action is the Update Action for the permissions.
+     */
     public class Update extends Action {
         // Generic Update action constructor.
         public Update() { }
@@ -73,15 +79,12 @@ public class PermissionController {
         // Override the execute to run the update function of the permissions collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
-            // Ensure the body is of type permissions.
-            if (req.body instanceof Permissions) {
-                // Attempt to update the permission in the database then return a success IActionResult.
-                CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
-                return new Ok();
-            }
-
             // Return an error on incorrect body type.
-            return new UnsupportedType(Permissions.class);
+            if (!(req.body instanceof Permissions)) return new UnsupportedType(Permissions.class);
+
+            // Attempt to update the permission in the database then return a success IActionResult.
+            CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
+            return new Ok();
         }
     }
 }
