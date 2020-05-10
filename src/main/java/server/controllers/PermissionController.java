@@ -29,19 +29,12 @@ public class PermissionController {
             if (perms.isEmpty()) return new BadRequest("No valid permissions");
 
             Permissions permissions = perms.get();
-            if (permissions.canEditUser)
+            if (permissions.canEditUser || session.get().username == ((Permissions)req.body).username)
             {
                 List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
                 return new Ok(res);
             }
-            else
-            {
-                if (session.get().username == ((Permissions)req.body).username)
-                {
-                    List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
-                    return new Ok(res);
-                }
-            }
+
             return new BadRequest("Can't view other users' permissions");
         }
     }
