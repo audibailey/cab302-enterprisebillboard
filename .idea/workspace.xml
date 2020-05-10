@@ -20,18 +20,14 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:xmlTesting" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:router-services-sql-refactoring" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="">
+    <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="refactor: Consistency of errors.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/BillboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/controllers/BillboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/PermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/controllers/PermissionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/ScheduleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/controllers/ScheduleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/middleware/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/middleware/Permission.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -384,7 +380,63 @@
       <option name="project" value="LOCAL" />
       <updated>1588856595910</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="refactor: Change default IActionResult response.">
+      <created>1589087034671</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087034671</updated>
+    </task>
+    <task id="LOCAL-00028" summary="refactor/docs: Abstract some of the Token service into here and add documentation.">
+      <created>1589087073814</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087073814</updated>
+    </task>
+    <task id="LOCAL-00029" summary="feat: New class for a not found IActionResult with a method.">
+      <created>1589087104758</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087104758</updated>
+    </task>
+    <task id="LOCAL-00030" summary="docs: Added documentation.">
+      <created>1589087162464</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087162464</updated>
+    </task>
+    <task id="LOCAL-00031" summary="feat/refactor/docs: Added error message for server. Changed some client responses. Added documentation.">
+      <created>1589087268222</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087268222</updated>
+    </task>
+    <task id="LOCAL-00032" summary="refactor: Consistency of errors.">
+      <created>1589087373608</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087373608</updated>
+    </task>
+    <task id="LOCAL-00033" summary="refactor: Rearrange and abstract some functions.">
+      <created>1589087416186</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087416186</updated>
+    </task>
+    <task id="LOCAL-00034" summary="fix/docs: expired function is no longer a tautologoly. Added documentation.">
+      <created>1589088119557</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1589088119557</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,29 +453,21 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="xmlTesting" />
+                        <option value="router-services-sql-refactoring" />
                       </list>
                     </value>
                   </entry>
                 </map>
               </option>
-              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Automatically generated/altered files for QOL improvements and CI support." />
-    <MESSAGE value="Alter files to support an example for tests." />
-    <MESSAGE value="Add support for Maven based CI using Bitbucket Pipelines." />
-    <MESSAGE value="Automagically altered file from IntelliJ." />
-    <MESSAGE value="Add verbosity to the CI pipeline results." />
-    <MESSAGE value="chore: IntelliJ automagic file altering and generation." />
-    <MESSAGE value="refactor: Implement CI as per Maven and BitBucket specifications." />
-    <MESSAGE value="refactor: Reimplement CI as per Maven and BitBucket specifications." />
     <MESSAGE value="refactor: Add official IntelliJ gitignore contents." />
     <MESSAGE value="chore: IntelliJ automagic project files." />
     <MESSAGE value="fix: Throw the correct type of exception." />
@@ -441,7 +485,15 @@
     <MESSAGE value="feat: Minor fix" />
     <MESSAGE value="feat: Fix the test" />
     <MESSAGE value="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java" />
+    <MESSAGE value="refactor: Change default IActionResult response." />
+    <MESSAGE value="refactor/docs: Abstract some of the Token service into here and add documentation." />
+    <MESSAGE value="feat: New class for a not found IActionResult with a method." />
+    <MESSAGE value="docs: Added documentation." />
+    <MESSAGE value="feat/refactor/docs: Added error message for server. Changed some client responses. Added documentation." />
+    <MESSAGE value="refactor: Consistency of errors." />
+    <MESSAGE value="refactor: Rearrange and abstract some functions." />
+    <MESSAGE value="fix/docs: expired function is no longer a tautologoly. Added documentation." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix/docs: expired function is no longer a tautologoly. Added documentation." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -492,10 +544,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/-3840.737.1707.942/1920.0.1920.999/0.0.1920.1040@0.0.1920.1040" timestamp="1589071582273" />
-    <state x="158" y="0" width="936" height="797" key="CommitChangelistDialog2" timestamp="1589086780517">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="414" y="67" width="936" height="797" key="CommitChangelistDialog2" timestamp="1589088119358">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="414" y="67" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1587703383252" />
+    <state x="414" y="67" width="936" height="797" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1589088119358" />
     <state x="158" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1589086780517" />
     <state x="139" y="23" width="936" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1584691794476" />
     <state width="439" height="466" key="DebuggerActiveHint" timestamp="1586504534721">
@@ -620,9 +672,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="368" y="245" key="git4idea.merge.GitMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1586934354911" />
-    <state x="438" y="203" key="git4idea.merge.GitPullDialog" timestamp="1589085618531">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="411" y="222" key="git4idea.merge.GitPullDialog" timestamp="1589087427300">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="411" y="222" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1589087427300" />
     <state x="438" y="203" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1589085618531" />
     <state x="485" y="317" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1584682963083">
       <screen x="0" y="23" width="1440" height="797" />
