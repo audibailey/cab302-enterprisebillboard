@@ -1,7 +1,13 @@
 package server.controllers;
 
+import common.models.Billboard;
+import common.models.Schedule;
+import common.models.User;
 import common.router.*;
 import server.router.*;
+import server.sql.CollectionFactory;
+
+import java.util.List;
 
 public class ScheduleController {
 
@@ -10,7 +16,9 @@ public class ScheduleController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            List<Schedule> res = CollectionFactory.getInstance(Schedule.class).get(x -> true);
+
+            return new Ok(res);
         }
     }
 
@@ -19,7 +27,11 @@ public class ScheduleController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            String id = req.params.get("id");
+            if (id == null) return new BadRequest("No ID");
+
+            List<Schedule> res = CollectionFactory.getInstance(Schedule.class).get(x -> id == String.valueOf(x.id));
+            return new Ok(res);
         }
     }
 
@@ -28,7 +40,12 @@ public class ScheduleController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            if (req.body instanceof Schedule) {
+                CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
+                return new Ok();
+            }
+
+            return new UnsupportedType(Schedule.class);
         }
     }
 
@@ -37,7 +54,12 @@ public class ScheduleController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            if (req.body instanceof Schedule) {
+                CollectionFactory.getInstance(Schedule.class).delete((Schedule) req.body);
+                return new Ok();
+            }
+
+            return new UnsupportedType(Schedule.class);
         }
     }
 }
