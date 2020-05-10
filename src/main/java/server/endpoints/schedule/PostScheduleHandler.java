@@ -1,10 +1,5 @@
 package server.endpoints.schedule;
 
-import java.util.Optional;
-
-import common.models.Response;
-import common.Status;
-import common.models.Schedule;
 
 /**
  * This class handles the post function of schedule database handler and turns it into a response

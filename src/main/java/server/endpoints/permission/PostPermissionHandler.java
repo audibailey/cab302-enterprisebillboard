@@ -1,11 +1,5 @@
 package server.endpoints.permission;
 
-import java.util.Optional;
-
-import common.models.Permissions;
-import common.models.Response;
-import common.Status;
-import common.models.Schedule;
 
 /**
  * This class handles the post function of permission database handler and turns it into a response

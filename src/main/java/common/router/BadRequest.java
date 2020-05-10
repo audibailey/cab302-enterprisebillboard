@@ -1,6 +1,4 @@
-package server.router.models;
-
-import common.Status;
+package common.router;
 
 public class BadRequest extends IActionResult {
     public BadRequest(String message) {

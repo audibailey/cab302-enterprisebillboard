@@ -1,11 +1,5 @@
 package server.endpoints.permission;
 
-import java.util.Optional;
-
-import common.models.Permissions;
-import common.models.Response;
-import common.Status;
-
 /**
  * This class handles the update function of permission database handler and turns it into a response
  * for the client.
