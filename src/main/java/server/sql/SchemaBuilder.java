@@ -34,7 +34,7 @@ public class SchemaBuilder {
 
             String sql = sqlite ? tableStringSQLITE(classType) : tableStringSQL(classType);
             System.out.println(sql);
-            // sqlStatement.execute("PRAGMA foreign_keys = ON");
+            sqlStatement.execute("PRAGMA foreign_keys = ON");
             sqlStatement.executeUpdate(sql);
         }
     }
