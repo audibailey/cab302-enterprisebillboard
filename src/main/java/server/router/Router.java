@@ -46,16 +46,16 @@ public class Router {
         // If there's no actions return NotFound.
         if (actions == null) return new NotFound("No path requests were specified.");
 
-        // Ensure the client can't inject permissions
+        // Ensure the client can't inject permissions or session information
         r.permissions = null;
         r.session = null;
 
         if (r.token != null) {
             Optional<Session> session = TokenService.getInstance().getSessionByToken(r.token);
-            if (session.isEmpty()) return new BadRequest("No session found");
+            if (session.isEmpty()) return new BadRequest("No session found.");
 
             Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
-            if (perms.isEmpty()) return new BadRequest("No permissions found");
+            if (perms.isEmpty()) return new BadRequest("No permissions found.");
 
             r.session = session.get();
             r.permissions = perms.get();
@@ -84,6 +84,8 @@ public class Router {
                 System.out.println("User requested with the parameters: " + r.params + ".");
                 System.out.println("User requested with the token: " + r.token + ".");
                 System.out.println("User requested with the body: " + r.body + ".");
+                //System.out.println("User requested with server injected permissions: " + r.permissions + ".");
+                //System.out.println("User requested with server injected session data: " + r.session + ".");
                 System.out.println("The request error stacktrace will now print: ");
                 e.printStackTrace();
 
@@ -100,23 +102,40 @@ public class Router {
      * Add an array of Classes that extend Action to the routes path.
      *
      * @param path:    The path you want to set, ie: /login.
-     * @param actions: The actions you want to perform in order given, ie: Authorize.class, GetSecret.class.
-     * @return Router: Returns self/this which allows chaining of ADD().ADD();.
+     * @param actions: The actions you want to perform in order given, ie: Insert.class, GetSecret.class.
+     * @return Router: Returns self/this which allows chaining of ADD().ADD().
      */
     public Router ADD(String path, Class<? extends Action>... actions) {
         routes.put(path, actions);
         return this;
     }
 
+    /**
+     * Add an array of Classes that extend Action to the routes path with authentication checks.
+     *
+     * @param path: The path you want to set, ie: /login.
+     * @param actions: The actions you want to perform in order given, ie: Insert.class, GetSecret.class.
+     * @return Router: Returns self/this which allows chaining of ADD().ADD().
+     */
     public Router ADD_AUTH(String path, Class<? extends Action>... actions) {
+        // Ensure there is an authentication class available.
         if (authenticatedAction == null) {
             return ADD(path, actions);
         }
 
+        // Add the authentication class and the actions.
         return ADD(path, combine(authenticatedAction, actions));
     }
 
+    /**
+     * This function combines multiple Actions.
+     *
+     * @param action: The base action other actions are combining into.
+     * @param actions: The other actions that are combining into the base.
+     * @return Class<? extends Action>[]: Returns the list of combined actions.
+     */
     public Class<? extends Action>[] combine(Class<? extends Action> action, Class<? extends Action>... actions) {
+
         Class<? extends Action>[] temp = new Class[actions.length + 1];
 
         for (int i = 0; i < actions.length + 1; i++) {
