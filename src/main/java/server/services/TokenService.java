@@ -1,6 +1,7 @@
 package server.services;
 
 import common.models.User;
+import common.utils.HashingFactory;
 import common.utils.RandomFactory;
 import server.sql.CollectionFactory;
 
@@ -17,8 +18,6 @@ import java.util.*;
  * @author Kevin Huynh
  */
 public class TokenService {
-    // Hashing Iterations
-    private final int ITERATIONS = 1000;
 
     private Set<Session> sessions = new HashSet<>();
 
@@ -33,27 +32,18 @@ public class TokenService {
     /**
      * This is the function called when a client attempts to login.
      *
-     * @param username: this is the username of the user trying to login
-     * @param password: the attempted password
-     * @return String token: null if failed, token if valid Session exists or new Session created.
+     * @param user: This is the user object of the user trying to login
+     * @param password: The attempted password
+     * @return String token: Null if failed, token if valid Session exists or new Session created.
+     * @throws Exception: Pass through the server error from the tryLogout function.
      */
     public String tryLogin(User user, String password) throws Exception {
         // Convert the users saved password and salt as a hex to a byte array
-        byte[] storedPassword = decodeHex(user.password);
-        byte[] userSalt = decodeHex(user.salt);
+        byte[] storedPassword = HashingFactory.decodeHex(user.password);
+        byte[] userSalt = HashingFactory.decodeHex(user.salt);
 
         // Attempt to create a hash based on the given password and the salt/password already in the database
-        byte[] testHash = hashPassword(password, userSalt, storedPassword.length);
-
-        // TODO: CHECK LEGITIMACY OF THIS
-//        // Ensure the hashes are the same
-//        int diff = storedPassword.length ^ testHash.length;
-//        for (int i = 0; i < storedPassword.length && i < testHash.length; i++) {
-//            diff |= storedPassword[i] ^ testHash[i];
-//        }
-//
-//        // if passwords aren't the same return null
-//        if (diff != 0) return null;
+        byte[] testHash = HashingFactory.hashPassword(password, userSalt, storedPassword.length)
 
         // Ensure the testHash is the same as the hash in the database
         if (!Arrays.equals(storedPassword, testHash)) return null;
@@ -67,111 +57,17 @@ public class TokenService {
         sessions.add(newSession);
 
         return newSession.token;
-
-        // TODO: Remove
-        // Ensure the data type is a String
-//        if (data instanceof String) {
-//
-//            // Set some variables for use outside of try/catch argument
-//            String[] parts;
-//            User user = null;
-//            boolean passwordMatch = false;
-//
-//            // Attempt to Base64 Decode the login data and split the username and password hash
-//            try {
-//                // Decode
-//                byte[] decodedValue = Base64.getDecoder().decode((String) data);
-//                String b64decoded = new String(decodedValue, StandardCharsets.UTF_8.toString());
-//
-//                // Split
-//                parts = b64decoded.split(":");
-//            } catch (Exception e) {
-//                return new Response<>(
-//                    Status.INTERNAL_SERVER_ERROR,
-//                    "An error occurred decoding the login data received."
-//                );
-//            }
-//
-//            // Attempt to fetch user
-//            try {
-//                // Fetch user from database based off username then save to a variable to reference later
-//                Optional<User> fetchedUser = db.users.get(parts[0]);
-//                if (fetchedUser.isPresent()) {
-//                    user = fetchedUser.get();
-//
-//                    // If client is already logged in under that username, deny them
-//                    if (loggedInUsers.contains(user.username)) {
-//                        return new Response<>(
-//                            Status.UNAUTHORIZED,
-//                            "Already logged in!"
-//                        );
-//                    }
-//                } else {
-//                    // If user not found, tell the client
-//                    return new Response<>(
-//                        Status.UNAUTHORIZED,
-//                        "Unknown Username."
-//                    );
-//                }
-//            } catch (SQLException e) {
-//                return new Response<>(
-//                    Status.INTERNAL_SERVER_ERROR,
-//                    "An error occurred retrieving your username from the database."
-//                );
-//            }
-//
-
-//            } catch (Exception e) {
-//                return new Response<>(
-//                    Status.INTERNAL_SERVER_ERROR,
-//                    "An error occurred processing the hash of your password."
-//                );
-//            }
-//
-//            // Ensure the password was correct else return a incorrect password error
-//            if (passwordMatch) {
-//                // Generate the token and save it to memory along with the username and token expiry
-//                String token = RandomFactory.token();
-//                sessionTokens.put(token,
-//                    new AbstractMap.SimpleEntry<>(
-//                        user.username,
-//                        LocalDateTime.now().plusHours(24)
-//                    )
-//                );
-//
-//                // Also set the user as logged in
-//                loggedInUsers.add(user.username);
-//                return new Response<>(
-//                    Status.CREATED,
-//                    token
-//                );
-//            } else {
-//                return new Response<>(
-//                    Status.UNAUTHORIZED,
-//                    "Incorrect Password."
-//                );
-//            }
-//        } else {
-//            return new Response<>(
-//                Status.UNSUPPORTED_TYPE,
-//                "Unknown parameter received in data field."
-//            );
-//        }
     }
 
+    /**
+     * This function checks if the user exists and returns an optional user.
+     *
+     * @param username: The username of the user using the client.
+     * @return Optional<User>: The user optional after attempting to fetch the user based off username.
+     * @throws Exception: Pass through the server error.
+     */
     public Optional<User> checkUserExists(String username) throws Exception {
-        return CollectionFactory.getInstance(User.class).get(u -> u.username == username).stream().findFirst();
-    }
-
-    public byte[] hashPassword(String password, byte[] salt, int length) throws Exception {
-        // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
-        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, length * 8);
-        // Choose the cryptography standard for hashing
-        SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-
-        // Attempt to hash the supplied password using the hashing standard and hashing spec
-        return HashingStandard.generateSecret(HashingSpec).getEncoded();
-
+        return CollectionFactory.getInstance(User.class).get(u -> u.username.equals(username)).stream().findFirst();
     }
 
     /**
@@ -216,7 +112,7 @@ public class TokenService {
      * @return Optional<Session>: The Session object related to the logged-in user.
      */
     public Optional<Session> getSessionByToken(String token) {
-        return sessions.stream().filter(x -> x.token == token).findFirst();
+        return sessions.stream().filter(session -> token.equals(session.token)).findFirst();
     }
 
     /**
@@ -242,19 +138,4 @@ public class TokenService {
         return false;
     }
 
-    /**
-     * This function is a helper function that converts a hex string to a byte array.
-     *
-     * @param hex: The hex string to be converted to a byte array.
-     * @return byte[]: The byte array after converting the hex string.
-     */
-    private static byte[] decodeHex(String hex) {
-        // Convert using BigInteger then turn into a byte array
-        byte[] byteArray = new BigInteger(hex, 16).toByteArray();
-        // If the byte array has a garbage first value, remove it
-        if (byteArray[0] == 0) {
-            return Arrays.copyOfRange(byteArray, 1, byteArray.length);
-        }
-        return byteArray;
-    }
 }
