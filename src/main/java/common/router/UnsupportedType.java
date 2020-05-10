@@ -7,5 +7,5 @@ package common.router;
  */
 public class UnsupportedType extends IActionResult {
     // A constructor with a class based response for the client.
-    public <T> UnsupportedType(Class<T> clazz) { super(Status.UNSUPPORTED_TYPE, "Unsupported Type. Must be" + clazz.getSimpleName()); }
+    public <T> UnsupportedType(Class<T> classType) { super(Status.UNSUPPORTED_TYPE, "Unsupported Type. Must be" + classType.getSimpleName()); }
 }

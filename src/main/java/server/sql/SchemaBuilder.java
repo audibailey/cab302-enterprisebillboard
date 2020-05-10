@@ -2,16 +2,23 @@ package server.sql;
 
 import java.sql.*;
 
+/**
+ * This class initialises the database and it's schema.
+ *
+ * @author Jamie Martin
+ * @author Kevin Huynh
+ * @author Perdana Bailey
+ */
 public class SchemaBuilder {
 
     /**
      * Creates the database, and switches the connection to use the database.
      *
-     * @param url:      the DBMS url. Example: jdbc:mysql://127.0.0.1
-     * @param username: the DBMS password
-     * @param password: the DBMS password
-     * @param schema:   the database name/schema
-     * @throws SQLException : Description
+     * @param url: The DBMS url. Example: jdbc:mysql://127.0.0.1.
+     * @param username: The DBMS username.
+     * @param password: The DBMS password
+     * @param schema: The database name/schema.
+     * @throws SQLException: A pass-through internal server exception.
      */
     public static Connection createDatabase(Connection connection, String url, String username, String password, String schema) throws SQLException {
         Statement sqlStatement = null;
@@ -45,7 +52,7 @@ public class SchemaBuilder {
     /**
      * Populates the database schema.
      *
-     * @throws SQLException: this exception is just a
+     * @throws SQLException: A pass-through internal server exception.
      */
     public static void populateSchema(Connection connection) throws SQLException {
         Statement sqlStatement = null;
@@ -165,4 +172,6 @@ public class SchemaBuilder {
             }
         }
     }
+
+    // TODO: ADD DEFAULT MASTER USER
 }
