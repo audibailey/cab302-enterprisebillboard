@@ -17,13 +17,9 @@ public class Authentication {
 
     /**
      * This class extends action for authenticating users. It ensures the user is using a valid token.
-     *
-     * @author Jamie Martin
      */
-    public class Authenticate extends Action {
-        // Empty constructor to just initialise the authenticate class.
-        public Authenticate() {
-        }
+    public static class Authenticate extends Action {
+        public Authenticate(){}
 
         /**
          * Override the execution with the token validation check to authorise the user.
@@ -43,14 +39,9 @@ public class Authentication {
 
     /**
      * This class extends action for logging in users. It "logs" the user in and generates a token.
-     *
-     * @author Jamie Martin
-     * @author Perdana Bailey
      */
-    public class Login extends Action {
-        // Empty constructor to just initialise the login class.
-        public Login() {
-        }
+    public static class Login extends Action {
+        public Login(){}
 
         /**
          * Override the default execute function with the login of the user.
@@ -77,26 +68,20 @@ public class Authentication {
                 // Attempt to log the user in and request for the token.
                 String token = TokenService.getInstance().tryLogin(user.get(), password);
                 // Return a success IActionResult with the token.
-                // TODO: RETURN SESSION and PERMISSIONS
                 if (token != null) return new Ok(token);
             }
 
             // If the token is null that means the password is incorrect.
             // If the user doesn't exist tell the client it's an invalid username.
-            return new BadRequest("Incorrect details");
+            return new BadRequest("Incorrect details.");
         }
     }
 
     /**
      * This class extends action for logging out the user. It "logs" the user out and removes them from the session.
-     *
-     * @author Jamie Martin
-     * @author Perdana Bailey
      */
-    public class Logout extends Action {
-        // Empty constructor to just initialise the login class.
-        public Logout() {
-        }
+    public static class Logout extends Action {
+        public Logout(){}
 
         /**
          * Override the default execute function with the logging out of the user.
