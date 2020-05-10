@@ -14,7 +14,7 @@ import java.util.Random;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-@SQL(type="PRIMARY KEY(id), CONSTRAINT FK_UserBillboard FOREIGN KEY (userId) REFERENCES USER(id))")
+@SQL(type="PRIMARY KEY(id), CONSTRAINT FK_UserBillboard FOREIGN KEY (userId) REFERENCES USER(id)")
 @SQLITE(type="FOREIGN KEY(userId) REFERENCES User(id)")
 public class Billboard implements Serializable {
     /**
