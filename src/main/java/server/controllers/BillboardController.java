@@ -16,7 +16,8 @@ import java.util.Optional;
 public class BillboardController {
 
     public class Get extends Action {
-        public Get() {}
+        public Get() {
+        }
 
         @Override
         public IActionResult execute(Request req) throws Exception {
@@ -27,7 +28,8 @@ public class BillboardController {
     }
 
     public class GetById extends Action {
-        public GetById() {}
+        public GetById() {
+        }
 
         @Override
         public IActionResult execute(Request req) throws Exception {
@@ -40,7 +42,8 @@ public class BillboardController {
     }
 
     public class GetByLock extends Action {
-        public GetByLock() {}
+        public GetByLock() {
+        }
 
         @Override
         public IActionResult execute(Request req) throws Exception {
@@ -53,7 +56,8 @@ public class BillboardController {
     }
 
     public class Insert extends Action {
-        public Insert() {}
+        public Insert() {
+        }
 
         @Override
         public IActionResult execute(Request req) throws Exception {
@@ -67,13 +71,36 @@ public class BillboardController {
     }
 
     public class Update extends Action {
-        public Update() {}
+        public Update() {
+        }
 
         @Override
         public IActionResult execute(Request req) throws Exception {
             if (req.body instanceof Billboard) {
-                CollectionFactory.getInstance(Billboard.class).update((Billboard) req.body);
-                return new Ok();
+                Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
+                if (session.isEmpty()) return new BadRequest("No valid session");
+
+                Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+                if (perms.isEmpty()) return new BadRequest("No valid perms");
+
+                Permissions permissions = perms.get();
+
+                if (permissions.canEditBillboard) {
+                    CollectionFactory.getInstance(Billboard.class).update((Billboard) req.body);
+                    return new Ok();
+                }
+                else
+                {
+                    Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(b -> b.userId == session.get().userId).stream().findFirst();
+
+                    if (billboard.isEmpty()) return new BadRequest("User cannot edit this billboard");
+
+                    if (permissions.canCreateBillboard && !billboard.get().locked && billboard.equals(req.body)) {
+                        CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
+                        return new Ok();
+                    }
+                }
+
             }
 
             return new UnsupportedType(Billboard.class);
@@ -81,7 +108,8 @@ public class BillboardController {
     }
 
     public class Delete extends Action {
-        public Delete() {}
+        public Delete() {
+        }
 
         @Override
         public IActionResult execute(Request req) throws Exception {
@@ -99,13 +127,15 @@ public class BillboardController {
                     return new Ok();
                 } else {
                     Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(b -> b.userId == session.get().userId).stream().findFirst();
+
                     if (billboard.isEmpty()) return new BadRequest("User cannot delete this billboard");
-                    
-                    CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
-                    return new Ok();
+
+                    if (permissions.canCreateBillboard && !billboard.get().locked && billboard.equals(req.body)) {
+                        CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
+                        return new Ok();
+                    }
                 }
             }
-
             return new UnsupportedType(Billboard.class);
         }
     }
