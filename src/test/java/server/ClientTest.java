@@ -83,12 +83,8 @@ public class ClientTest {
         OutputStream newOStream = newS.getOutputStream();
 
         ObjectOutputStream newOos = new ObjectOutputStream(newOStream);
-        Request newReq = new Request(
-            "/billboard/insert",
-            token,
-            null,
-            Billboard.Random(1)
-        );
+        Billboard bbtest = Billboard.Random(1);
+        Request newReq = new Request("/billboard/insert", token, null, bbtest);
 
         newOos.writeObject(newReq);
         newOos.flush();

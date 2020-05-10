@@ -43,7 +43,7 @@ public class TokenService {
         byte[] userSalt = HashingFactory.decodeHex(user.salt);
 
         // Attempt to create a hash based on the given password and the salt/password already in the database
-        byte[] testHash = HashingFactory.hashPassword(password, userSalt, storedPassword.length)
+        byte[] testHash = HashingFactory.hashPassword(password, userSalt, storedPassword.length);
 
         // Ensure the testHash is the same as the hash in the database
         if (!Arrays.equals(storedPassword, testHash)) return null;
