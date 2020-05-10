@@ -41,7 +41,7 @@ public class Permission {
             if (perms.isEmpty()) return new BadRequest("No permissions found");
 
             if (perms.get().canEditBillboard) return new Ok();
-            else return new Unauthorised();
+            else return new Unauthorised("Not authorized to edit billboards");
         }
     }
 
@@ -57,7 +57,7 @@ public class Permission {
             if (perms.isEmpty()) return new BadRequest("No permissions found");
 
             if (perms.get().canEditUser) return new Ok();
-            else return new Unauthorised();
+            else return new Unauthorised("Not authorized to edit user");
         }
     }
 
@@ -74,7 +74,7 @@ public class Permission {
             if (perms.isEmpty()) return new BadRequest("No permissions found");
 
             if (perms.get().canScheduleBillboard) return new Ok();
-            else return new Unauthorised();
+            else return new Unauthorised("Not authorized to schedule billboards");
         }
     }
 
@@ -90,7 +90,7 @@ public class Permission {
             if (perms.isEmpty()) return new BadRequest("No permissions found");
 
             if (perms.get().canViewBillboard) return new Ok();
-            else return new Unauthorised();
+            else return new Unauthorised("Not authorized to view billboards");
         }
     }
 
