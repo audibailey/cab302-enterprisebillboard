@@ -6,6 +6,7 @@ import common.router.IActionResult;
 import common.router.NotFound;
 import common.router.InternalError;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -16,9 +17,19 @@ import java.util.HashMap;
  */
 public class Router {
 
+    private Class<? extends Action> authenticatedAction;
+
     // <Path, Array<Actions> Hash Map to store the path to find those Actions on.
     // Multiple actions are allowable, enabling chaining ie: Authenticate, then Get
     protected final HashMap<String, Class<? extends Action>[]> routes = new HashMap<>();
+
+    public Router() {
+
+    }
+
+    public Router(Class<? extends Action> action) {
+        this.authenticatedAction = action;
+    }
 
     /**
      * Routes a given request and returns the result.
@@ -78,5 +89,24 @@ public class Router {
     public Router ADD(String path, Class<? extends Action>... actions) {
         routes.put(path, actions);
         return this;
+    }
+
+    public Router ADD_AUTH(String path, Class<? extends Action>... actions) {
+        if (authenticatedAction == null) {
+            return ADD(path, actions);
+        }
+
+        return ADD(path, combine(authenticatedAction, actions));
+    }
+
+    public Class<? extends Action>[] combine(Class<? extends Action> action, Class<? extends Action>... actions) {
+        Class<? extends Action>[] temp = new Class[actions.length + 1];
+
+        for (int i = 0; i < actions.length + 1; i++) {
+            if (i == 0) temp[i] = action;
+            else temp[i] = actions[i-1];
+        }
+
+        return temp;
     }
 }
