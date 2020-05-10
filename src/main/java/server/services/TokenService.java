@@ -6,7 +6,6 @@ import server.sql.CollectionFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.swing.text.html.Option;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -200,28 +199,47 @@ public class TokenService {
         return true;
     }
 
-    public Optional<Session> getSessionByUsername(String username) {
+    /**
+     * This function gets the session details by username.
+     *
+     * @param username: The username of the logged-in user.
+     * @return Optional<Session>: The Session object related to the logged-in user.
+     */
+    private Optional<Session> getSessionByUsername(String username) {
         return sessions.stream().filter(x -> x.username == username).findFirst();
     }
 
+    /**
+     * This function gets the session details by token.
+     *
+     * @param token: The token of the logged-in user.
+     * @return Optional<Session>: The Session object related to the logged-in user.
+     */
     public Optional<Session> getSessionByToken(String token) {
         return sessions.stream().filter(x -> x.token == token).findFirst();
     }
 
+    /**
+     * This function ensures the token is not expired.
+     *
+     * @param token: The token of the logged-in/ex-logged in user.
+     * @return boolean: True if expired, False is not expired.
+     */
     public boolean expired(String token) {
-        Optional<Session> session = sessions.stream().filter(x -> x.token == token).findFirst();
+        // Get the session information from the token.
+        Optional<Session> session = getSessionByToken(token);
 
-        // session is empty so logical equivalent of being expired
+        // Session is empty so logical equivalent of being expired.
         if (session.isEmpty()) return true;
 
-        // If session is expired remove session and return null
+        // If session is expired remove session and return true.
         if (session.get().expireTime.compareTo(LocalDateTime.now()) <= 0) {
             sessions.remove(session);
             return true;
         }
 
-        // If the session is present and valid
-        return true;
+        // If the session is present and valid.
+        return false;
     }
 
     /**
