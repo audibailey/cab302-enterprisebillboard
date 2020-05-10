@@ -3,16 +3,10 @@ package server;
 import java.io.*;
 import java.net.Socket;
 
-import common.Methods;
-import common.Status;
-import server.controllers.billboard.Get;
-import server.controllers.billboard.Insert;
-import server.controllers.billboard.Update;
-import server.endpoints.EndpointHandler;
+import common.router.*;
 import server.router.*;
-import server.middleware.MiddlewareHandler;
-import server.router.models.BadRequest;
-import server.router.models.IActionResult;
+import common.router.BadRequest;
+import common.router.IActionResult;
 
 /**
  * This class handles the how the server responds to the clients request.
@@ -20,17 +14,17 @@ import server.router.models.IActionResult;
  * @author Perdana Bailey
  * @author Jamie Martin
  */
-public class ClientHandler implements Runnable {
+public class SocketHandler implements Runnable {
 
     // Used for getting the relevant streams and closing the socket when finished.
     private Socket client;
     private Router router;
     /**
-     * The ClientHandler Constructor.
+     * The SocketHandler Constructor.
      *
      * @param client:          This is the socket connection from the client.
      */
-    public ClientHandler(Socket client, Router router) {
+    public SocketHandler(Socket client, Router router) {
         this.client = client;
         this.router = router;
     }

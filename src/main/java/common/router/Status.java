@@ -1,4 +1,4 @@
-package common;
+package common.router;
 
 /**
  * This enum determines the type of response.

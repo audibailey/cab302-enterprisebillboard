@@ -10,6 +10,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * A singleton Class that handles all the database interactions for the server.
+ *
+ * @author Jamie Martin
+ * @author Kevin Huynh
+ * @author Perdana Bailey
+ */
 public class DataService {
     private Connection connection;
 
@@ -23,8 +30,8 @@ public class DataService {
     }
 
     /**
-     * Generates a Dataservice Instance
-     *
+     * Generates a Dataservice Instance for Unit Tests if required
+     * @param debug: whether the database should run using a mock list or the actual db
      * @throws Exception: thrown when unable to connect to database;
      */
     public DataService(boolean debug) throws Exception {
@@ -33,6 +40,9 @@ public class DataService {
         }
     }
 
+    /**
+     * Ensures the DataService is a singleton when getConnection() is called
+     */
     private static class DataServiceHolder {
         private final static DataService INSTANCE = new DataService();
     }
@@ -48,16 +58,8 @@ public class DataService {
      * @throws Exception: thrown when unable to configure database connection from props.
      */
     private static Connection startConnection() throws Exception {
-        Properties props = null;
-
-        // Configure the database from the prop file
-        try {
-            props = getProps();
-        } catch (IOException e) {
-            throw new IOException("Failed to get db.props values.", e);
-        } catch (NullPointerException e) {
-            throw new NullPointerException("Failed to get db.props.values.");
-        }
+        // Configure the database from the prop file, throws error if one
+        Properties props = getProps();
 
         String url = props.getProperty("jdbc.url");
         String db = props.getProperty("jdbc.schema");
@@ -68,6 +70,7 @@ public class DataService {
             Connection pre_dbconn = DriverManager.getConnection(url, username, password);
             Connection new_dbconn = SchemaBuilder.createDatabase(pre_dbconn, url, username, password, db);
             SchemaBuilder.populateSchema(new_dbconn);
+            // TODO: Put SchemaBuilder into each Collection, Still CREATE DB here though
 
             return new_dbconn;
         } catch (SQLException ex) {

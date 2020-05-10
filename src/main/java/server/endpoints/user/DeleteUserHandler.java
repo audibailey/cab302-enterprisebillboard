@@ -1,11 +1,5 @@
 package server.endpoints.user;
 
-import java.util.Optional;
-
-import common.models.Permissions;
-import common.models.Response;
-import common.Status;
-import common.models.User;
 
 /**
  * This class handles the delete function of user database handler and turns it into a response

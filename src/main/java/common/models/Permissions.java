@@ -55,24 +55,6 @@ public class Permissions implements Serializable {
     }
 
     /**
-     * Parses the SQL result set and returns a permissions object.
-     *
-     * @param rs: the result set from an SQL SELECT query.
-     * @return Billboard: the permissions object after converting from SQL.
-     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
-     */
-    public static Permissions fromSQL(ResultSet rs) throws SQLException {
-        return new Permissions(
-            rs.getInt("id"),
-            rs.getString("username"),
-            rs.getBoolean("canCreateBillboard"),
-            rs.getBoolean("canEditBillboard"),
-            rs.getBoolean("canScheduleBillboard"),
-            rs.getBoolean("canEditUsers"),
-            rs.getBoolean("canViewBillboard"));
-    }
-
-    /**
      * Generates a random permissions object with random variables
      * @param id: the id of the user
      * @param username: the user's username
