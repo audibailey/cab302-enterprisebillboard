@@ -76,8 +76,8 @@ public class BillboardController {
             String lock = req.params.get("lock");
 
             // Ensure lock field is not null.
-            if (lock == null) {
-                return new BadRequest("Must specify a billboard lock status.");
+            if (lock == null || lock != "true" || lock != "false") {
+                return new BadRequest("Must specify a billboard boolean lock status.");
             }
             
             // Cast the lock string to a boolean
@@ -85,7 +85,7 @@ public class BillboardController {
 
             // Get list of billboards with the lock status as specified. This should only return 1 billboard.
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> lock == billboard.locked);
+                billboard -> lockBool == billboard.locked);
 
             // Return a success IActionResult with the list of billboards.
             return new Ok(billboardList);
