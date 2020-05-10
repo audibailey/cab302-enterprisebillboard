@@ -3,11 +3,9 @@ package server.controllers;
 import common.models.Billboard;
 import common.models.Permissions;
 import common.router.*;
-import server.middleware.Permission;
 import server.router.*;
 import server.services.Session;
 import server.services.TokenService;
-import server.sql.Collection;
 import server.sql.CollectionFactory;
 
 import java.util.List;
@@ -100,7 +98,7 @@ public class BillboardController {
                 } else {
                     Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(b -> b.userId == session.get().userId).stream().findFirst();
                     if (billboard.isEmpty()) return new BadRequest("User cannot delete this billboard");
-                    
+
                     CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
                     return new Ok();
                 }

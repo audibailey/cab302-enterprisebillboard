@@ -1,26 +1,49 @@
 package server.sql;
 
-import server.services.DataService;
-
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.List;
 
 public class StatementBuilder {
 
-    public static <T> PreparedStatement get(Class<T> clazz) throws Exception {
-        return DataService.getConnection().prepareStatement("SELECT * FROM " + clazz.getSimpleName());
+    public static <T> PreparedStatement get(Connection conn, Class<T> clazz) throws Exception {
+        return conn.prepareStatement(createGetStatement(clazz));
     }
 
-    public static <T> PreparedStatement insert(T object) throws Exception {
+    public static <T> String createGetStatement(Class<T> clazz) {
+        return "SELECT * FROM " + clazz.getSimpleName().toUpperCase();
+    }
+
+    public static <T> PreparedStatement insert(Connection conn, T object) throws Exception {
         Class clazz = object.getClass();
-        List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
+        PreparedStatement pstmt = conn.prepareStatement(createInsertStatement(clazz));
+
+        int j = 1;
+
+        for (Field field : getFields(object.getClass())) {
+            if (field.getName() != "id") {
+                Object value = field.get(object);
+                if (value instanceof byte[])
+                    pstmt.setBinaryStream(j, new ByteArrayInputStream((byte[]) value));
+                else
+                    pstmt.setObject(j, value);
+
+                j++;
+            }
+        }
+
+        return pstmt;
+    }
+
+    public static <T> String createInsertStatement(Class<T> clazz) {
+        List<Field> fields = getFields(clazz);
         int lastField = fields.toArray().length - 1;
 
-        StringBuilder names = new StringBuilder("INSERT INTO " + clazz.getSimpleName() + " (");
-        StringBuilder values = new StringBuilder(" VALUES (");
+        var names = new StringBuilder("INSERT INTO " + clazz.getSimpleName().toUpperCase() + " (");
+        var values = new StringBuilder(" VALUES (");
 
         int i = 1;
 
@@ -32,74 +55,34 @@ public class StatementBuilder {
                     names.append(field.getName() + ")");
                     values.append("?)");
                 } else {
-                    names.append(field.getName() + ',');
-                    values.append("?,");
+                    names.append(field.getName() + ", ");
+                    values.append("?, ");
                 }
 
                 i++;
             }
         }
 
-        String query = names.toString() + values.toString();
-        PreparedStatement pstmt = DataService.getConnection().prepareStatement(query);
-
-        int j = 1;
-
-        for (Field field : fields) {
-            if (field.getName() != "id") {
-                Object value = field.get(object);
-                if (value instanceof byte[]) {
-                    pstmt.setBinaryStream(j, new ByteArrayInputStream((byte[]) value));
-                } else {
-                    pstmt.setObject(j, value);
-                }
-                j++;
-            }
-        }
-
-        return pstmt;
+        return names.toString() + values.toString();
     }
 
-    public static <T> PreparedStatement update(T object) throws Exception {
+    public static <T> PreparedStatement update(Connection conn, T object) throws Exception {
         Class clazz = object.getClass();
-        List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
-        int lastField = fields.toArray().length - 1;
-
-        StringBuilder names = new StringBuilder("UPDATE " + clazz.getSimpleName() + " SET ");
+        PreparedStatement pstmt = conn.prepareStatement(createUpdateStatement(clazz));
 
         int id = clazz.getDeclaredField("id").getInt(object);
-
-        int i = 1;
-
-        for (Field field : fields) {
-            if (field.getName() != "id") {
-                field.setAccessible(true);
-
-                if (i == lastField) {
-                    names.append(field.getName() + " = ?");
-                } else {
-                    names.append(field.getName() + " = ?,");
-                }
-            }
-
-            i++;
-        }
-
-        names.append(" WHERE ID = ?");
-
-        String query = names.toString();
-        PreparedStatement pstmt = DataService.getConnection().prepareStatement(query);
-
         int j = 1;
 
-        for (Field field : fields) {
-            Object value = field.get(object);
-            if (value instanceof byte[]) {
-                pstmt.setBinaryStream(j, new ByteArrayInputStream((byte[])value));
-            } else {
-                pstmt.setObject(j, value);
+        for (Field field : getFields(object.getClass())) {
+            if (field.getName() != "id") {
+                Object value = field.get(object);
+                if (value instanceof byte[])
+                    pstmt.setBinaryStream(j, new ByteArrayInputStream((byte[])value));
+                else
+                    pstmt.setObject(j, value);
+
+                j++;
             }
-            j++;
         }
 
         pstmt.setObject(j, id);
@@ -107,15 +90,49 @@ public class StatementBuilder {
         return pstmt;
     }
 
-    public static <T> PreparedStatement delete(T object) throws Exception {
+    public static <T> String createUpdateStatement(Class<T> clazz) throws Exception {
+        List<Field> fields = getFields(clazz);
+        int lastField = fields.toArray().length - 1;
+
+        StringBuilder names = new StringBuilder("UPDATE " + clazz.getSimpleName().toUpperCase() + " SET ");
+
+        int i = 1;
+
+        for (Field field : fields) {
+            if (field.getName() != "id") {
+                field.setAccessible(true);
+
+                if (i == lastField)
+                    names.append(field.getName() + " = ?");
+                else
+                    names.append(field.getName() + " = ?, ");
+
+                i++;
+            }
+        }
+
+        return names.append(" WHERE ID = ?").toString();
+    }
+
+    public static <T> PreparedStatement delete(Connection conn, T object) throws Exception {
         Class clazz = object.getClass();
 
         int id = clazz.getDeclaredField("id").getInt(object);
 
-        PreparedStatement pstmt = DataService.getConnection().prepareStatement("UPDATE " + clazz.getSimpleName() + " SET WHERE ID = ?");
+        PreparedStatement pstmt = conn.prepareStatement(createDeleteStatement(clazz));
 
         pstmt.setObject(1, id);
 
         return pstmt;
+    }
+
+    public static <T> String createDeleteStatement(Class<T> clazz) {
+        return "DELETE " + clazz.getSimpleName().toUpperCase() + " WHERE ID = ?";
+    }
+
+    /* HELPER FUNCTIONS */
+
+    private static <T> List<Field> getFields(Class<T> clazz) {
+        return Arrays.asList(clazz.getDeclaredFields());
     }
 }
