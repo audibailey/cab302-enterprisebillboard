@@ -2,7 +2,7 @@ package server.services;
 
 import org.junit.jupiter.api.Test;
 
-public class PermissionService {
+public class PermissionServiceTests {
     // Test cases of permissions
 
     @Test
