@@ -17,12 +17,21 @@ import java.util.List;
  */
 public class StatementBuilder {
 
+
     public static <T> PreparedStatement get(Connection conn, Class<T> clazz) throws Exception {
         return conn.prepareStatement(createGetStatement(clazz));
     }
 
-    public static <T> String createGetStatement(Class<T> clazz) {
-        return "SELECT * FROM " + clazz.getSimpleName().toUpperCase();
+    /**
+     * Creates a SELECT SQL statement based on given class type.
+     *
+     * @param className: The provided class type.
+     * @param <T>: The type of the provided class type.
+     * @return PreparedStatement: The SELECT SQL statement.
+     * @throws Exception: A pass-through internal server exception.
+     */
+    public static <T> String createGetStatement(Class<T> className) {
+        return "SELECT * FROM " + className.getSimpleName().toUpperCase();
     }
 
     public static <T> PreparedStatement insert(Connection conn, T object) throws Exception {
