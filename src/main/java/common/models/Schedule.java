@@ -15,15 +15,28 @@ import java.util.Date;
  * @author Jamie Martin
  * @author Kevin Huynh
  */
+@SQLITE(type="FOREIGN KEY(billboardName) REFERENCES Billboard(name)")
 public class Schedule implements Serializable {
     /**
      * The variables of the object schedule
      */
+    @SQL(type="int NOT NULL AUTO_INCREMENT UNIQUE")
+    @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
+    @SQL(type="varchar(255) NOT NULL UNIQUE")
+    @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String billboardName;
+    @SQL(type="TIMESTAMP NOT NULL")
+    @SQLITE(type="DATETIME NOT NULL")
     public Instant startTime;
+    @SQL(type="TIMESTAMP NOT NULL")
+    @SQLITE(type="DATETIME NOT NULL")
     public Instant createTime; // Time when create the schedule
+    @SQL(type="int")
+    @SQLITE(type="INTEGER")
     public int duration;
+    @SQL(type="int")
+    @SQLITE(type="INTEGER")
     public int interval;
 
     /**

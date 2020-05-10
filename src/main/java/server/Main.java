@@ -6,6 +6,7 @@ import server.middleware.*;
 import server.router.*;
 import server.services.DataService;
 import server.sql.CollectionFactory;
+import server.sql.SchemaBuilder;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,8 +33,9 @@ public class Main {
         System.out.println("Billboard Server");
 
         System.out.println("Attempting to connect to database...");
+
         // Connect and populate the database
-        DataService.getConnection();
+//        new SchemaBuilder(DataService.getConnection(), false, User.class, Billboard.class, Schedule.class, Permissions.class).build();
         CollectionFactory.getInstance(Billboard.class);
         CollectionFactory.getInstance(User.class);
         CollectionFactory.getInstance(Schedule.class);
