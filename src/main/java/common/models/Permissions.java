@@ -22,21 +22,27 @@ public class Permissions implements Serializable {
     @SQL(type="int NOT NULL AUTO_INCREMENT UNIQUE")
     @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
+
     @SQL(type="varchar(255) NOT NULL UNIQUE")
     @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String username;
+
     @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canCreateBillboard;
+
     @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canEditBillboard;
+
     @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canScheduleBillboard;
+
     @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canEditUser;
+
     @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canViewBillboard;
