@@ -1,6 +1,7 @@
 package server.controllers.user;
 
 import common.models.Billboard;
+import common.models.User;
 import server.router.Action;
 import server.router.Request;
 import server.router.models.IActionResult;
@@ -16,7 +17,9 @@ public class Get extends Action {
 
     @Override
     public IActionResult execute(Request req) throws Exception {
-        return new NotFound();
+        List<User> res = CollectionFactory.getInstance(User.class).get(x -> true);
+
+        return new Ok(res);
     }
 
 }

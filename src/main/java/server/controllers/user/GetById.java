@@ -1,6 +1,7 @@
 package server.controllers.user;
 
 import common.models.Billboard;
+import common.models.User;
 import server.router.Action;
 import server.router.Request;
 import server.router.models.IActionResult;
@@ -16,6 +17,10 @@ public class GetById extends Action {
 
     @Override
     public IActionResult execute(Request req) throws Exception {
-        return new NotFound();
+        String id = req.params.get("id");
+
+        List<User> res = CollectionFactory.getInstance(User.class).get(x -> id == String.valueOf(x.id));
+
+        return new Ok(res);
     }
 }

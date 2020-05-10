@@ -1,6 +1,7 @@
 package server.controllers.user;
 
 import common.models.Billboard;
+import common.models.User;
 import server.router.Action;
 import server.router.Request;
 import server.router.models.BadRequest;
@@ -15,7 +16,12 @@ public class Update extends Action {
 
     @Override
     public IActionResult execute(Request req) throws Exception {
-        return new NotFound();
+        if (req.body instanceof User) {
+            CollectionFactory.getInstance(User.class).update((User) req.body);
+            return new Ok();
+        }
+
+        return new BadRequest("Not a User");
     }
 
 }
