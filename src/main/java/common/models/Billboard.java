@@ -47,7 +47,7 @@ public class Billboard implements Serializable {
     @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean locked;
-    @SQL(type="BOOLEAN NOT NULL")
+    @SQL(type="int NOT NULL")
     @SQLITE(type="INTEGER NOT NULL")
     public int userId;
 
