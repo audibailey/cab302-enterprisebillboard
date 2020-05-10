@@ -30,8 +30,7 @@ public class UserController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             String id = req.params.get("id");
-
-            if (id == null) return new BadRequest("No id");
+            if (id == null) return new BadRequest("Parameter required: id");
 
             List<User> res = CollectionFactory.getInstance(User.class).get(x -> id == String.valueOf(x.id));
 
@@ -44,12 +43,11 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (req.body instanceof User) {
-                CollectionFactory.getInstance(User.class).insert((User) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            return new UnsupportedType(User.class);
+            // TODO: INSERT PERMISSIONS HERE TOO
+            CollectionFactory.getInstance(User.class).insert((User) req.body);
+            return new Ok();
         }
     }
 
@@ -58,31 +56,23 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (req.body instanceof User) {
-                Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
-                if (session.isEmpty()) return new BadRequest("No valid session");
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-                Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
-                if (perms.isEmpty()) return new BadRequest("No valid perms");
+            CollectionFactory.getInstance(User.class).update((User) req.body);
+            return new Ok();
+        }
+    }
 
-                Permissions permissions = perms.get();
+    public class UpdatePassword extends Action {
+        public UpdatePassword() { }
 
-                if (permissions.canEditUser) {
-                    CollectionFactory.getInstance(User.class).update((User) req.body);
-                    return new Ok();
-                }
-                else
-                {
-                    if (session.get().userId == ((User) req.body).id)
-                    {
-                        CollectionFactory.getInstance(User.class).update((User) req.body);
-                        return new Ok();
-                    }
-                }
+        @Override
+        public IActionResult execute(Request req) throws Exception {
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            }
-
-            return new UnsupportedType(User.class);
+            // TODO: UPDATE PASSWORD FUNCTION
+            // CollectionFactory.getInstance(User.class).update((User) req.body);
+            return new Ok();
         }
     }
 
@@ -91,14 +81,11 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            // DELETE PERMS TOO
-            if (req.body instanceof User) {
-                CollectionFactory.getInstance(User.class).delete((User) req.body);
-                CollectionFactory.getInstance(Permissions.class).delete((Permissions) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            return new UnsupportedType(User.class);
+            CollectionFactory.getInstance(User.class).delete((User) req.body);
+            CollectionFactory.getInstance(Permissions.class).delete((Permissions) req.body);
+            return new Ok();
         }
     }
 }

@@ -35,11 +35,9 @@ public class Authentication {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // If the token is null or expired return an Unauthorised Result
-            if (req.token == null || !TokenService.getInstance().verify(req.token)) {
-                return new Unauthorised("Token is invalid.");
-            } else {
-                return new Ok();
-            }
+            if (req.token == null || !TokenService.getInstance().verify(req.token)) return new Unauthorised("Token is invalid.");
+
+            return new Ok();
         }
     }
 
@@ -68,9 +66,9 @@ public class Authentication {
 
             // Ensure the fields are not null.
             if (username == null) {
-                return new BadRequest("Must specify a username.");
+                return new BadRequest("Parameter required: username.");
             } else if (password == null) {
-                return new BadRequest("Must specify a password.");
+                return new BadRequest("Parameter required: password.");
             }
 
             // Ensure the user exists.
@@ -78,19 +76,14 @@ public class Authentication {
             if (user.isPresent()) {
                 // Attempt to log the user in and request for the token.
                 String token = TokenService.getInstance().tryLogin(user.get(), password);
-
-                // If the token is null that means the password is incorrect.
-                if (token == null) {
-                    return new BadRequest("Incorrect password.");
-                }
-
                 // Return a success IActionResult with the token.
                 // TODO: RETURN SESSION and PERMISSIONS
-                return new Ok(token);
-            } else {
-                // If the user doesn't exist tell the client it's an invalid username.
-                return new BadRequest("Invalid username.");
+                if (token != null) return new Ok(token);
             }
+
+            // If the token is null that means the password is incorrect.
+            // If the user doesn't exist tell the client it's an invalid username.
+            return new BadRequest("Incorrect details");
         }
     }
 
@@ -114,15 +107,11 @@ public class Authentication {
          */
         @Override
         public IActionResult execute(Request req) throws Exception {
-            String token = req.token;
-
             // Ensure the token is not null.
-            if (token == null) {
-                return new Unauthorised("Must provide token to logout.");
-            }
+            if (req.token == null) return new Unauthorised("Must provide token to logout.");
 
             // Attempt to log the user out and return a success empty IActionResult.
-            TokenService.getInstance().tryLogout(token);
+            TokenService.getInstance().tryLogout(req.token);
             return new Ok();
         }
     }

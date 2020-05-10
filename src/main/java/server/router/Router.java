@@ -1,13 +1,15 @@
 package server.router;
 
-import common.router.Status;
-import common.router.Request;
-import common.router.IActionResult;
-import common.router.NotFound;
+import common.models.Permissions;
+import common.router.*;
 import common.router.InternalError;
+import server.services.Session;
+import server.services.TokenService;
+import server.sql.CollectionFactory;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * A router class to manage controllers for the clients requests. Http-Like
@@ -38,11 +40,26 @@ public class Router {
      * @param r: The Request class.
      * @return IActionResult: The result from performing the given actions.
      */
-    public IActionResult route(Request r) {
+    public IActionResult route(Request r) throws Exception {
         // Attempt to get the actions from the given path.
         var actions = routes.get(r.path);
         // If there's no actions return NotFound.
         if (actions == null) return new NotFound("No path requests were specified.");
+
+        // Ensure the client can't inject permissions
+        r.permissions = null;
+        r.session = null;
+
+        if (r.token != null) {
+            Optional<Session> session = TokenService.getInstance().getSessionByToken(r.token);
+            if (session.isEmpty()) return new BadRequest("No session found");
+
+            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+            if (perms.isEmpty()) return new BadRequest("No permissions found");
+
+            r.session = session.get();
+            r.permissions = perms.get();
+        }
 
         // Initialise the return object
         IActionResult result = null;

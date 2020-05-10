@@ -28,9 +28,10 @@ public class ScheduleController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             String id = req.params.get("id");
-            if (id == null) return new BadRequest("No ID");
+            if (id == null) return new BadRequest("Parameter required: id");
 
             List<Schedule> res = CollectionFactory.getInstance(Schedule.class).get(x -> id == String.valueOf(x.id));
+
             return new Ok(res);
         }
     }
@@ -40,12 +41,10 @@ public class ScheduleController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (req.body instanceof Schedule) {
-                CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof Schedule)) return new UnsupportedType(Schedule.class);
 
-            return new UnsupportedType(Schedule.class);
+            CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
+            return new Ok();
         }
     }
 
@@ -54,12 +53,10 @@ public class ScheduleController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (req.body instanceof Schedule) {
-                CollectionFactory.getInstance(Schedule.class).delete((Schedule) req.body);
-                return new Ok();
-            }
+            if (!(req.body instanceof Schedule)) return new UnsupportedType(Schedule.class);
 
-            return new UnsupportedType(Schedule.class);
+            CollectionFactory.getInstance(Schedule.class).delete((Schedule) req.body);
+            return new Ok();
         }
     }
 }
