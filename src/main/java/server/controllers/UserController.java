@@ -1,5 +1,6 @@
 package server.controllers;
 
+import common.models.Permissions;
 import common.models.User;
 import common.router.*;
 import server.router.*;
@@ -45,7 +46,7 @@ public class UserController {
                 return new Ok();
             }
 
-            return new BadRequest("Not a User");
+            return new UnsupportedType(User.class);
         }
     }
 
@@ -59,7 +60,7 @@ public class UserController {
                 return new Ok();
             }
 
-            return new BadRequest("Not a User");
+            return new UnsupportedType(User.class);
         }
     }
 
@@ -71,10 +72,11 @@ public class UserController {
             // DELETE PERMS TOO
             if (req.body instanceof User) {
                 CollectionFactory.getInstance(User.class).delete((User) req.body);
+                CollectionFactory.getInstance(Permissions.class).delete((Permissions) req.body);
                 return new Ok();
             }
 
-            return new BadRequest("Not a user");
+            return new UnsupportedType(User.class);
         }
     }
 }

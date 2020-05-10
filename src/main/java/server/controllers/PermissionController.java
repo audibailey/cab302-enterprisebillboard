@@ -1,7 +1,15 @@
 package server.controllers;
 
+import common.models.Billboard;
+import common.models.Permissions;
+import common.models.Schedule;
+import common.models.User;
 import common.router.*;
+import server.middleware.Permission;
 import server.router.*;
+import server.sql.CollectionFactory;
+
+import java.util.List;
 
 public class PermissionController {
 
@@ -10,7 +18,9 @@ public class PermissionController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> true);
+
+            return new Ok(res);
         }
     }
 
@@ -19,7 +29,11 @@ public class PermissionController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            String id = req.params.get("id");
+
+            List<Permissions> res = CollectionFactory.getInstance(Permissions.class).get(x -> id == String.valueOf(x.id));
+
+            return new Ok(res);
         }
     }
 
@@ -28,7 +42,12 @@ public class PermissionController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            if (req.body instanceof Permissions) {
+                CollectionFactory.getInstance(Permissions.class).insert((Permissions) req.body);
+                return new Ok();
+            }
+
+            return new UnsupportedType(Permissions.class);
         }
     }
 
@@ -37,7 +56,12 @@ public class PermissionController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            if (req.body instanceof Permissions) {
+                CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
+                return new Ok();
+            }
+
+            return new UnsupportedType(Permissions.class);
         }
     }
 }

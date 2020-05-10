@@ -56,7 +56,7 @@ public class BillboardController {
                 return new Ok();
             }
 
-            return new BadRequest("Not a billboard");
+            return new UnsupportedType(Billboard.class);
         }
     }
 
@@ -70,7 +70,7 @@ public class BillboardController {
                 return new Ok();
             }
 
-            return new BadRequest("Not a billboard");
+            return new UnsupportedType(Billboard.class);
         }
     }
 
@@ -84,7 +84,7 @@ public class BillboardController {
                 return new Ok();
             }
 
-            return new BadRequest("Not a billboard");
+            return new UnsupportedType(Billboard.class);
         }
     }
 
