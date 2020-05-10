@@ -3,7 +3,7 @@ package common.router;
 import java.io.Serializable;
 
 /**
- * This class is the Response object.
+ * This class is the IActionResult object.
  *
  * @author Perdana Bailey
  * @author Jamie Martin
@@ -28,8 +28,8 @@ public class IActionResult implements Serializable {
     /**
      * Constructor for the Response object.
      *
-     * @param status: An enum that determines if the request was successful.
-     * @param message: the message given
+     * @param status:  An enum that determines if the request was successful.
+     * @param message: the message given.
      */
     public IActionResult(Status status, String message) {
         this.status = status;
@@ -40,7 +40,7 @@ public class IActionResult implements Serializable {
      * Constructor for the Response object.
      *
      * @param status: An enum that determines if the request was successful.
-     * @param body: the body Object of the return
+     * @param body: the body Object of the return.
      */
     public IActionResult(Status status, Object body) {
         this.status = status;
@@ -51,7 +51,7 @@ public class IActionResult implements Serializable {
      * Constructor for the Response object.
      *
      * @param status: An enum that determines if the request was successful.
-     * @param message: the message given
+     * @param message: the message given.
      * @param body:   This acts as the result of the request.
      */
     public IActionResult(Status status, String message, Object body) {
