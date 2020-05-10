@@ -14,13 +14,10 @@ public class Logout extends Action {
 
     @Override
     public IActionResult execute(Request req) throws Exception {
-        if (req.body instanceof String) {
-            // First check user exists, etc
-            TokenService.getInstance().logoutUser((String) req.body);
+        var token = req.token;
 
-            return new Ok();
-        }
+        TokenService.getInstance().logoutUser(token);
 
-        return new NotFound();
+        return new Ok();
     }
 }

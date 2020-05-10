@@ -3,6 +3,7 @@ package server.controllers.auth;
 import common.models.User;
 import server.router.Action;
 import server.router.Request;
+import server.router.models.BadRequest;
 import server.router.models.IActionResult;
 import server.router.models.NotFound;
 import server.router.models.Ok;
@@ -14,11 +15,15 @@ public class Login extends Action {
 
     @Override
     public IActionResult execute(Request req) throws Exception {
-        if (req.body instanceof User) {
-            // First check user exists, etc
-            return new Ok(TokenService.getInstance().loginUser((User) req.body));
+        var username = req.params.get("username");
+        var password = req.params.get("password");
+
+        if (true /* check user exists */) {
+            var token = TokenService.getInstance().loginUser(username, password);
+
+            if (token != null) return new Ok(token);
         }
 
-        return new NotFound();
+        return new BadRequest("Failed to login");
     }
 }
