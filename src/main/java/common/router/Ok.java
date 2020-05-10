@@ -1,7 +1,7 @@
 package common.router;
 
 /**
- * An IActionResult for a successful action.
+ * An IActionResult for a successful result.
  *
  * @author Jamie Martin
  */

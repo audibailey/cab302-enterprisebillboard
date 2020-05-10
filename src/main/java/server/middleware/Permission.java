@@ -24,7 +24,7 @@ public class Permission {
             if (perms.isEmpty()) return new BadRequest("No permissions found");
 
             if (perms.get().canCreateBillboard) return new Ok();
-            else return new Unauthorised();
+            else return new Unauthorised("Not authorized to create billboards");
         }
     }
 
