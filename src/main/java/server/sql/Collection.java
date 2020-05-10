@@ -113,23 +113,9 @@ public class Collection<T> {
             String name = field.getName();
             Object value = resultSet.getObject(name);
 
-            var o = (T) convertInstanceOfObject(value);
-            field.set(dto, o);
+            field.set(dto, value);
         }
 
         return dto;
-    }
-
-    /**
-     * Casts an object to the class
-     * @param o: the Object
-     * @return the Object of type T
-     */
-    private T convertInstanceOfObject(Object o) {
-        try {
-            return (T) o;
-        } catch (ClassCastException e) {
-            return null;
-        }
     }
 }

@@ -127,7 +127,7 @@ public class StatementBuilder {
     }
 
     public static <T> String createDeleteStatement(Class<T> clazz) {
-        return "DELETE " + clazz.getSimpleName().toUpperCase() + " WHERE ID = ?";
+        return "DELETE FROM " + clazz.getSimpleName().toUpperCase() + " WHERE ID = ?";
     }
 
     /* HELPER FUNCTIONS */

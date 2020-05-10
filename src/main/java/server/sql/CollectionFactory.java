@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class CollectionFactory {
     // Class Name, Collection Key Value Pair
-    public static Map<String, Collection> collections = new HashMap<String, Collection>();
+    public static Map<Class, Collection> collections = new HashMap<>();
 
     /**
      * Returns an Instance of Collection<T> given the class
@@ -21,15 +21,12 @@ public class CollectionFactory {
      * @throws Exception
      */
     public static <T> Collection<T> getInstance(Class<T> clazz) throws Exception {
-        // get the class name
-        String clazzName = clazz.getSimpleName();
-        //
-        Object instance = collections.get(clazzName);
+        Object instance = collections.get(clazz);
 
         if (instance == null){
             synchronized (clazz) {
                 instance = new Collection(clazz);
-                collections.put(clazzName, (Collection) instance);
+                collections.put(clazz, (Collection) instance);
             }
         }
 
