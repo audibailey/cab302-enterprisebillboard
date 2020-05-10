@@ -1,5 +1,7 @@
 package server.sql;
 
+import server.services.DataService;
+
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +40,7 @@ public class Collection<T> {
      */
     public List<T> get(Predicate<T> predicate) throws Exception {
         // Prepares the statement using the StatementBuilder
-        PreparedStatement psmt = StatementBuilder.get(className);
+        PreparedStatement psmt = StatementBuilder.get(DataService.getConnection(), clazz);
 
         // Collection object list to be returned.
         List<T> arr = new ArrayList<>();
@@ -72,8 +74,8 @@ public class Collection<T> {
      * @throws Exception: A pass-through internal server exception.
      */
     public void insert(T object) throws Exception {
-        // Prepares the statement using the StatementBuilder.
-        PreparedStatement psmt = StatementBuilder.insert(object);
+        // Prepares the statement using the StatementBuilder
+        PreparedStatement psmt = StatementBuilder.insert(DataService.getConnection(), object);
 
         // Insert the new collection object in the database.
         psmt.executeUpdate();
@@ -90,7 +92,7 @@ public class Collection<T> {
      */
     public void update(T object) throws Exception {
         // Prepares the statement using the StatementBuilder
-        PreparedStatement psmt = StatementBuilder.update(object);
+        PreparedStatement psmt = StatementBuilder.update(DataService.getConnection(), object);
 
         // Update the existing collection object in the database.
         psmt.executeUpdate();
@@ -107,7 +109,7 @@ public class Collection<T> {
      */
     public void delete(T object) throws Exception {
         // Prepares the statement using the StatementBuilder
-        PreparedStatement psmt = StatementBuilder.delete(object);
+        PreparedStatement psmt = StatementBuilder.delete(DataService.getConnection(), object);
 
         // Delete the collection object in the database.
         psmt.executeUpdate();

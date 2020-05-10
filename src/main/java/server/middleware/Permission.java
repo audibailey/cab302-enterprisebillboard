@@ -7,7 +7,6 @@ import server.services.Session;
 import server.services.TokenService;
 import server.sql.CollectionFactory;
 
-import java.util.List;
 import java.util.Optional;
 
 public class Permission {
@@ -18,14 +17,14 @@ public class Permission {
         public IActionResult execute(Request req) throws Exception {
 
             Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
-            if (session.isEmpty()) return new BadRequest("No session");
+            if (session.isEmpty()) return new BadRequest("No valid session");
 
             Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
 
-            if (perms.isEmpty()) return new BadRequest("No perms found");
+            if (perms.isEmpty()) return new BadRequest("No permissions found");
 
             if (perms.get().canCreateBillboard) return new Ok();
-            else return new Unauthorised();
+            else return new Unauthorised("Not authorized to create billboards");
         }
     }
 
@@ -34,7 +33,15 @@ public class Permission {
         @Override
         public IActionResult execute(Request req) throws Exception {
 
-            return new Ok();
+            Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
+            if (session.isEmpty()) return new BadRequest("No valid session");
+
+            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+
+            if (perms.isEmpty()) return new BadRequest("No permissions found");
+
+            if (perms.get().canEditBillboard) return new Ok();
+            else return new Unauthorised("Not authorized to edit billboards");
         }
     }
 
@@ -42,8 +49,15 @@ public class Permission {
         public canEditUser() {}
         @Override
         public IActionResult execute(Request req) throws Exception {
+            Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
+            if (session.isEmpty()) return new BadRequest("No valid session");
 
-            return new Ok();
+            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+
+            if (perms.isEmpty()) return new BadRequest("No permissions found");
+
+            if (perms.get().canEditUser) return new Ok();
+            else return new Unauthorised("Not authorized to edit user");
         }
     }
 
@@ -52,7 +66,15 @@ public class Permission {
         @Override
         public IActionResult execute(Request req) throws Exception {
 
-            return new Ok();
+            Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
+            if (session.isEmpty()) return new BadRequest("No valid session");
+
+            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+
+            if (perms.isEmpty()) return new BadRequest("No permissions found");
+
+            if (perms.get().canScheduleBillboard) return new Ok();
+            else return new Unauthorised("Not authorized to schedule billboards");
         }
     }
 
@@ -60,8 +82,16 @@ public class Permission {
         public canViewBillboard() {}
         @Override
         public IActionResult execute(Request req) throws Exception {
+            Optional<Session> session = TokenService.getInstance().getSessionByToken(req.token);
+            if (session.isEmpty()) return new BadRequest("No valid session");
 
-            return new Ok();
+            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+
+            if (perms.isEmpty()) return new BadRequest("No permissions found");
+
+            if (perms.get().canViewBillboard) return new Ok();
+            else return new Unauthorised("Not authorized to view billboards");
         }
     }
+
 }
