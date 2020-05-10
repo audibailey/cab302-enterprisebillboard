@@ -35,7 +35,7 @@ public class Main {
         System.out.println("Attempting to connect to database...");
 
         // Connect and populate the database
-        new SchemaBuilder(DataService.getConnection(), false, User.class, Billboard.class, Schedule.class, Permissions.class).build();
+        new SchemaBuilder(DataService.getConnection(), true, User.class, Billboard.class, Schedule.class, Permissions.class).build();
         CollectionFactory.getInstance(Billboard.class);
         CollectionFactory.getInstance(User.class);
         CollectionFactory.getInstance(Schedule.class);
