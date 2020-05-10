@@ -22,7 +22,7 @@ import common.models.User;
  * @author Kevin Huynh
  * @author Perdana Bailey
  */
-public class PermissionsTests {
+public class PermissionTests {
 
     // The DataService used by all the tests, essentially a database connection.
 //    private static DataService dataService;

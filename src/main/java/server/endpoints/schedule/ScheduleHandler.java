@@ -1,12 +1,5 @@
 package server.endpoints.schedule;
 
-import common.Status;
-import common.models.Request;
-import common.models.Response;
-import common.models.Schedule;
-
-import java.sql.SQLException;
-
 /**
  * This class handles how the schedule endpoints interact with the schedule database handler
  * and the client.

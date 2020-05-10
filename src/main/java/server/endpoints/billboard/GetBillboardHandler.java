@@ -1,12 +1,5 @@
 package server.endpoints.billboard;
 
-import java.util.List;
-import java.util.Optional;
-
-import common.models.Billboard;
-import common.models.Response;
-import common.Status;
-
 /**
  * This class handles the get function of billboard database handler and turns it into a response
  * for the client.

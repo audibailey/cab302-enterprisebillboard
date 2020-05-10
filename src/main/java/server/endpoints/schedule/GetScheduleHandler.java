@@ -1,11 +1,5 @@
 package server.endpoints.schedule;
 
-import java.util.List;
-import java.util.Optional;
-
-import common.models.Response;
-import common.Status;
-import common.models.Schedule;
 
 /**
  * This class handles the get function of schedule database handler and turns it into a response

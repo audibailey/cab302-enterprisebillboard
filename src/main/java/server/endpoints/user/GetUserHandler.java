@@ -1,11 +1,6 @@
 package server.endpoints.user;
 
-import java.util.List;
-import java.util.Optional;
 
-import common.models.Response;
-import common.Status;
-import common.models.User;
 
 /**
  * This class handles the get function of user database handler and turns it into a response

@@ -80,23 +80,6 @@ public class Schedule implements Serializable {
     }
 
     /**
-     * Parses the SQL result set and returns a schedule object.
-     *
-     * @param rs: the result set from an SQL SELECT query.
-     * @return Schedule: the schedule object after converting from SQL.
-     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
-     */
-    public static Schedule fromSQL(ResultSet rs) throws SQLException {
-        return new Schedule(
-            rs.getInt("id"),
-            rs.getString("billboardName"),
-            rs.getTimestamp("startTime").toInstant(),
-            rs.getTimestamp("createTime").toInstant(),
-            rs.getInt("duration"),
-            rs.getInt("interval"));
-    }
-
-    /**
      * Generates a random Schedule object with random variables
      *
      * @param billboardName: the name of the billboard.

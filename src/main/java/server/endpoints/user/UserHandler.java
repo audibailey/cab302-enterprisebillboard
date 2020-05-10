@@ -1,11 +1,5 @@
 package server.endpoints.user;
 
-import common.Status;
-import common.models.Request;
-import common.models.Response;
-import common.models.User;
-
-import java.sql.SQLException;
 
 /**
  * This class handles how the user endpoints interact with the user database handler

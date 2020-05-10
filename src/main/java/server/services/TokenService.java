@@ -6,7 +6,6 @@ import server.sql.CollectionFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.swing.text.html.Option;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -21,8 +20,7 @@ public class TokenService {
     // Hashing Iterations
     private final int ITERATIONS = 1000;
 
-    // Better to just make a session object?
-    class Session {
+    public class Session {
         public String token;
         public String username;
         public LocalDateTime expireTime;
@@ -51,7 +49,7 @@ public class TokenService {
      * @param password: the attempted password
      * @return String token: null if failed, token if valid Session exists or new Session created.
      */
-    public String loginUser(String username, String password) throws Exception {
+    public String tryLogin(String username, String password) throws Exception {
         // both are required
         if (username == null || password == null) return null;
 
@@ -209,7 +207,7 @@ public class TokenService {
      *
      * @param token: The supplied user token.
      */
-    public void logoutUser(String token) {
+    public void tryLogout(String token) {
         sessions.remove(token);
     }
 

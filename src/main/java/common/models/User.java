@@ -74,22 +74,7 @@ public class User extends Object implements Serializable {
     public boolean tryLogin(String pass) {
         return this.password.equals(pass);
     }
-
-    /**
-     * Parses the SQL result set and returns a user object.
-     *
-     * @param rs: the result set from an SQL SELECT query.
-     * @return Billboard: the user object after converting from SQL.
-     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
-     */
-    public static User fromSQL(ResultSet rs) throws SQLException {
-        return new User(
-            rs.getInt("id"),
-            rs.getString("username"),
-            rs.getString("password"),
-            rs.getString("salt"));
-    }
-
+    
     /**
      * Generates a User object with random variables
      * @return a randomised User object

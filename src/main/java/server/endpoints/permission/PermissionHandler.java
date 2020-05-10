@@ -1,15 +1,5 @@
 package server.endpoints.permission;
 
-
-import common.Status;
-import common.models.Permissions;
-import common.models.Request;
-import common.models.Response;
-import server.endpoints.schedule.GetScheduleHandler;
-import server.endpoints.user.UpdateUserHandler;
-
-import java.sql.SQLException;
-
 /**
  * This class handles how the permission endpoints interact with the permission database handler
  * and the client.

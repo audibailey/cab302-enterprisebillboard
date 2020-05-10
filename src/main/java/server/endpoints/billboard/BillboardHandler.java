@@ -1,12 +1,8 @@
 package server.endpoints.billboard;
 
 
-import common.Status;
-import common.models.Billboard;
-import common.models.Request;
-import common.models.Response;
-
-import java.sql.SQLException;
+import common.router.*;
+import server.router.*;
 
 /**
  * This class handles how the billboard endpoints interact with the billboard database handler
