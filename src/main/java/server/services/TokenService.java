@@ -1,16 +1,12 @@
 package server.services;
 
-import common.Status;
-import common.models.Response;
 import common.models.User;
 import common.utils.RandomFactory;
-import server.router.Request;
+import server.sql.CollectionFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -24,9 +20,19 @@ public class TokenService {
     // Hashing Iterations
     private final int ITERATIONS = 1000;
 
-    private Map<String, AbstractMap.SimpleEntry<String, LocalDateTime>> sessionTokens = new HashMap<>();
-    // TODO: a map if can have more than 1 logged in client
-    private List<String> loggedInUsers = new ArrayList<>();
+    public class Session {
+        public String token;
+        public String username;
+        public LocalDateTime expireTime;
+
+        public Session(String username) {
+            this.token = RandomFactory.token();
+            this.username = username;
+            this.expireTime = LocalDateTime.now().plusHours(24);
+        }
+    }
+
+    private Set<Session> sessions = new HashSet<>();
 
     private static class TokenServiceHolder {
         private final static TokenService INSTANCE = new TokenService();
@@ -39,11 +45,56 @@ public class TokenService {
     /**
      * This is the function called when a client attempts to login.
      *
-     * @param data: this is the input from the client, should contain username and password as `username:password`.
-     * @param <T>:  this is the type parameter for the data, should be a String.
-     * @return Response<?>: this response gets directly sent to client.
+     * @param username: this is the username of the user trying to login
+     * @param password: the attempted password
+     * @return String token: null if failed, token if valid Session exists or new Session created.
      */
-    public String loginUser(User user) {
+    public String tryLogin(String username, String password) throws Exception {
+        // both are required
+        if (username == null || password == null) return null;
+
+        // Ensure user exists
+        Optional<User> optionalUser = CollectionFactory.getInstance(User.class).get(u -> u.username == username).stream().findFirst();
+        if (optionalUser.isEmpty()) return null;
+
+        User user = optionalUser.get();
+
+        // TODO: ENSURE PASSWORDY STUFF HERE IS CORRECT. Perhaps push salted to a method ie salted(password, salt) != user.password return null; continue otherwise
+
+        // Convert the users saved password and salt as a hex to a byte array for the hashing spec
+        byte[] storedPassword = decodeHex(user.password);
+        byte[] userSalt = decodeHex(user.salt);
+
+        // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
+        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), userSalt, ITERATIONS, storedPassword.length * 8);
+          // Choose the cryptography standard for hashing
+        SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+
+        // Attempt to hash the supplied password using the hashing standard and hashing spec
+        byte[] testHash = HashingStandard.generateSecret(HashingSpec).getEncoded();
+
+//        // Ensure the hashes are the same
+//        int diff = storedPassword.length ^ testHash.length;
+//        for (int i = 0; i < storedPassword.length && i < testHash.length; i++) {
+//            diff |= storedPassword[i] ^ testHash[i];
+//        }
+//
+//        // if passwords aren't the same return null
+//        if (diff != 0) return null;
+        if (!Arrays.equals(storedPassword, testHash)) return null;
+        // TODO: isn't Array.equals() essentially the same thing as above?
+
+        // Checks if there is a valid session already and returns token if so
+        Optional<Session> existingSession = getSessionByUsername(username);
+        if (existingSession.isPresent()) return existingSession.get().token;
+
+        // Generate new session and save it to sessions set
+        Session newSession = new Session(user.username);
+        sessions.add(newSession);
+
+        return newSession.token;
+        // TODO: I THINK COMMENTED BELOW CAN BE REMOVED
+
         // Ensure the data type is a String
 //        if (data instanceof String) {
 //
@@ -97,29 +148,7 @@ public class TokenService {
 //                );
 //            }
 //
-//            // Ensure the password is correct
-//            try {
-//                // Convert the users saved password and salt as a hex to a byte array for the hashing spec
-//                byte[] password = decodeHex(user.password);
-//                byte[] salt = decodeHex(user.salt);
-//
-//                // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
-//                PBEKeySpec HashingSpec = new PBEKeySpec(parts[1].toCharArray(), salt, ITERATIONS, password.length * 8);
-//
-//                // Choose the cryptography standard for hashing
-//                SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-//
-//                // Attempt to hash the supplied password using the hashing standard and hashing spec
-//                byte[] testHash = HashingStandard.generateSecret(HashingSpec).getEncoded();
-//
-//                // Ensure the hashes are the same
-//                int diff = password.length ^ testHash.length;
-//                for (int i = 0; i < password.length && i < testHash.length; i++) {
-//                    diff |= password[i] ^ testHash[i];
-//                }
-//
-//                // Save the result to reference later
-//                passwordMatch = diff == 0;
+
 //            } catch (Exception e) {
 //                // TODO: Console Log this
 //                return new Response<>(
@@ -157,7 +186,19 @@ public class TokenService {
 //                "Unknown parameter received in data field."
 //            );
 //        }
-        return "";
+    }
+
+    public byte[] salted(String password, byte[] salt) throws Exception {
+        // TODO: IDEALLY LIKE THIS?
+//        // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
+//        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), userSalt, ITERATIONS, storedPassword.length * 8);
+//        // Choose the cryptography standard for hashing
+//        SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+//
+//        // Attempt to hash the supplied password using the hashing standard and hashing spec
+//        byte[] testHash = HashingStandard.generateSecret(HashingSpec).getEncoded();
+
+        return new byte[0];
     }
 
     /**
@@ -166,15 +207,8 @@ public class TokenService {
      *
      * @param token: The supplied user token.
      */
-    public void logoutUser(String token) {
-        // Ensure they are in the session
-//        if (sessionTokens.containsKey(token)) {
-//            // Ensure they are logged in
-//            if (loggedInUsers.contains(sessionTokens.get(token).getKey())) {
-//                loggedInUsers.remove(sessionTokens.get(token).getKey());
-//            }
-//            sessionTokens.remove(token);
-//        }
+    public void tryLogout(String token) {
+        sessions.remove(token);
     }
 
     /**
@@ -183,23 +217,33 @@ public class TokenService {
      * @param token: The supplied user token.
      * @return boolean: Token valid or invalid.
      */
-    public boolean checkToken(String token) {
-        // Ensure the token is even in this session
-//        if (sessionTokens.containsKey(token)) {
-//            // Ensure the token hasn't expired
-//            int checkTime = sessionTokens.get(token).getValue().compareTo(LocalDateTime.now());
-//            if (checkTime < 0 || checkTime == 0) {
-//                // If expired remove it from token store and remove user from logged in list
-//                loggedInUsers.remove(sessionTokens.get(token).getKey());
-//                sessionTokens.remove(token);
-//                return false;
-//            } else {
-//                return true;
-//            }
-//        } else {
-//            return false;
-//        }
-        return false;
+    public boolean verify(String token) {
+        Optional<Session> session = sessions.stream().filter(x -> x.token == token).findFirst();
+
+        // verify the session isn't empty or expired
+        if (session.isEmpty() || expired(token)) return false;
+
+        return true;
+    }
+
+    public Optional<Session> getSessionByUsername(String username) {
+        return sessions.stream().filter(x -> x.username == username).findFirst();
+    }
+
+    public boolean expired(String token) {
+        Optional<Session> session = sessions.stream().filter(x -> x.token == token).findFirst();
+
+        // session is empty so logical equivalent of being expired
+        if (session.isEmpty()) return true;
+
+        // If session is expired remove session and return null
+        if (session.get().expireTime.compareTo(LocalDateTime.now()) <= 0) {
+            sessions.remove(session);
+            return true;
+        }
+
+        // If the session is present and valid
+        return true;
     }
 
     /**

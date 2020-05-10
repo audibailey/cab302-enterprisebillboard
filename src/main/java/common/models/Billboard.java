@@ -107,27 +107,6 @@ public class Billboard implements Serializable {
     }
 
     /**
-     * Parses the SQL result set and returns a Billboard object.
-     *
-     * @param rs: the result set from an SQL SELECT query.
-     * @return Billboard: the billboard object after converting from SQL.
-     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
-     */
-    public static Billboard fromSQL(ResultSet rs) throws SQLException {
-        return new Billboard(
-            rs.getInt("id"),
-            rs.getString("name"),
-            rs.getString("message"),
-            rs.getString("messageColor"),
-            rs.getBytes("picture"),
-            rs.getString("backgroundColor"),
-            rs.getString("information"),
-            rs.getString("informationColor"),
-            rs.getBoolean("locked"),
-            rs.getInt("userId"));
-    }
-
-    /**
      * Generates a random billboard object with random variables
      * @param userId: the id of the user creating the billboard
      * @return a randomised billboard

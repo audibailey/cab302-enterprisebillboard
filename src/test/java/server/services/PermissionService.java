@@ -2,8 +2,8 @@ package server.services;
 
 import org.junit.jupiter.api.Test;
 
-public class TokenService {
-    // Test assigning Tokens, generating hashes, mock logging out, etc
+public class PermissionService {
+    // Test cases of permissions
 
     @Test
     public void Test() throws Exception {}

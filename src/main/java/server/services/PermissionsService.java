@@ -1,7 +1,7 @@
 package server.services;
 
-import common.models.User;
-import server.router.Request;
+import common.router.*;
+import common.models.*;
 
 public class PermissionsService {
 

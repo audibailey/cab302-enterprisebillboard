@@ -2,8 +2,6 @@ package client;
 
 import client.frames.*;
 import common.models.Billboard;
-import common.models.Request;
-import common.models.Response;
 import common.models.User;
 
 import java.io.*;
