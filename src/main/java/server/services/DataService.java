@@ -1,7 +1,7 @@
 package server.services;
 
+import server.sql.Schema;
 import server.sql.SchemaBuilder;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,24 +20,12 @@ import java.util.Properties;
 public class DataService {
     private Connection connection;
 
-    protected DataService() {
-        try {
-            this.connection = startConnection();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
-     * Generates a Dataservice Instance for Unit Tests if required
-     * @param debug: whether the database should run using a mock list or the actual db
+     * Generates a Dataservice Instance
      * @throws Exception: thrown when unable to connect to database;
      */
-    public DataService(boolean debug) throws Exception {
-        if (!debug) {
-            this.connection = startConnection();
-        }
+    protected DataService() {
+        this.connection = startConnection();
     }
 
     /**
@@ -57,25 +45,26 @@ public class DataService {
      * @return Connection object
      * @throws Exception: thrown when unable to configure database connection from props.
      */
-    private static Connection startConnection() throws Exception {
-        // Configure the database from the prop file, throws error if one
-        Properties props = getProps();
-
-        String url = props.getProperty("jdbc.url");
-        String db = props.getProperty("jdbc.schema");
-        String username = props.getProperty("jdbc.username");
-        String password = props.getProperty("jdbc.password");
-
+    private static Connection startConnection() {
+        Connection new_dbconn = null;
         try {
-            Connection pre_dbconn = DriverManager.getConnection(url, username, password);
-            Connection new_dbconn = SchemaBuilder.createDatabase(pre_dbconn, url, username, password, db);
-            SchemaBuilder.populateSchema(new_dbconn);
+            // Configure the database from the prop file, throws error if one
+            Properties props = getProps();
+
+            String url = props.getProperty("jdbc.url");
+            String schema = props.getProperty("jdbc.schema");
+            String username = props.getProperty("jdbc.username");
+            String password = props.getProperty("jdbc.password");
+
+            new_dbconn = DriverManager.getConnection(url, username, password);
             // TODO: Put SchemaBuilder into each Collection, Still CREATE DB here though
 
-            return new_dbconn;
-        } catch (SQLException ex) {
-            throw new RuntimeException("Error connecting to the database", ex);
+        } catch (Exception e) {
+            System.out.println("Error connecting to the database");
+            e.printStackTrace();
+            System.exit(0);
         }
+        return new_dbconn;
     }
 
     /**

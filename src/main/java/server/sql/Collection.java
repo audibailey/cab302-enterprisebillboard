@@ -40,7 +40,7 @@ public class Collection<T> {
      */
     public List<T> get(Predicate<T> predicate) throws Exception {
         // Prepares the statement using the StatementBuilder
-        PreparedStatement psmt = StatementBuilder.get(DataService.getConnection(), clazz);
+        PreparedStatement psmt = StatementBuilder.get(DataService.getConnection(), className);
 
         // Collection object list to be returned.
         List<T> arr = new ArrayList<>();
