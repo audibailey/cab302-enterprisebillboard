@@ -29,7 +29,7 @@ public class StatementBuilderTests {
     @Test
     public void DeleteStatement() throws Exception {
         String stmt = StatementBuilder.createDeleteStatement(Billboard.class);
-        assertEquals(stmt, "DELETE BILLBOARD WHERE ID = ?");
+        assertEquals(stmt, "DELETE FROM BILLBOARD WHERE ID = ?");
     }
 
 }
