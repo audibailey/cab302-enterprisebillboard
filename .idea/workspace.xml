@@ -26,7 +26,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3de191b-8aa7-454f-986b-f26b13616215" name="Default Changelist" comment="feat: Added permission endpoints + add function to check token's user against request.data user in MiddlewareHandler.java">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/controllers/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -196,7 +195,7 @@
       <workItem from="1587354586099" duration="4670000" />
       <workItem from="1589025763372" duration="2000" />
       <workItem from="1589025918461" duration="107000" />
-      <workItem from="1589068872983" duration="13598000" />
+      <workItem from="1589068872983" duration="13696000" />
     </task>
     <task id="LOCAL-00001" summary="Add some QOL improvements to the repository.">
       <created>1584682537545</created>
