@@ -3,16 +3,17 @@ package server.controllers;
 import common.models.Billboard;
 import common.models.Permissions;
 import common.router.*;
-import server.middleware.Permission;
 import server.router.*;
 import server.services.Session;
 import server.services.TokenService;
-import server.sql.Collection;
 import server.sql.CollectionFactory;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
+/**
+ * This controller has all the Actions related to the fetch of
+ */
 public class BillboardController {
 
     public class Get extends Action {

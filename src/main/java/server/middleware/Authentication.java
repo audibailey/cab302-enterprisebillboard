@@ -85,6 +85,7 @@ public class Authentication {
                 }
 
                 // Return a success IActionResult with the token.
+                // TODO: RETURN SESSION and PERMISSIONS
                 return new Ok(token);
             } else {
                 // If the user doesn't exist tell the client it's an invalid username.

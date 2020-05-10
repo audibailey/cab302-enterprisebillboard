@@ -10,124 +10,142 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * A Collection class to manage the CRUD updates of a given class
+ * A Collection class to manage the CRUD updates of a given class.
  *
  * @author Jamie Martin
+ * @author Perdana Bailey
  */
 public class Collection<T> {
-    private final Class<T> clazz;
+    private final Class<T> className;
 
-    public Collection(Class<T> clazz) {
-        this.clazz = clazz;
+    /**
+     * Constructor that sets the collection type to the specified class.
+     *
+     * @param className: Specified class to set the collection type to.
+     */
+    public Collection(Class<T> className) {
+        this.className = className;
 
         // TODO: DO AUTOMAGIC SCHEMA STUFF HERE??
     }
 
     /**
-     * Get all items from the DataService
-     * @param predicate: used to filter out specific items, x -> true, for all
-     * @return A List of the gotten object T
-     * @throws Exception
+     * Get all items from the DataService.
+     *
+     * @param predicate: Used to filter out specific items. Example: x -> true, for all.
+     * @return A list of the retrieved collection object type from the database.
+     * @throws Exception: A pass-through internal server exception.
      */
     public List<T> get(Predicate<T> predicate) throws Exception {
         // Prepares the statement using the StatementBuilder
-        PreparedStatement psmt = StatementBuilder.get(clazz);
+        PreparedStatement psmt = StatementBuilder.get(className);
 
-        // Billboard to be returned
+        // Collection object list to be returned.
         List<T> arr = new ArrayList<>();
 
+        // Fetch the collection objects from the database.
         ResultSet result = psmt.executeQuery();
 
-        // Use the result of the database query to create billboard object and add it to the returned list
+        // Use the result of the database query to create collection object and add it to the returned list.
         while (result.next()) {
+            // Convert from SQL result to the collection object.
             T res = fromSQL(result);
+
+            // TODO: Change this to SQL based predicate checks
+            // Ensure the result matches the predicate before adding to the list.
             if (predicate.test(res)) {
                 arr.add(res);
             }
         }
 
-        // Clean up query
+        // Clean up query.
         psmt.close();
 
+        // Return array list.
         return arr;
     }
 
     /**
-     * Inserts a given object into the DataService
-     * @param object: the object you want inserted
-     * @throws Exception
+     * Inserts a specified collection object into the DataService.
+     *
+     * @param object: The collection object you want inserted.
+     * @throws Exception: A pass-through internal server exception.
      */
     public void insert(T object) throws Exception {
-        // Prepares the statement using the StatementBuilder
+        // Prepares the statement using the StatementBuilder.
         PreparedStatement psmt = StatementBuilder.insert(object);
 
+        // Insert the new collection object in the database.
         psmt.executeUpdate();
-        // Clean up query
+
+        // Clean up query.
         psmt.close();
     }
 
     /**
-     * Updates a given object into the DataService
-     * @param object: the object you want inserted
-     * @throws Exception
+     * Updates a specified collection object into the DataService
+     *
+     * @param object: The collection object you want updated.
+     * @throws Exception: A pass-through internal server exception.
      */
     public void update(T object) throws Exception {
         // Prepares the statement using the StatementBuilder
         PreparedStatement psmt = StatementBuilder.update(object);
 
+        // Update the existing collection object in the database.
         psmt.executeUpdate();
-        // Clean up query
+
+        // Clean up query.
         psmt.close();
     }
 
     /**
-     * Deletes a given object into the DataService
-     * @param object: the object you want inserted
-     * @throws Exception
+     * Deletes a specified collection object from the DataService.
+     *
+     * @param object: The collection object you want deleted.
+     * @throws Exception: A pass-through internal server exception.
      */
     public void delete(T object) throws Exception {
         // Prepares the statement using the StatementBuilder
         PreparedStatement psmt = StatementBuilder.delete(object);
 
+        // Delete the collection object in the database.
         psmt.executeUpdate();
-        // Clean up query
+
+        // Clean up query.
         psmt.close();
     }
 
     /**
-     * Parses the SQL result set and returns a Billboard object.
+     * Parses the SQL result set and returns the collection object.
      *
-     * @param resultSet: the result set from an SQL SELECT query.
-     * @return T: the object after converting from SQL.
-     * @throws SQLException : this is thrown when there is an issue with getting values from the query.
+     * @param resultSet: The result set from an SQL query.
+     * @return T: The collection object after converting from SQL.
+     * @throws SQLException: A pass-through internal server exception.
      */
     public T fromSQL(ResultSet resultSet) throws Exception {
-        List<Field> fields = Arrays.asList(this.clazz.getDeclaredFields());
-        T dto = this.clazz.getConstructor().newInstance();
+        // Create a list of fields from the class reference through reflection.
+        List<Field> fields = Arrays.asList(this.className.getDeclaredFields());
 
+        // Use a generic constructor on the class reference to create the collection object.
+        T collectionObject = this.className.getConstructor().newInstance();
+
+        // Loops through the available fields from the class reference.
         for (Field field : fields) {
+            // Sets the field accessibility.
             field.setAccessible(true);
 
+            // Gets the name of the field.
             String name = field.getName();
+
+            // Fetches the value using name of the field as the key from the result set.
             Object value = resultSet.getObject(name);
 
-            var o = (T) convertInstanceOfObject(value);
-            field.set(dto, o);
+            // Set the field of the collection object with the value fetched.
+            field.set(collectionObject, value);
         }
 
-        return dto;
-    }
-
-    /**
-     * Casts an object to the class
-     * @param o: the Object
-     * @return the Object of type T
-     */
-    private T convertInstanceOfObject(Object o) {
-        try {
-            return (T) o;
-        } catch (ClassCastException e) {
-            return null;
-        }
+        // Return the collection object
+        return collectionObject;
     }
 }
