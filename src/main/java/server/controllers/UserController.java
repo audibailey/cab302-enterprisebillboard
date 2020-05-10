@@ -1,7 +1,11 @@
 package server.controllers;
 
+import common.models.User;
 import common.router.*;
 import server.router.*;
+import server.sql.CollectionFactory;
+
+import java.util.List;
 
 public class UserController {
 
@@ -10,7 +14,9 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            List<User> res = CollectionFactory.getInstance(User.class).get(x -> true);
+
+            return new Ok(res);
         }
     }
 
@@ -19,7 +25,11 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            String id = req.params.get("id");
+
+            List<User> res = CollectionFactory.getInstance(User.class).get(x -> id == String.valueOf(x.id));
+
+            return new Ok(res);
         }
     }
 
@@ -28,7 +38,12 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            if (req.body instanceof User) {
+                CollectionFactory.getInstance(User.class).insert((User) req.body);
+                return new Ok();
+            }
+
+            return new BadRequest("Not a User");
         }
     }
 
@@ -37,7 +52,12 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            if (req.body instanceof User) {
+                CollectionFactory.getInstance(User.class).update((User) req.body);
+                return new Ok();
+            }
+
+            return new BadRequest("Not a User");
         }
     }
 
@@ -46,7 +66,13 @@ public class UserController {
 
         @Override
         public IActionResult execute(Request req) throws Exception {
-            return new NotFound();
+            // DELETE PERMS TOO
+            if (req.body instanceof User) {
+                CollectionFactory.getInstance(User.class).delete((User) req.body);
+                return new Ok();
+            }
+
+            return new BadRequest("Not a user");
         }
     }
 }
