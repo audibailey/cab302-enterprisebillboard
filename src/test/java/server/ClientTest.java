@@ -1,8 +1,5 @@
 package server;
 
-import common.models.Request;
-import common.models.Response;
-
 public class ClientTest {
 
     private String host;
