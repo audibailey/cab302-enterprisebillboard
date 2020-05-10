@@ -152,3 +152,5 @@ buildNumber.properties
 # db.props will be different for each other
 db.props
 .idea
+cab302.db
+!sqlite-jdbc-3.30.1.jar
