@@ -27,6 +27,8 @@ public class UserController {
         public IActionResult execute(Request req) throws Exception {
             String id = req.params.get("id");
 
+            if (id == null) return new BadRequest("No id");
+
             List<User> res = CollectionFactory.getInstance(User.class).get(x -> id == String.valueOf(x.id));
 
             return new Ok(res);
