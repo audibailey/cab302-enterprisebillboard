@@ -6,6 +6,7 @@ import server.sql.CollectionFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.swing.text.html.Option;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -19,18 +20,6 @@ import java.util.*;
 public class TokenService {
     // Hashing Iterations
     private final int ITERATIONS = 1000;
-
-    public class Session {
-        public String token;
-        public String username;
-        public LocalDateTime expireTime;
-
-        public Session(String username) {
-            this.token = RandomFactory.token();
-            this.username = username;
-            this.expireTime = LocalDateTime.now().plusHours(24);
-        }
-    }
 
     private Set<Session> sessions = new HashSet<>();
 
@@ -228,6 +217,10 @@ public class TokenService {
 
     public Optional<Session> getSessionByUsername(String username) {
         return sessions.stream().filter(x -> x.username == username).findFirst();
+    }
+
+    public Optional<Session> getSessionByToken(String token) {
+        return sessions.stream().filter(x -> x.token == token).findFirst();
     }
 
     public boolean expired(String token) {
