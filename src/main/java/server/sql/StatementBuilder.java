@@ -49,10 +49,7 @@ public class StatementBuilder {
         for (Field field : getFields(object.getClass())) {
             if (field.getName() != "id") {
                 Object value = field.get(object);
-                if (value instanceof byte[])
-                    pstmt.setBinaryStream(j, new ByteArrayInputStream((byte[]) value));
-                else
-                    pstmt.setObject(j, value);
+                pstmt.setObject(j, value);
 
                 j++;
             }
@@ -99,10 +96,7 @@ public class StatementBuilder {
         for (Field field : getFields(object.getClass())) {
             if (field.getName() != "id") {
                 Object value = field.get(object);
-                if (value instanceof byte[])
-                    pstmt.setBinaryStream(j, new ByteArrayInputStream((byte[])value));
-                else
-                    pstmt.setObject(j, value);
+                pstmt.setObject(j, value);
 
                 j++;
             }
