@@ -7,7 +7,10 @@ import common.router.*;
 import server.router.*;
 import server.sql.CollectionFactory;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -108,4 +111,54 @@ public class ScheduleController {
         }
     }
 
+    /**
+     * This Action is the GetByID Action for the schedules.
+     */
+    public static class GetByTime extends Action {
+        // Generic GetById action constructor.
+        public GetByTime() { }
+
+        // Override the execute to run the get function of the schedule collection
+        @Override
+        public IActionResult execute(Request req) throws Exception {
+            // Get list of all schedules.
+            List<Schedule> allSchedule = CollectionFactory.getInstance(Schedule.class).get(x -> true);
+            List<Schedule> scheduleList = null;
+            for ( Schedule temp: allSchedule)
+            {
+                Instant startTime = temp.startTime;
+                Instant endTime = startTime.plus(temp.duration, ChronoUnit.MINUTES);
+                Instant rightNow = Instant.now();
+
+                if (startTime.compareTo(rightNow) * rightNow.compareTo(endTime) >= 0)
+                {
+                    scheduleList.add(temp);
+                }
+            }
+
+            Schedule resultSchedule;
+            if (scheduleList.isEmpty()) {
+                resultSchedule = null;
+            }
+            else
+            {
+                resultSchedule = scheduleList.get(0);
+                for (Schedule temp: scheduleList)
+                {
+                    if (temp.createTime.compareTo(resultSchedule.createTime) > 0)
+                    {
+                        resultSchedule = temp;
+                    }
+                }
+            }
+
+//            String bName = resultSchedule.billboardName;
+//            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
+//                billboard -> bName.equals(billboard.name)
+//            );
+
+            // Return a success IActionResult with the list of schedules.
+            return new Ok(resultSchedule);
+        }
+    }
 }
