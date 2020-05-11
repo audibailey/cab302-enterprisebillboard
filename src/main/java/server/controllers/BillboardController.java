@@ -94,7 +94,7 @@ public class BillboardController {
     /**
      * This Action is the Insert Action for the billboards.
      */
-    public class Insert extends Action {
+    public static class Insert extends Action {
         public Insert() {}
 
         // Override the execute to run the insert function of the billboard collection.

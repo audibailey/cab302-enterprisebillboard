@@ -23,7 +23,7 @@ public class Permission {
     /**
      * This is an Action class that ensures the user can create billboards.
      */
-    public class canCreateBillboard extends Action {
+    public static class canCreateBillboard extends Action {
         // Generic canCreateBillboard Constructor.
         public canCreateBillboard() {}
 

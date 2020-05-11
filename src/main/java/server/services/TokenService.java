@@ -87,7 +87,7 @@ public class TokenService {
      * @return boolean: Token valid or invalid.
      */
     public boolean verify(String token) {
-        Optional<Session> session = sessions.stream().filter(x -> x.token == token).findFirst();
+        Optional<Session> session = sessions.stream().filter(sess -> token.equals(sess.token)).findFirst();
 
         // verify the session isn't empty or expired
         if (session.isEmpty() || expired(token)) return false;
@@ -102,7 +102,7 @@ public class TokenService {
      * @return Optional<Session>: The Session object related to the logged-in user.
      */
     private Optional<Session> getSessionByUsername(String username) {
-        return sessions.stream().filter(x -> x.username == username).findFirst();
+        return sessions.stream().filter(sess -> username.equals(sess.username)).findFirst();
     }
 
     /**
