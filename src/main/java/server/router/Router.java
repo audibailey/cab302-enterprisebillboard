@@ -54,7 +54,7 @@ public class Router {
             Optional<Session> session = TokenService.getInstance().getSessionByToken(r.token);
             if (session.isEmpty()) return new BadRequest("No session found.");
 
-            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username == session.get().username).stream().findFirst();
+            Optional<Permissions> perms = CollectionFactory.getInstance(Permissions.class).get(p -> p.username.equals(session.get().username)).stream().findFirst();
             if (perms.isEmpty()) return new BadRequest("No permissions found.");
 
             r.session = session.get();

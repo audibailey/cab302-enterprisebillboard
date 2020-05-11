@@ -143,8 +143,13 @@ public class Collection<T> {
             // Fetches the value using name of the field as the key from the result set.
             Object value = resultSet.getObject(name);
 
-            // Set the field of the collection object with the value fetched.
-            field.set(collectionObject, value);
+            if (field.get(collectionObject) instanceof Boolean) {
+                // Set the field of the collection object with the value fetched.
+                field.set(collectionObject, (int)value == 1 ? true : false);
+            } else {
+                // Set the field of the collection object with the value fetched.
+                field.set(collectionObject, value);
+            }
         }
 
         // Return the collection object
