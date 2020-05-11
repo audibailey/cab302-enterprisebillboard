@@ -11,6 +11,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -136,21 +137,12 @@ public class ScheduleController {
                 }
             }
 
-            Schedule resultSchedule;
-            if (scheduleList.isEmpty()) {
-                resultSchedule = null;
-            }
-            else
-            {
-                resultSchedule = scheduleList.get(0);
-                for (Schedule temp: scheduleList)
-                {
-                    if (temp.createTime.compareTo(resultSchedule.createTime) > 0)
-                    {
-                        resultSchedule = temp;
-                    }
-                }
-            }
+            if (scheduleList.isEmpty()) return new Ok();
+
+            scheduleList.sort(Comparator.comparing(s -> s.createTime));
+
+            Schedule resultSchedule = scheduleList.get(scheduleList.size() - 1);
+
 
 //            String bName = resultSchedule.billboardName;
 //            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
