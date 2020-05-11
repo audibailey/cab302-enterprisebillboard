@@ -46,7 +46,7 @@ public class Permission {
     /**
      * This is an Action class that ensures the user can edit billboards.
      */
-    public class canEditBillboard extends Action {
+    public static class canEditBillboard extends Action {
         public canEditBillboard() {}
 
         /**
@@ -74,7 +74,7 @@ public class Permission {
     /**
      * This is an Action class that ensures the user has self permissions on billboards.
      */
-    public class isSelf extends Action {
+    public static class isSelf extends Action {
         public isSelf() {}
 
         /**
@@ -96,7 +96,7 @@ public class Permission {
     /**
      * This is an Action class that ensures the user can create users.
      */
-    public class canEditUser extends Action {
+    public static class canEditUser extends Action {
         public canEditUser() {}
 
         /**
@@ -117,7 +117,7 @@ public class Permission {
     /**
      * This is an Action class that ensures the user can schedule billboards.
      */
-    public class canScheduleBillboard extends Action {
+    public static class canScheduleBillboard extends Action {
         public canScheduleBillboard() {}
 
         /**
@@ -138,7 +138,7 @@ public class Permission {
     /**
      * This is an Action class that ensures the user can view billboards.
      */
-    public class canViewBillboard extends Action {
+    public static class canViewBillboard extends Action {
         public canViewBillboard() {}
 
         /**

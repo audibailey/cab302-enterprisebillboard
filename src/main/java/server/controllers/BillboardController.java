@@ -23,7 +23,7 @@ public class BillboardController {
     /**
      * This Action is the get all Action for the billboards.
      */
-    public class Get extends Action {
+    public static class Get extends Action {
         public Get() {}
 
         // Override the execute to run the get function of the billboard collection.
@@ -40,7 +40,7 @@ public class BillboardController {
     /**
      * This Action is the GetById Action for the billboards.
      */
-    public class GetById extends Action {
+    public static class GetById extends Action {
         public GetById() {}
 
         // Override the execute to run the get function of the billboard collection.
@@ -66,7 +66,7 @@ public class BillboardController {
     /**
      * This Action is the GetByLock Action for the billboards.
      */
-    public class GetByLock extends Action {
+    public static class GetByLock extends Action {
         public GetByLock() {}
 
         // Override the execute to run the get function of the billboard collection.
@@ -112,7 +112,7 @@ public class BillboardController {
     /**
      * This Action is the Update Action for the billboards.
      */
-    public class Update extends Action {
+    public static class Update extends Action {
         public Update() {}
 
         // Override the execute to run the update function of the billboard collection.
@@ -130,7 +130,7 @@ public class BillboardController {
     /**
      * This Action is the Delete Action for the billboards.
      */
-    public class Delete extends Action {
+    public static class Delete extends Action {
         public Delete() {}
 
         // Override the execute to run the delete function of the billboard collection.

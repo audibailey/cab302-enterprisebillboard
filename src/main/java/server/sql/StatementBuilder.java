@@ -54,7 +54,6 @@ public class StatementBuilder {
                 j++;
             }
         }
-
         return pstmt;
     }
 
@@ -70,7 +69,6 @@ public class StatementBuilder {
         for (Field field : fields) {
             if (field.getName() != "id") {
                 field.setAccessible(true);
-
                 if (i == lastField) {
                     names.append(field.getName() + ")");
                     values.append("?)");
@@ -78,7 +76,6 @@ public class StatementBuilder {
                     names.append(field.getName() + ", ");
                     values.append("?, ");
                 }
-
                 i++;
             }
         }

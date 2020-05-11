@@ -26,7 +26,7 @@ public class PermissionController {
     /**
      * This Action is the get all Action for the permissions.
      */
-    public class Get extends Action {
+    public static class Get extends Action {
         // Generic Get action constructor.
         public Get() { }
 
@@ -44,7 +44,7 @@ public class PermissionController {
     /**
      * This Action is the GetByID Action for the permissions.
      */
-    public class GetById extends Action {
+    public static class GetById extends Action {
         // Generic GetById action constructor.
         public GetById() { }
 
@@ -72,7 +72,7 @@ public class PermissionController {
     /**
      * This Action is the Update Action for the permissions.
      */
-    public class Update extends Action {
+    public static class Update extends Action {
         // Generic Update action constructor.
         public Update() { }
 

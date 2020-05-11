@@ -7,6 +7,7 @@ import common.router.*;
 import server.router.*;
 import server.sql.CollectionFactory;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class ScheduleController {
     /**
      * This Action is the get all Action for the schedule.
      */
-    public class Get extends Action {
+    public static class Get extends Action {
         // Generic Get action constructor.
         public Get() { }
 
@@ -39,7 +40,7 @@ public class ScheduleController {
     /**
      * This Action is the GetByID Action for the schedules.
      */
-    public class GetById extends Action {
+    public static class GetById extends Action {
         // Generic GetById action constructor.
         public GetById() { }
 
@@ -66,7 +67,7 @@ public class ScheduleController {
     /**
      * This Action is the Insert Action for the schedules.
      */
-    public class Insert extends Action {
+    public static class Insert extends Action {
         // Generic Insert action constructor.
         public Insert() { }
 
@@ -88,7 +89,7 @@ public class ScheduleController {
     /**
      * This Action is the Delete Action for the schedules.
      */
-    public class Delete extends Action {
+    public static class Delete extends Action {
         // Generic Delete action constructor.
         public Delete() { }
 
@@ -106,4 +107,5 @@ public class ScheduleController {
             return new UnsupportedType(Schedule.class);
         }
     }
+
 }
