@@ -27,7 +27,7 @@ public class UserController {
     /**
      * This Action is the get all Action for the users.
      */
-    public class Get extends Action {
+    public static class Get extends Action {
         // Generic Get action constructor.
         public Get() { }
 
@@ -45,7 +45,7 @@ public class UserController {
     /**
      * This Action is the GetByID Action for the users.
      */
-    public class GetById extends Action {
+    public static class GetById extends Action {
         // Generic GetById action constructor.
         public GetById() { }
 
@@ -72,7 +72,7 @@ public class UserController {
     /**
      * This Action is the Insert Action for the users.
      */
-    public class Insert extends Action {
+    public static class Insert extends Action {
         // Generic Insert action constructor
         public Insert() { }
 
@@ -97,7 +97,7 @@ public class UserController {
     /**
      * This Action is the Update Action for the users.
      */
-    public class Update extends Action {
+    public static class Update extends Action {
         // Generic Update action constructor.
         public Update() { }
 
@@ -116,7 +116,7 @@ public class UserController {
     /**
      * This Action is the UpdatePassword Action the users,
      */
-    public class UpdatePassword extends Action {
+    public static class UpdatePassword extends Action {
         // Generic UpdatePassword action constructor.
         public UpdatePassword() { }
 
@@ -140,7 +140,7 @@ public class UserController {
     /**
      * This Action is the Delete Action for the users.
      */
-    public class Delete extends Action {
+    public static class Delete extends Action {
         // Generic Delete action constructor.
         public Delete() { }
 
