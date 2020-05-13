@@ -51,8 +51,12 @@ public class ClientSocketFactory {
         if (o instanceof IActionResult) {
             res = (IActionResult) o;
 
-            if (res.error) {
+            if (res.status == Status.SUCCESS) {
+                System.out.println(res.message);
+            } else if (res.error) {
                 Notification.display("Error", res.message, JOptionPane.ERROR_MESSAGE);
+                System.out.println((String) res.status.toString());
+                System.out.println((String) res.message);
             }
         }
 
