@@ -4,6 +4,7 @@ import common.router.IActionResult;
 import common.router.Request;
 import common.router.Status;
 import common.models.Billboard;
+import common.utils.ClientSocketFactory;
 import common.utils.RandomFactory;
 
 import javax.crypto.SecretKeyFactory;
@@ -26,6 +27,13 @@ public class ClientTest {
     private int port;
 
     public static <Response> void main(String[] args) throws Exception {
+
+        {
+            String token = null;
+            HashMap<String, String> params = null;
+            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+        }
+
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Username: ");
