@@ -42,25 +42,25 @@ public class PermissionController {
     }
 
     /**
-     * This Action is the GetByID Action for the permissions.
+     * This Action is the GetByUsername Action for the permissions.
      */
-    public static class GetById extends Action {
+    public static class GetByUsername extends Action {
         // Generic GetById action constructor.
-        public GetById() { }
+        public GetByUsername() { }
 
         // Override the execute to run the get function of the permissions collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
-            String id = req.params.get("id");
+            String username = req.params.get("username");
             
             // Ensure id field is not null.
-            if (id == null) {
-                return new BadRequest("Must specify a permission ID.");
+            if (username == null) {
+                return new BadRequest("Must specify a username.");
             }
 
             // Get list of permissions with the ID as specified. This should only return 1 permission.
             List<Permissions> permissionsList = CollectionFactory.getInstance(Permissions.class).get(
-                permissions -> id.equals(String.valueOf(permissions.id))
+                permissions -> username.equals(String.valueOf(permissions.username))
             );
 
             // Return a success IActionResult with the list of permissions.

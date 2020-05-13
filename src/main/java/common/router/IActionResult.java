@@ -14,6 +14,7 @@ public class IActionResult implements Serializable {
      */
     public Status status;
     public String message;
+    public Boolean error;
     public Object body;
 
     /**
@@ -23,6 +24,7 @@ public class IActionResult implements Serializable {
      */
     public IActionResult(Status status) {
         this.status = status;
+        isError(status);
     }
 
     /**
@@ -33,6 +35,7 @@ public class IActionResult implements Serializable {
      */
     public IActionResult(Status status, String message) {
         this.status = status;
+        isError(status);
         this.message = message;
     }
 
@@ -44,6 +47,7 @@ public class IActionResult implements Serializable {
      */
     public IActionResult(Status status, Object body) {
         this.status = status;
+        isError(status);
         this.body = body;
     }
 
@@ -56,7 +60,18 @@ public class IActionResult implements Serializable {
      */
     public IActionResult(Status status, String message, Object body) {
         this.status = status;
+        isError(status);
         this.message = message;
         this.body = body;
+    }
+
+    public void isError(Status status) {
+        switch (status) {
+            case SUCCESS:
+                this.error = false;
+                break;
+            default:
+                this.error = true;
+        }
     }
 }

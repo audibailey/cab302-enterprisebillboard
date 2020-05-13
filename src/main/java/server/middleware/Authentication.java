@@ -37,69 +37,7 @@ public class Authentication {
         }
     }
 
-    /**
-     * This class extends action for logging in users. It "logs" the user in and generates a token.
-     */
-    public static class Login extends Action {
-        public Login(){}
 
-        /**
-         * Override the default execute function with the login of the user.
-         *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns a token or a Unauthenticated.
-         * @throws Exception: Pass through the server error from the checkUserExists or tryLogin function.
-         */
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            String username = req.params.get("username");
-            String password = req.params.get("password");
-
-            // Ensure the fields are not null.
-            if (username == null) {
-                return new BadRequest("Parameter required: username.");
-            } else if (password == null) {
-                return new BadRequest("Parameter required: password.");
-            }
-
-            // Ensure the user exists.
-            Optional<User> user = TokenService.getInstance().checkUserExists(username);
-            if (user.isPresent()) {
-                // Attempt to log the user in and request for the token.
-                String token = TokenService.getInstance().tryLogin(user.get(), password);
-                // Return a success IActionResult with the token.
-                if (token != null) return new Ok(token);
-            }
-
-            // If the token is null that means the password is incorrect.
-            // If the user doesn't exist tell the client it's an invalid username.
-            return new BadRequest("Incorrect details.");
-        }
-    }
-
-    /**
-     * This class extends action for logging out the user. It "logs" the user out and removes them from the session.
-     */
-    public static class Logout extends Action {
-        public Logout(){}
-
-        /**
-         * Override the default execute function with the logging out of the user.
-         *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that ensures a successful logout.
-         * @throws Exception: Pass through the server error from the tryLogout function.
-         */
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            // Ensure the token is not null.
-            if (req.token == null) return new Unauthorised("Must provide token to logout.");
-
-            // Attempt to log the user out and return a success empty IActionResult.
-            TokenService.getInstance().tryLogout(req.token);
-            return new Ok();
-        }
-    }
 
     // TODO: NEW class to check when token expires
 }

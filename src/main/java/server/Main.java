@@ -43,31 +43,28 @@ public class Main {
 
         // ADD THE ROUTER
         Router router = new Router(Authentication.Authenticate.class)
-            .ADD("/login", Authentication.Login.class)
-            .ADD("/logout", Authentication.Logout.class)
+            .ADD("/login", UserController.Login.class)
+            .ADD("/logout", UserController.Logout.class)
             // Add Billboard actions to router
-            .ADD_AUTH("/billboard/get", BillboardController.Get.class)
-            .ADD_AUTH("/billboard/getbyid", BillboardController.GetById.class)
-            .ADD_AUTH("/billboard/getbylock", BillboardController.GetByLock.class)
+            .ADD_AUTH("/billboard/get", Permission.canViewBillboard.class, BillboardController.Get.class)
+            .ADD_AUTH("/billboard/get/lock", Permission.canViewBillboard.class, BillboardController.GetByLock.class)
             .ADD_AUTH("/billboard/insert", Permission.canCreateBillboard.class, BillboardController.Insert.class)
-            .ADD_AUTH("/billboard/update", BillboardController.Update.class)
-            .ADD_AUTH("/billboard/delete", BillboardController.Delete.class)
+            .ADD_AUTH("/billboard/update", Permission.canEditBillboard.class, BillboardController.Update.class)
+            .ADD_AUTH("/billboard/delete", Permission.canEditBillboard.class, BillboardController.Delete.class)
+            // Add UserPermissions actions to router
+            .ADD_AUTH("/userpermissions/insert", Permission.canEditUser.class, UserPermissionsController.Insert.class)
             // Add User actions to router
-            .ADD_AUTH("/user/get", Permission.canEditUser.class, UserController.Get.class)
-            .ADD_AUTH("/user/getbyid", Permission.canEditUser.class, UserController.GetById.class)
-            .ADD_AUTH("/user/insert", Permission.canEditUser.class, UserController.Insert.class)
-            .ADD_AUTH("/user/update", Permission.canEditUser.class, UserController.Update.class)
-            .ADD_AUTH("/user/updatepassword", Permission.isSelf.class, UserController.UpdatePassword.class)
+            .ADD_AUTH("/user/update/password", Permission.isSelf.class, UserController.UpdatePassword.class)
             .ADD_AUTH("/user/delete", Permission.canEditUser.class, UserController.Delete.class)
             // Add Schedule actions to router
             .ADD_AUTH("/schedule/get", Permission.canScheduleBillboard.class, ScheduleController.Get.class)
-            .ADD_AUTH("/schedule/getbyid", Permission.canScheduleBillboard.class, ScheduleController.GetById.class)
+            .ADD_AUTH("/schedule/get/current", Permission.canScheduleBillboard.class, ScheduleController.GetCurrent.class)
             .ADD_AUTH("/schedule/insert", Permission.canScheduleBillboard.class, ScheduleController.Insert.class)
             .ADD_AUTH("/schedule/delete", Permission.canScheduleBillboard.class, ScheduleController.Delete.class)
             //Add Permission actions to router
-            .ADD_AUTH("/permission/get", PermissionController.Get.class)
-            .ADD_AUTH("/permission/getbyid", PermissionController.GetById.class)
-            .ADD_AUTH("/permission/update", PermissionController.Update.class);
+            .ADD_AUTH("/permission/get", Permission.canEditUser.class, PermissionController.Get.class)
+            .ADD_AUTH("/permission/get/username", Permission.canEditUser.class, PermissionController.GetByUsername.class)
+            .ADD_AUTH("/permission/update", Permission.canEditUser.class, PermissionController.Update.class);
 
         // Fetch the port from the props file
         Properties props = getProps();
