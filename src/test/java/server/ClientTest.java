@@ -9,17 +9,11 @@ import common.utils.RandomFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ClientTest {
 
@@ -27,92 +21,61 @@ public class ClientTest {
     private int port;
 
     public static <Response> void main(String[] args) throws Exception {
+        String token = null;
 
         {
-            String token = null;
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Username: ");
+            String username = sc.nextLine();
+
+            System.out.println("Password: ");
+            String password = sc.nextLine();
+
+            int passHash = password.hashCode();
+
+            // Use this to generate both the salt and password to store in the database manually
+            int iterations = 1000;
+            char[] chars = Integer.toString(passHash).toCharArray();
+            byte[] salt = RandomFactory.String().getBytes();
+
+            PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            byte[] hash = skf.generateSecret(spec).getEncoded();
+            System.out.println("Salt: " + new BigInteger(1, salt).toString(16));
+            System.out.println("Password Hash: " + new BigInteger(1, hash).toString(16));
+
+            HashMap<String, String> test = new HashMap<String, String>();
+            test.put("username", username);
+            test.put("password", Integer.toString(passHash));
+
+            IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
+
+            if (result.status == Status.SUCCESS) {
+                System.out.println("Successfully logged in!");
+                System.out.println("Your token is: " + (String) result.body);
+                token = (String) result.body;
+            } else {
+                System.exit(0);
+            }
+        }
+
+        {
+            HashMap<String, String> params = null;
+            new ClientSocketFactory("/billboard/insert", token, params, Billboard.Random(1)).Connect();
+        }
+
+        {
             HashMap<String, String> params = null;
             IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
-        }
+            if (result != null && result.body != null) {
+                List<Billboard> billboards = (List<Billboard>)result.body;
 
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Username: ");
-        String username = sc.nextLine();
-
-        System.out.println("Password: ");
-        String password = sc.nextLine();
-
-        Socket s = new Socket("127.0.0.1", 12345);
-        OutputStream outputStream = s.getOutputStream();
-
-        ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-
-        int passHash = password.hashCode();
-
-        // Use this to generate both the salt and password to store in the database manually
-        int iterations = 1000;
-        char[] chars = Integer.toString(passHash).toCharArray();
-        byte[] salt = RandomFactory.String().getBytes();
-
-        PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = skf.generateSecret(spec).getEncoded();
-        System.out.println("Salt: " + new BigInteger(1, salt).toString(16));
-        System.out.println("Password Hash: " + new BigInteger(1, hash).toString(16));
-
-        HashMap<String, String> test = new HashMap<String, String>();
-        test.put("username", username);
-        test.put("password", Integer.toString(passHash));
-
-        Request req = new Request("/login", null, test, null);
-        oos.writeObject(req);
-        oos.flush();
-        oos.reset();
-
-        String token = null;
-        InputStream inputStream = s.getInputStream();
-        ObjectInputStream ois = new ObjectInputStream(inputStream);
-        Object o = ois.readObject();
-        if (o instanceof IActionResult) {
-            IActionResult resp = (IActionResult) o;
-            if (resp.status == Status.SUCCESS) {
-                System.out.println("Successfully logged in!");
-                System.out.println("Your token is: " + (String) resp.body);
-                token = (String) resp.body;
-            } else {
-                System.out.println("Failed to login in.");
-                System.out.println((String) resp.status.toString());
-                System.out.println((String) resp.message);
+                for (Billboard billboard : billboards) {
+                    System.out.println(billboard.name);
+                }
             }
         }
-        s.close();
-
-        Socket newS = new Socket("127.0.0.1", 12345);
-        OutputStream newOStream = newS.getOutputStream();
-
-        ObjectOutputStream newOos = new ObjectOutputStream(newOStream);
-        Billboard bbtest = Billboard.Random(1);
-        Request newReq = new Request("/billboard/insert", token, null, bbtest);
-
-        newOos.writeObject(newReq);
-        newOos.flush();
-        newOos.reset();
-
-        InputStream newIStream = newS.getInputStream();
-        ObjectInputStream newOis = new ObjectInputStream(newIStream);
-        Object newO = newOis.readObject();
-        if (newO instanceof IActionResult) {
-            IActionResult resp = (IActionResult) newO;
-            if (resp.status == Status.SUCCESS) {
-                System.out.println("Posted Billboard");;
-            } else {
-                System.out.println("Failed to post Billboard.");
-                System.out.println((String) resp.status.toString());
-                System.out.println((String) resp.message);
-            }
-        }
-        newS.close();
-        sc.close();
     }
 
 }
