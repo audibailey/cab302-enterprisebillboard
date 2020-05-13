@@ -1,29 +1,36 @@
-/*package common.utils;
+package common.utils;
 
-import common.models.Request;
-import common.models.Response;
+import common.models.*;
+import common.router.*;
 import common.swing.Notification;
 
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
 
-public class ClientSocketFactory<T> {
+public class ClientSocketFactory {
 
-    T data;
-    Method method;
+    String path;
+    String token;
+    HashMap<String, String> params;
+    Object body;
 
-    public ClientSocketFactory(Method method) {
-        this.method = method;
+    public ClientSocketFactory(String path, String token, HashMap<String, String> params) {
+        this.path = path;
+        this.token = token;
+        this.params = params;
     }
 
-    public ClientSocketFactory(Method method, T data) {
-        this.method = method;
-        this.data = data;
+    public ClientSocketFactory(String path, String token, HashMap<String, String> params, Object body) {
+        this.path = path;
+        this.token = token;
+        this.params = params;
+        this.body = body;
     }
 
-    public Response<T> Connect() throws IOException, ClassNotFoundException {
-        Socket s = new Socket("localhost", 12345);
+    public IActionResult Connect() throws IOException, ClassNotFoundException {
+        Socket s = new Socket("127.0.0.1", 12345);
 
         OutputStream outputStream = s.getOutputStream();
         InputStream inputStream = s.getInputStream();
@@ -31,23 +38,21 @@ public class ClientSocketFactory<T> {
         ObjectOutputStream oos = new ObjectOutputStream(outputStream);
         ObjectInputStream ois = new ObjectInputStream(inputStream);
 
-        Request<T> req = new Request<>(method, data);
+        Request req = new Request(path, token, params, body);
 
         oos.writeObject(req);
         oos.flush();
         oos.close();
 
-        Response<T> res = new Response<>();
+        IActionResult res = null;
 
-        while (ois.available() > 0) {
-            Object o = ois.readObject();
+        Object o = ois.readObject();
 
-            if (o instanceof Response) {
-                res = (Response<T>) o;
+        if (o instanceof IActionResult) {
+            res = (IActionResult) o;
 
-                if (res.status.error) {
-                    Notification.display("Error", res.status.message, JOptionPane.ERROR_MESSAGE);
-                }
+            if (res.error) {
+                Notification.display("Error", res.message, JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -58,4 +63,4 @@ public class ClientSocketFactory<T> {
         return res;
     }
 
-}*/
+}
