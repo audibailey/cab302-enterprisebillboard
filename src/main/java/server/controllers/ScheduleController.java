@@ -143,14 +143,12 @@ public class ScheduleController {
 
             Schedule resultSchedule = scheduleList.get(scheduleList.size() - 1);
 
-
-//            String bName = resultSchedule.billboardName;
-//            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-//                billboard -> bName.equals(billboard.name)
-//            );
+            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
+                billboard -> resultSchedule.billboardName.equals(billboard.name)
+            );
 
             // Return a success IActionResult with the list of schedules.
-            return new Ok(resultSchedule);
+            return new Ok(billboardList.stream().findFirst().get());
         }
     }
 }
