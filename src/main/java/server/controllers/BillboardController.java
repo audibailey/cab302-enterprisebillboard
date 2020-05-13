@@ -122,7 +122,7 @@ public class BillboardController {
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
 
             // Attempt to update the billboard in the database then return a success IActionResult.
-            CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
+            CollectionFactory.getInstance(Billboard.class).update((Billboard) req.body);
             return new Ok();
         }
     }

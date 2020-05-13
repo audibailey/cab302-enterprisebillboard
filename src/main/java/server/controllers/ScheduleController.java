@@ -113,11 +113,11 @@ public class ScheduleController {
     }
 
     /**
-     * This Action is the GetByID Action for the schedules.
+     * This Action is the GetCurrent Action for the schedules.
      */
-    public static class GetByTime extends Action {
+    public static class GetCurrent extends Action {
         // Generic GetById action constructor.
-        public GetByTime() { }
+        public GetCurrent() { }
 
         // Override the execute to run the get function of the schedule collection
         @Override
