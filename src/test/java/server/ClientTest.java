@@ -65,6 +65,34 @@ public class ClientTest {
             new ClientSocketFactory("/billboard/insert", token, params, Billboard.Random(1)).Connect();
         }
 
+        Billboard updated = null;
+        Billboard deleted = null;
+        {
+            HashMap<String, String> params = null;
+            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+            if (result != null && result.body != null) {
+                List<Billboard> billboards = (List<Billboard>)result.body;
+
+                for (Billboard billboard : billboards) {
+                    System.out.println(billboard.name);
+                }
+                updated = billboards.get(billboards.size()-1);
+                //deleted = billboards.get(billboards.size()-2);
+
+            }
+        }
+
+        {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            HashMap<String, String> params = null;
+            updated.name = "Something else1";
+            updated.message = "Hello";
+            IActionResult result= new ClientSocketFactory("/billboard/update",token, params, updated).Connect();
+
+            System.out.println("test fuc kyou Audi \n");
+        }
+
         {
             HashMap<String, String> params = null;
             IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();

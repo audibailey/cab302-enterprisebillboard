@@ -42,8 +42,6 @@ public class ClientSocketFactory {
         InputStream inputStream = s.getInputStream();
         ObjectInputStream ois = new ObjectInputStream(inputStream);
         Object o = ois.readObject();
-        ois.close();
-        s.close();
 
         IActionResult res = null;
 
@@ -56,6 +54,9 @@ public class ClientSocketFactory {
                 System.out.println((String) res.message);
             }
         }
+
+        ois.close();
+        s.close();
         
         return res;
     }
