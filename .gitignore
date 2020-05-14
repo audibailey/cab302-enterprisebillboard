@@ -150,3 +150,5 @@ buildNumber.properties
 
 # db.props will be different for each other
 db.props
+.idea
+cab302.db
