@@ -33,20 +33,19 @@ public class ClientSocketFactory {
         Socket s = new Socket("127.0.0.1", 12345);
 
         OutputStream outputStream = s.getOutputStream();
-        InputStream inputStream = s.getInputStream();
-
         ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-        ObjectInputStream ois = new ObjectInputStream(inputStream);
-
         Request req = new Request(path, token, params, body);
-
         oos.writeObject(req);
         oos.flush();
-        oos.close();
+        oos.reset();
+
+        InputStream inputStream = s.getInputStream();
+        ObjectInputStream ois = new ObjectInputStream(inputStream);
+        Object o = ois.readObject();
+        ois.close();
+        s.close();
 
         IActionResult res = null;
-
-        Object o = ois.readObject();
 
         if (o instanceof IActionResult) {
             res = (IActionResult) o;
@@ -59,11 +58,7 @@ public class ClientSocketFactory {
                 System.out.println((String) res.message);
             }
         }
-
-        ois.close();
-
-        s.close();
-
+        
         return res;
     }
 
