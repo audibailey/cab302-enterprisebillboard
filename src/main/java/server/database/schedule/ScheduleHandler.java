@@ -1,9 +1,6 @@
 package server.database.schedule;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,12 +40,16 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         if (this.connection != null) {
             // Initialise return value
             Optional<Schedule> returnSchedule = Optional.empty();
-
+            // Create a query that updates the user and execute the query
+            String query = "SELECT * FROM SCHEDULES WHERE id = ?";
             // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setInt(1, scheduleId);
             // Create a query that selects schedule based on the id and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE id = " + scheduleId);
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the schedule object and save it
             while (result.next()) {
@@ -56,7 +57,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return returnSchedule;
         } else {
@@ -83,12 +84,16 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
         if (this.connection != null) {
             // Initialise return value
             Optional<Schedule> returnSchedule = Optional.empty();
-
+            // Create a query that updates the user and execute the query
+            String query = "SELECT * FROM SCHEDULES WHERE billboardName = ?";
             // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
-
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            // Fill the parameters with the data and execute query
+            pstmt.setString(1, billboardName);
             // Create a query that selects schedule based on the id and execute the query
-            ResultSet result = sqlStatement.executeQuery("SELECT * FROM SCHEDULES WHERE billboardName = '" + billboardName + "'");
+            ResultSet result = pstmt.executeQuery();
 
             // Use the result of the database query to create the schedule object and save it
             while (result.next()) {
@@ -96,7 +101,7 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
             }
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
 
             return returnSchedule;
         } else {
@@ -152,19 +157,24 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     public void insert(Schedule schedule) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
 
             // Create a query that adds the schedule and execute the query
-            String query = "INSERT INTO SCHEDULES" +
-                "(billboardName, startTime, duration, `interval`)" +
-                "VALUES('" + schedule.billboardName + "', (timestamp '" +
-                java.sql.Timestamp.from(schedule.startTime) + "')," + schedule.duration + "," + schedule.interval +
-                ")";
-            sqlStatement.executeUpdate(query);
+
+            String query = "INSERT INTO SCHEDULES (billboardName, startTime, duration, `interval`) VALUES (?,?,?,?)";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+
+            // Fill in the parameters and execute query
+            pstmt.setString(1, schedule.billboardName);
+            pstmt.setTimestamp(2, java.sql.Timestamp.from(schedule.startTime));
+            pstmt.setInt(3, schedule.duration);
+            pstmt.setInt(4, schedule.interval);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Emulate auto increment ID
             schedule.id = mockDBNum;
@@ -182,19 +192,23 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     public void update(Schedule schedule) throws SQLException {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
 
-            // Create a query that updates the user permissions and execute the query
-            String query = "UPDATE SCHEDULES " +
-                "SET startTime = (timestamp '" + java.sql.Timestamp.from(schedule.startTime) +
-                "'), duration = " + schedule.duration +
-                ", `interval` = " + schedule.interval +
-                " WHERE id = " + schedule.id;
-            sqlStatement.executeUpdate(query);
+            String query = "UPDATE SCHEDULES SET startTime = ?, duration = ?, `interval` = ? WHERE id = ?";
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+
+            // Fill in the parameters and execute query
+
+            pstmt.setTimestamp(1, java.sql.Timestamp.from(schedule.startTime));
+            pstmt.setInt(2, schedule.duration);
+            pstmt.setInt(3, schedule.interval);
+            pstmt.setInt(4, schedule.id);
+            pstmt.executeUpdate();
 
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             // Loop through mock database and find the schedule to update, then update it
             for (Schedule mockSchedule : this.mockDB) {
@@ -214,14 +228,20 @@ public class ScheduleHandler implements ObjectHandler<Schedule> {
     public void delete(Schedule schedule) throws Exception {
         // Check that it's not in testing mode
         if (this.connection != null) {
-            // Attempt to query the database
-            Statement sqlStatement = connection.createStatement();
+
 
             // Create a query that deletes the schedule and executes the query
-            sqlStatement.executeUpdate("DELETE FROM SCHEDULES WHERE id = " + schedule.id);
+            String query = "DELETE FROM SCHEDULES WHERE id = ?";
 
+            // Attempt to query the database
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            // Clear all parameters before insert
+            pstmt.clearParameters();
+            pstmt.setInt(1, schedule.id);
+
+            pstmt.executeUpdate();
             // Clean up query
-            sqlStatement.close();
+            pstmt.close();
         } else {
             this.mockDB.remove(schedule);
         }
