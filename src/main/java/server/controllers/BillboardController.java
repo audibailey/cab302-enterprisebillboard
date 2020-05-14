@@ -103,6 +103,12 @@ public class BillboardController {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
 
+            String bName = ((Billboard) req.body).name;
+            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
+                billboard -> bName.equals(String.valueOf(billboard.name)));
+
+            if (!billboardList.isEmpty()) return new BadRequest("Billboard name already exists.");
+
             // Attempt to insert the billboard into the database then return a success IActionResult.
             CollectionFactory.getInstance(Billboard.class).insert((Billboard) req.body);
             return new Ok();
