@@ -77,7 +77,7 @@ public class ClientTest {
                     System.out.println(billboard.name);
                 }
                 updated = billboards.get(billboards.size()-1);
-                //deleted = billboards.get(billboards.size()-2);
+                deleted = billboards.get(billboards.size()-2);
 
             }
         }
