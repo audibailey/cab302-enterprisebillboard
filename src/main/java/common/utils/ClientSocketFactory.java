@@ -49,7 +49,7 @@ public class ClientSocketFactory {
             res = (IActionResult) o;
 
              if (res.error) {
-                Notification.display("Error", res.message, JOptionPane.ERROR_MESSAGE);
+                Notification.display(res.message);
                 System.out.println((String) res.status.toString());
                 System.out.println((String) res.message);
             }
