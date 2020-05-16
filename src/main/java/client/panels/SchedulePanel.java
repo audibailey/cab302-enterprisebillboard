@@ -13,7 +13,6 @@ public class SchedulePanel extends JPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                common.swing.Notification.display("Hello World!");
                 try {
                     common.system.Notification.display("Hello", "test", TrayIcon.MessageType.ERROR);
                 } catch (AWTException awtException) {

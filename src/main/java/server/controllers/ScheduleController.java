@@ -80,6 +80,12 @@ public class ScheduleController {
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type schedule.
             if (req.body instanceof Schedule) {
+
+                String sName = ((Schedule) req.body).billboardName;
+                List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
+                    schedule -> sName.equals(String.valueOf(schedule.billboardName)));
+                if (!scheduleList.isEmpty()) return new BadRequest("Schedule already exists.");
+
                 // Attempt to insert the schedule into the database then return a success IActionResult.
                 CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
                 return new Ok();

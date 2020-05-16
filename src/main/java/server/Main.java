@@ -55,7 +55,7 @@ public class Main {
             .ADD_AUTH("/userpermissions/insert", Permission.canEditUser.class, UserPermissionsController.Insert.class)
             // Add User actions to router
             .ADD_AUTH("/user/update/password", Permission.isSelf.class, UserController.UpdatePassword.class)
-            .ADD_AUTH("/user/delete", Permission.canEditUser.class, UserController.Delete.class)
+            .ADD_AUTH("/user/delete", Permission.canDeleteUser.class, UserController.Delete.class)
             // Add Schedule actions to router
             .ADD_AUTH("/schedule/get", Permission.canScheduleBillboard.class, ScheduleController.Get.class)
             .ADD_AUTH("/schedule/get/current", Permission.canScheduleBillboard.class, ScheduleController.GetCurrent.class)

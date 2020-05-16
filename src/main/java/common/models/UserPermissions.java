@@ -1,6 +1,8 @@
 package common.models;
 
-public class UserPermissions {
+import java.io.Serializable;
+
+public class UserPermissions implements Serializable {
     public User user;
     public Permissions permissions;
 

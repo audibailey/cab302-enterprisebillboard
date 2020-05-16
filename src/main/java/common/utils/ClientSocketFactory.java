@@ -49,9 +49,9 @@ public class ClientSocketFactory {
             res = (IActionResult) o;
 
              if (res.error) {
-                Notification.display(res.message);
-                System.out.println((String) res.status.toString());
-                System.out.println((String) res.message);
+                //Notification.display(res.message);
+                System.out.println( res.status.toString());
+                System.out.println( res.message);
             }
         }
 

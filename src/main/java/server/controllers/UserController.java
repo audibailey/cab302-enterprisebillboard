@@ -1,5 +1,6 @@
 package server.controllers;
 
+import common.models.Billboard;
 import common.models.Permissions;
 import common.models.User;
 import common.router.*;
@@ -8,6 +9,7 @@ import server.router.*;
 import server.services.TokenService;
 import server.sql.CollectionFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 import static common.utils.HashingFactory.encodeHex;
@@ -123,10 +125,29 @@ public class UserController {
             // Ensure the body is of type user.
             if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
+            User temp = (User) req.body;
+            List<Permissions> deletePerm = CollectionFactory.getInstance(Permissions.class).get(permissions -> temp.username.equals(String.valueOf(permissions.username)));
             // Attempt to delete the user and permission in the database then return a success IActionResult.
-            CollectionFactory.getInstance(Permissions.class).delete((Permissions) req.body);
+            CollectionFactory.getInstance(Permissions.class).delete(deletePerm.get(0));
             CollectionFactory.getInstance(User.class).delete((User) req.body);
             return new Ok();
+        }
+    }
+
+    /**
+     * This Action is the get all Action for the billboards.
+     */
+    public static class Get extends Action {
+        public Get() {}
+
+        // Override the execute to run the get function of the billboard collection.
+        @Override
+        public IActionResult execute(Request req) throws Exception {
+            // Get list of all billboards.
+            List<User> billboardList = CollectionFactory.getInstance(User.class).get(user -> true);
+
+            // Return a success IActionResult with the list of billboards.
+            return new Ok(billboardList);
         }
     }
 }

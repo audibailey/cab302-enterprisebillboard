@@ -7,6 +7,7 @@ import server.router.*;
 import common.router.*;
 import server.services.Session;
 import server.services.TokenService;
+import server.sql.Collection;
 import server.sql.CollectionFactory;
 
 import java.util.List;
@@ -109,7 +110,36 @@ public class Permission {
         @Override
         public IActionResult execute(Request req) throws Exception {
             if (!req.permissions.canEditUser) return new Unauthorised("Not authorised to edit user. ");
+            return new Ok();
+        }
+    }
 
+
+    /**
+     * This is an Action class that ensures the user can create users.
+     */
+    public static class canDeleteUser extends Action {
+        public canDeleteUser() {}
+
+        /**
+         * Override the default execute function with permission check.
+         *
+         * @param req: The user request.
+         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
+         * @throws Exception: Pass through server error.
+         */
+        @Override
+        public IActionResult execute(Request req) throws Exception {
+            if (!req.permissions.canEditUser) return new Unauthorised("Not authorised to edit user. ");
+            else {
+                System.out.println("Reached here");
+                if (!(req.body instanceof User)) return new UnsupportedType(User.class);
+                System.out.println("reached here????");
+                Optional <User> user = CollectionFactory.getInstance(User.class).get(u -> ((User) req.body).id == u.id).stream().findFirst();
+                if (user.isEmpty()) return new BadRequest("User does not exist. ");
+
+                if (user.get().id == req.session.userId) return new Unauthorised("Not authorised to delete yourself.");
+            }
             return new Ok();
         }
     }
