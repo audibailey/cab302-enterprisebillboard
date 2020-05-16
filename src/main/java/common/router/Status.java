@@ -6,16 +6,16 @@ package common.router;
  * @author Perdana Bailey
  */
 public enum Status {
-    SUCCESS, // Generic Response
-    FAILED, // Generic Response
-
+    BAD_REQUEST,
     CREATED,
 
-    BAD_REQUEST,
-    UNSUPPORTED_TYPE,
-    UNAUTHORIZED,
-    INTERNAL_SERVER_ERROR,
+    FAILED, // Generic Response
+
     FORBIDDEN,
+    INTERNAL_SERVER_ERROR,
     METHOD_NOT_ALLOWED,
     NOT_FOUND,
+    SUCCESS,
+    UNAUTHORIZED,
+    UNSUPPORTED_TYPE,
 }

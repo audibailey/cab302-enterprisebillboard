@@ -78,7 +78,7 @@ public class BillboardController {
             if (lock == null || lock != "true" || lock != "false") {
                 return new BadRequest("Must specify a billboard boolean lock status.");
             }
-            
+
             // Cast the lock string to a boolean
             var lockBool = Boolean.getBoolean(lock);
 
@@ -126,6 +126,11 @@ public class BillboardController {
         public IActionResult execute(Request req) throws Exception {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
+
+            String bName = ((Billboard) req.body).name;
+            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
+                billboard -> bName.equals(String.valueOf(billboard.name)));
+            if (!billboardList.isEmpty()) return new BadRequest("Billboard name already exists.");
 
             // Attempt to update the billboard in the database then return a success IActionResult.
             CollectionFactory.getInstance(Billboard.class).update((Billboard) req.body);

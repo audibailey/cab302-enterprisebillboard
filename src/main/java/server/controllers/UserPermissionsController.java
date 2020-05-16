@@ -1,15 +1,15 @@
 package server.controllers;
 
+import common.models.Billboard;
 import common.models.Permissions;
 import common.models.User;
 import common.models.UserPermissions;
-import common.router.IActionResult;
-import common.router.Ok;
-import common.router.Request;
-import common.router.UnsupportedType;
+import common.router.*;
 import common.utils.RandomFactory;
 import server.router.Action;
 import server.sql.CollectionFactory;
+
+import java.util.List;
 
 import static common.utils.HashingFactory.encodeHex;
 import static common.utils.HashingFactory.hashPassword;
@@ -40,6 +40,10 @@ public class UserPermissionsController {
             if (userPermissions.user == null || userPermissions.permissions == null) return new UnsupportedType(UserPermissions.class);
 
             User user = userPermissions.user;
+            List<User> userList = CollectionFactory.getInstance(User.class).get(
+                userName -> user.username.equals(String.valueOf(userName.username)));
+            if (!userList.isEmpty()) return new BadRequest("User already exists.");
+
             Permissions permissions = userPermissions.permissions;
 
             // Hash the password supplied and set the respective user objects for database insertion.
