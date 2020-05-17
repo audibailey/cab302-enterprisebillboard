@@ -63,7 +63,7 @@ public class Main {
             .ADD_AUTH("/schedule/delete", Permission.canScheduleBillboard.class, ScheduleController.Delete.class)
             //Add Permission actions to router
             .ADD_AUTH("/permission/get", Permission.canEditUser.class, PermissionController.Get.class)
-            .ADD_AUTH("/permission/get/username", Permission.canEditUser.class, PermissionController.GetByUsername.class)
+            .ADD_AUTH("/permission/get/username", Permission.canViewPermission.class, PermissionController.GetByUsername.class)
             .ADD_AUTH("/permission/update", Permission.canEditUser.class, PermissionController.Update.class);
 
         // Fetch the port from the props file

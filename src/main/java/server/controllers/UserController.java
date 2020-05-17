@@ -133,21 +133,4 @@ public class UserController {
             return new Ok();
         }
     }
-
-    /**
-     * This Action is the get all Action for the billboards.
-     */
-    public static class Get extends Action {
-        public Get() {}
-
-        // Override the execute to run the get function of the billboard collection.
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            // Get list of all billboards.
-            List<User> billboardList = CollectionFactory.getInstance(User.class).get(user -> true);
-
-            // Return a success IActionResult with the list of billboards.
-            return new Ok(billboardList);
-        }
-    }
 }

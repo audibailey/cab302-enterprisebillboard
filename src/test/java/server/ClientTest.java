@@ -73,8 +73,8 @@ public class ClientTest {
 //            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
 //        }
 
-        Billboard updated = null;
-        Billboard deleted = null;
+//        Billboard updated = null;
+//        Billboard deleted = null;
         // Test get all -- Worked
 //        {
 //            HashMap<String, String> params = null;
@@ -90,16 +90,28 @@ public class ClientTest {
 //            }
 //        }
         // Test update billboard -- Worked
-//        {
-//            Scanner sc = new Scanner(System.in);
-//            sc.nextLine();
-//            HashMap<String, String> params = null;
-//            updated.name = "Something else1";
-//            updated.message = "Hello";
-//            IActionResult result= new ClientSocketFactory("/billboard/update",token, params, updated).Connect();
-//
-//            System.out.println("test fuc kyou Audi \n");
-//        }
+        {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            HashMap<String, String> params = null;
+            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+            Billboard updated = null;
+            if (result != null && result.body != null) {
+                List<Billboard> billboards = (List<Billboard>) result.body;
+
+                for (Billboard billboard : billboards) {
+                    if (billboard.userId == 3) {
+                        updated = billboard;
+                        break;
+                    }
+                }
+                updated.name = "Something else1";
+                updated.message = "Hello 12345";
+                new ClientSocketFactory("/billboard/update", token, params, updated).Connect();
+
+                System.out.println("test fuck you Audi \n");
+            }
+        }
 
         // Test delete billboard -- Worked
 //        {
@@ -107,6 +119,7 @@ public class ClientTest {
 //            sc.nextLine();
 //            HashMap<String, String> params = null;
 //            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+//            Billboard deleted = null;
 //            if (result != null && result.body != null) {
 //                List<Billboard> billboards = (List<Billboard>) result.body;
 //
@@ -116,9 +129,10 @@ public class ClientTest {
 //                        break;
 //                    }
 //                }
-//                result = new Clie ntSocketFactory("/billboard/delete", token, params, deleted).Connect();
+//                result = new ClientSocketFactory("/billboard/delete", token, params, deleted).Connect();
 //                System.out.println("Deleted billboard");
 //            }
+//        }
 
         // Test insert user -- Worked
 //        {
@@ -126,6 +140,7 @@ public class ClientTest {
 //            sc.nextLine();
 //            HashMap<String, String> params = null;
 //            User testUser = User.Random();
+//            testUser.password = "1234";
 //            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
 //            UserPermissions temp = new UserPermissions(testUser, testPerm);
 //
@@ -153,10 +168,91 @@ public class ClientTest {
 //            System.out.println("Deleted");
 //        }
 
-        // Test list users
-        {
+        // Test list users -- Worked
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = null;
+//            IActionResult result = new ClientSocketFactory("/permission/get", token, params, null).Connect();
+//            if (result != null && result.body != null) {
+//                List<Permissions> userList = (List<Permissions>) result.body;
+//
+//                for (Permissions perm : userList) {
+//                    System.out.print(perm.username + " has permission of: ");
+//                    if (perm.canEditBillboard) {
+//                        System.out.print(" canEditBillboard, ");
+//                    }
+//                    if (perm.canScheduleBillboard) {
+//                        System.out.print(" canScheduleBillboard, ");
+//                    }
+//                    if (perm.canViewBillboard) {
+//                        System.out.print(" canViewBillboard, ");
+//                    }
+//                    if (perm.canCreateBillboard) {
+//                        System.out.print(" canCreateBillboard, ");
+//                    }
+//                    if (perm.canEditUser) {
+//                        System.out.print(" canEditUser.");
+//                    }
+//                    System.out.println("");
+//                }
+//            }
+//        }
 
-        }
+        // Test get permission by username -- Worked
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = new HashMap<>();
+//
+//            String permUser = "kevin1";
+//            params.put("username", permUser);
+//            IActionResult result = new ClientSocketFactory("/permission/get/username", token, params, null).Connect();
+//
+//            if (result != null && result.body != null) {
+//                List<Permissions> userList = (List<Permissions>) result.body;
+//                Permissions perm = userList.get(0);
+//                System.out.print(perm.username + " has permission of: ");
+//                if (perm.canEditBillboard) {
+//                    System.out.print(" canEditBillboard, ");
+//                }
+//                if (perm.canScheduleBillboard) {
+//                    System.out.print(" canScheduleBillboard, ");
+//                }
+//                if (perm.canViewBillboard) {
+//                    System.out.print(" canViewBillboard, ");
+//                }
+//                if (perm.canCreateBillboard) {
+//                    System.out.print(" canCreateBillboard, ");
+//                }
+//                if (perm.canEditUser) {
+//                    System.out.println(" canEditUser.");
+//                }
+//            }
+//            System.out.println("Get perm by username");
+//        }
+        // Test update permission
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = new HashMap<>();
+//            IActionResult result = new ClientSocketFactory("/permission/get", token, params, null).Connect();
+//            Permissions updatePerm = null;
+//            if (result != null && result.body != null) {
+//                List<Permissions> permList = (List<Permissions>) result.body;
+//                for (Permissions perm: permList)
+//                {
+//                    if (perm.username.equals("kevin1"))
+//                    {
+//                        updatePerm = perm;
+//                        break;
+//                    }
+//                }
+//            }
+//            updatePerm.canEditUser = false;
+//            new ClientSocketFactory("/permission/update", token, params, updatePerm).Connect();
+//            System.out.println("Updated perm");
+//        }
 
     }
 
