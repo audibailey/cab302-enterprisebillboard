@@ -24,7 +24,8 @@ public class BillboardController {
      * This Action is the get all Action for the billboards.
      */
     public static class Get extends Action {
-        public Get() {}
+        public Get() {
+        }
 
         // Override the execute to run the get function of the billboard collection.
         @Override
@@ -41,7 +42,8 @@ public class BillboardController {
      * This Action is the GetById Action for the billboards.
      */
     public static class GetById extends Action {
-        public GetById() {}
+        public GetById() {
+        }
 
         // Override the execute to run the get function of the billboard collection.
         @Override
@@ -67,7 +69,8 @@ public class BillboardController {
      * This Action is the GetByLock Action for the billboards.
      */
     public static class GetByLock extends Action {
-        public GetByLock() {}
+        public GetByLock() {
+        }
 
         // Override the execute to run the get function of the billboard collection.
         @Override
@@ -95,7 +98,8 @@ public class BillboardController {
      * This Action is the Insert Action for the billboards.
      */
     public static class Insert extends Action {
-        public Insert() {}
+        public Insert() {
+        }
 
         // Override the execute to run the insert function of the billboard collection.
         @Override
@@ -119,7 +123,8 @@ public class BillboardController {
      * This Action is the Update Action for the billboards.
      */
     public static class Update extends Action {
-        public Update() {}
+        public Update() {
+        }
 
         // Override the execute to run the update function of the billboard collection.
         @Override
@@ -130,7 +135,12 @@ public class BillboardController {
             String bName = ((Billboard) req.body).name;
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
                 billboard -> bName.equals(String.valueOf(billboard.name)));
-            if (!billboardList.isEmpty()) return new BadRequest("Billboard name already exists.");
+            if (!billboardList.isEmpty()) {
+                Billboard temp = billboardList.get(0);
+                if (temp.id != ((Billboard) req.body).id) {
+                    return new BadRequest("Billboard name already exists.");
+                }
+            }
 
             // Attempt to update the billboard in the database then return a success IActionResult.
             CollectionFactory.getInstance(Billboard.class).update((Billboard) req.body);
@@ -142,7 +152,8 @@ public class BillboardController {
      * This Action is the Delete Action for the billboards.
      */
     public static class Delete extends Action {
-        public Delete() {}
+        public Delete() {
+        }
 
         // Override the execute to run the delete function of the billboard collection.
         @Override

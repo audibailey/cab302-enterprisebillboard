@@ -82,6 +82,12 @@ public class PermissionController {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Permissions)) return new UnsupportedType(Permissions.class);
 
+
+            if(((Permissions) req.body).username.equals(req.session.username) )
+            {
+                if (!((Permissions) req.body).canEditUser) return new BadRequest("Can't remove your own Edit User permission.");
+            }
+
             // Attempt to update the permission in the database then return a success IActionResult.
             CollectionFactory.getInstance(Permissions.class).update((Permissions) req.body);
             return new Ok();

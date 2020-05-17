@@ -61,7 +61,7 @@ public class Permission {
         public IActionResult execute(Request req) throws Exception {
             if (!req.permissions.canEditBillboard) {
                 if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
-
+                if (((Billboard) req.body).locked) return new BadRequest("Can't delete scheduled billboard.");
                 Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(b -> ((Billboard) req.body).id == b.id).stream().findFirst();
                 if (billboard.isEmpty()) return new BadRequest("Billboard does not exist. ");
 
@@ -114,6 +114,34 @@ public class Permission {
         }
     }
 
+    /**
+     * This is an Action class that ensures the user can create users.
+     */
+    public static class canViewPermission extends Action {
+        public canViewPermission() {}
+
+        /**
+         * Override the default execute function with permission check.
+         *
+         * @param req: The user request.
+         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
+         * @throws Exception: Pass through server error.
+         */
+        @Override
+        public IActionResult execute(Request req) throws Exception {
+            if (req.permissions.canEditUser) return new Ok() ;
+            else
+            {
+                if (!(req.params.get("username") instanceof String)) return new UnsupportedType(String.class);
+                Optional <User> user = CollectionFactory.getInstance(User.class).get(u -> (req.params.get("username")).equals(u.username)).stream().findFirst();
+                if (user.isEmpty()) return new BadRequest("User does not exist.");
+
+                if (user.get().id == req.session.userId) return new Ok();
+
+            }
+            return new Unauthorised(" Not authorised to view  other user's permissions.");
+        }
+    }
 
     /**
      * This is an Action class that ensures the user can create users.
@@ -130,11 +158,9 @@ public class Permission {
          */
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (!req.permissions.canEditUser) return new Unauthorised("Not authorised to edit user. ");
+            if (!req.permissions.canEditUser) return new Unauthorised("Not authorised to delete user. ");
             else {
-                System.out.println("Reached here");
                 if (!(req.body instanceof User)) return new UnsupportedType(User.class);
-                System.out.println("reached here????");
                 Optional <User> user = CollectionFactory.getInstance(User.class).get(u -> ((User) req.body).id == u.id).stream().findFirst();
                 if (user.isEmpty()) return new BadRequest("User does not exist. ");
 
