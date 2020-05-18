@@ -1,12 +1,13 @@
 package server;
 
-import common.models.Session;
+import common.models.*;
 import common.router.IActionResult;
+import common.router.Request;
 import common.router.Status;
-import common.models.Billboard;
 import common.utils.ClientSocketFactory;
 import common.utils.HashingFactory;
 import common.utils.RandomFactory;
+import server.controllers.UserPermissionsController;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -46,6 +47,31 @@ public class ClientTest {
             }
         }
 
+        {
+            User u = new User("jamie", HashingFactory.hashPassword("1234"), null);
+            Permissions p = new Permissions(u.username, true, true, true, false, true);
+            UserPermissions up = new UserPermissions(u, p);
+
+            new ClientSocketFactory("/userpermissions/insert", token, null, up).Connect();
+            System.out.println("INSERTING USER jamie with pass 1234");
+        }
+
+        {
+
+            HashMap<String, String> test = new HashMap<String, String>();
+            test.put("username", "jamie");
+            test.put("password", HashingFactory.hashPassword("1234"));
+
+            IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
+
+            if (result.status == Status.SUCCESS) {
+                System.out.println("Successfully logged in!");
+                System.out.println("Your token is: " + ((Session) result.body).token);
+            } else {
+                System.exit(0);
+            }
+        }
+
         // test insert billboard -- Worked
 //        {
 //            HashMap<String, String> params = null;
@@ -56,7 +82,7 @@ public class ClientTest {
 
 //        Billboard updated = null;
 //        Billboard deleted = null;
-        // Test get all -- Worked
+////         Test get all -- Worked
 //        {
 //            HashMap<String, String> params = null;
 //            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
@@ -71,28 +97,28 @@ public class ClientTest {
 //            }
 //        }
         // Test update billboard -- Worked
-        {
-            Scanner sc = new Scanner(System.in);
-            sc.nextLine();
-            HashMap<String, String> params = null;
-            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
-            Billboard updated = null;
-            if (result != null && result.body != null) {
-                List<Billboard> billboards = (List<Billboard>) result.body;
-
-                for (Billboard billboard : billboards) {
-                    if (billboard.userId == 3) {
-                        updated = billboard;
-                        break;
-                    }
-                }
-                updated.name = "Something else1";
-                updated.message = "Hello 12345";
-                new ClientSocketFactory("/billboard/update", token, params, updated).Connect();
-
-                System.out.println("test fuck you Audi \n");
-            }
-        }
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = null;
+//            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+//            Billboard updated = null;
+//            if (result != null && result.body != null) {
+//                List<Billboard> billboards = (List<Billboard>) result.body;
+//
+//                for (Billboard billboard : billboards) {
+//                    if (billboard.userId == 1) {
+//                        updated = billboard;
+//                        break;
+//                    }
+//                }
+//                updated.name = "Something else1";
+//                updated.message = "Hello 12345";
+//                new ClientSocketFactory("/billboard/update", token, params, updated).Connect();
+//
+//                System.out.println("test fuck you Audi \n");
+//            }
+//        }
 
         // Test delete billboard -- Worked
 //        {
