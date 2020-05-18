@@ -97,12 +97,10 @@ public class Login extends JFrame implements ActionListener {
         try {
             // Use this to generate both the salt and password to store in the database manually
             String u = username.getText();
-            char[] passHash = password.getPassword();
-            String pass = String.valueOf(passHash);
 
             HashMap<String, String> params = new HashMap<>();
             params.put("username", u);
-            params.put("password", HashingFactory.hashPassword(pass));
+            params.put("password", HashingFactory.hashPassword(String.valueOf(password.getPassword())));
             IActionResult res = new ClientSocketFactory("/login", null, params, null).Connect();
 
             if (res.status == Status.SUCCESS && res.body instanceof Session) {

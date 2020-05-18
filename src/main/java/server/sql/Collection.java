@@ -25,10 +25,10 @@ public class Collection<T> {
      *
      * @param className: Specified class to set the collection type to.
      */
-    public Collection(Class<T> className) {
+    public Collection(Class<T> className) throws Exception {
         this.className = className;
 
-        // TODO: DO AUTOMAGIC SCHEMA STUFF HERE??
+        SchemaBuilder.build(DataService.getConnection(), className);
     }
 
     /**
