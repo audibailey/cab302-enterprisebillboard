@@ -4,7 +4,7 @@ import common.models.Permissions;
 import common.router.*;
 import common.router.InternalError;
 import server.router.Action;
-import server.services.Session;
+import common.models.Session;
 import server.services.TokenService;
 import server.sql.CollectionFactory;
 

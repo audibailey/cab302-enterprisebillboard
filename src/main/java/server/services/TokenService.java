@@ -1,13 +1,10 @@
 package server.services;
 
+import common.models.Session;
 import common.models.User;
 import common.utils.HashingFactory;
-import common.utils.RandomFactory;
 import server.sql.CollectionFactory;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -37,26 +34,26 @@ public class TokenService {
      * @return String token: Null if failed, token if valid Session exists or new Session created.
      * @throws Exception: Pass through the server error from the tryLogout function.
      */
-    public String tryLogin(User user, String password) throws Exception {
+    public Session tryLogin(User user, String password) throws Exception {
         // Convert the users saved password and salt as a hex to a byte array
         byte[] storedPassword = HashingFactory.decodeHex(user.password);
         byte[] userSalt = HashingFactory.decodeHex(user.salt);
 
         // Attempt to create a hash based on the given password and the salt/password already in the database
-        byte[] testHash = HashingFactory.hashPassword(password, userSalt, storedPassword.length);
+        byte[] testHash = HashingFactory.hashAndSaltPassword(password, userSalt);
 
         // Ensure the testHash is the same as the hash in the database
         if (!Arrays.equals(storedPassword, testHash)) return null;
 
         // Checks if there is a valid session already and returns token if so
         Optional<Session> existingSession = getSessionByUsername(user.username);
-        if (existingSession.isPresent()) return existingSession.get().token;
+        if (existingSession.isPresent()) return existingSession.get();
 
         // Generate new session and save it to sessions set
         Session newSession = new Session(user.id, user.username);
         sessions.add(newSession);
 
-        return newSession.token;
+        return newSession;
     }
 
     /**
