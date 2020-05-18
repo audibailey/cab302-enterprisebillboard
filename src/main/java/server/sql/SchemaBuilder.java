@@ -4,7 +4,10 @@ import common.models.SQLITE;
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+import static common.utils.HashingFactory.encodeHex;
 
 /**
  * This class initialises the database and it's schema.
