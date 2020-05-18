@@ -1,6 +1,8 @@
 package server.router;
 
-import common.router.*;
+import common.router.IActionResult;
+import common.router.NotFound;
+import common.router.Request;
 
 /**
  * The Action Class, this is used in the Router to ensure given executions contain the necessary methods to run

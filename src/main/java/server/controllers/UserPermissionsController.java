@@ -1,6 +1,5 @@
 package server.controllers;
 
-import common.models.Billboard;
 import common.models.Permissions;
 import common.models.User;
 import common.models.UserPermissions;

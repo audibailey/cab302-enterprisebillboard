@@ -1,41 +1,41 @@
 package server.router;
 
-import common.router.*;
 import java.util.HashMap;
 
+/**
+ * A router class to manage ActionLike actions on a Path. Http-Like
+ *
+ * @author Jamie Martin
+ * @author Perdana Bailey
+ */
 public abstract class GenericRouter<Path, ActionLike, RouterLike extends GenericRouter<Path, ActionLike, RouterLike>> {
     protected abstract RouterLike getThis();
 
     private ActionLike authenticatedAction;
 
-    // <Path, Array<Actions> Hash Map to store the path to find those Actions on.
+    // <Path, Array<ActionLike> Hash Map to store the path to find those Actions on.
     // Multiple actions are allowable, enabling chaining ie: Authenticate, then Get
     protected final HashMap<Path, ActionLike[]> routes = new HashMap<>();
 
     public GenericRouter() { }
 
-    public GenericRouter(ActionLike action) {
-        this.authenticatedAction = action;
-    }
-
     /**
-     * Routes a given request and returns the result.
-     * All exceptions inside the actions are handled here and returned to the client.
+     * Routes a given Path and returns the Actions to do.
      *
-     * @param path: The Request class.
-     * @return IActionResult: The result from performing the given actions.
+     * @param path: The Path class.
+     * @return ActionLike[]: The result found using the given Path.
      */
-    public ActionLike[] route(Path path) throws Exception {
-        // Attempt to get the actions from the given path.
+    public ActionLike[] route(Path path) {
+        // Attempt to get the actions from the given path, null if none.
         return routes.get(path);
     }
 
     /**
      * Add an array of Classes that extend Action to the routes path.
      *
-     * @param path:    The path you want to set, ie: /login.
-     * @param actions: The actions you want to perform in order given, ie: Insert.class, GetSecret.class.
-     * @return Router: Returns self/this which allows chaining of ADD().ADD().
+     * @param path:    The Path you want to set, ie: String "/login".
+     * @param actions: The ActionLike actions you want to perform in order given, ie: Insert.class, GetSecret.class.
+     * @return RouterLike: Returns self/this which allows chaining of ADD().ADD().
      */
     public RouterLike ADD(Path path, ActionLike... actions) {
         routes.put(path, actions);
@@ -43,9 +43,20 @@ public abstract class GenericRouter<Path, ActionLike, RouterLike extends Generic
     }
 
     /**
+     * Add an auth Action that appends itself to the start of ADD_AUTH() paths.
+     *
+     * @param action: The ActionLike action you want to perform.
+     * @return RouterLike: Returns self/this which allows chaining of ADD().ADD().
+     */
+    public RouterLike SET_AUTH(ActionLike action) {
+        this.authenticatedAction = action;
+        return getThis();
+    }
+
+    /**
      * Add an array of Classes that extend Action to the routes path with authentication checks.
      *
-     * @param path: The path you want to set, ie: /login.
+     * @param path:    The Path you want to set, ie: String "/login".
      * @param actions: The actions you want to perform in order given, ie: Insert.class, GetSecret.class.
      * @return Router: Returns self/this which allows chaining of ADD().ADD().
      */

@@ -9,8 +9,8 @@ public class RouterTests {
     private static String authentication = "protected";
 
     static class StringRouter extends GenericRouter<String, String, StringRouter> {
-        public StringRouter(String protected_route) {
-            super(protected_route);
+        public StringRouter() {
+            super();
         }
 
         @Override protected StringRouter getThis() { return this; }
@@ -18,11 +18,25 @@ public class RouterTests {
 
     @BeforeAll
     public static void PrepRoutes() {
-        router = new StringRouter(authentication)
+        router = new StringRouter()
+            .ADD_AUTH("/authnull", "it should be just me on this route")
+            .SET_AUTH(authentication)
             .ADD_AUTH("/auth", "permittedToSeeSecret", "a secret")
             .ADD("/unauth", "no secrets here")
             .ADD("/overwritten", "old action")
             .ADD("/overwritten", "new action!");
+    }
+
+    @Test
+    public void TestAuthNull() throws Exception {
+        Object[] actions = router.route("/authnull");
+        assert actions != null;
+
+        var expectedActions = new String[1];
+
+        expectedActions[0] = "it should be just me on this route";
+
+        TestEquals(actions, expectedActions);
     }
 
     @Test
