@@ -1,9 +1,11 @@
 package server;
 
+import common.models.Session;
 import common.router.IActionResult;
 import common.router.Status;
 import common.models.Billboard;
 import common.utils.ClientSocketFactory;
+import common.utils.HashingFactory;
 import common.utils.RandomFactory;
 
 import javax.crypto.SecretKeyFactory;
@@ -28,30 +30,17 @@ public class ClientTest {
             System.out.println("Password: ");
             String password = sc.nextLine();
 
-            int passHash = password.hashCode();
-
-            // Use this to generate both the salt and password to store in the database manually
-            int iterations = 1000;
-            char[] chars = Integer.toString(passHash).toCharArray();
-            byte[] salt = RandomFactory.String().getBytes();
-
-            PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            byte[] hash = skf.generateSecret(spec).getEncoded();
-            System.out.println("Salt: " + new BigInteger(1, salt).toString(16));
-            System.out.println("Password Hash: " + new BigInteger(1, hash).toString(16));
-
             HashMap<String, String> test = new HashMap<String, String>();
             test.put("username", username);
-            test.put("password", Integer.toString(passHash));
+            test.put("password", HashingFactory.hashPassword(password));
 
             System.out.println("Username from test: " + test.get("username"));
             IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
 
             if (result.status == Status.SUCCESS) {
                 System.out.println("Successfully logged in!");
-                System.out.println("Your token is: " + (String) result.body);
-                token = (String) result.body;
+                System.out.println("Your token is: " + ((Session) result.body).token);
+                token = ((Session) result.body).token;
             } else {
                 System.exit(0);
             }
