@@ -1,11 +1,11 @@
 package server.middleware;
 
-import common.models.User;
-import common.router.*;
+import common.router.IActionResult;
+import common.router.Ok;
+import common.router.Request;
+import common.router.Unauthorised;
 import server.router.*;
 import server.services.TokenService;
-
-import java.util.Optional;
 
 /**
  * This class handles the authentication action.

@@ -2,16 +2,12 @@ package server;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Optional;
 
-import common.models.Permissions;
 import common.router.Request;
-import server.router.*;
 import common.router.BadRequest;
 import common.router.IActionResult;
-import server.services.Session;
-import server.services.TokenService;
-import server.sql.CollectionFactory;
+import server.router.Action;
+import server.services.RouterService;
 
 /**
  * This class handles the how the server responds to the clients request.
@@ -23,15 +19,13 @@ public class SocketHandler implements Runnable {
 
     // Used for getting the relevant streams and closing the socket when finished.
     private Socket client;
-    private Router router;
     /**
      * The SocketHandler Constructor.
      *
      * @param client:          This is the socket connection from the client.
      */
-    public SocketHandler(Socket client, Router router) {
+    public SocketHandler(Socket client) {
         this.client = client;
-        this.router = router;
     }
 
     /**
@@ -58,7 +52,9 @@ public class SocketHandler implements Runnable {
             req.ip = client.getLocalAddress().toString();
 
             // use the router to try and find a response
-            IActionResult res = router.route(req);
+            Class<? extends Action>[] actions = RouterService.getInstance().route(req.path);
+            // execute the request for the result
+            IActionResult res = RouteHandler.execute(req, actions);
 
             // send the response
             replyClient(res);

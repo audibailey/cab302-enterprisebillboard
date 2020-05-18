@@ -1,16 +1,11 @@
 package server.middleware;
 
 import common.models.Billboard;
-import common.models.Permissions;
 import common.models.User;
-import server.router.*;
 import common.router.*;
-import server.services.Session;
-import server.services.TokenService;
-import server.sql.Collection;
+import server.router.*;
 import server.sql.CollectionFactory;
 
-import java.util.List;
 import java.util.Optional;
 
 /**

@@ -1,22 +1,14 @@
 package server;
 
-import common.models.Permissions;
-import common.models.User;
-import common.models.UserPermissions;
 import common.router.IActionResult;
-import common.router.Request;
 import common.router.Status;
 import common.models.Billboard;
 import common.utils.ClientSocketFactory;
 import common.utils.RandomFactory;
-import server.sql.CollectionFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.io.*;
 import java.math.BigInteger;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ClientTest {
