@@ -3,8 +3,6 @@ package common.models;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * This class consists of the user's permissions object and its associated methods.
@@ -13,37 +11,29 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-@SQL(type="PRIMARY KEY(id), CONSTRAINT FK_USERPERMID FOREIGN KEY (id) REFERENCES USER(id), CONSTRAINT FK_USERPERMUNAME FOREIGN KEY (username) REFERENCES USER(username))")
 @SQLITE(type="FOREIGN KEY(id) REFERENCES User(id), FOREIGN KEY(username) REFERENCES User(username)")
 public class Permissions implements Serializable {
     /**
      * The variables of the object Permissions
      */
-    @SQL(type="int NOT NULL AUTO_INCREMENT UNIQUE")
     @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
 
-    @SQL(type="varchar(255) NOT NULL UNIQUE")
     @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String username;
 
-    @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canCreateBillboard;
 
-    @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canEditBillboard;
 
-    @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canScheduleBillboard;
 
-    @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canEditUser;
 
-    @SQL(type="BOOLEAN")
     @SQLITE(type="BOOLEAN")
     public boolean canViewBillboard;
 

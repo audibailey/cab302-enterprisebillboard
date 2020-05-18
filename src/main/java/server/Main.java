@@ -40,9 +40,36 @@ public class Main {
         System.out.println("Billboard Server");
 
         System.out.println("Attempting to connect to database...");
+        initDatabase();
 
+        System.out.println("Configuring router...");
+        initRouter();
+
+        // Fetch the port from the props file
+        Properties props = Props.getProps("./network.props");
+        String port = props.getProperty("server.port");
+        if (port == null) {
+            throw new Exception("Server Port was not specified in the network.props file!");
+        }
+
+        // Open the socket
+        System.out.println("Opening Server on port " + port + "...");
+        int portNum = Integer.parseInt(port);
+        ServerSocket ss = new ServerSocket(portNum);
+        System.out.println("Sever available at " + ss.getLocalSocketAddress());
+
+        // Loop through constantly looking for connections
+        while (true) {
+            // When a connection is found accept it and create a thread for it
+            Socket s = ss.accept();
+            System.out.println("A request attempt has been made from " + s.getInetAddress());
+            new Thread(new SocketHandler(s)).start();
+        }
+    }
+
+
+    public static void initDatabase() throws Exception {
         // Connect and populate the database
-        new SchemaBuilder(DataService.getConnection(), true, User.class, Billboard.class, Schedule.class, Permissions.class).build();
         CollectionFactory.getInstance(Billboard.class);
         CollectionFactory.getInstance(User.class);
         CollectionFactory.getInstance(Schedule.class);
@@ -58,7 +85,9 @@ public class Main {
 
             new UserPermissionsController.Insert().execute(new Request(null, null, null, up));
         }
+    }
 
+    public static void initRouter() {
         // ADD THE ROUTER
         RouterService.getInstance().SET_AUTH(Authentication.Authenticate.class)
             .ADD("/login", UserController.Login.class)
@@ -83,26 +112,5 @@ public class Main {
             .ADD_AUTH("/permission/get", Permission.canEditUser.class, PermissionController.Get.class)
             .ADD_AUTH("/permission/get/username", Permission.canViewPermission.class, PermissionController.GetByUsername.class)
             .ADD_AUTH("/permission/update", Permission.canEditUser.class, PermissionController.Update.class);
-
-        // Fetch the port from the props file
-        Properties props = Props.getProps("./network.props");
-        String port = props.getProperty("server.port");
-        if (port == null) {
-            throw new Exception("Server Port was not specified in the network.props file!");
-        }
-
-        // Open the socket
-        System.out.println("Opening Server on port " + port + "...");
-        int portNum = Integer.parseInt(port);
-        ServerSocket ss = new ServerSocket(portNum);
-        System.out.println("Sever available at " + ss.getLocalSocketAddress());
-
-        // Loop through constantly looking for connections
-        while (true) {
-            // When a connection is found accept it and create a thread for it
-            Socket s = ss.accept();
-            System.out.println("A request attempt has been made from " + s.getInetAddress());
-            new Thread(new SocketHandler(s)).start();
-        }
     }
 }
