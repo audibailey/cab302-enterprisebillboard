@@ -1,7 +1,10 @@
 package server;
 
 import common.models.*;
+import common.utils.ClientSocketFactory;
+import common.utils.HashingFactory;
 import common.utils.Props;
+import common.utils.RandomFactory;
 import server.controllers.*;
 import server.middleware.*;
 import server.router.*;
@@ -9,9 +12,14 @@ import server.services.DataService;
 import server.services.RouterService;
 import server.sql.CollectionFactory;
 import server.sql.SchemaBuilder;
+
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
+
+import static common.utils.HashingFactory.encodeHex;
 
 /**
  * This class is the main class, used as the entry point for the server application.
@@ -38,6 +46,39 @@ public class Main {
         CollectionFactory.getInstance(User.class);
         CollectionFactory.getInstance(Schedule.class);
         CollectionFactory.getInstance(Permissions.class);
+
+        // Insert admin user( u:admin-p:admin)
+        boolean checkAdmin = false;
+        List<User> userList = CollectionFactory.getInstance(User.class).get(user -> true);
+        for (User checkUser : userList) {
+            if (checkUser.username.equals("admin")) {
+                checkAdmin = true;
+                break;
+            }
+        }
+        if (!checkAdmin) {
+            HashMap<String, String> params = null;
+            User testUser = User.Random();
+            testUser.username = "admin";
+            testUser.password = "admin";
+            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
+            testPerm.canEditUser = true;
+            testPerm.canScheduleBillboard = true;
+            testPerm.canCreateBillboard = true;
+            testPerm.canViewBillboard = true;
+            testPerm.canEditBillboard = true;
+            // Hash the password supplied and set the respective user objects for database insertion.
+            byte[] salt = RandomFactory.String().getBytes();
+            byte[] password = HashingFactory.hashPassword(Integer.toString(testUser.password.hashCode()), salt, 64);
+            testUser.salt = encodeHex(salt);
+            testUser.password = encodeHex(password);
+
+            // Attempt to insert the user into the database then return a success IActionResult.
+            CollectionFactory.getInstance(User.class).insert(testUser);
+            testPerm.username = testUser.username;
+            CollectionFactory.getInstance(Permissions.class).insert(testPerm);
+        }
+
 
         // ADD THE ROUTER
         RouterService.getInstance().SET_AUTH(Authentication.Authenticate.class)
