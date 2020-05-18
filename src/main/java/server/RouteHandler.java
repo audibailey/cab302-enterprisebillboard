@@ -8,6 +8,7 @@ import common.models.Session;
 import server.services.TokenService;
 import server.sql.CollectionFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 public class RouteHandler {
@@ -19,7 +20,7 @@ public class RouteHandler {
      * @param r: The Request class.
      * @return IActionResult: The result from performing the given actions.
      */
-    public static IActionResult execute(Request r, Class<? extends Action>[] actions) throws Exception {
+    public static IActionResult execute(Request r, List<Class<? extends Action>> actions) throws Exception {
         // If there's no actions return NotFound.
         if (actions == null) return new NotFound("No path requests were specified.");
 
