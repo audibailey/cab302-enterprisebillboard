@@ -31,7 +31,7 @@ public class ClientTest {
             System.out.println("Password: ");
             String password = sc.nextLine();
 
-            HashMap<String, String> test = new HashMap<String, String>();
+            HashMap<String, String> test = new HashMap<>();
             test.put("username", username);
             test.put("password", HashingFactory.hashPassword(password));
 
@@ -58,7 +58,7 @@ public class ClientTest {
 
         {
 
-            HashMap<String, String> test = new HashMap<String, String>();
+            HashMap<String, String> test = new HashMap<>();
             test.put("username", "jamie");
             test.put("password", HashingFactory.hashPassword("1234"));
 
@@ -73,29 +73,27 @@ public class ClientTest {
         }
 
         // test insert billboard -- Worked
-//        {
-//            HashMap<String, String> params = null;
-//            Billboard bb = Billboard.Random(1);
-//
-//            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
-//        }
+        {
+            HashMap<String, String> params = null;
+            Billboard bb = Billboard.Random(1);
 
-//        Billboard updated = null;
-//        Billboard deleted = null;
-////         Test get all -- Worked
-//        {
-//            HashMap<String, String> params = null;
-//            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
-//            if (result != null && result.body != null) {
-//                List<Billboard> billboards = (List<Billboard>) result.body;
-//
-//                for (Billboard billboard : billboards) {
-//                    System.out.println(billboard.name);
-//                }
-//                updated = billboards.get(billboards.size() - 1);
-//
-//            }
-//        }
+            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
+        }
+
+
+//         Test get all -- Worked
+        {
+            HashMap<String, String> params = null;
+            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+            if (result != null && result.body != null) {
+                List<Billboard> billboards = (List<Billboard>) result.body;
+
+                for (Billboard billboard : billboards) {
+                    System.out.println(billboard.name);
+                }
+
+            }
+        }
         // Test update billboard -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
