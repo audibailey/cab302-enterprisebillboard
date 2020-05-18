@@ -1,7 +1,7 @@
 package common.router;
 
 import common.models.Permissions;
-import server.services.Session;
+import common.models.Session;
 
 import java.io.Serializable;
 import java.util.HashMap;
