@@ -13,13 +13,26 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-public class User implements Serializable {
+@SQL
+@SQLITE
+public class User extends Object implements Serializable {
     /**
      * The variables of the object User
      */
+    @SQL(type="int NOT NULL AUTO_INCREMENT UNIQUE")
+    @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
+
+    @SQL(type="varchar(255) UNIQUE")
+    @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String username;
+
+    @SQL(type="varchar(255)")
+    @SQLITE(type="VARCHAR(255)")
     public String password;
+
+    @SQL(type="varchar(255)")
+    @SQLITE(type="VARCHAR(255)")
     public String salt;
 
     /**
@@ -74,22 +87,7 @@ public class User implements Serializable {
     public boolean tryLogin(String pass) {
         return this.password.equals(pass);
     }
-
-    /**
-     * Parses the SQL result set and returns a user object.
-     *
-     * @param rs: the result set from an SQL SELECT query.
-     * @return Billboard: the user object after converting from SQL.
-     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
-     */
-    public static User fromSQL(ResultSet rs) throws SQLException {
-        return new User(
-            rs.getInt("id"),
-            rs.getString("username"),
-            rs.getString("password"),
-            rs.getString("salt"));
-    }
-
+    
     /**
      * Generates a User object with random variables
      * @return a randomised User object

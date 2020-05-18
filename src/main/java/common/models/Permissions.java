@@ -13,18 +13,39 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
+@SQL(type="PRIMARY KEY(id), CONSTRAINT FK_USERPERMID FOREIGN KEY (id) REFERENCES USER(id), CONSTRAINT FK_USERPERMUNAME FOREIGN KEY (username) REFERENCES USER(username))")
+@SQLITE(type="FOREIGN KEY(id) REFERENCES User(id), FOREIGN KEY(username) REFERENCES User(username)")
 public class Permissions implements Serializable {
     /**
      * The variables of the object Permissions
      */
+    @SQL(type="int NOT NULL AUTO_INCREMENT UNIQUE")
+    @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
-    public String username;
-    public boolean canCreateBillboard;
-    public boolean canEditBillboard;
-    public boolean canScheduleBillboard;
-    public boolean canEditUser;
-    public boolean canViewBillboard;
 
+    @SQL(type="varchar(255) NOT NULL UNIQUE")
+    @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
+    public String username;
+
+    @SQL(type="BOOLEAN")
+    @SQLITE(type="BOOLEAN")
+    public boolean canCreateBillboard;
+
+    @SQL(type="BOOLEAN")
+    @SQLITE(type="BOOLEAN")
+    public boolean canEditBillboard;
+
+    @SQL(type="BOOLEAN")
+    @SQLITE(type="BOOLEAN")
+    public boolean canScheduleBillboard;
+
+    @SQL(type="BOOLEAN")
+    @SQLITE(type="BOOLEAN")
+    public boolean canEditUser;
+
+    @SQL(type="BOOLEAN")
+    @SQLITE(type="BOOLEAN")
+    public boolean canViewBillboard;
 
     /**
      * An empty constructor just for creating the object.
@@ -52,24 +73,6 @@ public class Permissions implements Serializable {
         this.canScheduleBillboard = canScheduleBillboard;
         this.canEditUser = canEditUser;
         this.canViewBillboard = canViewBillboard;
-    }
-
-    /**
-     * Parses the SQL result set and returns a permissions object.
-     *
-     * @param rs: the result set from an SQL SELECT query.
-     * @return Billboard: the permissions object after converting from SQL.
-     * @throws SQLException: this is thrown when there is an issue with getting values from the query.
-     */
-    public static Permissions fromSQL(ResultSet rs) throws SQLException {
-        return new Permissions(
-            rs.getInt("id"),
-            rs.getString("username"),
-            rs.getBoolean("canCreateBillboard"),
-            rs.getBoolean("canEditBillboard"),
-            rs.getBoolean("canScheduleBillboard"),
-            rs.getBoolean("canEditUsers"),
-            rs.getBoolean("canViewBillboard"));
     }
 
     /**

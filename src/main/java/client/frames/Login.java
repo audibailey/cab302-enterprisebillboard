@@ -1,6 +1,7 @@
 package client.frames;
 
 import client.Main;
+import common.models.Billboard;
 
 import javax.swing.*;
 import java.awt.*;
