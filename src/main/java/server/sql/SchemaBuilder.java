@@ -1,14 +1,21 @@
 package server.sql;
 
+import common.models.Permissions;
 import common.models.SQL;
 import common.models.SQLITE;
+import common.models.User;
+import common.utils.HashingFactory;
+import common.utils.RandomFactory;
 
 import java.io.ByteArrayInputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+import static common.utils.HashingFactory.encodeHex;
 
 /**
  * This class initialises the database and it's schema.
