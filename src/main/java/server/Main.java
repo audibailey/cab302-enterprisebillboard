@@ -1,6 +1,7 @@
 package server;
 
 import common.models.*;
+import common.router.Request;
 import common.utils.ClientSocketFactory;
 import common.utils.HashingFactory;
 import common.utils.Props;
@@ -48,37 +49,15 @@ public class Main {
         CollectionFactory.getInstance(Permissions.class);
 
         // Insert admin user( u:admin-p:admin)
-        boolean checkAdmin = false;
-        List<User> userList = CollectionFactory.getInstance(User.class).get(user -> true);
-        for (User checkUser : userList) {
-            if (checkUser.username.equals("admin")) {
-                checkAdmin = true;
-                break;
-            }
-        }
-        if (!checkAdmin) {
-            HashMap<String, String> params = null;
-            User testUser = User.Random();
-            testUser.username = "admin";
-            testUser.password = "admin";
-            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
-            testPerm.canEditUser = true;
-            testPerm.canScheduleBillboard = true;
-            testPerm.canCreateBillboard = true;
-            testPerm.canViewBillboard = true;
-            testPerm.canEditBillboard = true;
-            // Hash the password supplied and set the respective user objects for database insertion.
-            byte[] salt = RandomFactory.String().getBytes();
-            byte[] password = HashingFactory.hashPassword(Integer.toString(testUser.password.hashCode()), salt, 64);
-            testUser.salt = encodeHex(salt);
-            testUser.password = encodeHex(password);
+        int adminExists = CollectionFactory.getInstance(User.class).get(user -> user.username.equals("admin")).size();
 
-            // Attempt to insert the user into the database then return a success IActionResult.
-            CollectionFactory.getInstance(User.class).insert(testUser);
-            testPerm.username = testUser.username;
-            CollectionFactory.getInstance(Permissions.class).insert(testPerm);
-        }
+        if (adminExists == 0) {
+            User u = new User("admin", HashingFactory.hashPassword("admin"), null);
+            Permissions p = new Permissions(u.username, true, true, true, true, true);
+            UserPermissions up = new UserPermissions(u, p);
 
+            new UserPermissionsController.Insert().execute(new Request(null, null, null, up));
+        }
 
         // ADD THE ROUTER
         RouterService.getInstance().SET_AUTH(Authentication.Authenticate.class)
