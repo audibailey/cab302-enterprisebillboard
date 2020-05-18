@@ -19,29 +19,62 @@ public class RouterTests {
     @BeforeAll
     public static void PrepRoutes() {
         router = new StringRouter(authentication)
-            .ADD_AUTH("/billboard", "canEditBillboard", "a billboard");
+            .ADD_AUTH("/auth", "permittedToSeeSecret", "a secret")
+            .ADD("/unauth", "no secrets here")
+            .ADD("/overwritten", "old action")
+            .ADD("/overwritten", "new action!");
     }
 
     @Test
     public void TestAuthenticated() throws Exception {
-        Object[] actions = router.route("/billboard");
+        Object[] actions = router.route("/auth");
+        assert actions != null;
+
         var expectedActions = new String[3];
 
         expectedActions[0] = authentication;
-        expectedActions[1] = "canEditBillboard";
-        expectedActions[2] = "a billboard";
+        expectedActions[1] = "permittedToSeeSecret";
+        expectedActions[2] = "a secret";
 
-        assert actions.length == expectedActions.length;
+        TestEquals(actions, expectedActions);
+    }
 
-        for (int i = 0; i < actions.length; i++) {
-            String action = (String)actions[i];
-            assert action.equals(expectedActions[i]);
-        }
+    @Test
+    public void TestUnauthenticated() throws Exception {
+        Object[] actions = router.route("/unauth");
+        assert actions != null;
+
+        var expectedActions = new String[1];
+
+        expectedActions[0] = "no secrets here";
+
+        TestEquals(actions, expectedActions);
     }
 
     @Test
     public void TestNull() throws Exception {
         Object[] actions = router.route("/null");
         assert actions == null;
+    }
+
+    @Test
+    public void TestOverwrite() throws Exception {
+        Object[] actions = router.route("/overwritten");
+        assert actions != null;
+
+        var expectedActions = new String[1];
+
+        expectedActions[0] = "new action!";
+
+        TestEquals(actions, expectedActions);
+    }
+
+    public static void TestEquals(Object[] s1, Object[] s2) throws Exception {
+        assert s1.length == s2.length;
+
+        for (int i = 0; i < s1.length; i++) {
+            String action = (String)s1[i];
+            assert action.equals((String)s2[i]);
+        }
     }
 }
