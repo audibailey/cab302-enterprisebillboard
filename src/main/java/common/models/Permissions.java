@@ -57,6 +57,25 @@ public class Permissions implements Serializable {
     /**
      * Permissions object constructor
      *
+     * @param username:             permissions username.
+     * @param canCreateBillboard:   permissions canCreateBillboard permission.
+     * @param canEditBillboard:     permissions canEditBillboard permission.
+     * @param canScheduleBillboard: permissions canScheduleBillboard permission.
+     * @param canEditUser:          permissions canEditUser permission.
+     * @param canViewBillboard:     permissions canViewBillboard permission.
+     */
+    public Permissions(String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser, boolean canViewBillboard) {
+        this.username = username;
+        this.canCreateBillboard = canCreateBillboard;
+        this.canEditBillboard = canEditBillboard;
+        this.canScheduleBillboard = canScheduleBillboard;
+        this.canEditUser = canEditUser;
+        this.canViewBillboard = canViewBillboard;
+    }
+
+    /**
+     * Permissions object constructor
+     *
      * @param id:                   permissions id.
      * @param username:             permissions username.
      * @param canCreateBillboard:   permissions canCreateBillboard permission.
