@@ -11,7 +11,7 @@ import server.sql.CollectionFactory;
 import java.util.List;
 
 import static common.utils.HashingFactory.encodeHex;
-import static common.utils.HashingFactory.hashPassword;
+import static common.utils.HashingFactory.hashAndSaltPassword;
 
 /**
  * This class acts as the controller with all the Actions related to the schedule request path.
@@ -47,7 +47,7 @@ public class UserPermissionsController {
 
             // Hash the password supplied and set the respective user objects for database insertion.
             byte[] salt = RandomFactory.String().getBytes();
-            byte[] password = hashPassword(user.password, salt, 64);
+            byte[] password = hashAndSaltPassword(user.password, salt);
             user.salt = encodeHex(salt);
             user.password = encodeHex(password);
 
