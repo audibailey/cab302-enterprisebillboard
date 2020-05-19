@@ -23,12 +23,14 @@ public class createEditUserFrame extends JFrame implements ActionListener {
 
     JLabel nameLabel = new JLabel("Username:"); // Username label
     JTextField name = new JTextField(25); // Username label field
+    JLabel passLabel = new JLabel("Password:"); // Password label
+    JPasswordField pass = new JPasswordField(); // Password text field
 
     JLabel perms = new JLabel("Select user permissions:"); // Select user permissions label
     JCheckBox bPerms = new JCheckBox("Create billboards");// Create billboards permission checkbox
-    JCheckBox eBPerms = new JCheckBox("Create billboards");// Edit all billboards permission checkbox
-    JCheckBox sBPerms = new JCheckBox("Create billboards");// Schedule billboards permission checkbox
-    JCheckBox eUPerms = new JCheckBox("Create billboards");// Edit users permission checkbox
+    JCheckBox eBPerms = new JCheckBox("Edit all billboards");// Edit all billboards permission checkbox
+    JCheckBox sBPerms = new JCheckBox("Schedule billboards");// Schedule billboards permission checkbox
+    JCheckBox eUPerms = new JCheckBox("Edit users");// Edit users permission checkbox
 
 
 
@@ -45,7 +47,7 @@ public class createEditUserFrame extends JFrame implements ActionListener {
         }
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayoutManager();
-        addComponentsToContainer();
+        addComponentsToContainer(choice);
         setLocationAndSize();
         // Set the listener for the save button and make it the default button for enter press
         save.addActionListener(this);
@@ -59,19 +61,33 @@ public class createEditUserFrame extends JFrame implements ActionListener {
         panel.setLayout(new GridBagLayout());
     }
 
-    public void addComponentsToContainer() {
+    public void addComponentsToContainer(String choice) {
         GridBagConstraints c = new GridBagConstraints();
         Insets i = new Insets(5, 5, 5, 5);
         c.insets = i;
         c.fill = GridBagConstraints.HORIZONTAL; // Setting grid layout constraints
-        // Add username label to panel
-        c.gridx = 0;
-        c.gridy = 0;
-        panel.add(nameLabel, c);
-        // Add username text box to panel
-        c.gridx = 1;
-        c.gridy = 0;
-        panel.add(name, c);
+        // Check if create user button is selected
+        if(choice == "CreateUser"){
+            // Add username label to panel
+            c.gridx = 0;
+            c.gridy = 0;
+            panel.add(nameLabel, c);
+            // Add username text box to panel
+            c.gridx = 1;
+            c.gridy = 0;
+            panel.add(name, c);
+        }
+        // Check if edit user button is selected
+        if(choice == "EditUser"){
+            // Add password label to panel
+            c.gridx = 0;
+            c.gridy = 0;
+            panel.add(passLabel, c);
+            // Add password text box to panel
+            c.gridx = 1;
+            c.gridy = 0;
+            panel.add(pass, c);
+        }
         // Add user permissions label to panel
         c.gridx = 0;
         c.gridy = 1;
@@ -106,6 +122,7 @@ public class createEditUserFrame extends JFrame implements ActionListener {
         int height = screenSize.height;
 
         // Display the window.
+
         // Get the screen size
         setSize(width / 2, height / 2);
         // Get the frame size for centering
