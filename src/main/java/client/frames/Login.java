@@ -103,14 +103,12 @@ public class Login extends JFrame implements ActionListener {
             params.put("password", HashingFactory.hashPassword(String.valueOf(password.getPassword())));
             IActionResult res = new ClientSocketFactory("/login", null, params, null).Connect();
 
-            if (res.status == Status.SUCCESS && res.body instanceof Session) {
+            if (res != null && res.status == Status.SUCCESS && res.body instanceof Session) {
                 SessionService.setInstance((Session) res.body);
                 System.out.println("Successfully logged in!");
                 System.out.println("Your token is: " + SessionService.getInstance().token);
                 dispose();
                 Main.createAndShowClient();
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
         } catch (Exception exception) {
             exception.printStackTrace();
