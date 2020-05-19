@@ -34,7 +34,7 @@ public class BillboardFrame extends JFrame implements ActionListener {
 
     public BillboardFrame(Billboard billboard) {
         setTitle("Edit Billboard");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayoutManager();
         addComponentsToContainer();
         setLocationAndSize();

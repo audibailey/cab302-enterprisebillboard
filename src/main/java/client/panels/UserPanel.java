@@ -2,15 +2,19 @@ package client.panels;
 
 import client.components.SelectableTable;
 import client.components.SelectableTableModel;
+import client.frames.createEditUserFrame;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class UserPanel extends JPanel {
+public class UserPanel extends JPanel implements ActionListener {
     int selected;
     JButton addButton = new JButton("New User");
+    JButton editButton = new JButton("Edit User");
     Container pagination = new Container();
     JButton first = new JButton("<<");
     JButton prev = new JButton("<");
@@ -39,6 +43,8 @@ public class UserPanel extends JPanel {
         setLayout(new GridBagLayout());
         pagination.setLayout(new GridLayout());
         addComponentsToContainer();
+        addButton.addActionListener(this::actionPerformed); // Registering create user button
+        editButton.addActionListener(this::actionPerformed); // Registering edit user button
     }
 
     public void addComponentsToContainer() {
@@ -51,6 +57,10 @@ public class UserPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(addButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        add(editButton, gbc);
 
         GridBagConstraints table_gbc = new GridBagConstraints();
 
@@ -83,5 +93,18 @@ public class UserPanel extends JPanel {
         gbc.fill = GridBagConstraints.CENTER;
         add(pagination, gbc);
 
+    }
+
+    @Override
+    // Adding listener events for the user panel buttons.
+    public void actionPerformed(ActionEvent e) {
+        // Check if new user button is pressed
+        if(e.getSource() == addButton){
+            new createEditUserFrame("CreateUser"); // Open create user frame
+        }
+        // Check if edit user button is pressed
+        if(e.getSource() == editButton){
+            new createEditUserFrame("EditUser"); // Open edit user frame
+        }
     }
 }

@@ -2,10 +2,8 @@ package client;
 
 import client.frames.*;
 import common.models.Billboard;
-import common.models.User;
 
 import java.io.*;
-import java.net.Socket;
 
 /**
  * This class consists of the Billboard Viewer handler.
@@ -39,6 +37,6 @@ public class Main {
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
 
-        javax.swing.SwingUtilities.invokeLater(() -> createAndShowLogin());
+        javax.swing.SwingUtilities.invokeLater(() -> runAll());
     }
 }
