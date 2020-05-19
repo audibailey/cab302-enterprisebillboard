@@ -2,6 +2,8 @@ package client.panels;
 
 import client.components.SelectableTable;
 import client.components.SelectableTableModel;
+import client.services.SessionService;
+import common.models.Session;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -10,7 +12,8 @@ import java.awt.*;
 
 public class BillboardPanel extends JPanel {
     int selected;
-    JButton addButton = new JButton("New Billboard");
+    JButton createButton = new JButton("Create Billboard");
+    JButton editButton = new JButton("Edit Billboard");
     Container pagination = new Container();
     JButton first = new JButton("<<");
     JButton prev = new JButton("<");
@@ -47,9 +50,19 @@ public class BillboardPanel extends JPanel {
         gbc.fill = GridBagConstraints.CENTER;
         gbc.gridwidth = 1;
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(addButton, gbc);
+        Session session = SessionService.getInstance();
+
+         if (session.permissions.canCreateBillboard) {
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            add(createButton, gbc);
+        }
+
+        if (session.permissions.canEditBillboard) {
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            add(editButton, gbc);
+        }
 
         GridBagConstraints table_gbc = new GridBagConstraints();
 

@@ -1,6 +1,7 @@
 package server.controllers;
 
 import common.models.Permissions;
+import common.models.Session;
 import common.models.User;
 import common.router.*;
 import common.utils.RandomFactory;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static common.utils.HashingFactory.encodeHex;
-import static common.utils.HashingFactory.hashPassword;
+import static common.utils.HashingFactory.hashAndSaltPassword;
 
 /**
  * This class acts as the controller with all the Actions related to the user request path.
@@ -50,11 +51,12 @@ public class UserController {
 
             // Ensure the user exists.
             Optional<User> user = TokenService.getInstance().checkUserExists(username);
-            if (user.isPresent()) {
+            Optional<Permissions> permissions = TokenService.getInstance().checkPermissionsExist(username);
+            if (user.isPresent() && permissions.isPresent()) {
                 // Attempt to log the user in and request for the token.
-                String token = TokenService.getInstance().tryLogin(user.get(), password);
+                Session ses = TokenService.getInstance().tryLogin(user.get(), permissions.get(), password);
                 // Return a success IActionResult with the token.
-                if (token != null) return new Ok(token);
+                if (ses != null) return new Ok(ses);
             }
 
             // If the token is null that means the password is incorrect.
@@ -102,7 +104,7 @@ public class UserController {
 
             // Hash the password supplied and set the respective user objects for database insertion.
             byte[] salt = RandomFactory.String().getBytes();
-            byte[] password = hashPassword(((User) req.body).password, salt, 64);
+            byte[] password = hashAndSaltPassword(((User) req.body).password, salt);
             ((User) req.body).salt = encodeHex(salt);
             ((User) req.body).password = encodeHex(password);
 

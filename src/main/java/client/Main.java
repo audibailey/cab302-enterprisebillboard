@@ -33,7 +33,7 @@ public class Main {
     /**
      * Main class to run GUI Application and socket interface
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
 
