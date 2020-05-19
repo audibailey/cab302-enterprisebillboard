@@ -3,8 +3,6 @@ package common.models;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * This class consists of the user object and its associated methods.
@@ -13,25 +11,20 @@ import java.sql.SQLException;
  * @author Kevin Huynh
  * @author Jamie Martin
  */
-@SQL
 @SQLITE
 public class User extends Object implements Serializable {
     /**
      * The variables of the object User
      */
-    @SQL(type="int NOT NULL AUTO_INCREMENT UNIQUE")
     @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
 
-    @SQL(type="varchar(255) UNIQUE")
     @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String username;
 
-    @SQL(type="varchar(255)")
     @SQLITE(type="VARCHAR(255)")
     public String password;
 
-    @SQL(type="varchar(255)")
     @SQLITE(type="VARCHAR(255)")
     public String salt;
 
