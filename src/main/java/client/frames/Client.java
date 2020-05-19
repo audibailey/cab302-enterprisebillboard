@@ -3,6 +3,7 @@ package client.frames;
 import client.Main;
 import client.components.Menu;
 import client.panels.PanelHandler;
+import client.services.SessionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class Client extends JFrame implements ActionListener {
         setLocationAndSize();
 
         menu.getLogout().addActionListener(e -> {
-            System.out.println("clicked!");
+            SessionService.setInstance(null);
             client.Main.createAndShowLogin();
             dispose();
         });
