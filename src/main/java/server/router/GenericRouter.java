@@ -1,6 +1,9 @@
 package server.router;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A router class to manage ActionLike actions on a Path. Http-Like
@@ -15,7 +18,7 @@ public abstract class GenericRouter<Path, ActionLike, RouterLike extends Generic
 
     // <Path, Array<ActionLike> Hash Map to store the path to find those Actions on.
     // Multiple actions are allowable, enabling chaining ie: Authenticate, then Get
-    protected final HashMap<Path, ActionLike[]> routes = new HashMap<>();
+    protected final HashMap<Path, List<ActionLike>> routes = new HashMap<>();
 
     public GenericRouter() { }
 
@@ -23,11 +26,13 @@ public abstract class GenericRouter<Path, ActionLike, RouterLike extends Generic
      * Routes a given Path and returns the Actions to do.
      *
      * @param path: The Path class.
-     * @return ActionLike[]: The result found using the given Path.
+     * @return List<ActionLike>: The result found using the given Path.
      */
-    public ActionLike[] route(Path path) {
+    public List<ActionLike> route(Path path) {
         // Attempt to get the actions from the given path, null if none.
-        return routes.get(path);
+        List<ActionLike> actions = routes.get(path);
+
+        return actions;
     }
 
     /**
@@ -38,7 +43,7 @@ public abstract class GenericRouter<Path, ActionLike, RouterLike extends Generic
      * @return RouterLike: Returns self/this which allows chaining of ADD().ADD().
      */
     public RouterLike ADD(Path path, ActionLike... actions) {
-        routes.put(path, actions);
+        routes.put(path, Arrays.asList(actions));
         return getThis();
     }
 
@@ -68,26 +73,14 @@ public abstract class GenericRouter<Path, ActionLike, RouterLike extends Generic
         }
 
         // Add the authentication class and the actions.
-        ADD(path, combine(authenticatedAction, actions));
-        return getThis();
-    }
+        List<ActionLike> actionList = new ArrayList<>();
+        actionList.add(authenticatedAction);
 
-    /**
-     * This function combines multiple Actions.
-     *
-     * @param action: The base action other actions are combining into.
-     * @param actions: The other actions that are combining into the base.
-     * @return ActionLike[]: Returns the list of combined actions.
-     */
-    public ActionLike[] combine(ActionLike action, ActionLike... actions) {
-
-        ActionLike[] temp = (ActionLike[]) new Object[actions.length + 1];
-
-        for (int i = 0; i < actions.length + 1; i++) {
-            if (i == 0) temp[i] = action;
-            else temp[i] = actions[i-1];
+        for (ActionLike action : actions) {
+            actionList.add(action);
         }
 
-        return temp;
+        routes.put(path, actionList);
+        return getThis();
     }
 }

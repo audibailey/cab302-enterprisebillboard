@@ -3,6 +3,7 @@ package common.utils;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Arrays;
 
 /**
@@ -15,22 +16,39 @@ public class HashingFactory {
     private final static int ITERATIONS = 1000;
 
     /**
-     * This function creates a PBKDF2WithHmaxSHA1 hash using the password, the a byte array as the salt and a length.
+     * This function creates a PBKDF2WithHmacSHA1 hash using the password, the a byte array as the salt and a length.
      *
      * @param password: The password to hash.
      * @param salt: The salt to combine with the password.
-     * @param length: The length of the key usually based on password length.
      * @return byte[]: A byte array with the hex of the hashed and salted password.
      * @throws Exception: Pass through the server error.
      */
-    public static byte[] hashPassword(String password, byte[] salt, int length) throws Exception {
+    public static byte[] hashAndSaltPassword(String password, byte[] salt) throws Exception {
         // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
-        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, length * 8);
+        PBEKeySpec HashingSpec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, 64);
         // Choose the cryptography standard for hashing
         SecretKeyFactory HashingStandard = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 
         // Attempt to hash the supplied password using the hashing standard and hashing spec
         return HashingStandard.generateSecret(HashingSpec).getEncoded();
+    }
+
+    public static String hashPassword(String password) throws Exception {
+        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+        crypt.reset();
+        crypt.update(password.getBytes("UTF-8"));
+
+        return encodeHex(crypt.digest());
+    }
+
+    /**
+     * This function creates a random salt.
+     *
+     * @return byte[]: A byte array salt.
+     * @throws Exception: Pass through the server error.
+     */
+    public static byte[] getSalt() {
+        return RandomFactory.String().getBytes();
     }
 
     /**

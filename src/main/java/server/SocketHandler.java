@@ -2,6 +2,7 @@ package server;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 import common.router.Request;
 import common.router.BadRequest;
@@ -47,12 +48,12 @@ public class SocketHandler implements Runnable {
             Object o = ois.readObject();
             // cast the object to a request
             Request req = (Request) o;
-
+            System.out.println("On path: " + req.path);
             // assign the IP of the client to the request
             req.ip = client.getLocalAddress().toString();
 
             // use the router to try and find a response
-            Class<? extends Action>[] actions = RouterService.getInstance().route(req.path);
+            List<Class<? extends Action>> actions = RouterService.getInstance().route(req.path);
             // execute the request for the result
             IActionResult res = RouteHandler.execute(req, actions);
 
@@ -61,6 +62,7 @@ public class SocketHandler implements Runnable {
 
         } catch (Exception e) {
             // Print an error if reading the objects fail
+            e.printStackTrace();
             replyClient(new BadRequest("Invalid request."));
         }
 
