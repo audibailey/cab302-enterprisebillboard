@@ -1,7 +1,11 @@
 package server;
 
 import common.models.*;
+import common.router.Request;
+import common.utils.ClientSocketFactory;
+import common.utils.HashingFactory;
 import common.utils.Props;
+import common.utils.RandomFactory;
 import server.controllers.*;
 import server.middleware.*;
 import server.router.*;
@@ -9,9 +13,14 @@ import server.services.DataService;
 import server.services.RouterService;
 import server.sql.CollectionFactory;
 import server.sql.SchemaBuilder;
+
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
+
+import static common.utils.HashingFactory.encodeHex;
 
 /**
  * This class is the main class, used as the entry point for the server application.
@@ -31,14 +40,54 @@ public class Main {
         System.out.println("Billboard Server");
 
         System.out.println("Attempting to connect to database...");
+        initDatabase();
 
+        System.out.println("Configuring router...");
+        initRouter();
+
+        // Fetch the port from the props file
+        Properties props = Props.getProps("./network.props");
+        String port = props.getProperty("server.port");
+        if (port == null) {
+            throw new Exception("Server Port was not specified in the network.props file!");
+        }
+
+        // Open the socket
+        System.out.println("Opening Server on port " + port + "...");
+        int portNum = Integer.parseInt(port);
+        ServerSocket ss = new ServerSocket(portNum);
+        System.out.println("Sever available at " + ss.getLocalSocketAddress());
+
+        // Loop through constantly looking for connections
+        while (true) {
+            // When a connection is found accept it and create a thread for it
+            Socket s = ss.accept();
+            System.out.println("A request attempt has been made from " + s.getInetAddress());
+            new Thread(new SocketHandler(s)).start();
+        }
+    }
+
+
+    public static void initDatabase() throws Exception {
         // Connect and populate the database
-        new SchemaBuilder(DataService.getConnection(), true, User.class, Billboard.class, Schedule.class, Permissions.class).build();
         CollectionFactory.getInstance(Billboard.class);
         CollectionFactory.getInstance(User.class);
         CollectionFactory.getInstance(Schedule.class);
         CollectionFactory.getInstance(Permissions.class);
 
+        // Insert admin user( u:admin-p:admin)
+        int adminExists = CollectionFactory.getInstance(User.class).get(user -> user.username.equals("admin")).size();
+
+        if (adminExists == 0) {
+            User u = new User("admin", HashingFactory.hashPassword("admin"), null);
+            Permissions p = new Permissions(u.username, true, true, true, true, true);
+            UserPermissions up = new UserPermissions(u, p);
+
+            new UserPermissionsController.Insert().execute(new Request(null, null, null, up));
+        }
+    }
+
+    public static void initRouter() {
         // ADD THE ROUTER
         RouterService.getInstance().SET_AUTH(Authentication.Authenticate.class)
             .ADD("/login", UserController.Login.class)
@@ -63,26 +112,5 @@ public class Main {
             .ADD_AUTH("/permission/get", Permission.canEditUser.class, PermissionController.Get.class)
             .ADD_AUTH("/permission/get/username", Permission.canViewPermission.class, PermissionController.GetByUsername.class)
             .ADD_AUTH("/permission/update", Permission.canEditUser.class, PermissionController.Update.class);
-
-        // Fetch the port from the props file
-        Properties props = Props.getProps("./network.props");
-        String port = props.getProperty("server.port");
-        if (port == null) {
-            throw new Exception("Server Port was not specified in the network.props file!");
-        }
-
-        // Open the socket
-        System.out.println("Opening Server on port " + port + "...");
-        int portNum = Integer.parseInt(port);
-        ServerSocket ss = new ServerSocket(portNum);
-        System.out.println("Sever available at " + ss.getLocalSocketAddress());
-
-        // Loop through constantly looking for connections
-        while (true) {
-            // When a connection is found accept it and create a thread for it
-            Socket s = ss.accept();
-            System.out.println("A request attempt has been made from " + s.getInetAddress());
-            new Thread(new SocketHandler(s)).start();
-        }
     }
 }

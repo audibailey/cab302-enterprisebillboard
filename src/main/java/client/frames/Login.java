@@ -1,12 +1,25 @@
 package client.frames;
 
 import client.Main;
+import client.services.SessionService;
 import common.models.Billboard;
+import common.models.Session;
+import common.router.IActionResult;
+import common.router.Status;
+import common.utils.ClientSocketFactory;
+import common.utils.HashingFactory;
+import common.utils.RandomFactory;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -81,13 +94,26 @@ public class Login extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (username.getText().equalsIgnoreCase("admin") //&& passwordField.getPassword().toString().equalsIgnoreCase("admin")
-        ) {
-            dispose();
-            Main.createAndShowClient();
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid Username or Password");
+        try {
+            // Use this to generate both the salt and password to store in the database manually
+            String u = username.getText();
+
+            HashMap<String, String> params = new HashMap<>();
+            params.put("username", u);
+            params.put("password", HashingFactory.hashPassword(String.valueOf(password.getPassword())));
+            IActionResult res = new ClientSocketFactory("/login", null, params, null).Connect();
+
+            if (res.status == Status.SUCCESS && res.body instanceof Session) {
+                SessionService.setInstance((Session) res.body);
+                System.out.println("Successfully logged in!");
+                System.out.println("Your token is: " + SessionService.getInstance().token);
+                dispose();
+                Main.createAndShowClient();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password");
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
-
 }

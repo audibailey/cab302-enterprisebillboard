@@ -1,5 +1,6 @@
 package server.sql;
 
+import common.models.SQLITE;
 import server.services.DataService;
 
 import java.io.ByteArrayInputStream;
@@ -21,11 +22,10 @@ public class StatementBuilder {
      * Creates a SELECT SQL statement based on given class type.
      *
      * @param className: The provided class type.
-     * @param <T>: The type of the provided class type.
      * @return PreparedStatement: The SELECT SQL statement.
      * @throws Exception: A pass-through internal server exception.
      */
-    public static <T> PreparedStatement get(Connection conn, Class<T> className) throws Exception {
+    public static PreparedStatement get(Connection conn, Class<?> className) throws Exception {
         return conn.prepareStatement(createGetStatement(className));
     }
 
@@ -33,21 +33,20 @@ public class StatementBuilder {
      * Creates a SELECT SQL statement string based on given class type.
      *
      * @param className: The provided class type.
-     * @param <T>: The type of the provided class type.
      * @return String: The SELECT SQL statement string.
      */
-    public static <T> String createGetStatement(Class<T> className) {
+    public static String createGetStatement(Class<?> className) {
         return "SELECT * FROM " + className.getSimpleName().toUpperCase();
     }
 
-    public static <T> PreparedStatement insert(Connection conn, T object) throws Exception {
+    public static PreparedStatement insert(Connection conn, Object object) throws Exception {
         Class clazz = object.getClass();
         PreparedStatement pstmt = conn.prepareStatement(createInsertStatement(clazz));
 
         int j = 1;
 
         for (Field field : getFields(object.getClass())) {
-            if (field.getName() != "id") {
+            if (field.getName() != "id" && object.getClass().getAnnotationsByType(SQLITE.class).length > 0) {
                 Object value = field.get(object);
                 pstmt.setObject(j, value);
 
@@ -57,7 +56,13 @@ public class StatementBuilder {
         return pstmt;
     }
 
-    public static <T> String createInsertStatement(Class<T> clazz) {
+    /**
+     * Creates an INSERT SQL statement string based on given class type.
+     *
+     * @param clazz: The provided class type.
+     * @return String: The SELECT SQL statement string.
+     */
+    public static String createInsertStatement(Class<?> clazz) {
         List<Field> fields = getFields(clazz);
         int lastField = fields.toArray().length - 1;
 
@@ -67,7 +72,7 @@ public class StatementBuilder {
         int i = 1;
 
         for (Field field : fields) {
-            if (field.getName() != "id") {
+            if (field.getName() != "id" && hasSQLAnnotation(clazz)) {
                 field.setAccessible(true);
                 if (i == lastField) {
                     names.append(field.getName() + ")");
@@ -83,7 +88,7 @@ public class StatementBuilder {
         return names.toString() + values.toString();
     }
 
-    public static <T> PreparedStatement update(Connection conn, T object) throws Exception {
+    public static PreparedStatement update(Connection conn, Object object) throws Exception {
         Class clazz = object.getClass();
         PreparedStatement pstmt = conn.prepareStatement(createUpdateStatement(clazz));
 
@@ -91,7 +96,7 @@ public class StatementBuilder {
         int j = 1;
 
         for (Field field : getFields(object.getClass())) {
-            if (field.getName() != "id") {
+            if (field.getName() != "id" && hasSQLAnnotation(clazz)) {
                 Object value = field.get(object);
                 pstmt.setObject(j, value);
 
@@ -104,7 +109,13 @@ public class StatementBuilder {
         return pstmt;
     }
 
-    public static <T> String createUpdateStatement(Class<T> clazz) throws Exception {
+    /**
+     * Creates an UPDATE SQL statement string based on given class type.
+     *
+     * @param clazz: The provided class type.
+     * @return String: The SELECT SQL statement string.
+     */
+    public static String createUpdateStatement(Class<?> clazz) throws Exception {
         List<Field> fields = getFields(clazz);
         int lastField = fields.toArray().length - 1;
 
@@ -113,7 +124,7 @@ public class StatementBuilder {
         int i = 1;
 
         for (Field field : fields) {
-            if (field.getName() != "id") {
+            if (field.getName() != "id" && hasSQLAnnotation(clazz)) {
                 field.setAccessible(true);
 
                 if (i == lastField)
@@ -128,7 +139,7 @@ public class StatementBuilder {
         return names.append(" WHERE ID = ?").toString();
     }
 
-    public static <T> PreparedStatement delete(Connection conn, T object) throws Exception {
+    public static PreparedStatement delete(Connection conn, Object object) throws Exception {
         Class clazz = object.getClass();
 
         int id = clazz.getDeclaredField("id").getInt(object);
@@ -140,13 +151,23 @@ public class StatementBuilder {
         return pstmt;
     }
 
-    public static <T> String createDeleteStatement(Class<T> clazz) {
+    /**
+     * Creates a DELETE SQL statement string based on given class type.
+     *
+     * @param clazz: The provided class type.
+     * @return String: The SELECT SQL statement string.
+     */
+    public static String createDeleteStatement(Class<?> clazz) {
         return "DELETE FROM " + clazz.getSimpleName().toUpperCase() + " WHERE ID = ?";
     }
 
     /* HELPER FUNCTIONS */
 
-    private static <T> List<Field> getFields(Class<T> clazz) {
+    private static List<Field> getFields(Class<?> clazz) {
         return Arrays.asList(clazz.getDeclaredFields());
+    }
+
+    private static boolean hasSQLAnnotation(Class<?> clazz) {
+        return clazz.getAnnotationsByType(SQLITE.class).length > 0;
     }
 }

@@ -1,10 +1,13 @@
 package server;
 
+import common.models.*;
 import common.router.IActionResult;
+import common.router.Request;
 import common.router.Status;
-import common.models.Billboard;
 import common.utils.ClientSocketFactory;
+import common.utils.HashingFactory;
 import common.utils.RandomFactory;
+import server.controllers.UserPermissionsController;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -28,82 +31,92 @@ public class ClientTest {
             System.out.println("Password: ");
             String password = sc.nextLine();
 
-            int passHash = password.hashCode();
-
-            // Use this to generate both the salt and password to store in the database manually
-            int iterations = 1000;
-            char[] chars = Integer.toString(passHash).toCharArray();
-            byte[] salt = RandomFactory.String().getBytes();
-
-            PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            byte[] hash = skf.generateSecret(spec).getEncoded();
-            System.out.println("Salt: " + new BigInteger(1, salt).toString(16));
-            System.out.println("Password Hash: " + new BigInteger(1, hash).toString(16));
-
-            HashMap<String, String> test = new HashMap<String, String>();
+            HashMap<String, String> test = new HashMap<>();
             test.put("username", username);
-            test.put("password", Integer.toString(passHash));
+            test.put("password", HashingFactory.hashPassword(password));
 
             System.out.println("Username from test: " + test.get("username"));
             IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
 
             if (result.status == Status.SUCCESS) {
                 System.out.println("Successfully logged in!");
-                System.out.println("Your token is: " + (String) result.body);
-                token = (String) result.body;
+                System.out.println("Your token is: " + ((Session) result.body).token);
+                token = ((Session) result.body).token;
+            } else {
+                System.exit(0);
+            }
+        }
+
+        {
+            User u = new User("jamie", HashingFactory.hashPassword("1234"), null);
+            Permissions p = new Permissions(u.username, true, true, true, false, true);
+            UserPermissions up = new UserPermissions(u, p);
+
+            new ClientSocketFactory("/userpermissions/insert", token, null, up).Connect();
+            System.out.println("INSERTING USER jamie with pass 1234");
+        }
+
+        {
+
+            HashMap<String, String> test = new HashMap<>();
+            test.put("username", "jamie");
+            test.put("password", HashingFactory.hashPassword("1234"));
+
+            IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
+
+            if (result.status == Status.SUCCESS) {
+                System.out.println("Successfully logged in!");
+                System.out.println("Your token is: " + ((Session) result.body).token);
             } else {
                 System.exit(0);
             }
         }
 
         // test insert billboard -- Worked
-//        {
-//            HashMap<String, String> params = null;
-//            Billboard bb = Billboard.Random(1);
-//
-//            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
-//        }
-
-//        Billboard updated = null;
-//        Billboard deleted = null;
-        // Test get all -- Worked
-//        {
-//            HashMap<String, String> params = null;
-//            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
-//            if (result != null && result.body != null) {
-//                List<Billboard> billboards = (List<Billboard>) result.body;
-//
-//                for (Billboard billboard : billboards) {
-//                    System.out.println(billboard.name);
-//                }
-//                updated = billboards.get(billboards.size() - 1);
-//
-//            }
-//        }
-        // Test update billboard -- Worked
         {
-            Scanner sc = new Scanner(System.in);
-            sc.nextLine();
+            HashMap<String, String> params = null;
+            Billboard bb = Billboard.Random(1);
+
+            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
+        }
+
+
+//         Test get all -- Worked
+        {
             HashMap<String, String> params = null;
             IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
-            Billboard updated = null;
             if (result != null && result.body != null) {
                 List<Billboard> billboards = (List<Billboard>) result.body;
 
                 for (Billboard billboard : billboards) {
-                    if (billboard.userId == 3) {
-                        updated = billboard;
-                        break;
-                    }
+                    System.out.println(billboard.name);
                 }
-                updated.name = "Something else1";
-                updated.message = "Hello 12345";
-                new ClientSocketFactory("/billboard/update", token, params, updated).Connect();
 
-                System.out.println("test fuck you Audi \n");
             }
         }
+        // Test update billboard -- Worked
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = null;
+//            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+//            Billboard updated = null;
+//            if (result != null && result.body != null) {
+//                List<Billboard> billboards = (List<Billboard>) result.body;
+//
+//                for (Billboard billboard : billboards) {
+//                    if (billboard.userId == 1) {
+//                        updated = billboard;
+//                        break;
+//                    }
+//                }
+//                updated.name = "Something else1";
+//                updated.message = "Hello 12345";
+//                new ClientSocketFactory("/billboard/update", token, params, updated).Connect();
+//
+//                System.out.println("test fuck you Audi \n");
+//            }
+//        }
 
         // Test delete billboard -- Worked
 //        {

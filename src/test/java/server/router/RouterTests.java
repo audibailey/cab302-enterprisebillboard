@@ -3,6 +3,9 @@ package server.router;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RouterTests {
 
     private static StringRouter router;
@@ -29,66 +32,66 @@ public class RouterTests {
 
     @Test
     public void TestAuthNull() throws Exception {
-        Object[] actions = router.route("/authnull");
+        List<String> actions = router.route("/authnull");
         assert actions != null;
 
-        var expectedActions = new String[1];
+        List<String> expectedActions = new ArrayList<>();
 
-        expectedActions[0] = "it should be just me on this route";
+        expectedActions.add("it should be just me on this route");
 
         TestEquals(actions, expectedActions);
     }
 
     @Test
     public void TestAuthenticated() throws Exception {
-        Object[] actions = router.route("/auth");
+        List<String> actions = router.route("/auth");
         assert actions != null;
 
-        var expectedActions = new String[3];
+        List<String> expectedActions = new ArrayList<>();
 
-        expectedActions[0] = authentication;
-        expectedActions[1] = "permittedToSeeSecret";
-        expectedActions[2] = "a secret";
+        expectedActions.add(authentication);
+        expectedActions.add("permittedToSeeSecret");
+        expectedActions.add("a secret");
 
         TestEquals(actions, expectedActions);
     }
 
     @Test
     public void TestUnauthenticated() throws Exception {
-        Object[] actions = router.route("/unauth");
+        List<String> actions = router.route("/unauth");
         assert actions != null;
 
-        var expectedActions = new String[1];
+        List<String> expectedActions = new ArrayList<>();
 
-        expectedActions[0] = "no secrets here";
+        expectedActions.add("no secrets here");
 
         TestEquals(actions, expectedActions);
     }
 
     @Test
     public void TestNull() throws Exception {
-        Object[] actions = router.route("/null");
+        List<String> actions = router.route("/null");
         assert actions == null;
     }
 
     @Test
     public void TestOverwrite() throws Exception {
-        Object[] actions = router.route("/overwritten");
+        List<String> actions = router.route("/overwritten");
         assert actions != null;
 
-        var expectedActions = new String[1];
+        List<String> expectedActions = new ArrayList<>();
 
-        expectedActions[0] = "new action!";
+        expectedActions.add("new action!");
 
         TestEquals(actions, expectedActions);
     }
 
-    public static void TestEquals(Object[] s1, Object[] s2) throws Exception {
-        assert s1.length == s2.length;
+    public static void TestEquals(List<String> s1, List<String> s2) throws Exception {
+        assert s1.size() == s2.size();
 
-        for (int i = 0; i < s1.length; i++) {
-            String action = (String)s1[i];
-            assert action.equals((String)s2[i]);
+        for (int i = 0; i < s1.size(); i++) {
+            String action = s1.get(i);
+            assert action.equals(s2.get(i));
         }
     }
 }

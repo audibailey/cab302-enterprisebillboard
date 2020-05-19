@@ -1,10 +1,11 @@
-package server.services;
+package common.models;
 
 import common.utils.RandomFactory;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Session {
+public class Session implements Serializable {
     public String token;
     public int userId;
     public String username;
