@@ -48,7 +48,7 @@ public class SocketHandler implements Runnable {
             Object o = ois.readObject();
             // cast the object to a request
             Request req = (Request) o;
-
+            System.out.println("On path: " + req.path);
             // assign the IP of the client to the request
             req.ip = client.getLocalAddress().toString();
 

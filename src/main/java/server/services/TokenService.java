@@ -1,5 +1,6 @@
 package server.services;
 
+import common.models.Permissions;
 import common.models.Session;
 import common.models.User;
 import common.utils.HashingFactory;
@@ -30,11 +31,12 @@ public class TokenService {
      * This is the function called when a client attempts to login.
      *
      * @param user: This is the user object of the user trying to login
+     * @param permissions: These are the permissions of the user trying to login
      * @param password: The attempted password
      * @return String token: Null if failed, token if valid Session exists or new Session created.
      * @throws Exception: Pass through the server error from the tryLogout function.
      */
-    public Session tryLogin(User user, String password) throws Exception {
+    public Session tryLogin(User user, Permissions permissions, String password) throws Exception {
         // Convert the users saved password and salt as a hex to a byte array
         byte[] storedPassword = HashingFactory.decodeHex(user.password);
         byte[] userSalt = HashingFactory.decodeHex(user.salt);
@@ -50,7 +52,7 @@ public class TokenService {
         if (existingSession.isPresent()) return existingSession.get();
 
         // Generate new session and save it to sessions set
-        Session newSession = new Session(user.id, user.username);
+        Session newSession = new Session(user.id, user.username, permissions);
         sessions.add(newSession);
 
         return newSession;
@@ -65,6 +67,10 @@ public class TokenService {
      */
     public Optional<User> checkUserExists(String username) throws Exception {
         return CollectionFactory.getInstance(User.class).get(u -> u.username.equals(username)).stream().findFirst();
+    }
+
+    public Optional<Permissions> checkPermissionsExist(String username) throws Exception {
+        return CollectionFactory.getInstance(Permissions.class).get(u -> u.username.equals(username)).stream().findFirst();
     }
 
     /**
