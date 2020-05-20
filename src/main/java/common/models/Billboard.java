@@ -3,6 +3,8 @@ package common.models;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class consists of the billboard object and its associated methods.
@@ -141,6 +143,24 @@ public class Billboard implements Serializable {
             RandomFactory.Boolean(),
             userId
         );
+    }
+
+    public static Object[] toObjectArray(Billboard b) {
+        return new Object[]{ b.name, b.message, b.messageColor, b.information, b.informationColor };
+    }
+
+    public static Object[][] objectify(List<Billboard> billboards) {
+        List<Object[]> bill = new ArrayList<>();
+
+        for (Billboard b : billboards) {
+            bill.add(toObjectArray(b));
+        }
+
+        if (bill.size() == 0) {
+            return new Object[2][0];
+        } else {
+            return (Object[][]) bill.toArray();
+        }
     }
 
 }
