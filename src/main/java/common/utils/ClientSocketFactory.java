@@ -4,6 +4,7 @@ import common.router.IActionResult;
 import common.router.Request;
 import common.swing.Notification;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
@@ -49,7 +50,9 @@ public class ClientSocketFactory {
                 res = (IActionResult) o;
 
                 if (res.error) {
-                    Notification.display(res.message);
+                    IActionResult finalRes = res;
+                    SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
+                    System.out.println(req.path);
                     System.out.println( res.status.toString());
                     System.out.println( res.message);
                 }

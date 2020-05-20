@@ -6,8 +6,7 @@ import common.models.Session;
 import javax.swing.*;
 
 public class PanelHandler extends JTabbedPane {
-    public PanelHandler() {
-        Session session = SessionService.getInstance();
+    public PanelHandler(Session session) {
 
         if (session.permissions.canViewBillboard) {
             add("Billboards", new BillboardPanel());
