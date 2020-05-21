@@ -46,14 +46,8 @@ public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
     }
 
     @Override
-    public Object getValueAt(T t, int columnIndex) {
-        try {
-            return columnInfoMap.get(columnIndex)
-                .getterMethod.invoke(t);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Object getValueAt(T t, int columnIndex) throws Exception {
+        return columnInfoMap.get(columnIndex).getterMethod.invoke(t);
     }
 
     @Override
@@ -89,11 +83,21 @@ public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
     @Override
     public boolean setObjectFieldValue(T t, int column, Object value) {
         ColumnInfo columnInfo = columnInfoMap.get(column);
+
         try {
+            Object oldValue = columnInfo.getterMethod.invoke(t);
+
             if (columnInfo.setterMethod != null) {
                 columnInfo.setterMethod.invoke(t, value);
-                dataService.update(t);
-                return true;
+
+                Boolean success = dataService.update(t);
+
+                if (success) {
+                    return true;
+                } else {
+                    columnInfo.setterMethod.invoke(t, oldValue);
+                    return false;
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

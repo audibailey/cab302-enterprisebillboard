@@ -1,4 +1,4 @@
-package client.components;
+package client.components.table;
 
 import common.models.Picture;
 
