@@ -1,15 +1,19 @@
 package client.panels;
 
+import common.models.Schedule;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SchedulePanel extends JPanel {
-    JButton button;
+    JButton button = new JButton("Schedule");
+    private List<Schedule> scheduleList = new ArrayList<>();
 
     public SchedulePanel() {
 
-        button = new JButton("Schedule");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -21,6 +25,5 @@ public class SchedulePanel extends JPanel {
             }
         });
         add(button);
-
     }
 }

@@ -1,87 +1,151 @@
 package client.panels;
 
-import client.components.SelectableTable;
-import client.components.SelectableTableModel;
+import client.components.table.ColourEditor;
+import client.components.table.ColourRenderer;
+import client.components.table.PictureEditor;
+import client.components.table.PictureRenderer;
+import client.components.table.DisplayableObjectTableModel;
+import client.components.table.ObjectTableModel;
+import client.frames.CreateEditUserFrame;
+import client.services.BillboardService;
+import client.services.SessionService;
+import common.models.Billboard;
+import common.models.Picture;
+import common.models.Session;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Optional;
 
-public class BillboardPanel extends JPanel {
-    int selected;
-    JButton addButton = new JButton("New Billboard");
-    Container pagination = new Container();
-    JButton first = new JButton("<<");
-    JButton prev = new JButton("<");
-    JButton next = new JButton(">");
-    JButton last = new JButton(">>");
+public class BillboardPanel extends JPanel implements ActionListener {
 
-    private String[] columnNames = {"Id", "Name", "Message"};
-
-    private Object[][] data = {
-        {1, "Billboard 1", "Hello World!"},
-        {2, "Billboard 2", "Hello World Again!"},
-    };
-
-    SelectableTableModel model = new SelectableTableModel(data, columnNames);
-    SelectableTable table = new SelectableTable(model, new ListSelectionListener() {
-        public void valueChanged(ListSelectionEvent e) {
-            selected = (int) table.getValueAt(table.getSelectedRow(), 0);
-            System.out.println(selected);
-        }
-    });
-
-    JScrollPane scrollPane = new JScrollPane(table);
+    ObjectTableModel<Billboard> tableModel;
+    JTable table;
+    Container buttonContainer = new Container();
+    JButton viewButton, createButton, refreshButton, deleteButton;
+    String selected;
 
     public BillboardPanel() {
-        setLayout(new GridBagLayout());
-        pagination.setLayout(new GridLayout());
-        addComponentsToContainer();
+        Session session = SessionService.getInstance();
+
+        createButton = new JButton("Create New");
+        viewButton = new JButton("View Selected");
+        refreshButton = new JButton("Refresh");
+        deleteButton = new JButton("Delete Selected");
+        createButton.addActionListener(this::actionPerformed);
+
+        if (!session.permissions.canCreateBillboard) {
+            createButton.setEnabled(false);
+        }
+
+        viewButton.addActionListener(this::actionPerformed);
+        refreshButton.addActionListener(this::actionPerformed);
+        deleteButton.addActionListener(this::actionPerformed);
+        viewButton.setEnabled(false);
+        deleteButton.setEnabled(false);
+
+        tableModel = new DisplayableObjectTableModel<>(Billboard.class, BillboardService.getInstance());
+        tableModel.setObjectRows(BillboardService.getInstance().refresh());
+        table = new JTable(tableModel);
+
+        setupSelection();
+        setupRenderersAndEditors();
+
+        JScrollPane pane = new JScrollPane(table);
+
+        buttonContainer.setLayout(new FlowLayout());
+        buttonContainer.add(createButton);
+        buttonContainer.add(viewButton);
+        buttonContainer.add(refreshButton);
+        buttonContainer.add(deleteButton);
+
+        setLayout(new BorderLayout());
+        add(buttonContainer, BorderLayout.NORTH);
+        add(pane, BorderLayout.CENTER);
+        setVisible(true);
     }
 
-    public void addComponentsToContainer() {
-        GridBagConstraints gbc = new GridBagConstraints();
-        Insets i = new Insets(5, 5, 5, 5);
-        gbc.insets = i;
-        gbc.fill = GridBagConstraints.CENTER;
-        gbc.gridwidth = 1;
+    public void setupSelection() {
+        table.setAutoCreateRowSorter(true);
+        table.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel = table.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(addButton, gbc);
+        cellSelectionModel.addListSelectionListener(e -> {
+            selected = (String)table.getModel().getValueAt(table.getSelectedRow(), 1);
+            Session session = SessionService.getInstance();
 
-        GridBagConstraints table_gbc = new GridBagConstraints();
+            Optional<Billboard> selectedValue = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
 
-        table_gbc.weightx = 1.0;
-        table_gbc.weighty = 1.0;
-        table_gbc.gridx = 0;
-        table_gbc.gridy = 1;
-        table_gbc.gridwidth = 6;
-        table_gbc.fill = GridBagConstraints.BOTH;
-        add(scrollPane, table_gbc);
-        table.setFillsViewportHeight(true);
+            if (selectedValue.isPresent() && (session.permissions.canEditBillboard || session.userId == selectedValue.get().userId)) {
+                if (selected != null) {
+                    viewButton.setEnabled(true);
+                    deleteButton.setEnabled(true);
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+                    System.out.println(selected);
+                } else {
+                    viewButton.setEnabled(false);
+                    deleteButton.setEnabled(false);
+                }
+            }
+        });
+    }
 
-        gbc.gridx = 0;
-        pagination.add(first, gbc);
+    public void setupRenderersAndEditors() {
+        //Set up renderer and editor for the Favourite Colour column.
+        table.setDefaultRenderer(Color.class,
+            new ColourRenderer());
+        table.setDefaultEditor(Color.class,
+            new ColourEditor());
+        table.setDefaultEditor(Picture.class, new PictureEditor());
+        table.setDefaultRenderer(Picture.class, new PictureRenderer());
+    }
 
-        gbc.gridx = 1;
-        pagination.add(prev, gbc);
+    @Override
+    // Adding listener events for the user panel buttons.
+    public void actionPerformed(ActionEvent e) {
+        // Check if new user button is pressed
+        if(e.getSource() == createButton){
+            String result = (String)JOptionPane.showInputDialog(
+                this,
+                "Input a new billboard name",
+                "Create Billboard",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+            );
 
-        gbc.gridx = 3;
-        pagination.add(next, gbc);
+            if (result != null) {
+                Billboard b = new Billboard();
+                b.name = result;
 
-        gbc.gridx = 4;
-        pagination.add(last, gbc);
+                tableModel.setObjectRows(BillboardService.getInstance().insert(b));
+                tableModel.fireTableDataChanged();
+            }
+        }
+        // Check if edit user button is pressed
+        if(e.getSource() == viewButton){
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    viewer.Main.createAndShowGUI(tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst().get());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+        }
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 4;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.CENTER;
-        add(pagination, gbc);
+        if (e.getSource() == refreshButton) {
+            tableModel.setObjectRows(BillboardService.getInstance().refresh());
+            tableModel.fireTableDataChanged();
+        }
 
+        if (e.getSource() == deleteButton) {
+            tableModel.setObjectRows(BillboardService.getInstance().delete(tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst().get()));
+            tableModel.fireTableDataChanged();
+        }
     }
 }

@@ -1,8 +1,10 @@
 package server.services;
 
+import common.models.Permissions;
 import common.models.Session;
 import common.models.User;
 import common.utils.HashingFactory;
+import server.middleware.Permission;
 import server.sql.CollectionFactory;
 
 import java.time.LocalDateTime;
@@ -30,11 +32,12 @@ public class TokenService {
      * This is the function called when a client attempts to login.
      *
      * @param user: This is the user object of the user trying to login
+     * @param permissions: These are the permissions of the user trying to login
      * @param password: The attempted password
      * @return String token: Null if failed, token if valid Session exists or new Session created.
      * @throws Exception: Pass through the server error from the tryLogout function.
      */
-    public Session tryLogin(User user, String password) throws Exception {
+    public Session tryLogin(User user, Permissions permissions, String password) throws Exception {
         // Convert the users saved password and salt as a hex to a byte array
         byte[] storedPassword = HashingFactory.decodeHex(user.password);
         byte[] userSalt = HashingFactory.decodeHex(user.salt);
@@ -47,10 +50,22 @@ public class TokenService {
 
         // Checks if there is a valid session already and returns token if so
         Optional<Session> existingSession = getSessionByUsername(user.username);
-        if (existingSession.isPresent()) return existingSession.get();
+        if (existingSession.isPresent()) {
+            Session session = existingSession.get();
+
+            sessions.remove(session);
+
+            Optional<Permissions> p = checkPermissionsExist(session.username);
+
+            session.permissions = p.get();
+
+            sessions.add(session);
+
+            return session;
+        }
 
         // Generate new session and save it to sessions set
-        Session newSession = new Session(user.id, user.username);
+        Session newSession = new Session(user.id, user.username, permissions);
         sessions.add(newSession);
 
         return newSession;
@@ -65,6 +80,10 @@ public class TokenService {
      */
     public Optional<User> checkUserExists(String username) throws Exception {
         return CollectionFactory.getInstance(User.class).get(u -> u.username.equals(username)).stream().findFirst();
+    }
+
+    public Optional<Permissions> checkPermissionsExist(String username) throws Exception {
+        return CollectionFactory.getInstance(Permissions.class).get(u -> u.username.equals(username)).stream().findFirst();
     }
 
     /**

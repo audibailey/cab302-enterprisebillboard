@@ -1,7 +1,14 @@
 package viewer;
 
+import common.models.Billboard;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 /**
  * This class consists of the Billboard Viewer handler.
@@ -14,8 +21,13 @@ public class Main {
     /**
      * Create the Billboard Viewer GUI and show it.
      */
-    private static void createAndShowGUI() {
+    public static void createAndShowGUI(Billboard billboard) throws IOException {
         JFrame frame = new JFrame("Billboard Viewer"); // Constructing Billboard Viewer frame
+
+        // Check if billboard has a background colour attribute to add background colour
+        if(billboard.backgroundColor != null){
+            frame.getContentPane().setBackground(Color.decode(billboard.backgroundColor)); // Setting background colour
+        }
 
         // Get the screen dimensions
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -26,14 +38,25 @@ public class Main {
         frame.setSize(screen_Width, screen_Height); // Setting frame size
 
         // Setting the frame event listeners
-        frame.addKeyListener(new ExitEvents.KeyListener()); // Adding key listener
-        frame.addMouseListener(new ExitEvents.MouseListener()); // Adding mouse listener
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    frame.dispose();
+                }
+            }
+        }); // Adding key listener
+        frame.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                frame.dispose();
+            }
+        }); // Adding mouse listener
 
         // Setting frame properties
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set frame to exit on close
         frame.setExtendedState(Frame.MAXIMIZED_BOTH); // Setting frame size to maximise to full screen
         frame.setUndecorated(true); // Removing the frame title bar including default buttons
-        frame.setContentPane(new ViewerPanel()); // Assigning Viewer panel to Viewer frame
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        new ViewerPanel(frame, billboard); // Assigning ViewerPanel to Viewer frame
         frame.setVisible(true); // Show frame
     }
 
@@ -41,11 +64,17 @@ public class Main {
      * Main class to run GUI Application and socket interface
      */
     public static void main(String[] args) throws InterruptedException {
+        Billboard billboard = Billboard.Random(1); // Creating new random Billboard object for testing. Comment out each line to test an attribute.
+
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                try {
+                    createAndShowGUI(billboard);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

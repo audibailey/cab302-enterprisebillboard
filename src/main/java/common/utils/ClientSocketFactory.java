@@ -2,7 +2,9 @@ package common.utils;
 
 import common.router.IActionResult;
 import common.router.Request;
+import common.swing.Notification;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
@@ -27,36 +29,44 @@ public class ClientSocketFactory {
         this.body = body;
     }
 
-    public IActionResult Connect() throws IOException, ClassNotFoundException {
-        Socket s = new Socket("127.0.0.1", 12345);
+    public IActionResult Connect() {
+        try {
+            Socket s = new Socket("127.0.0.1", 12345);
 
-        OutputStream outputStream = s.getOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-        Request req = new Request(path, token, params, body);
-        oos.writeObject(req);
-        oos.flush();
-        oos.reset();
+            OutputStream outputStream = s.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+            Request req = new Request(path, token, params, body);
+            oos.writeObject(req);
+            oos.flush();
 
-        InputStream inputStream = s.getInputStream();
-        ObjectInputStream ois = new ObjectInputStream(inputStream);
-        Object o = ois.readObject();
+            InputStream inputStream = s.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(inputStream);
+            Object o = ois.readObject();
 
-        IActionResult res = null;
+            IActionResult res = null;
 
-        if (o instanceof IActionResult) {
-            res = (IActionResult) o;
+            if (o instanceof IActionResult) {
+                res = (IActionResult) o;
 
-             if (res.error) {
-                //Notification.display(res.message);
-                System.out.println( res.status.toString());
-                System.out.println( res.message);
+                if (res.error) {
+                    IActionResult finalRes = res;
+                    SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
+                    System.out.println(req.path);
+                    System.out.println(res.status.toString());
+                    System.out.println(res.message);
+                }
             }
-        }
 
-        ois.close();
-        s.close();
-        
-        return res;
+            ois.close();
+            oos.close();
+            s.close();
+
+            return res;
+        } catch (IOException | ClassNotFoundException ex) {
+            Notification.display(ex.getMessage());
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 }

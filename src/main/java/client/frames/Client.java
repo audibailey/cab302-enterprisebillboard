@@ -3,6 +3,7 @@ package client.frames;
 import client.Main;
 import client.components.Menu;
 import client.panels.PanelHandler;
+import client.services.SessionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +15,14 @@ public class Client extends JFrame implements ActionListener {
     Menu menu = new Menu();
 
     public Client() {
-        setTitle("Billboard Control Panel");
+        setTitle("Control Panel");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLocationAndSize();
 
         menu.getLogout().addActionListener(e -> {
-            System.out.println("clicked!");
+            SessionService.setInstance(null);
             client.Main.createAndShowLogin();
             dispose();
         });
@@ -28,7 +30,9 @@ public class Client extends JFrame implements ActionListener {
         setJMenuBar(menu);
 
         add(new PanelHandler(), BorderLayout.CENTER);
+
         setVisible(true);
+
     }
 
     public void setLocationAndSize() {

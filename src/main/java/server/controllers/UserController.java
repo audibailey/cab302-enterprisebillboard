@@ -51,9 +51,10 @@ public class UserController {
 
             // Ensure the user exists.
             Optional<User> user = TokenService.getInstance().checkUserExists(username);
-            if (user.isPresent()) {
+            Optional<Permissions> permissions = TokenService.getInstance().checkPermissionsExist(username);
+            if (user.isPresent() && permissions.isPresent()) {
                 // Attempt to log the user in and request for the token.
-                Session ses = TokenService.getInstance().tryLogin(user.get(), password);
+                Session ses = TokenService.getInstance().tryLogin(user.get(), permissions.get(), password);
                 // Return a success IActionResult with the token.
                 if (ses != null) return new Ok(ses);
             }
