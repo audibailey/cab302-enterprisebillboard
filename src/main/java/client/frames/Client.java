@@ -4,6 +4,7 @@ import client.Main;
 import client.components.Menu;
 import client.panels.PanelHandler;
 import client.services.SessionService;
+import common.models.Session;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,8 @@ public class Client extends JFrame implements ActionListener {
     Menu menu = new Menu();
 
     public Client() {
-        setTitle("Billboard Control Panel");
+        setTitle("Control Panel");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLocationAndSize();
@@ -29,7 +31,9 @@ public class Client extends JFrame implements ActionListener {
         setJMenuBar(menu);
 
         add(new PanelHandler(), BorderLayout.CENTER);
+
         setVisible(true);
+
     }
 
     public void setLocationAndSize() {

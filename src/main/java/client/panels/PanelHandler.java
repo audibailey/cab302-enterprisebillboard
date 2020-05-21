@@ -6,20 +6,31 @@ import common.models.Session;
 import javax.swing.*;
 
 public class PanelHandler extends JTabbedPane {
+
+    BillboardPanel billboardPanel = new BillboardPanel();
+    SchedulePanel schedulePanel = new SchedulePanel();
+    UserPanel userPanel = new UserPanel();
+
     public PanelHandler() {
         Session session = SessionService.getInstance();
 
-        if (session.permissions.canViewBillboard) {
-            add("Billboards", new BillboardPanel());
+        if (session == null) {
+            add("Billboards", billboardPanel);
+            add("Schedule", schedulePanel);
+            add("Users", userPanel);
         }
+        else {
+            if (session.permissions.canViewBillboard) {
+                add("Billboards", billboardPanel);
+            }
 
-        if (session.permissions.canScheduleBillboard) {
-            add("Schedule", new SchedulePanel());
+            if (session.permissions.canScheduleBillboard) {
+                add("Schedule", schedulePanel);
+            }
+
+            if (session.permissions.canEditUser) {
+                add("Users", userPanel);
+            }
         }
-
-        if (session.permissions.canEditUser) {
-            add("Users", new UserPanel());
-        }
-
     }
 }
