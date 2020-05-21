@@ -2,7 +2,7 @@ package client.panels;
 
 import client.components.SelectableTable;
 import client.components.SelectableTableModel;
-import client.frames.createEditUserFrame;
+import client.frames.CreateEditUserFrame;
 import client.services.BillboardService;
 import client.services.SessionService;
 import common.models.Billboard;
