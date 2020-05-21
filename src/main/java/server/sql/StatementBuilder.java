@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * A class to generate SQL statements given a class type.
@@ -41,12 +42,14 @@ public class StatementBuilder {
 
     public static PreparedStatement insert(Connection conn, Object object) throws Exception {
         Class clazz = object.getClass();
+        var fields = getFields(clazz);
         PreparedStatement pstmt = conn.prepareStatement(createInsertStatement(clazz));
 
         int j = 1;
 
-        for (Field field : getFields(object.getClass())) {
-            if (field.getName() != "id" && hasSQLAnnotation(field)) {
+        for (Object obj : fields) {
+            var field = (Field) obj;
+            if (field.getName() != "id") {
                 Object value = field.get(object);
                 pstmt.setObject(j, value);
 
@@ -63,16 +66,17 @@ public class StatementBuilder {
      * @return String: The SELECT SQL statement string.
      */
     public static String createInsertStatement(Class<?> clazz) {
-        List<Field> fields = getFields(clazz);
-        int lastField = fields.toArray().length - 1;
+        var fields = getFields(clazz);
+        int lastField = fields.length - 1;
 
         var names = new StringBuilder("INSERT INTO " + clazz.getSimpleName().toUpperCase() + " (");
         var values = new StringBuilder(" VALUES (");
 
         int i = 1;
 
-        for (Field field : fields) {
-            if (field.getName() != "id" && hasSQLAnnotation(field)) {
+        for (Object obj : fields) {
+            var field = (Field) obj;
+            if (field.getName() != "id") {
                 field.setAccessible(true);
                 if (i == lastField) {
                     names.append(field.getName() + ")");
@@ -90,13 +94,17 @@ public class StatementBuilder {
 
     public static PreparedStatement update(Connection conn, Object object) throws Exception {
         Class clazz = object.getClass();
-        PreparedStatement pstmt = conn.prepareStatement(createUpdateStatement(clazz));
+        var fields = getFields(clazz);
+        String statement = createUpdateStatement(clazz);
+
+        PreparedStatement pstmt = conn.prepareStatement(statement);
 
         int id = clazz.getDeclaredField("id").getInt(object);
         int j = 1;
 
-        for (Field field : getFields(object.getClass())) {
-            if (field.getName() != "id" && hasSQLAnnotation(field)) {
+        for (Object obj : fields) {
+            var field = (Field) obj;
+            if (field.getName() != "id") {
                 Object value = field.get(object);
                 pstmt.setObject(j, value);
 
@@ -116,15 +124,17 @@ public class StatementBuilder {
      * @return String: The SELECT SQL statement string.
      */
     public static String createUpdateStatement(Class<?> clazz) throws Exception {
-        List<Field> fields = getFields(clazz);
-        int lastField = fields.toArray().length - 1;
+        var fields = getFields(clazz);
+        int lastField = fields.length - 1;
 
         StringBuilder names = new StringBuilder("UPDATE " + clazz.getSimpleName().toUpperCase() + " SET ");
 
         int i = 1;
 
-        for (Field field : fields) {
-            if (field.getName() != "id" && hasSQLAnnotation(field)) {
+        for (Object obj : fields) {
+            var field = (Field) obj;
+
+            if (field.getName() != "id") {
                 field.setAccessible(true);
 
                 if (i == lastField)
@@ -163,8 +173,8 @@ public class StatementBuilder {
 
     /* HELPER FUNCTIONS */
 
-    private static List<Field> getFields(Class<?> clazz) {
-        return Arrays.asList(clazz.getDeclaredFields());
+    private static Object[] getFields(Class<?> clazz) {
+        return Arrays.asList(clazz.getDeclaredFields()).stream().filter(f -> hasSQLAnnotation(f) && f.getName() != "serialVersionUID").toArray();
     }
 
     public static boolean hasSQLAnnotation(Field field) {

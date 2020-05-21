@@ -17,9 +17,7 @@ public class PanelHandler extends JTabbedPane {
         if (session == null) {
             add("Test Billboard", new TestBillboardPanel());
             add("Test User", new TestUserPanel());
-            add("Billboards", billboardPanel);
             add("Schedule", schedulePanel);
-            add("Users", userPanel);
         }
         else {
             if (session.permissions.canViewBillboard) {

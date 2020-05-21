@@ -10,7 +10,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -40,7 +42,7 @@ public class Billboard implements Serializable, Editable {
     public String messageColor;
 
     @SQLITE(type="BLOB")
-    public byte[] picture;
+    public String picture;
 
     @SQLITE(type="VARCHAR(7) DEFAULT \"#ffffff\"")
     public String backgroundColor;
@@ -82,7 +84,7 @@ public class Billboard implements Serializable, Editable {
                      String name,
                      String message,
                      String messageColor,
-                     byte[] picture,
+                     String picture,
                      String backgroundColor,
                      String information,
                      String informationColor,
@@ -117,7 +119,7 @@ public class Billboard implements Serializable, Editable {
         String name,
         String message,
         String messageColor,
-        byte[] picture,
+        String picture,
         String backgroundColor,
         String information,
         String informationColor,
@@ -144,7 +146,7 @@ public class Billboard implements Serializable, Editable {
             RandomFactory.String(),
             RandomFactory.String(),
             RandomFactory.Color(),
-            RandomFactory.Bytes(30),
+            null,
             RandomFactory.Color(),
             RandomFactory.String(),
             RandomFactory.Color(),
@@ -180,17 +182,12 @@ public class Billboard implements Serializable, Editable {
     }
 
     @DisplayAs(value = "Picture", index = 4, editable = true)
-    public BufferedImage getPicture() throws IOException {
-        if (picture == null) return null;
-
-        ByteArrayInputStream bis = new ByteArrayInputStream(picture);
-        return ImageIO.read(bis);
+    public Picture getPicture() {
+        return new Picture(picture);
     }
 
-    public void setPicture(BufferedImage p) throws IOException {
-        ByteArrayOutputStream finalPicture = new ByteArrayOutputStream();
-        ImageIO.write(p, "jpg", finalPicture);
-        picture = finalPicture.toByteArray();
+    public void setPicture(Picture p) {
+        picture = p.data;
     }
 
     @DisplayAs(value = "Background Colour", index = 5, editable = true)
@@ -220,7 +217,12 @@ public class Billboard implements Serializable, Editable {
         informationColor = String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
     }
 
-    @DisplayAs(value = "User Id", index = 8)
+    @DisplayAs(value = "Locked", index = 8)
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    @DisplayAs(value = "User Id", index = 9)
     public int getUserId() {
         return userId;
     }

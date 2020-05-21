@@ -1,5 +1,7 @@
 package client.components;
 
+import common.models.Picture;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableCellEditor;
@@ -10,11 +12,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Base64;
 
 public class PictureEditor extends AbstractCellEditor
     implements TableCellEditor,
     ActionListener {
-    byte[] currentPicture;
+    Picture currentPicture;
     JButton button;
     JFileChooser fileChooser;
     JDialog dialog;
@@ -27,7 +30,7 @@ public class PictureEditor extends AbstractCellEditor
         button.setBorderPainted(false);
 
         fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "png", "jpeg"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "BMP", "JPEG", "PNG"));
         dialog = new JDialog((Window) null);
     }
 
@@ -40,8 +43,9 @@ public class PictureEditor extends AbstractCellEditor
                 File file = fileChooser.getSelectedFile();
                 try {
                     System.out.println(file.toPath());
-                    currentPicture = Files.readAllBytes(file.toPath());
-                    System.out.println(currentPicture.toString());
+                    byte[] fileContent = Files.readAllBytes(file.toPath());
+                    currentPicture.data = Base64.getEncoder().encodeToString(fileContent);
+                    System.out.println(currentPicture.data);
                 } catch (IOException e1) {
                     JOptionPane.showMessageDialog(null, "Failed to load the file: " + e1.getMessage());
                     e1.printStackTrace();
@@ -63,7 +67,7 @@ public class PictureEditor extends AbstractCellEditor
                                                  boolean isSelected,
                                                  int row,
                                                  int column) {
-        currentPicture = (byte[]) value;
+        currentPicture = (Picture) value;
         return button;
     }
 }
