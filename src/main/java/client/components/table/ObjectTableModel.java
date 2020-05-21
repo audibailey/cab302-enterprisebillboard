@@ -22,8 +22,12 @@ public abstract class ObjectTableModel<T> extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        T t = objectRows.get(rowIndex);
-        return getValueAt(t, columnIndex);
+        try {
+            T t = objectRows.get(rowIndex);
+            return getValueAt(t, columnIndex);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -48,7 +52,7 @@ public abstract class ObjectTableModel<T> extends AbstractTableModel {
     }
 
     public abstract  boolean isColumnEditable(int columnIndex);
-    public abstract Object getValueAt(T t, int columnIndex);
+    public abstract Object getValueAt(T t, int columnIndex) throws Exception;
     public abstract boolean setObjectFieldValue(T t, int column, Object value);
 
     @Override
