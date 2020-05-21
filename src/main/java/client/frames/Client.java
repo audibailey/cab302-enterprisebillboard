@@ -4,7 +4,6 @@ import client.Main;
 import client.components.Menu;
 import client.panels.PanelHandler;
 import client.services.SessionService;
-import common.models.Session;
 
 import javax.swing.*;
 import java.awt.*;

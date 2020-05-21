@@ -2,23 +2,15 @@ package client.frames;
 
 import client.Main;
 import client.services.SessionService;
-import common.models.Billboard;
 import common.models.Session;
 import common.router.IActionResult;
 import common.router.Status;
 import common.utils.ClientSocketFactory;
 import common.utils.HashingFactory;
-import common.utils.RandomFactory;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class Login extends JFrame implements ActionListener {
