@@ -4,6 +4,7 @@ import common.models.Permissions;
 import common.models.Session;
 import common.models.User;
 import common.utils.HashingFactory;
+import server.middleware.Permission;
 import server.sql.CollectionFactory;
 
 import java.time.LocalDateTime;
@@ -49,7 +50,19 @@ public class TokenService {
 
         // Checks if there is a valid session already and returns token if so
         Optional<Session> existingSession = getSessionByUsername(user.username);
-        if (existingSession.isPresent()) return existingSession.get();
+        if (existingSession.isPresent()) {
+            Session session = existingSession.get();
+
+            sessions.remove(session);
+
+            Optional<Permissions> p = checkPermissionsExist(session.username);
+
+            session.permissions = p.get();
+
+            sessions.add(session);
+
+            return session;
+        }
 
         // Generate new session and save it to sessions set
         Session newSession = new Session(user.id, user.username, permissions);
