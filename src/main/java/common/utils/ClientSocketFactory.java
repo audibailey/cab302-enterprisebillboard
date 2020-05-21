@@ -38,7 +38,6 @@ public class ClientSocketFactory {
             Request req = new Request(path, token, params, body);
             oos.writeObject(req);
             oos.flush();
-            oos.reset();
 
             InputStream inputStream = s.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(inputStream);
@@ -59,6 +58,7 @@ public class ClientSocketFactory {
             }
 
             ois.close();
+            oos.close();
             s.close();
 
             return res;
