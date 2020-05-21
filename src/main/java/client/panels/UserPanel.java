@@ -1,5 +1,6 @@
 package client.panels;
 
+<<<<<<< HEAD
 import client.components.table.ColourEditor;
 import client.components.table.ColourRenderer;
 import client.components.table.PictureEditor;
@@ -12,6 +13,7 @@ import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
 import common.utils.HashingFactory;
+import client.frames.CreateEditUserFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -180,6 +182,14 @@ public class UserPanel extends JPanel implements ActionListener {
                 tableModel.setObjectRows(PermissionsService.getInstance().delete(u));
                 tableModel.fireTableDataChanged();
             }
+=======
+        if(e.getSource() == addButton){
+            new CreateEditUserFrame("CreateUser"); // Open create user frame
+        }
+        // Check if edit user button is pressed
+        if(e.getSource() == editButton){
+            new CreateEditUserFrame("EditUser"); // Open edit user frame
+>>>>>>> e3e2f07bcc3f8ff7e6e903a768f76cec5e169f5f
         }
     }
 }

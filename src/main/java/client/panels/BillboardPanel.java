@@ -6,6 +6,7 @@ import client.components.table.PictureEditor;
 import client.components.table.PictureRenderer;
 import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
+import client.frames.CreateEditUserFrame;
 import client.services.BillboardService;
 import client.services.SessionService;
 import common.models.Billboard;
