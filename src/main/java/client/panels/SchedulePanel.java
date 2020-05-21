@@ -17,11 +17,6 @@ public class SchedulePanel extends JPanel {
     private List<Schedule> scheduleList = new ArrayList<>();
 
     public SchedulePanel() {
-        IActionResult res = new ClientSocketFactory("/schedule/get", SessionService.getInstance().token, null).Connect();
-
-        if (res != null && res.body instanceof java.util.List) {
-            scheduleList = (List<Schedule>) res.body;
-        }
 
         button.addActionListener(new ActionListener() {
             @Override

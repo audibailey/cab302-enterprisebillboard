@@ -30,14 +30,10 @@ public class Client extends JFrame implements ActionListener {
 
         setJMenuBar(menu);
 
-        Session session = SessionService.getInstance();
+        add(new PanelHandler(), BorderLayout.CENTER);
 
-        if (session == null || session.permissions == null)
-            dispose();
-        else {
-            add(new PanelHandler(session), BorderLayout.CENTER);
-            setVisible(true);
-        }
+        setVisible(true);
+
     }
 
     public void setLocationAndSize() {
