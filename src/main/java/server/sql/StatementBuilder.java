@@ -46,7 +46,7 @@ public class StatementBuilder {
         int j = 1;
 
         for (Field field : getFields(object.getClass())) {
-            if (field.getName() != "id" && object.getClass().getAnnotationsByType(SQLITE.class).length > 0) {
+            if (field.getName() != "id" && hasSQLAnnotation(object.getClass())) {
                 Object value = field.get(object);
                 pstmt.setObject(j, value);
 
