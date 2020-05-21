@@ -3,7 +3,9 @@ package client.frames;
 import client.Main;
 import client.components.Menu;
 import client.panels.PanelHandler;
+import client.services.PermissionsService;
 import client.services.SessionService;
+import common.models.Session;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +27,26 @@ public class Client extends JFrame implements ActionListener {
             SessionService.setInstance(null);
             client.Main.createAndShowLogin();
             dispose();
+        });
+
+        menu.getUpdatePassword().addActionListener(e -> {
+            Session session = SessionService.getInstance();
+
+            String result = (String)JOptionPane.showInputDialog(
+                this,
+                "Input a new password for user: " + session.username,
+                "Edit Password",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+            );
+
+            try {
+                PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
 
         setJMenuBar(menu);
