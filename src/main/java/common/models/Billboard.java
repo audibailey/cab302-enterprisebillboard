@@ -9,10 +9,7 @@ import common.utils.RandomFactory;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +22,7 @@ import java.util.List;
  */
 @SQLITE(type="FOREIGN KEY(userId) REFERENCES User(id)")
 public class Billboard implements Serializable, Editable {
+    private static final long serialVersionUID = 7002136681416053566L;
     /**
      * The variables of the object billboard.
      */
@@ -170,9 +168,15 @@ public class Billboard implements Serializable, Editable {
         return message;
     }
 
+    public void setMessage(String m) { message = m; }
+
     @DisplayAs(value = "Message Colour", index = 3, editable = true)
     public Color getMessageColor() {
         return Color.decode(messageColor);
+    }
+
+    public void setMessageColor(Color c) {
+        messageColor = String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
     }
 
     @DisplayAs(value = "Picture", index = 4, editable = true)
@@ -183,9 +187,19 @@ public class Billboard implements Serializable, Editable {
         return ImageIO.read(bis);
     }
 
+    public void setPicture(BufferedImage p) throws IOException {
+        ByteArrayOutputStream finalPicture = new ByteArrayOutputStream();
+        ImageIO.write(p, "jpg", finalPicture);
+        picture = finalPicture.toByteArray();
+    }
+
     @DisplayAs(value = "Background Colour", index = 5, editable = true)
     public Color getBackgroundColor() {
         return Color.decode(backgroundColor);
+    }
+
+    public void setBackgroundColor(Color c) {
+        backgroundColor = String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
     }
 
     @DisplayAs(value = "Information", index = 6, editable = true)
@@ -193,9 +207,17 @@ public class Billboard implements Serializable, Editable {
         return information;
     }
 
+    public void setInformation(String i) {
+        information = i;
+    }
+
     @DisplayAs(value = "Information Colour", index = 7, editable = true)
     public Color getInformationColor() {
         return Color.decode(informationColor);
+    }
+
+    public void setInformationColor(Color c) {
+        informationColor = String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
     }
 
     @DisplayAs(value = "User Id", index = 8)
