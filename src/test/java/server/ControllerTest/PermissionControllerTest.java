@@ -41,25 +41,25 @@ public class PermissionControllerTest {
         IActionResult result = new PermissionController.GetByUsername().execute(req);
         assertEquals(result.status, Status.SUCCESS);
     }
-    @Test
-    public void testUpdatePermissions() throws Exception {
-        // Create params
-        HashMap<String, String> params = new HashMap<>();
-        String permUser = "kevin";
-        params.put("username", permUser);
-
-        // Create new request.
-        Request req = new Request(null, "blah", params, null);
-
-        // Get all the permissions from database
-        IActionResult result = new PermissionController.GetByUsername().execute(req);
-        Permissions perm =(Permissions) ((ArrayList) result.body).get(0);
-        perm.canScheduleBillboard = true;
-
-        req = new Request(null, "blah", null, perm);
-
-        result = new PermissionController.Update().execute(req);
-        assertEquals(result.status, Status.SUCCESS);
-    }
+//    @Test
+//    public void testUpdatePermissions() throws Exception {
+//        // Create params
+//        HashMap<String, String> params = new HashMap<>();
+//        String permUser = "kevin";
+//        params.put("username", permUser);
+//
+//        // Create new request.
+//        Request req = new Request(null, "blah", params, null);
+//
+//        // Get all the permissions from database
+//        IActionResult result = new PermissionController.GetByUsername().execute(req);
+//        Permissions perm =(Permissions) ((ArrayList) result.body).get(0);
+//        perm.canScheduleBillboard = true;
+//
+//        req = new Request(null, "blah", null, perm);
+//
+//        result = new PermissionController.Update().execute(req);
+//        assertEquals(result.status, Status.SUCCESS);
+//    }
 
 }
