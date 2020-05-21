@@ -1,4 +1,6 @@
-package client.components;
+package trash;
+
+import trash.SelectableTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
