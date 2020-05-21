@@ -1,6 +1,5 @@
 package client.panels;
 
-<<<<<<< HEAD
 import client.components.table.ColourEditor;
 import client.components.table.ColourRenderer;
 import client.components.table.PictureEditor;
