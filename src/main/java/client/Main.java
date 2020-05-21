@@ -3,8 +3,6 @@ package client;
 import client.frames.*;
 import common.models.Billboard;
 
-import java.io.*;
-
 /**
  * This class consists of the Billboard Viewer handler.
  * All methods that manage and create the GUI are present in this file.

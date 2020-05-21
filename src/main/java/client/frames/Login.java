@@ -31,7 +31,7 @@ public class Login extends JFrame implements ActionListener {
     JButton login = new JButton("LOGIN");
 
     public Login() {
-        setTitle("Billboard Control Panel: Login");
+        setTitle("Control Panel: Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayoutManager();
         addComponentsToContainer();
@@ -95,20 +95,15 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            // Use this to generate both the salt and password to store in the database manually
-            String u = username.getText();
-
             HashMap<String, String> params = new HashMap<>();
-            params.put("username", u);
+            params.put("username", username.getText());
             params.put("password", HashingFactory.hashPassword(String.valueOf(password.getPassword())));
             IActionResult res = new ClientSocketFactory("/login", null, params, null).Connect();
 
             if (res != null && res.status == Status.SUCCESS && res.body instanceof Session) {
                 SessionService.setInstance((Session) res.body);
-                System.out.println("Successfully logged in!");
-                System.out.println("Your token is: " + SessionService.getInstance().token);
-                dispose();
                 Main.createAndShowClient();
+                dispose();
             }
         } catch (Exception exception) {
             exception.printStackTrace();

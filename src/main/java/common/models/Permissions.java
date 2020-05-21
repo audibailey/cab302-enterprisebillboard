@@ -3,6 +3,8 @@ package common.models;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class consists of the user's permissions object and its associated methods.
@@ -100,5 +102,19 @@ public class Permissions implements Serializable {
             RandomFactory.Boolean(),
             RandomFactory.Boolean()
         );
+    }
+
+    public static Object[] toObjectArray(Permissions p) {
+        return new Object[]{ p.username, p.canCreateBillboard, p.canEditBillboard, p.canScheduleBillboard, p.canEditUser, p.canViewBillboard };
+    }
+
+    public static Object[][] objectify(List<Permissions> permissions) {
+        List<Object[]> perm = new ArrayList<>();
+
+        for (Permissions p : permissions) {
+            perm.add(toObjectArray(p));
+        }
+
+        return (Object[][]) perm.toArray();
     }
 }

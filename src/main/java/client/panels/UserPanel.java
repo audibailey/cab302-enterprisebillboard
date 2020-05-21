@@ -2,7 +2,13 @@ package client.panels;
 
 import client.components.SelectableTable;
 import client.components.SelectableTableModel;
-import client.frames.CreateEditUserFrame;
+import client.frames.createEditUserFrame;
+import client.services.SessionService;
+import common.models.Billboard;
+import common.models.Permissions;
+import common.router.IActionResult;
+import common.utils.ClientSocketFactory;
+import server.middleware.Permission;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -10,8 +16,11 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserPanel extends JPanel implements ActionListener {
+
     int selected;
     JButton addButton = new JButton("New User");
     JButton editButton = new JButton("Edit User");
@@ -21,12 +30,9 @@ public class UserPanel extends JPanel implements ActionListener {
     JButton next = new JButton(">");
     JButton last = new JButton(">>");
 
-    private String[] columnNames = {"Id", "Username", "Create Billboards", "Edit Billboards", "Schedule Billboards", "Edit Users", "View Billboards"};
+    private String[] columnNames = {"Username", "Create Billboards", "Edit Billboards", "Schedule Billboards", "Edit Users", "View Billboards"};
 
-    private Object[][] data = {
-        {0, "User 1", false, false, false, false, false},
-        {1, "User 2", true, true, true, true, true},
-    };
+    private Object[][] data = {};
 
     SelectableTableModel model = new SelectableTableModel(data, columnNames);
     SelectableTable table = new SelectableTable(model, new ListSelectionListener() {
@@ -100,11 +106,11 @@ public class UserPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Check if new user button is pressed
         if(e.getSource() == addButton){
-            new CreateEditUserFrame("CreateUser"); // Open create user frame
+            new createEditUserFrame("CreateUser"); // Open create user frame
         }
         // Check if edit user button is pressed
         if(e.getSource() == editButton){
-            new CreateEditUserFrame("EditUser"); // Open edit user frame
+            new createEditUserFrame("EditUser"); // Open edit user frame
         }
     }
 }
