@@ -65,12 +65,6 @@ public class Main {
      */
     public static void main(String[] args) throws InterruptedException {
         Billboard billboard = Billboard.Random(1); // Creating new random Billboard object for testing. Comment out each line to test an attribute.
-        //billboard.messageColor = null;
-        //billboard.informationColor = null;
-        //billboard.backgroundColor = null;
-        //billboard.message = null;
-        //billboard.picture = null;
-        //billboard.information = null;
 
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.

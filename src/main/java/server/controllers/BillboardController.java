@@ -141,7 +141,6 @@ public class BillboardController {
             b.messageColor = b.messageColor == null ? "#000000" : b.messageColor;
             b.informationColor = b.informationColor == null ? "#000000" : b.informationColor;
             b.backgroundColor = b.backgroundColor == null ? "#ffffff" : b.backgroundColor;
-            b.picture = b.picture == null ? new byte[0] : b.picture;
 
             b.userId = req.session.userId;
 
