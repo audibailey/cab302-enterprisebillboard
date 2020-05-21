@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
+import java.util.Base64;
 
 /**
  * This class consists of the picture methods for the Billboard Viewer GUI.
@@ -64,20 +65,17 @@ public class Picture extends JLabel {
     }
     // Method to draw picture. Takes billboard object, container and label resize factors as parameters.
     public void DrawPicture(Billboard billboard, Container container, int wFactor, int hFactor) throws IOException {
-//        // Test billboard image
-//        BufferedImage image = billboard.getPicture(); // Reading image file from path
-//        ByteArrayOutputStream finalPicture = new ByteArrayOutputStream(); // Opening output stream
-//        ImageIO.write(image, "jpg", finalPicture); // Writing image file into output stream
-//        billboard.picture = finalPicture.toByteArray(); // Converting output stream to a byte array and storing into picture
+
+        byte[] base64 = Base64.getDecoder().decode(billboard.picture);
+        BufferedImage pictureOutput = ImageIO.read(new ByteArrayInputStream(base64));
 
         // Converting image byte array to a buffered image to calculation new size
-        BufferedImage pictureOutput = billboard.getPicture(); // Reading image for input stream
         int labelWidth = (Toolkit.getDefaultToolkit().getScreenSize().width / wFactor); // Storing the width of the label with resize factor
         int labelHeight = Toolkit.getDefaultToolkit().getScreenSize().height * 2 / hFactor; // Storing the height of the label with resize factor
 
         // Check if picture output data is not null before resizing image
         if (pictureOutput != null){
-            billboard.picture = calcPicSize(pictureOutput, labelWidth, labelHeight); // Resizing the picture
+            billboard.picture = Base64.getEncoder().encodeToString(calcPicSize(pictureOutput, labelWidth, labelHeight)); // Resizing the picture
         }
         ImageIcon pic = new ImageIcon(billboard.picture); // Storing image byte array in image icon
         JLabel picture = new JLabel(pic);

@@ -8,6 +8,7 @@ import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
 import client.services.BillboardService;
 import common.models.Billboard;
+import common.models.Picture;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,8 +70,8 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
             new ColourRenderer());
         table.setDefaultEditor(Color.class,
             new ColourEditor());
-        table.setDefaultEditor(BufferedImage.class, new PictureEditor());
-        table.setDefaultRenderer(BufferedImage.class, new PictureRenderer());
+        table.setDefaultEditor(Picture.class, new PictureEditor());
+        table.setDefaultRenderer(Picture.class, new PictureRenderer());
     }
 
     @Override
@@ -100,7 +101,7 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
         if(e.getSource() == viewButton){
             SwingUtilities.invokeLater(() -> {
                 try {
-                    viewer.Main.createAndShowGUI(BillboardService.getInstance().billboards.stream().filter(x -> x.name.equals(selected)).findFirst().get());
+                    viewer.Main.createAndShowGUI(tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst().get());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
