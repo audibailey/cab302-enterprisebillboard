@@ -182,13 +182,5 @@ public class UserPanel extends JPanel implements ActionListener {
                 tableModel.fireTableDataChanged();
             }
         }
-
-        if(e.getSource() == createButton){
-            new CreateEditUserFrame("CreateUser"); // Open create user frame
-        }
-        // Check if edit user button is pressed
-        if(e.getSource() == editButton){
-            new CreateEditUserFrame("EditUser"); // Open edit user frame
-        }
     }
 }
