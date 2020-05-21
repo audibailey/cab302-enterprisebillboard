@@ -9,11 +9,10 @@ import common.utils.RandomFactory;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -25,6 +24,7 @@ import java.util.List;
  */
 @SQLITE(type="FOREIGN KEY(userId) REFERENCES User(id)")
 public class Billboard implements Serializable, Editable {
+    private static final long serialVersionUID = 7002136681416053566L;
     /**
      * The variables of the object billboard.
      */
@@ -42,7 +42,7 @@ public class Billboard implements Serializable, Editable {
     public String messageColor;
 
     @SQLITE(type="BLOB")
-    public byte[] picture;
+    public String picture;
 
     @SQLITE(type="VARCHAR(7) DEFAULT \"#ffffff\"")
     public String backgroundColor;
@@ -84,7 +84,7 @@ public class Billboard implements Serializable, Editable {
                      String name,
                      String message,
                      String messageColor,
-                     byte[] picture,
+                     String picture,
                      String backgroundColor,
                      String information,
                      String informationColor,
@@ -119,7 +119,7 @@ public class Billboard implements Serializable, Editable {
         String name,
         String message,
         String messageColor,
-        byte[] picture,
+        String picture,
         String backgroundColor,
         String information,
         String informationColor,
@@ -146,7 +146,7 @@ public class Billboard implements Serializable, Editable {
             RandomFactory.String(),
             RandomFactory.String(),
             RandomFactory.Color(),
-            RandomFactory.Bytes(30),
+            null,
             RandomFactory.Color(),
             RandomFactory.String(),
             RandomFactory.Color(),
@@ -170,17 +170,24 @@ public class Billboard implements Serializable, Editable {
         return message;
     }
 
+    public void setMessage(String m) { message = m; }
+
     @DisplayAs(value = "Message Colour", index = 3, editable = true)
     public Color getMessageColor() {
         return Color.decode(messageColor);
     }
 
-    @DisplayAs(value = "Picture", index = 4, editable = true)
-    public BufferedImage getPicture() throws IOException {
-        if (picture == null) return null;
+    public void setMessageColor(Color c) {
+        messageColor = String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
+    }
 
-        ByteArrayInputStream bis = new ByteArrayInputStream(picture);
-        return ImageIO.read(bis);
+    @DisplayAs(value = "Picture", index = 4, editable = true)
+    public Picture getPicture() {
+        return new Picture(picture);
+    }
+
+    public void setPicture(Picture p) {
+        picture = p.data;
     }
 
     @DisplayAs(value = "Background Colour", index = 5, editable = true)
@@ -188,9 +195,17 @@ public class Billboard implements Serializable, Editable {
         return Color.decode(backgroundColor);
     }
 
+    public void setBackgroundColor(Color c) {
+        backgroundColor = String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
+    }
+
     @DisplayAs(value = "Information", index = 6, editable = true)
     public String getInformation() {
         return information;
+    }
+
+    public void setInformation(String i) {
+        information = i;
     }
 
     @DisplayAs(value = "Information Colour", index = 7, editable = true)
@@ -198,7 +213,16 @@ public class Billboard implements Serializable, Editable {
         return Color.decode(informationColor);
     }
 
-    @DisplayAs(value = "User Id", index = 8)
+    public void setInformationColor(Color c) {
+        informationColor = String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
+    }
+
+    @DisplayAs(value = "Locked", index = 8)
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    @DisplayAs(value = "User Id", index = 9)
     public int getUserId() {
         return userId;
     }
