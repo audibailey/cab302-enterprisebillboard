@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -148,6 +149,8 @@ public class Collection<T> {
                 if (field.get(collectionObject) instanceof Boolean) {
                     // Set the field of the collection object with the value fetched.
                     field.set(collectionObject, (int)value == 1 ? true : false);
+                } else if (field.get(collectionObject) instanceof Instant) {
+                    field.set(collectionObject, Instant.parse((String) value));
                 } else {
                     // Set the field of the collection object with the value fetched.
                     field.set(collectionObject, value);

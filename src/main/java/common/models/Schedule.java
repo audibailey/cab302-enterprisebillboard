@@ -24,10 +24,10 @@ public class Schedule implements Serializable {
     public String billboardName;
 
     @SQLITE(type="DATETIME NOT NULL")
-    public Instant startTime;
+    public Instant startTime = Instant.MIN;
 
     @SQLITE(type="DATETIME NOT NULL")
-    public Instant createTime; // Time when create the schedule
+    public Instant createTime = Instant.MIN; // Time when create the schedule
 
     @SQLITE(type="INTEGER")
     public int duration;
