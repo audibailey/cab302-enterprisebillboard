@@ -17,14 +17,28 @@ public class Menu extends JMenuBar {
         }
     };
 
+    private JMenuItem updatePassword = new JMenuItem("Update Password") {
+        @Override
+        public Dimension getMaximumSize() {
+            setBackground(bgColor);
+            Dimension d1 = super.getPreferredSize();
+            Dimension d2 = super.getMaximumSize();
+            d2.width = d1.width;
+            return d2;
+        }
+    };
+
     public Menu() {
         add(Box.createHorizontalGlue());
+        add(updatePassword);
         add(logout);
     }
 
     public JMenuItem getLogout() {
         return logout;
     }
+
+    public JMenuItem getUpdatePassword() { return updatePassword; }
 
     @Override
     protected void paintComponent(Graphics g) {
