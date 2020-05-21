@@ -28,19 +28,19 @@ public class Permissions implements Serializable, Editable {
     public String username;
 
     @SQLITE(type="BOOLEAN")
-    public boolean canCreateBillboard;
+    public boolean canCreateBillboard = false;
 
     @SQLITE(type="BOOLEAN")
-    public boolean canEditBillboard;
+    public boolean canEditBillboard  = false;
 
     @SQLITE(type="BOOLEAN")
-    public boolean canScheduleBillboard;
+    public boolean canScheduleBillboard = false;
 
     @SQLITE(type="BOOLEAN")
-    public boolean canEditUser;
+    public boolean canEditUser = false;
 
     @SQLITE(type="BOOLEAN")
-    public boolean canViewBillboard;
+    public boolean canViewBillboard = false;
 
     /**
      * An empty constructor just for creating the object.

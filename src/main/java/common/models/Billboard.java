@@ -39,22 +39,22 @@ public class Billboard implements Serializable, Editable {
     public String message;
 
     @SQLITE(type="VARCHAR(7) DEFAULT \"#000000\"")
-    public String messageColor;
+    public String messageColor = "#000000";
 
     @SQLITE(type="BLOB")
     public String picture;
 
     @SQLITE(type="VARCHAR(7) DEFAULT \"#ffffff\"")
-    public String backgroundColor;
+    public String backgroundColor = "#ffffff";
 
     @SQLITE(type="VARCHAR(255)")
     public String information;
 
     @SQLITE(type="VARCHAR(7) DEFAULT \"#000000\"")
-    public String informationColor;
+    public String informationColor = "#000000";
 
     @SQLITE(type="BOOLEAN")
-    public boolean locked;
+    public boolean locked = false;
 
     @SQLITE(type="INTEGER NOT NULL")
     public int userId;
