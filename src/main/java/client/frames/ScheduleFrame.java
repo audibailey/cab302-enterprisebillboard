@@ -1,22 +1,19 @@
 package client.frames;
 
-import common.models.Billboard;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 /**
- * This class consists of the Create/Edit user frame.
+ * This class consists of the Schedule frame.
  * All methods that manage and create this part of the GUI are present in this file.
  *
  * @author Trevor Waturuocha
  */
 
-public class createEditUserFrame extends JFrame implements ActionListener {
+
+public class ScheduleFrame extends JFrame implements ActionListener {
     Container container = getContentPane(); // Get parent container
 
     JPanel panel = new JPanel(); // Panel to draw contents into
@@ -36,18 +33,10 @@ public class createEditUserFrame extends JFrame implements ActionListener {
 
     JButton save = new JButton("Save");
 
-    public createEditUserFrame(String choice) {
-        // Check if create user button is selected
-        if(choice == "CreateUser"){
-            setTitle("Create User"); // Add create user title
-        }
-        // Check if edit user button is selected
-        if(choice == "EditUser"){
-            setTitle("Edit User"); // Add edit user title
-        }
+    public ScheduleFrame() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayoutManager();
-        addComponentsToContainer(choice);
+        addComponentsToContainer();
         setLocationAndSize();
         // Set the listener for the save button and make it the default button for enter press
         save.addActionListener(this);
@@ -61,33 +50,20 @@ public class createEditUserFrame extends JFrame implements ActionListener {
         panel.setLayout(new GridBagLayout());
     }
 
-    public void addComponentsToContainer(String choice) {
+    public void addComponentsToContainer() {
         GridBagConstraints c = new GridBagConstraints();
         Insets i = new Insets(5, 5, 5, 5);
         c.insets = i;
         c.fill = GridBagConstraints.HORIZONTAL; // Setting grid layout constraints
         // Check if create user button is selected
-        if(choice == "CreateUser"){
-            // Add username label to panel
-            c.gridx = 0;
-            c.gridy = 0;
-            panel.add(nameLabel, c);
-            // Add username text box to panel
-            c.gridx = 1;
-            c.gridy = 0;
-            panel.add(name, c);
-        }
-        // Check if edit user button is selected
-        if(choice == "EditUser"){
-            // Add password label to panel
-            c.gridx = 0;
-            c.gridy = 0;
-            panel.add(passLabel, c);
-            // Add password text box to panel
-            c.gridx = 1;
-            c.gridy = 0;
-            panel.add(pass, c);
-        }
+        // Add username label to panel
+        c.gridx = 0;
+        c.gridy = 0;
+        panel.add(nameLabel, c);
+        // Add username text box to panel
+        c.gridx = 1;
+        c.gridy = 0;
+        panel.add(name, c);
         // Add user permissions label to panel
         c.gridx = 0;
         c.gridy = 1;
