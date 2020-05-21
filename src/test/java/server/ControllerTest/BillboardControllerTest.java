@@ -83,7 +83,6 @@ public class BillboardControllerTest {
         test = new BillboardController.Delete().execute(req);
         assertEquals(Status.SUCCESS,test.status);
     }
-
     @Test
     public void testGetAll() throws Exception {
 
@@ -117,9 +116,38 @@ public class BillboardControllerTest {
         IActionResult result = new BillboardController.GetByName().execute(req);
         Billboard resultBB = (Billboard) ((ArrayList) result.body).get(0);
 
-
         assertEquals(resultBB.name,bb.name);
     }
+
+//    @Test
+//    public void testUpdateBillboard() throws Exception{
+//        // Insert a billboard with the name "UpdateTest"
+//        Billboard bb = Billboard.Random(1);
+//        bb.name = "UpdateTest";
+//        // Create new request.
+//        Request req = new Request(null, "blah", null, bb);
+//
+//        // Insert the billboard to the database
+//        IActionResult test = new BillboardController.Insert().execute(req);
+//
+//        // Create new params with name = "UpdateTest"
+//        HashMap<String, String> params = new HashMap<>();
+//        String billboardName = "UpdateTest";
+//        params.put("name", billboardName);
+//        // Create new request.
+//        req = new Request(null, "blah", params, null);
+//        // Get all the billboard from database
+//        IActionResult result = new BillboardController.GetByName().execute(req);
+//        Billboard resultBB = (Billboard) ((ArrayList) result.body).get(0);
+//
+//        // Edit the message of the billboard and update it.
+//        resultBB.message ="Edited";
+//        req = new Request(null, "blah",null,resultBB);
+//        result = new BillboardController.Update().execute(req);
+//
+//        assertEquals(Status.SUCCESS,result.status);
+//
+//    }
 
 }
 

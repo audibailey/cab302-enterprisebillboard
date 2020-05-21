@@ -98,7 +98,7 @@ public class Schedule implements Serializable {
         return new Schedule(
             billboardName,
             RandomFactory.Instant(),
-            RandomFactory.Instant(),
+            Instant.now(),
             RandomFactory.Int(30),
             RandomFactory.Int(60)
         );

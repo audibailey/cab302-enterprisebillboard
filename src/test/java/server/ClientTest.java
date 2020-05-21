@@ -47,53 +47,44 @@ public class ClientTest {
             }
         }
 
-        {
-            User u = new User("jamie", HashingFactory.hashPassword("1234"), null);
-            Permissions p = new Permissions(u.username, true, true, true, false, true);
-            UserPermissions up = new UserPermissions(u, p);
-
-            new ClientSocketFactory("/userpermissions/insert", token, null, up).Connect();
-            System.out.println("INSERTING USER jamie with pass 1234");
-        }
-
-        {
-
-            HashMap<String, String> test = new HashMap<>();
-            test.put("username", "jamie");
-            test.put("password", HashingFactory.hashPassword("1234"));
-
-            IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
-
-            if (result.status == Status.SUCCESS) {
-                System.out.println("Successfully logged in!");
-                System.out.println("Your token is: " + ((Session) result.body).token);
-            } else {
-                System.exit(0);
-            }
-        }
 
         // test insert billboard -- Worked
-        {
-            HashMap<String, String> params = null;
-            Billboard bb = Billboard.Random(1);
+//        {
+//            HashMap<String, String> params = null;
+//            Billboard bb = Billboard.Random(1);
+//            bb.name = "Something3";
+//            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
+//        }
+        // Test get billboard by name -- Worked
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = new HashMap<>();
+//            String billboardName = "BillboardTest";
+//            params.put("name", billboardName);
+//            IActionResult result = new ClientSocketFactory("/billboard/get/name",token,params,null).Connect();
+//            if (result != null && result.body != null) {
+//                List<Billboard> bbList = (List<Billboard>)result.body;
+//                Billboard resultBB = bbList.get(0);
+//                System.out.println(resultBB.name);
+//            }
+//            System.out.println("Get by bName");
+//
+//        }
 
-            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
-        }
-
-
-//         Test get all -- Worked
-        {
-            HashMap<String, String> params = null;
-            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
-            if (result != null && result.body != null) {
-                List<Billboard> billboards = (List<Billboard>) result.body;
-
-                for (Billboard billboard : billboards) {
-                    System.out.println(billboard.name);
-                }
-
-            }
-        }
+//         Test get all billboard -- Worked
+//        {
+//            HashMap<String, String> params = null;
+//            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+//            if (result != null && result.body != null) {
+//                List<Billboard> billboards = (List<Billboard>) result.body;
+//
+//                for (Billboard billboard : billboards) {
+//                    System.out.println(billboard.name);
+//                }
+//
+//            }
+//        }
         // Test update billboard -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
@@ -144,8 +135,7 @@ public class ClientTest {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();
 //            HashMap<String, String> params = null;
-//            User testUser = User.Random();
-//            testUser.password = "1234";
+//            User testUser = new User(RandomFactory.String(), HashingFactory.hashPassword(RandomFactory.String()), null);
 //            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
 //            UserPermissions temp = new UserPermissions(testUser, testPerm);
 //
@@ -153,8 +143,8 @@ public class ClientTest {
 //
 //            System.out.println("Inserted user");
 //        }
-//
-//        // Test delete user -- Worked
+
+        // Test delete user -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();
@@ -257,6 +247,30 @@ public class ClientTest {
 //            updatePerm.canEditUser = false;
 //            new ClientSocketFactory("/permission/update", token, params, updatePerm).Connect();
 //            System.out.println("Updated perm");
+//        }
+        // Test insert schedule
+        {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            HashMap<String, String> params = new HashMap<>();
+            Schedule temp = Schedule.Random("Something123");
+            new ClientSocketFactory("/schedule/insert", token, params, temp).Connect();
+            System.out.println("Inserted schedule");
+        }
+
+
+        // Test get all schedule
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = new HashMap<>();
+//            IActionResult result = new ClientSocketFactory("/schedule/get", token, params, null).Connect();
+//            if (result != null && result.body != null) {
+//                List<Schedule> scheduleList = (List<Schedule>) result.body;
+//                for (Schedule schedule: scheduleList) {
+//                    System.out.println(schedule.billboardName);
+//                }
+//            }
 //        }
 
     }

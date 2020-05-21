@@ -93,8 +93,9 @@ public class Main {
             .ADD("/login", UserController.Login.class)
             .ADD("/logout", UserController.Logout.class)
             // Add Billboard actions to router
-            .ADD_AUTH("/billboard/get", Permission.canViewBillboard.class, BillboardController.Get.class)
-            .ADD_AUTH("/billboard/get/lock", Permission.canViewBillboard.class, BillboardController.GetByLock.class)
+            .ADD_AUTH("/billboard/get", BillboardController.Get.class)
+            .ADD_AUTH("/billboard/get/lock", BillboardController.GetByLock.class)
+            .ADD_AUTH("/billboard/get/name", BillboardController.GetByName.class)
             .ADD_AUTH("/billboard/insert", Permission.canCreateBillboard.class, BillboardController.Insert.class)
             .ADD_AUTH("/billboard/update", Permission.canEditBillboard.class, BillboardController.Update.class)
             .ADD_AUTH("/billboard/delete", Permission.canEditBillboard.class, BillboardController.Delete.class)
