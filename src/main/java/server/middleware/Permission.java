@@ -56,11 +56,11 @@ public class Permission {
         public IActionResult execute(Request req) throws Exception {
             if (!req.permissions.canEditBillboard) {
                 if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
-                if (((Billboard) req.body).locked) return new BadRequest("Can't delete scheduled billboard.");
+                if (((Billboard) req.body).locked) return new BadRequest("Can't change a scheduled billboard.");
                 Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(b -> ((Billboard) req.body).id == b.id).stream().findFirst();
-                if (billboard.isEmpty()) return new BadRequest("Billboard does not exist. ");
+                if (billboard.isEmpty()) return new BadRequest("Billboard does not exist.");
 
-                if (billboard.get().userId != req.session.userId) return new Unauthorised("Not authorised to edit billboards. ");
+                if (billboard.get().userId != req.session.userId) return new Unauthorised("Not authorised to edit billboards.");
             }
 
             return new Ok();

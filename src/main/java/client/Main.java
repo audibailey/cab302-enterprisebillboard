@@ -2,10 +2,6 @@ package client;
 
 import client.frames.*;
 import common.models.Billboard;
-import common.models.User;
-
-import java.io.*;
-import java.net.Socket;
 
 /**
  * This class consists of the Billboard Viewer handler.
@@ -23,6 +19,11 @@ public class Main {
     }
 
     public static void createAndShowClient() {
+        new Client();
+    }
+
+    public static void runAll() {
+        new Login();
         new Client();
     }
 
