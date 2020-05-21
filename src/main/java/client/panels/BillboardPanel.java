@@ -43,7 +43,11 @@ public class BillboardPanel extends JPanel implements ActionListener {
         editButton.addActionListener(this::actionPerformed);
         addComponentsToContainer();
 
-        setModel(Billboard.objectify(BillboardService.getInstance()));
+        Session session = SessionService.getInstance();
+
+        if (session != null) {
+            setModel(Billboard.objectify(BillboardService.getInstance()));
+        }
     }
 
     public void addComponentsToContainer() {
@@ -55,16 +59,26 @@ public class BillboardPanel extends JPanel implements ActionListener {
 
         Session session = SessionService.getInstance();
 
-         if (session.permissions.canCreateBillboard) {
+        if (session == null) {
             gbc.gridx = 0;
             gbc.gridy = 0;
             add(createButton, gbc);
-        }
 
-        if (session.permissions.canEditBillboard) {
             gbc.gridx = 1;
             gbc.gridy = 0;
             add(editButton, gbc);
+        } else {
+            if (session.permissions.canCreateBillboard) {
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                add(createButton, gbc);
+            }
+
+            if (session.permissions.canEditBillboard) {
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                add(editButton, gbc);
+            }
         }
 
         GridBagConstraints table_gbc = new GridBagConstraints();
