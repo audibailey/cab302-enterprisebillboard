@@ -1,5 +1,6 @@
 package server.sql;
 
+import common.models.SQLITE;
 import server.services.DataService;
 
 import java.lang.reflect.Field;
@@ -140,15 +141,17 @@ public class Collection<T> {
             // Gets the name of the field.
             String name = field.getName();
 
-            // Fetches the value using name of the field as the key from the result set.
-            Object value = resultSet.getObject(name);
+            if (StatementBuilder.hasSQLAnnotation(field)) {
+                // Fetches the value using name of the field as the key from the result set.
+                Object value = resultSet.getObject(name);
 
-            if (field.get(collectionObject) instanceof Boolean) {
-                // Set the field of the collection object with the value fetched.
-                field.set(collectionObject, (int)value == 1 ? true : false);
-            } else {
-                // Set the field of the collection object with the value fetched.
-                field.set(collectionObject, value);
+                if (field.get(collectionObject) instanceof Boolean) {
+                    // Set the field of the collection object with the value fetched.
+                    field.set(collectionObject, (int)value == 1 ? true : false);
+                } else {
+                    // Set the field of the collection object with the value fetched.
+                    field.set(collectionObject, value);
+                }
             }
         }
 
