@@ -1,7 +1,17 @@
 package common.models;
 
+import client.components.table.DisplayAs;
+import client.components.table.Editable;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.compiler.PluginProtos;
 import common.utils.RandomFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +24,7 @@ import java.util.List;
  * @author Jamie Martin
  */
 @SQLITE(type="FOREIGN KEY(userId) REFERENCES User(id)")
-public class Billboard implements Serializable {
+public class Billboard implements Serializable, Editable {
     /**
      * The variables of the object billboard.
      */
@@ -143,6 +153,57 @@ public class Billboard implements Serializable {
             RandomFactory.Boolean(),
             userId
         );
+    }
+
+    @DisplayAs(value = "Id", index = 0)
+    public int getId() {
+        return id;
+    }
+
+    @DisplayAs(value = "Billboard Name", index = 1)
+    public String getName() {
+        return name;
+    }
+
+    @DisplayAs(value = "Message", index = 2, editable = true)
+    public String getMessage() {
+        return message;
+    }
+
+    @DisplayAs(value = "Message Colour", index = 3, editable = true)
+    public Color getMessageColor() {
+        return Color.decode(messageColor);
+    }
+
+    @DisplayAs(value = "Picture", index = 4, editable = true)
+    public BufferedImage getPicture() throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(picture);
+        return ImageIO.read(bis);
+    }
+
+    @DisplayAs(value = "Background Colour", index = 5, editable = true)
+    public Color getBackgroundColor() {
+        return Color.decode(backgroundColor);
+    }
+
+    @DisplayAs(value = "Information", index = 6, editable = true)
+    public String getInformation() {
+        return information;
+    }
+
+    @DisplayAs(value = "Information Colour", index = 7, editable = true)
+    public Color getInformationColor() {
+        return Color.decode(informationColor);
+    }
+
+    @DisplayAs(value = "User Id", index = 8)
+    public int getUserId() {
+        return userId;
+    }
+
+    @Override
+    public boolean isEditable() {
+        return true;
     }
 
     public static Object[] toObjectArray(Billboard b) {

@@ -3,12 +3,6 @@ package client.panels;
 import client.components.SelectableTable;
 import client.components.SelectableTableModel;
 import client.frames.createEditUserFrame;
-import client.services.SessionService;
-import common.models.Billboard;
-import common.models.Permissions;
-import common.router.IActionResult;
-import common.utils.ClientSocketFactory;
-import server.middleware.Permission;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -16,8 +10,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserPanel extends JPanel implements ActionListener {
 
