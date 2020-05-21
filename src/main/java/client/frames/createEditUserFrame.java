@@ -1,10 +1,6 @@
 package client.frames;
 
-import common.models.Billboard;
-
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +12,7 @@ import java.awt.event.ActionListener;
  * @author Trevor Waturuocha
  */
 
-public class createEditUserFrame extends JFrame implements ActionListener {
+public class CreateEditUserFrame extends JFrame implements ActionListener {
     Container container = getContentPane(); // Get parent container
 
     JPanel panel = new JPanel(); // Panel to draw contents into
@@ -36,7 +32,7 @@ public class createEditUserFrame extends JFrame implements ActionListener {
 
     JButton save = new JButton("Save");
 
-    public createEditUserFrame(String choice) {
+    public CreateEditUserFrame(String choice) {
         // Check if create user button is selected
         if(choice == "CreateUser"){
             setTitle("Create User"); // Add create user title
