@@ -53,8 +53,8 @@ public class ClientSocketFactory {
                     IActionResult finalRes = res;
                     SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
                     System.out.println(req.path);
-                    System.out.println( res.status.toString());
-                    System.out.println( res.message);
+                    System.out.println(res.status.toString());
+                    System.out.println(res.message);
                 }
             }
 
@@ -62,11 +62,9 @@ public class ClientSocketFactory {
             s.close();
 
             return res;
-        } catch (IOException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Notification.display(ex.getMessage());
-            return null;
-        } catch (ClassNotFoundException ex) {
-            Notification.display(ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }

@@ -1,9 +1,6 @@
 package client.services;
 
-import common.models.Billboard;
-import common.models.Session;
-import common.models.User;
-import common.models.UserPermissions;
+import common.models.*;
 import common.router.IActionResult;
 import common.router.Status;
 import common.utils.ClientSocketFactory;
@@ -11,8 +8,8 @@ import common.utils.ClientSocketFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BillboardService {
-    private List<Billboard> billboards;
+public class BillboardService extends DataService<Billboard> {
+    public List<Billboard> billboards;
 
     protected BillboardService() {
         this.billboards = new ArrayList<>();
@@ -22,35 +19,37 @@ public class BillboardService {
         private final static BillboardService INSTANCE = new BillboardService();
     }
 
-    public static List<Billboard> getInstance() { return BillboardServiceHolder.INSTANCE.billboards; }
+    public static BillboardService getInstance() { return BillboardServiceHolder.INSTANCE; }
 
-    public static List<Billboard> refresh() {
+    public List<Billboard> refresh() {
         Session session = SessionService.getInstance();
 
-        IActionResult result = new ClientSocketFactory("/billboard/get", session.token, null).Connect();
+        if (session != null) {
+            IActionResult result = new ClientSocketFactory("/billboard/get", session.token, null).Connect();
 
-        if (result != null && result.status == Status.SUCCESS && result.body instanceof List) {
-            BillboardServiceHolder.INSTANCE.billboards = (List<Billboard>) result.body;
+            if (result != null && result.status == Status.SUCCESS && result.body instanceof List) {
+                BillboardServiceHolder.INSTANCE.billboards = (List<Billboard>) result.body;
+            }
         }
 
         return BillboardServiceHolder.INSTANCE.billboards;
     }
 
-    public static List<Billboard> insert(Billboard b) {
+    public List<Billboard> insert(Billboard b) {
         Session session = SessionService.getInstance();
         new ClientSocketFactory("/billboard/insert", session.token, null, b).Connect();
         refresh();
         return BillboardServiceHolder.INSTANCE.billboards;
     }
 
-    public static List<Billboard> update(Billboard b) {
+    public List<Billboard> update(Billboard b) {
         Session session = SessionService.getInstance();
         new ClientSocketFactory("/billboard/update", session.token, null, b).Connect();
         refresh();
         return BillboardServiceHolder.INSTANCE.billboards;
     }
 
-    public static List<Billboard> delete(Billboard b) {
+    public List<Billboard> delete(Billboard b) {
         Session session = SessionService.getInstance();
         new ClientSocketFactory("/billboard/delete", session.token, null, b).Connect();
         refresh();

@@ -15,13 +15,16 @@ public class PanelHandler extends JTabbedPane {
         Session session = SessionService.getInstance();
 
         if (session == null) {
+            add("Test Billboard", new TestBillboardPanel());
+            add("Test User", new TestUserPanel());
             add("Billboards", billboardPanel);
             add("Schedule", schedulePanel);
             add("Users", userPanel);
         }
         else {
             if (session.permissions.canViewBillboard) {
-                add("Billboards", billboardPanel);
+                //add("Billboards", billboardPanel);
+                add("Test Billboard", new TestBillboardPanel());
             }
 
             if (session.permissions.canScheduleBillboard) {
@@ -29,7 +32,8 @@ public class PanelHandler extends JTabbedPane {
             }
 
             if (session.permissions.canEditUser) {
-                add("Users", userPanel);
+                //add("Users", userPanel);
+                add("Test User", new TestUserPanel());
             }
         }
     }
