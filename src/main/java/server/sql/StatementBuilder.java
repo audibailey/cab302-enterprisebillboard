@@ -46,7 +46,7 @@ public class StatementBuilder {
         int j = 1;
 
         for (Field field : getFields(object.getClass())) {
-            if (field.getName() != "id" && object.getClass().getAnnotationsByType(SQLITE.class).length > 0) {
+            if (field.getName() != "id" && hasSQLAnnotation(field)) {
                 Object value = field.get(object);
                 pstmt.setObject(j, value);
 
@@ -72,7 +72,7 @@ public class StatementBuilder {
         int i = 1;
 
         for (Field field : fields) {
-            if (field.getName() != "id" && hasSQLAnnotation(clazz)) {
+            if (field.getName() != "id" && hasSQLAnnotation(field)) {
                 field.setAccessible(true);
                 if (i == lastField) {
                     names.append(field.getName() + ")");
@@ -96,7 +96,7 @@ public class StatementBuilder {
         int j = 1;
 
         for (Field field : getFields(object.getClass())) {
-            if (field.getName() != "id" && hasSQLAnnotation(clazz)) {
+            if (field.getName() != "id" && hasSQLAnnotation(field)) {
                 Object value = field.get(object);
                 pstmt.setObject(j, value);
 
@@ -124,7 +124,7 @@ public class StatementBuilder {
         int i = 1;
 
         for (Field field : fields) {
-            if (field.getName() != "id" && hasSQLAnnotation(clazz)) {
+            if (field.getName() != "id" && hasSQLAnnotation(field)) {
                 field.setAccessible(true);
 
                 if (i == lastField)
@@ -167,7 +167,7 @@ public class StatementBuilder {
         return Arrays.asList(clazz.getDeclaredFields());
     }
 
-    private static boolean hasSQLAnnotation(Class<?> clazz) {
-        return clazz.getAnnotationsByType(SQLITE.class).length > 0;
+    public static boolean hasSQLAnnotation(Field field) {
+        return field.getAnnotationsByType(SQLITE.class).length > 0;
     }
 }
