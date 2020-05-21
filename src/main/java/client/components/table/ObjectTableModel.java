@@ -53,6 +53,5 @@ public abstract class ObjectTableModel<T> extends AbstractTableModel {
 
     @Override
     public abstract String getColumnName(int column);
-
     public abstract String getFieldName(int column);
 }

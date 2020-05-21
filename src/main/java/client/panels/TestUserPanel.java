@@ -7,8 +7,11 @@ import client.components.PictureRenderer;
 import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
 import client.services.BillboardService;
+import client.services.PermissionsService;
 import common.models.Permissions;
 import common.models.User;
+import common.models.UserPermissions;
+import common.utils.HashingFactory;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -35,8 +38,8 @@ public class TestUserPanel extends JPanel implements ActionListener {
         editButton.addActionListener(this::actionPerformed);
         editButton.setEnabled(false);
 
-        ObjectTableModel<Permissions> tableModel = new DisplayableObjectTableModel<>(Permissions.class);
-        tableModel.setObjectRows(getBs());
+        ObjectTableModel<Permissions> tableModel = new DisplayableObjectTableModel<>(Permissions.class, PermissionsService.getInstance());
+        tableModel.setObjectRows(PermissionsService.getInstance().refresh());
         table = new JTable(tableModel);
 
         setupSelection();
@@ -65,6 +68,7 @@ public class TestUserPanel extends JPanel implements ActionListener {
             editButton.setEnabled(true);
             System.out.println(selected);
         });
+
     }
 
     public void setupRenderersAndEditors() {
@@ -77,21 +81,40 @@ public class TestUserPanel extends JPanel implements ActionListener {
         table.setDefaultRenderer(BufferedImage.class, new PictureRenderer());
     }
 
-    public static List<Permissions> getBs() {
-        final List<Permissions> list = new ArrayList<>();
-        for (int i = 1; i <= 50; i++) {
-            User u = User.Random();
-            list.add(Permissions.Random(u.id, u.username));
-        }
-        return list;
-    }
-
     @Override
     // Adding listener events for the user panel buttons.
     public void actionPerformed(ActionEvent e) {
         // Check if new user button is pressed
         if(e.getSource() == createButton){
-            // TODO : Spawn make user
+            String username = (String)JOptionPane.showInputDialog(
+                this,
+                "Input a username",
+                "Username",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+            );
+
+            String password = (String)JOptionPane.showInputDialog(
+                this,
+                "Input a password for user: " + username,
+                "Password",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+            );
+
+            try {
+                User user = new User();
+                user.username = username;
+                user.password = HashingFactory.hashPassword(password);
+
+                // PermissionsService.getInstance().insert();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         // Check if edit user button is pressed
         if(e.getSource() == editButton){
@@ -104,6 +127,12 @@ public class TestUserPanel extends JPanel implements ActionListener {
                 null,
                 ""
             );
+
+            try {
+                PermissionsService.updatePassword(selected, result);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
 }

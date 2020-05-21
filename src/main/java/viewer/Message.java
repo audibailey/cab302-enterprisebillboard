@@ -36,7 +36,10 @@ public class Message extends JLabel {
         // Otherwise do nothing
     }
 
-    // Method to calculate the largest possible message to fit the screen in one line
+    /**
+     * Method to calculate the largest possible message to fit the screen in one line
+     * @param label
+     */
     public void CalcMsgWidth(JLabel label){
         Font labelFont = label.getFont(); // Get the font used for the label
         String labelText = label.getText(); // Get the string used for the label
@@ -51,7 +54,11 @@ public class Message extends JLabel {
         label.setFont(new Font(labelFont.getName(), Font.PLAIN, finalSize));
     }
 
-    // Method to draw message. Takes billboard object and container to draw in as parameters.
+    /**
+     * Method to draw message. Takes billboard object and container to draw in as parameters.
+     * @param billboard
+     * @param container
+     */
     public void DrawMessage(Billboard billboard, Container container){
         JLabel msg = new JLabel(billboard.message); // Adding message string to label
         CalcMsgWidth(msg); // Formatting message for billboard width

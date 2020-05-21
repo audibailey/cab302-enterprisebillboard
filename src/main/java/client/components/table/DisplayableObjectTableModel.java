@@ -1,5 +1,7 @@
 package client.components.table;
 
+import client.services.DataService;
+
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -9,8 +11,10 @@ import java.util.Map;
 
 public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
     private Map<Integer, ColumnInfo> columnInfoMap;
+    private DataService dataService;
 
-    public DisplayableObjectTableModel(Class<T> tClass) {
+    public DisplayableObjectTableModel(Class<T> tClass, DataService dataService) {
+        this.dataService = dataService;
         init(tClass);
     }
 
@@ -47,8 +51,9 @@ public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
             return columnInfoMap.get(columnIndex)
                 .getterMethod.invoke(t);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override
@@ -87,6 +92,7 @@ public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
         try {
             if (columnInfo.setterMethod != null) {
                 columnInfo.setterMethod.invoke(t, value);
+                dataService.update(t);
                 return true;
             }
         } catch (Exception e) {

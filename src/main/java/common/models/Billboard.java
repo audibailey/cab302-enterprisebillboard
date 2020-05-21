@@ -38,19 +38,19 @@ public class Billboard implements Serializable, Editable {
     @SQLITE(type="VARCHAR(255)")
     public String message;
 
-    @SQLITE(type="VARCHAR(7)")
+    @SQLITE(type="VARCHAR(7) DEFAULT \"#000000\"")
     public String messageColor;
 
     @SQLITE(type="BLOB")
     public byte[] picture;
 
-    @SQLITE(type="VARCHAR(7)")
+    @SQLITE(type="VARCHAR(7) DEFAULT \"#ffffff\"")
     public String backgroundColor;
 
     @SQLITE(type="VARCHAR(255)")
     public String information;
 
-    @SQLITE(type="VARCHAR(7)")
+    @SQLITE(type="VARCHAR(7) DEFAULT \"#000000\"")
     public String informationColor;
 
     @SQLITE(type="BOOLEAN")
@@ -177,6 +177,8 @@ public class Billboard implements Serializable, Editable {
 
     @DisplayAs(value = "Picture", index = 4, editable = true)
     public BufferedImage getPicture() throws IOException {
+        if (picture == null) return null;
+
         ByteArrayInputStream bis = new ByteArrayInputStream(picture);
         return ImageIO.read(bis);
     }

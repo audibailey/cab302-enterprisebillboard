@@ -15,12 +15,16 @@ public class ColourRenderer extends JLabel
         JTable table, Object colour,
         boolean isSelected, boolean hasFocus,
         int row, int column) {
-        Color newColour = (Color)colour;
-        setBackground(newColour);
 
-        setToolTipText("RGB value: " + newColour.getRed() + ", "
-            + newColour.getGreen() + ", "
-            + newColour.getBlue());
+        if (colour != null) {
+            Color newColour = (Color)colour;
+            setBackground(newColour);
+
+            setToolTipText("RGB value: " + newColour.getRed() + ", "
+                + newColour.getGreen() + ", "
+                + newColour.getBlue());
+        }
+
         return this;
     }
 }
