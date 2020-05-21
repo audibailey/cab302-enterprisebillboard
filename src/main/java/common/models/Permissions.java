@@ -1,5 +1,7 @@
 package common.models;
 
+import client.components.table.DisplayAs;
+import client.components.table.Editable;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
@@ -14,7 +16,7 @@ import java.util.List;
  * @author Jamie Martin
  */
 @SQLITE(type="FOREIGN KEY(id) REFERENCES User(id), FOREIGN KEY(username) REFERENCES User(username)")
-public class Permissions implements Serializable {
+public class Permissions implements Serializable, Editable {
     /**
      * The variables of the object Permissions
      */
@@ -102,6 +104,46 @@ public class Permissions implements Serializable {
             RandomFactory.Boolean(),
             RandomFactory.Boolean()
         );
+    }
+
+    @DisplayAs(value = "Id", index = 0)
+    public int getId() {
+        return id;
+    }
+
+    @DisplayAs(value = "Username", index = 1)
+    public String getUsername() {
+        return username;
+    }
+
+    @DisplayAs(value = "Can Create Billboard", index = 2, editable = true)
+    public Boolean getCanCreateBillboard() {
+        return canCreateBillboard;
+    }
+
+    @DisplayAs(value = "Can Edit Billboard", index = 3, editable = true)
+    public Boolean getCanEditBillboard() {
+        return canEditBillboard;
+    }
+
+    @DisplayAs(value = "Can Schedule Billboard", index = 4, editable = true)
+    public Boolean getCanScheduleBillboard() {
+        return canScheduleBillboard;
+    }
+
+    @DisplayAs(value = "Can Edit User", index = 5, editable = true)
+    public Boolean getCanEditUser() {
+        return canEditUser;
+    }
+
+    @DisplayAs(value = "Can View Billboard", index = 6, editable = true)
+    public Boolean getCanViewBillboard() {
+        return canViewBillboard;
+    }
+
+    @Override
+    public boolean isEditable() {
+        return true;
     }
 
     public static Object[] toObjectArray(Permissions p) {
