@@ -73,16 +73,44 @@ public class Picture extends JLabel {
         int labelWidth = (Toolkit.getDefaultToolkit().getScreenSize().width / wFactor); // Storing the width of the label with resize factor
         int labelHeight = Toolkit.getDefaultToolkit().getScreenSize().height * 2 / hFactor; // Storing the height of the label with resize factor
 
-        // Check if picture output data is not null before resizing image
-        if (pictureOutput != null){
-            billboard.picture = Base64.getEncoder().encodeToString(calcPicSize(pictureOutput, labelWidth, labelHeight)); // Resizing the picture
-        }
-        ImageIcon pic = new ImageIcon(billboard.picture); // Storing image byte array in image icon
-        JLabel picture = new JLabel(pic);
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(pictureOutput).getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_DEFAULT));
+
+        JLabel picture = new JLabel(scaleImage(new ImageIcon(pictureOutput), labelWidth, labelHeight));
 
         picture.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally centering message text
         container.add(Box.createVerticalGlue()); // To add padding to top of picture
         container.add(picture); // Adding message to centre of container
         container.add(Box.createVerticalGlue()); // To add padding to bottom of picture
+    }
+
+    private ImageIcon getScaledImage(ImageIcon srcImg, int w, int h){
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg.getImage(), 0, 0, w, h, null);
+        g2.dispose();
+
+        return new ImageIcon(resizedImg);
+    }
+
+    public ImageIcon scaleImage(ImageIcon icon, int w, int h)
+    {
+        int nw = icon.getIconWidth();
+        int nh = icon.getIconHeight();
+
+        if(icon.getIconWidth() > w)
+        {
+            nw = w;
+            nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
+        }
+
+        if(nh > h)
+        {
+            nh = h;
+            nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
+        }
+
+        return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
     }
 }
