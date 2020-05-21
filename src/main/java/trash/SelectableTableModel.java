@@ -1,4 +1,4 @@
-package client.components;
+package trash;
 
 import javax.swing.table.AbstractTableModel;
 

@@ -1,4 +1,4 @@
-package client.frames;
+package trash;
 
 import common.models.Billboard;
 
