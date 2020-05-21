@@ -1,8 +1,6 @@
 package trash;
 
-import trash.SelectableTable;
-import trash.SelectableTableModel;
-import client.frames.createEditUserFrame;
+import client.frames.CreateEditUserFrame;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -98,11 +96,11 @@ public class UserPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Check if new user button is pressed
         if(e.getSource() == addButton){
-            new createEditUserFrame("CreateUser"); // Open create user frame
+            new CreateEditUserFrame("CreateUser"); // Open create user frame
         }
         // Check if edit user button is pressed
         if(e.getSource() == editButton){
-            new createEditUserFrame("EditUser"); // Open edit user frame
+            new CreateEditUserFrame("EditUser"); // Open edit user frame
         }
     }
 }
