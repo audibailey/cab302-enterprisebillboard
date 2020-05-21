@@ -16,6 +16,10 @@ public class BillboardService {
 
     protected BillboardService() {
         this.billboards = new ArrayList<>();
+
+        for (int i = 1; i <= 20; i++) {
+            this.billboards.add(Billboard.Random(1));
+        }
     }
 
     private static class BillboardServiceHolder {
