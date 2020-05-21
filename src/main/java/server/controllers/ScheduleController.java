@@ -8,6 +8,7 @@ import server.sql.CollectionFactory;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -77,11 +78,18 @@ public class ScheduleController {
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type schedule.
             if (req.body instanceof Schedule) {
-
+                // Check if billboard exist
                 String sName = ((Schedule) req.body).billboardName;
+
+                List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
+                    billboard -> sName.equals(String.valueOf(billboard.name)));
+                if (billboardList.isEmpty()) return new BadRequest("Billboard doesn't exists.");
+                // Check if the schedule already existed
+
                 List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
                     schedule -> sName.equals(String.valueOf(schedule.billboardName)));
                 if (!scheduleList.isEmpty()) return new BadRequest("Schedule already exists.");
+
 
                 // Attempt to insert the schedule into the database then return a success IActionResult.
                 CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
@@ -127,14 +135,15 @@ public class ScheduleController {
         public IActionResult execute(Request req) throws Exception {
             // Get list of all schedules.
             List<Schedule> allSchedule = CollectionFactory.getInstance(Schedule.class).get(x -> true);
-            List<Schedule> scheduleList = null;
+            List<Schedule> scheduleList = new ArrayList<>();
             for ( Schedule temp: allSchedule)
             {
                 Instant startTime = temp.startTime;
                 Instant endTime = startTime.plus(temp.duration, ChronoUnit.MINUTES);
-                Instant rightNow = Instant.now();
-
-                if (startTime.compareTo(rightNow) * rightNow.compareTo(endTime) >= 0)
+                Instant rightNow = Instant.now() ;
+                int x= startTime.compareTo(rightNow);
+                int y = rightNow.compareTo(endTime);
+                if ( x*y>= 0) // start < now < end
                 {
                     scheduleList.add(temp);
                 }

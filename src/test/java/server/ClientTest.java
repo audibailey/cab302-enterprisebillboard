@@ -52,7 +52,7 @@ public class ClientTest {
 //        {
 //            HashMap<String, String> params = null;
 //            Billboard bb = Billboard.Random(1);
-//            bb.name = "Something3";
+//            bb.name = "Something123";
 //            new ClientSocketFactory("/billboard/insert", token, params, bb).Connect();
 //        }
         // Test get billboard by name -- Worked
@@ -248,15 +248,15 @@ public class ClientTest {
 //            new ClientSocketFactory("/permission/update", token, params, updatePerm).Connect();
 //            System.out.println("Updated perm");
 //        }
-        // Test insert schedule
-        {
-            Scanner sc = new Scanner(System.in);
-            sc.nextLine();
-            HashMap<String, String> params = new HashMap<>();
-            Schedule temp = Schedule.Random("Something123");
-            new ClientSocketFactory("/schedule/insert", token, params, temp).Connect();
-            System.out.println("Inserted schedule");
-        }
+        // Test insert schedule -- Worked
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = new HashMap<>();
+//            Schedule temp = Schedule.Random("Something123");
+//            new ClientSocketFactory("/schedule/insert", token, params, temp).Connect();
+//            System.out.println("Inserted schedule");
+//        }
 
 
         // Test get all schedule
@@ -268,10 +268,42 @@ public class ClientTest {
 //            if (result != null && result.body != null) {
 //                List<Schedule> scheduleList = (List<Schedule>) result.body;
 //                for (Schedule schedule: scheduleList) {
-//                    System.out.println(schedule.billboardName);
+//                    System.out.println(schedule.billboardName + " starts at " + schedule.startTime);
 //                }
 //            }
 //        }
+
+        // Test get current schedule -- Worked
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = new HashMap<>();
+//            IActionResult result = new ClientSocketFactory("/schedule/get/current", token, params, null).Connect();
+//            if (result != null && result.body != null) {
+//                Billboard resultBB = (Billboard) result.body;
+//                System.out.println(resultBB.name + " with the message: " + resultBB.message);
+//            }
+//        }
+        // Test delete schedule -- Worked
+        {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            HashMap<String, String> params = new HashMap<>();
+            Schedule deleted = null;
+            IActionResult result = new ClientSocketFactory("/schedule/get", token, params, null).Connect();
+            if (result != null && result.body != null) {
+                List<Schedule> scheduleList = (List<Schedule>) result.body;
+                for (Schedule schedule: scheduleList) {
+                    if (schedule.billboardName.equals("Something123"))
+                    {
+                        deleted = schedule;
+                        break;
+                    }
+                }
+            }
+            result = new ClientSocketFactory("/schedule/delete", token, params, deleted).Connect();
+            System.out.println("Deleted schedule");
+        }
 
     }
 
