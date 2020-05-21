@@ -6,6 +6,7 @@ import client.components.PictureEditor;
 import client.components.PictureRenderer;
 import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
+import client.services.BillboardService;
 import common.models.Billboard;
 
 import javax.swing.*;
@@ -13,8 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 public class TestBillboardPanel extends JPanel implements ActionListener {
 
@@ -26,10 +26,12 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
     public TestBillboardPanel() {
         createButton = new JButton("Create New");
         viewButton = new JButton("View Selected");
+        createButton.addActionListener(this::actionPerformed);
+        viewButton.addActionListener(this::actionPerformed);
         viewButton.setEnabled(false);
 
         ObjectTableModel<Billboard> tableModel = new DisplayableObjectTableModel<>(Billboard.class);
-        tableModel.setObjectRows(getBs());
+        tableModel.setObjectRows(BillboardService.getInstance());
         table = new JTable(tableModel);
 
         setupSelection();
@@ -70,13 +72,6 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
         table.setDefaultRenderer(BufferedImage.class, new PictureRenderer());
     }
 
-    public static List<Billboard> getBs() {
-        final List<Billboard> list = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
-            list.add(Billboard.Random(1));
-        }
-        return list;
-    }
 
     @Override
     // Adding listener events for the user panel buttons.
@@ -87,7 +82,13 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
         }
         // Check if edit user button is pressed
         if(e.getSource() == viewButton){
-
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    viewer.Main.createAndShowGUI(BillboardService.getInstance().stream().filter(x -> x.name.equals(selected)).findFirst().get());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
         }
     }
 }

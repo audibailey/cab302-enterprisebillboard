@@ -17,7 +17,7 @@ public class Main {
     /**
      * Create the Billboard Viewer GUI and show it.
      */
-    private static void createAndShowGUI(Billboard billboard) throws IOException {
+    public static void createAndShowGUI(Billboard billboard) throws IOException {
         JFrame frame = new JFrame("Billboard Viewer"); // Constructing Billboard Viewer frame
 
         // Check if billboard has a background colour attribute to add background colour

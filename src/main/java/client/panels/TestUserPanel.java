@@ -6,6 +6,7 @@ import client.components.PictureEditor;
 import client.components.PictureRenderer;
 import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
+import client.services.BillboardService;
 import common.models.Permissions;
 import common.models.User;
 
@@ -13,11 +14,14 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestUserPanel extends JPanel {
+public class TestUserPanel extends JPanel implements ActionListener {
 
     JTable table;
     Container buttonContainer = new Container();
@@ -27,6 +31,8 @@ public class TestUserPanel extends JPanel {
     public TestUserPanel() {
         createButton = new JButton("Create New");
         editButton = new JButton("Edit Password");
+        createButton.addActionListener(this::actionPerformed);
+        editButton.addActionListener(this::actionPerformed);
         editButton.setEnabled(false);
 
         ObjectTableModel<Permissions> tableModel = new DisplayableObjectTableModel<>(Permissions.class);
@@ -78,5 +84,26 @@ public class TestUserPanel extends JPanel {
             list.add(Permissions.Random(u.id, u.username));
         }
         return list;
+    }
+
+    @Override
+    // Adding listener events for the user panel buttons.
+    public void actionPerformed(ActionEvent e) {
+        // Check if new user button is pressed
+        if(e.getSource() == createButton){
+            // TODO : Spawn make user
+        }
+        // Check if edit user button is pressed
+        if(e.getSource() == editButton){
+            String result = (String)JOptionPane.showInputDialog(
+                this,
+                "Input a new password for user: " + selected,
+                "Edit Password",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+            );
+        }
     }
 }
