@@ -1,10 +1,6 @@
 package client.panels;
 
-import client.services.SessionService;
-import common.models.Billboard;
 import common.models.Schedule;
-import common.router.IActionResult;
-import common.utils.ClientSocketFactory;
 
 import javax.swing.*;
 import java.awt.*;
