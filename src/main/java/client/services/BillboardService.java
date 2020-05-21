@@ -37,22 +37,19 @@ public class BillboardService extends DataService<Billboard> {
 
     public List<Billboard> insert(Billboard b) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/billboard/insert", session.token, null, b).Connect();
-        refresh();
-        return BillboardServiceHolder.INSTANCE.billboards;
+        IActionResult res = new ClientSocketFactory("/billboard/insert", session.token, null, b).Connect();
+        return refresh();
     }
 
-    public List<Billboard> update(Billboard b) {
+    public Boolean update(Billboard b) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/billboard/update", session.token, null, b).Connect();
-        refresh();
-        return BillboardServiceHolder.INSTANCE.billboards;
+        IActionResult res = new ClientSocketFactory("/billboard/update", session.token, null, b).Connect();
+        return !res.error;
     }
 
     public List<Billboard> delete(Billboard b) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/billboard/delete", session.token, null, b).Connect();
-        refresh();
-        return BillboardServiceHolder.INSTANCE.billboards;
+        IActionResult res = new ClientSocketFactory("/billboard/delete", session.token, null, b).Connect();
+        return refresh();
     }
 }

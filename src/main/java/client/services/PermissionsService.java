@@ -7,7 +7,6 @@ import common.utils.ClientSocketFactory;
 import common.utils.HashingFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PermissionsService extends DataService<Permissions> {
@@ -39,37 +38,38 @@ public class PermissionsService extends DataService<Permissions> {
 
     public List<Permissions> insert(UserPermissions up) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/userpermissions/insert", session.token, null, up).Connect();
-        refresh();
-        return PermissionsServiceHolder.INSTANCE.permissions;
+        IActionResult res = new ClientSocketFactory("/userpermissions/insert", session.token, null, up).Connect();
+        return refresh();
     }
 
-    public List<Permissions> update(Permissions p) {
+    public Boolean update(Permissions p) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/permission/update", session.token, null, p).Connect();
-        refresh();
-        return PermissionsServiceHolder.INSTANCE.permissions;
+        IActionResult res = new ClientSocketFactory("/permission/update", session.token, null, p).Connect();
+        return !res.error;
     }
 
-    // TODO: Might need to be permissions instead? We don't use User on FE
     public List<Permissions> delete(User u) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/user/delete", session.token, null, u).Connect();
-        refresh();
-        return PermissionsServiceHolder.INSTANCE.permissions;
+        IActionResult res = new ClientSocketFactory("/user/delete", session.token, null, u).Connect();
+        return refresh();
     }
 
 
-    public static List<Permissions> updatePassword(String username, String password) throws Exception {
+    public List<Permissions> updatePassword(int id, String username, String password) throws Exception {
         Session session = SessionService.getInstance();
 
-        HashMap<String, String> params = new HashMap<>();
+//        HashMap<String, String> params = new HashMap<>();
+//
+//        params.put("username", username);
+//        params.put("password", HashingFactory.hashPassword(password));
 
-        params.put("username", username);
-        params.put("password", HashingFactory.hashPassword(password));
+        User u = new User();
+        u.id = id;
+        u.username = username;
+        u.password = HashingFactory.hashPassword(password);
 
-        new ClientSocketFactory("/user/update/password", session.token, params).Connect();
+        IActionResult res = new ClientSocketFactory("/user/update/password", session.token, null, u).Connect();
 
-        return PermissionsServiceHolder.INSTANCE.permissions;
+        return refresh();
     }
 }
