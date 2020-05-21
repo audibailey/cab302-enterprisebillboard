@@ -46,7 +46,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
         Session session = SessionService.getInstance();
 
         if (session != null) {
-            setModel(Billboard.objectify(BillboardService.getInstance()));
+            setModel(Billboard.objectify(BillboardService.getInstance().billboards));
         }
     }
 

@@ -25,7 +25,6 @@ public class Main {
     public static void runAll() {
         new Login();
         new Client();
-        new BillboardFrame(Billboard.Random(1));
     }
 
     /**

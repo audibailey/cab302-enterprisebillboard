@@ -129,11 +129,21 @@ public class BillboardController {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
 
-            String bName = ((Billboard) req.body).name;
+            Billboard b = (Billboard) req.body;
+            if (b.name == null) return new BadRequest("Billboard name not nullable");
+
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> bName.equals(String.valueOf(billboard.name)));
+                billboard -> b.name.equals(String.valueOf(billboard.name)));
 
             if (!billboardList.isEmpty()) return new BadRequest("Billboard name already exists.");
+
+            // Set default values
+            b.messageColor = b.messageColor == null ? "#000000" : b.messageColor;
+            b.informationColor = b.informationColor == null ? "#000000" : b.informationColor;
+            b.backgroundColor = b.backgroundColor == null ? "#ffffff" : b.backgroundColor;
+            b.picture = b.picture == null ? new byte[0] : b.picture;
+
+            b.userId = req.session.userId;
 
             // Attempt to insert the billboard into the database then return a success IActionResult.
             CollectionFactory.getInstance(Billboard.class).insert((Billboard) req.body);
