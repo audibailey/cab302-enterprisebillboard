@@ -1,5 +1,6 @@
 package server.sql;
 
+import common.models.SQLITE;
 import server.services.DataService;
 
 import java.lang.reflect.Field;
@@ -140,7 +141,7 @@ public class Collection<T> {
             // Gets the name of the field.
             String name = field.getName();
 
-            if (name != "serialVersionUID") {
+            if (StatementBuilder.hasSQLAnnotation(field)) {
                 // Fetches the value using name of the field as the key from the result set.
                 Object value = resultSet.getObject(name);
 
