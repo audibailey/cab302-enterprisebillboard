@@ -75,7 +75,6 @@ public class PermissionController {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Permissions)) return new UnsupportedType(Permissions.class);
 
-
             if(((Permissions) req.body).username.equals(req.session.username) )
             {
                 if (!((Permissions) req.body).canEditUser) return new BadRequest("Can't remove your own Edit User permission.");

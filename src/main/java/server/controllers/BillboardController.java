@@ -80,7 +80,7 @@ public class BillboardController {
 
             // Get list of billboards with the ID as specified. This should only return 1 billboard.
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> name.equals(String.valueOf(billboard.name))
+                billboard -> name.equals(String.valueOf(billboard.name  ))
             );
 
             // Return a success IActionResult with the list of billboards.
