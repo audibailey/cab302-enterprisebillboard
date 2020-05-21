@@ -4,6 +4,10 @@ import common.models.Billboard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 /**
@@ -34,8 +38,18 @@ public class Main {
         frame.setSize(screen_Width, screen_Height); // Setting frame size
 
         // Setting the frame event listeners
-        frame.addKeyListener(new ExitEvents.KeyListener()); // Adding key listener
-        frame.addMouseListener(new ExitEvents.MouseListener()); // Adding mouse listener
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    frame.dispose();
+                }
+            }
+        }); // Adding key listener
+        frame.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                frame.dispose();
+            }
+        }); // Adding mouse listener
 
         // Setting frame properties
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set frame to exit on close

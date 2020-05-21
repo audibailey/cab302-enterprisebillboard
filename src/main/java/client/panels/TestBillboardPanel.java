@@ -18,9 +18,10 @@ import java.io.IOException;
 
 public class TestBillboardPanel extends JPanel implements ActionListener {
 
+    ObjectTableModel<Billboard> tableModel;
     JTable table;
     Container buttonContainer = new Container();
-    JButton viewButton, createButton;
+    JButton viewButton, createButton, refreshButton;
     String selected;
 
     public TestBillboardPanel() {
@@ -30,8 +31,8 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
         viewButton.addActionListener(this::actionPerformed);
         viewButton.setEnabled(false);
 
-        ObjectTableModel<Billboard> tableModel = new DisplayableObjectTableModel<>(Billboard.class);
-        tableModel.setObjectRows(BillboardService.getInstance());
+        tableModel = new DisplayableObjectTableModel<>(Billboard.class, BillboardService.getInstance());
+        tableModel.setObjectRows(BillboardService.getInstance().refresh());
         table = new JTable(tableModel);
 
         setupSelection();
@@ -63,7 +64,7 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
     }
 
     public void setupRenderersAndEditors() {
-        //Set up renderer and editor for the Favorite Color column.
+        //Set up renderer and editor for the Favourite Colour column.
         table.setDefaultRenderer(Color.class,
             new ColourRenderer());
         table.setDefaultEditor(Color.class,
@@ -72,19 +73,34 @@ public class TestBillboardPanel extends JPanel implements ActionListener {
         table.setDefaultRenderer(BufferedImage.class, new PictureRenderer());
     }
 
-
     @Override
     // Adding listener events for the user panel buttons.
     public void actionPerformed(ActionEvent e) {
         // Check if new user button is pressed
         if(e.getSource() == createButton){
-            // TODO : Spawn make billboard
+            String result = (String)JOptionPane.showInputDialog(
+                this,
+                "Input a new billboard name",
+                "Create Billboard",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+            );
+
+            if (result != null) {
+                Billboard b = new Billboard();
+                b.name = result;
+
+                tableModel.setObjectRows(BillboardService.getInstance().insert(b));
+                tableModel.fireTableDataChanged();
+            }
         }
         // Check if edit user button is pressed
         if(e.getSource() == viewButton){
             SwingUtilities.invokeLater(() -> {
                 try {
-                    viewer.Main.createAndShowGUI(BillboardService.getInstance().stream().filter(x -> x.name.equals(selected)).findFirst().get());
+                    viewer.Main.createAndShowGUI(BillboardService.getInstance().billboards.stream().filter(x -> x.name.equals(selected)).findFirst().get());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
