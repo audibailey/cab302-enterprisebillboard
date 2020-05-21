@@ -1,0 +1,69 @@
+package client.components;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+
+public class PictureEditor extends AbstractCellEditor
+    implements TableCellEditor,
+    ActionListener {
+    byte[] currentPicture;
+    JButton button;
+    JFileChooser fileChooser;
+    JDialog dialog;
+    protected static final String EDIT = "edit";
+
+    public PictureEditor() {
+        button = new JButton();
+        button.setActionCommand(EDIT);
+        button.addActionListener(this);
+        button.setBorderPainted(false);
+
+        fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "png", "jpeg"));
+        dialog = new JDialog((Window) null);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (EDIT.equals(e.getActionCommand())) {
+
+            int returnVal = fileChooser.showOpenDialog(dialog);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try {
+                    System.out.println(file.toPath());
+                    currentPicture = Files.readAllBytes(file.toPath());
+                    System.out.println(currentPicture.toString());
+                } catch (IOException e1) {
+                    JOptionPane.showMessageDialog(null, "Failed to load the file: " + e1.getMessage());
+                    e1.printStackTrace();
+                }
+            }
+            //Make the renderer reappear.
+            fireEditingStopped();
+        }
+    }
+
+    //Implement the one CellEditor method that AbstractCellEditor doesn't.
+    public Object getCellEditorValue() {
+        return currentPicture;
+    }
+
+    //Implement the one method defined by TableCellEditor.
+    public Component getTableCellEditorComponent(JTable table,
+                                                 Object value,
+                                                 boolean isSelected,
+                                                 int row,
+                                                 int column) {
+        currentPicture = (byte[]) value;
+        return button;
+    }
+}

@@ -15,6 +15,7 @@ public class PanelHandler extends JTabbedPane {
         Session session = SessionService.getInstance();
 
         if (session == null) {
+            add("Test", new TestPanel());
             add("Billboards", billboardPanel);
             add("Schedule", schedulePanel);
             add("Users", userPanel);
