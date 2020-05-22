@@ -63,7 +63,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
         deleteButton.setEnabled(false);
         importButton.setEnabled(false);
 
-        tableModel = new DisplayableObjectTableModel<>(Billboard.class, BillboardService.getInstance());
+        tableModel = new DisplayableObjectTableModel(Billboard.class, BillboardService.getInstance());
         tableModel.setObjectRows(BillboardService.getInstance().refresh());
         table = new JTable(tableModel);
 

@@ -12,7 +12,6 @@ import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
 import common.utils.HashingFactory;
-import client.frames.CreateEditUserFrame;
 
 import javax.swing.*;
 import java.awt.*;
