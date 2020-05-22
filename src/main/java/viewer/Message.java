@@ -40,18 +40,22 @@ public class Message extends JLabel {
      * Method to calculate the largest possible message to fit the screen in one line
      * @param label
      */
-    public void CalcMsgWidth(JLabel label){
+    public void CalcMsgWidth(JLabel label, Billboard billboard){
         Font labelFont = label.getFont(); // Get the font used for the label
         String labelText = label.getText(); // Get the string used for the label
         int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText); // Getting the width of the string
         int labelWidth = Toolkit.getDefaultToolkit().getScreenSize().width; // Getting the width of the label
-
+        int maxHeight = Toolkit.getDefaultToolkit().getScreenSize().height / 3; // Maximum label height
         // Checking to see how much the font can grow in width.
         double largestWidth = (double)labelWidth / (double)stringWidth; // Calculate largest width by taking label width/string width
         int finalSize = (int)(labelFont.getSize() * largestWidth); // Set final font size by multiplying font size with scale factor
 
         // Set the final plain font size to use for the message label
         label.setFont(new Font(labelFont.getName(), Font.PLAIN, finalSize));
+        // Check if font is larger than max height
+        if (finalSize > maxHeight){
+            label.setFont(new Font(labelFont.getName(), Font.PLAIN, maxHeight)); // Set font size to fit maximum label height
+        }
     }
 
     /**
@@ -61,7 +65,7 @@ public class Message extends JLabel {
      */
     public void DrawMessage(Billboard billboard, Container container){
         JLabel msg = new JLabel(billboard.message); // Adding message string to label
-        CalcMsgWidth(msg); // Formatting message for billboard width
+        CalcMsgWidth(msg, billboard); // Formatting message for billboard width
         // Check if message string has a message colour attribute to add colour
         if(billboard.messageColor != null){
             msg.setForeground(Color.decode(billboard.messageColor));
