@@ -80,7 +80,7 @@ public class Main {
 
         if (adminExists == 0) {
             User u = new User("admin", HashingFactory.hashPassword("admin"), null);
-            Permissions p = new Permissions(u.username, true, true, true, true, true);
+            Permissions p = new Permissions(u.username, true, true, true, true);
             UserPermissions up = new UserPermissions(u, p);
 
             new UserPermissionsController.Insert().execute(new Request(null, null, null, up));
