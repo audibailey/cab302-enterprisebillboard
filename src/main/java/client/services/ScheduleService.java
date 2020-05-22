@@ -1,5 +1,6 @@
 package client.services;
 
+import common.models.Billboard;
 import common.models.Schedule;
 import common.models.Session;
 import common.router.IActionResult;
@@ -9,7 +10,7 @@ import common.utils.ClientSocketFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleService {
+public class ScheduleService extends DataService<Schedule> {
 
     private List<Schedule> schedules;
 
@@ -21,27 +22,37 @@ public class ScheduleService {
         private final static ScheduleService INSTANCE = new ScheduleService();
     }
 
-    public static List<Schedule> getInstance() { return ScheduleServiceHolder.INSTANCE.schedules; }
+    public static ScheduleService getInstance() { return ScheduleServiceHolder.INSTANCE; }
 
-    public static void refresh() {
+    public List<Schedule> refresh() {
         Session session = SessionService.getInstance();
 
-        IActionResult result = new ClientSocketFactory("/schedule/get", session.token, null).Connect();
+        if (session != null) {
+            IActionResult result = new ClientSocketFactory("/schedule/get", session.token, null).Connect();
 
-        if (result != null && result.status == Status.SUCCESS && result.body instanceof List) {
-            ScheduleServiceHolder.INSTANCE.schedules = (List<Schedule>) result.body;
+            if (result != null && result.status == Status.SUCCESS && result.body instanceof List) {
+                ScheduleServiceHolder.INSTANCE.schedules = (List<Schedule>) result.body;
+            }
         }
+        return ScheduleServiceHolder.INSTANCE.schedules;
     }
 
-    public static void insert(Schedule s) {
+    public List<Schedule> insert(Schedule s) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/schedule/insert", session.token, null, s).Connect();
-        refresh();
+        IActionResult res = new ClientSocketFactory("/schedule/insert", session.token, null, s).Connect();
+        return refresh();
     }
 
-    public static void delete(Schedule s) {
+    public List<Schedule> delete(Schedule s) {
         Session session = SessionService.getInstance();
-        new ClientSocketFactory("/schedule/delete", session.token, null, s).Connect();
-        refresh();
+        IActionResult res = new ClientSocketFactory("/schedule/delete", session.token, null, s).Connect();
+        return refresh();
+    }
+
+    @Override
+    public Boolean update(Schedule schedule) {
+        Session session = SessionService.getInstance();
+        IActionResult res = new ClientSocketFactory("/schedule/update", session.token, null, schedule).Connect();
+        return !res.error;
     }
 }
