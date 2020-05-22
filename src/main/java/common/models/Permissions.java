@@ -39,9 +39,6 @@ public class Permissions implements Serializable, Editable {
     @SQLITE(type="BOOLEAN")
     public boolean canEditUser = false;
 
-    @SQLITE(type="BOOLEAN")
-    public boolean canViewBillboard = false;
-
     /**
      * An empty constructor just for creating the object.
      */
@@ -57,15 +54,13 @@ public class Permissions implements Serializable, Editable {
      * @param canEditBillboard:     permissions canEditBillboard permission.
      * @param canScheduleBillboard: permissions canScheduleBillboard permission.
      * @param canEditUser:          permissions canEditUser permission.
-     * @param canViewBillboard:     permissions canViewBillboard permission.
      */
-    public Permissions(String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser, boolean canViewBillboard) {
+    public Permissions(String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser) {
         this.username = username;
         this.canCreateBillboard = canCreateBillboard;
         this.canEditBillboard = canEditBillboard;
         this.canScheduleBillboard = canScheduleBillboard;
         this.canEditUser = canEditUser;
-        this.canViewBillboard = canViewBillboard;
     }
 
     /**
@@ -77,16 +72,14 @@ public class Permissions implements Serializable, Editable {
      * @param canEditBillboard:     permissions canEditBillboard permission.
      * @param canScheduleBillboard: permissions canScheduleBillboard permission.
      * @param canEditUser:          permissions canEditUser permission.
-     * @param canViewBillboard:     permissions canViewBillboard permission.
      */
-    public Permissions(int id, String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser, boolean canViewBillboard) {
+    public Permissions(int id, String username, boolean canCreateBillboard, boolean canEditBillboard, boolean canScheduleBillboard, boolean canEditUser) {
         this.id = id;
         this.username = username;
         this.canCreateBillboard = canCreateBillboard;
         this.canEditBillboard = canEditBillboard;
         this.canScheduleBillboard = canScheduleBillboard;
         this.canEditUser = canEditUser;
-        this.canViewBillboard = canViewBillboard;
     }
 
     /**
@@ -99,7 +92,6 @@ public class Permissions implements Serializable, Editable {
         return new Permissions(
             id,
             username,
-            RandomFactory.Boolean(),
             RandomFactory.Boolean(),
             RandomFactory.Boolean(),
             RandomFactory.Boolean(),
@@ -145,29 +137,8 @@ public class Permissions implements Serializable, Editable {
 
     public void setCanEditUser(Boolean b) { canEditUser = b; }
 
-    @DisplayAs(value = "Can View Billboard", index = 6, editable = true)
-    public Boolean getCanViewBillboard() {
-        return canViewBillboard;
-    }
-
-    public void setCanViewBillboard(Boolean b) { canViewBillboard = b; }
-
     @Override
     public boolean isEditable() {
         return true;
-    }
-
-    public static Object[] toObjectArray(Permissions p) {
-        return new Object[]{ p.username, p.canCreateBillboard, p.canEditBillboard, p.canScheduleBillboard, p.canEditUser, p.canViewBillboard };
-    }
-
-    public static Object[][] objectify(List<Permissions> permissions) {
-        List<Object[]> perm = new ArrayList<>();
-
-        for (Permissions p : permissions) {
-            perm.add(toObjectArray(p));
-        }
-
-        return (Object[][]) perm.toArray();
     }
 }

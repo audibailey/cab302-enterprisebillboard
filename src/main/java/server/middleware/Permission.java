@@ -185,26 +185,4 @@ public class Permission {
             return new Ok();
         }
     }
-
-    /**
-     * This is an Action class that ensures the user can view billboards.
-     */
-    public static class canViewBillboard extends Action {
-        public canViewBillboard() {}
-
-        /**
-         * Override the default execute function with permission check.
-         *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
-         */
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            if (!req.permissions.canViewBillboard) return new Unauthorised("Not authorised to view billboards. ");
-
-            return new Ok();
-        }
-    }
-
 }
