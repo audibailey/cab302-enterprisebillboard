@@ -73,8 +73,6 @@ public class Picture extends JLabel {
         int labelWidth = (Toolkit.getDefaultToolkit().getScreenSize().width / wFactor); // Storing the width of the label with resize factor
         int labelHeight = Toolkit.getDefaultToolkit().getScreenSize().height * 2 / hFactor; // Storing the height of the label with resize factor
 
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon(pictureOutput).getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_DEFAULT));
-
         JLabel picture = new JLabel(scaleImage(new ImageIcon(pictureOutput), labelWidth, labelHeight));
 
         picture.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally centering message text

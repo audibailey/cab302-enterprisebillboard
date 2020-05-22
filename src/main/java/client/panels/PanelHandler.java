@@ -10,9 +10,7 @@ public class PanelHandler extends JTabbedPane {
     public PanelHandler() {
         Session session = SessionService.getInstance();
 
-        if (session.permissions.canViewBillboard) {
-            add("Billboards", new BillboardPanel());
-        }
+        add("Billboards", new BillboardPanel());
 
         if (session.permissions.canScheduleBillboard) {
             add("Schedule", new SchedulePanel());
