@@ -43,7 +43,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
         deleteButton.setEnabled(false);
 
         // Getting table data and configuring table
-        tableModel = new DisplayableObjectTableModel(Schedule.class, ScheduleService.getInstance());
+        tableModel = new DisplayableObjectTableModel(Schedule.class, null);
         tableModel.setObjectRows(BillboardService.getInstance().refresh());
         table = new JTable(tableModel);
         setupSelection();
