@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SchedulePanel extends JPanel {
+public class SchedulePanel extends JPanel implements ActionListener {
 
     ObjectTableModel<Billboard> tableModel;
     JTable table;
@@ -31,11 +31,15 @@ public class SchedulePanel extends JPanel {
         // Adding button labels
         createButton = new JButton("Create Schedule");
         refreshButton = new JButton("Refresh");
-        deleteButton = new JButton("Delete Schedule");
+        deleteButton = new JButton("Delete Selected");
         // Disable schedule button if user is not permitted
         if (!session.permissions.canScheduleBillboard) {
             createButton.setEnabled(false);
         }
+
+        refreshButton.addActionListener(this::actionPerformed);
+        deleteButton.addActionListener(this::actionPerformed);
+        deleteButton.setEnabled(false);
 
         // Getting table data and configuring table
         tableModel = new DisplayableObjectTableModel(Schedule.class, ScheduleService.getInstance());
@@ -66,8 +70,9 @@ public class SchedulePanel extends JPanel {
 
         cellSelectionModel.addListSelectionListener(e -> {
             selected = (String)table.getModel().getValueAt(table.getSelectedRow(), 1);
+            Session session = SessionService.getInstance();
 
-            if (selected != null) {
+            if (selected != null && session.permissions.canScheduleBillboard) {
                 deleteButton.setEnabled(true);
                 System.out.println(selected);
             } else {
@@ -82,5 +87,10 @@ public class SchedulePanel extends JPanel {
         table.setDefaultEditor(Color.class, new ColourEditor());
         table.setDefaultEditor(Picture.class, new PictureEditor());
         table.setDefaultRenderer(Picture.class, new PictureRenderer());
+    }
+
+    @Override
+    // Adding listener events for the user panel buttons.
+    public void actionPerformed(ActionEvent e) {
     }
 }

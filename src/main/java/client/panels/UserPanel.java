@@ -28,7 +28,7 @@ public class UserPanel extends JPanel implements ActionListener {
     String selected;
 
     public UserPanel() {
-        createButton = new JButton("Create New");
+        createButton = new JButton("Create User");
         editButton = new JButton("Edit Password");
         refreshButton = new JButton("Refresh");
         deleteButton = new JButton("Delete Selected");

@@ -44,7 +44,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
     public BillboardPanel() {
         Session session = SessionService.getInstance();
 
-        createButton = new JButton("Create New");
+        createButton = new JButton("Create Billboard");
         viewButton = new JButton("View Selected");
         refreshButton = new JButton("Refresh");
         deleteButton = new JButton("Delete Selected");
