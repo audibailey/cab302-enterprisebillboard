@@ -12,6 +12,7 @@ import com.mysql.cj.log.Log;
 import common.models.Billboard;
 import common.models.Picture;
 import common.models.Session;
+import common.swing.Notification;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -22,6 +23,11 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +44,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
     ObjectTableModel<Billboard> tableModel;
     JTable table;
     Container buttonContainer = new Container();
-    JButton viewButton, createButton, refreshButton, deleteButton, importButton;
+    JButton viewButton, createButton, refreshButton, deleteButton, importButton, exportButton;
     String selected;
 
     public BillboardPanel() {
@@ -49,6 +55,8 @@ public class BillboardPanel extends JPanel implements ActionListener {
         refreshButton = new JButton("Refresh");
         deleteButton = new JButton("Delete Selected");
         importButton = new JButton("Import into Selected");
+        exportButton = new JButton("Export Selected");
+
         createButton.addActionListener(this::actionPerformed);
 
         if (!session.permissions.canCreateBillboard) {
@@ -59,9 +67,11 @@ public class BillboardPanel extends JPanel implements ActionListener {
         refreshButton.addActionListener(this::actionPerformed);
         deleteButton.addActionListener(this::actionPerformed);
         importButton.addActionListener(this::actionPerformed);
+        exportButton.addActionListener(this::actionPerformed);
         viewButton.setEnabled(false);
         deleteButton.setEnabled(false);
         importButton.setEnabled(false);
+        exportButton.setEnabled(false);
 
         tableModel = new DisplayableObjectTableModel(Billboard.class, BillboardService.getInstance());
         tableModel.setObjectRows(BillboardService.getInstance().refresh());
@@ -77,6 +87,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
         buttonContainer.add(viewButton);
         buttonContainer.add(deleteButton);
         buttonContainer.add(importButton);
+        buttonContainer.add(exportButton);
         buttonContainer.add(refreshButton);
 
         setLayout(new BorderLayout());
@@ -102,11 +113,13 @@ public class BillboardPanel extends JPanel implements ActionListener {
                     viewButton.setEnabled(true);
                     deleteButton.setEnabled(true);
                     importButton.setEnabled(true);
+                    exportButton.setEnabled(true);
                     System.out.println(selected);
                 } else {
                     viewButton.setEnabled(false);
                     deleteButton.setEnabled(false);
                     importButton.setEnabled(false);
+                    exportButton.setEnabled(false);
                 }
             }
         });
@@ -235,12 +248,76 @@ public class BillboardPanel extends JPanel implements ActionListener {
                 ex.printStackTrace();
             }
         }
+
+        if (e.getSource() == exportButton) {
+            try {
+                Optional<Billboard> selectedBillboard = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
+
+                if (selectedBillboard.isPresent()) {
+                    Billboard billboard = selectedBillboard.get();
+
+                    DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+
+                    DocumentBuilder documentBuilder = null;
+
+                    documentBuilder = documentFactory.newDocumentBuilder();
+
+                    Document document = documentBuilder.newDocument();
+
+                    // root element
+                    Element root = document.createElement("billboard");
+                    root.setAttribute("background", billboard.backgroundColor);
+                    document.appendChild(root);
+
+                    if (billboard.message != null && !billboard.message.isEmpty()) {
+                        Element element = document.createElement("message");
+                        element.setTextContent(billboard.message);
+                        element.setAttribute("colour", billboard.messageColor);
+
+                        root.appendChild(element);
+                    }
+
+                    if (billboard.picture != null && !billboard.picture.isEmpty()) {
+                        Element element = document.createElement("picture");
+                        element.setAttribute("data", billboard.picture);
+
+                        root.appendChild(element);
+                    }
+
+                    if (billboard.information != null && !billboard.information.isBlank()) {
+                        Element element = document.createElement("information");
+                        element.setTextContent(billboard.information);
+                        element.setAttribute("colour", billboard.informationColor);
+
+                        root.appendChild(element);
+                    }
+
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setFileFilter(new FileNameExtensionFilter("XML file", "xml"));
+                    int returnVal = fileChooser.showSaveDialog(new JDialog((Window) null));
+
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                        Transformer transformer = transformerFactory.newTransformer();
+                        DOMSource domSource = new DOMSource(document);
+                        StreamResult streamResult = new StreamResult(fileChooser.getSelectedFile());
+
+                        transformer.transform(domSource, streamResult);
+
+                        Notification.display("Successfully exported to " + fileChooser.getName(fileChooser.getSelectedFile()));
+                    }
+                }
+            } catch (Exception ex) {
+                Notification.display("Error exporting: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
     }
 
     private static String getTagValue(String tag, Document document) {
         try {
             NodeList nodeList = document.getElementsByTagName(tag).item(0).getChildNodes();
-            Node node = (Node) nodeList.item(0);
+            Node node = nodeList.item(0);
             return node.getNodeValue();
         } catch (Exception e) {
             return null;
