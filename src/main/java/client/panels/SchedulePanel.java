@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SchedulePanel extends JPanel {
-    JButton button = new JButton("Schedule");
+
     ObjectTableModel<Billboard> tableModel;
     JTable table;
     Container buttonContainer = new Container();
