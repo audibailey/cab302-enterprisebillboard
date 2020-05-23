@@ -2,12 +2,10 @@ package client.panels;
 
 import client.components.table.*;
 import client.services.BillboardService;
+import client.services.PermissionsService;
 import client.services.ScheduleService;
 import client.services.SessionService;
-import common.models.Billboard;
-import common.models.Picture;
-import common.models.Schedule;
-import common.models.Session;
+import common.models.*;
 import common.swing.Notification;
 
 import javax.swing.*;
@@ -156,6 +154,18 @@ public class SchedulePanel extends JPanel implements ActionListener {
             catch (Exception ex) {
                 Notification.display(ex.getMessage());
             }
+        }
+        
+        if (e.getSource() == deleteButton) {
+                var scheduleList = tableModel.getObjectRows();
+                Schedule s = scheduleList.stream().filter(x -> x.billboardName.equals(selected)).findFirst().get();
+                tableModel.setObjectRows(ScheduleService.getInstance().delete(s));
+                tableModel.fireTableDataChanged();
+        }
+
+        if (e.getSource() == refreshButton) {
+            tableModel.setObjectRows(ScheduleService.getInstance().refresh());
+            tableModel.fireTableDataChanged();
         }
     }
 }

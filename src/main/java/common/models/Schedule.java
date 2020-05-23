@@ -18,8 +18,6 @@ import java.time.format.DateTimeFormatter;
  */
 @SQLITE(type="FOREIGN KEY(billboardName) REFERENCES Billboard(name)")
 public class Schedule implements Serializable, Editable {
-    static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
-
     /**
      * The variables of the object schedule
      */
@@ -106,6 +104,7 @@ public class Schedule implements Serializable, Editable {
 
     @DisplayAs(value = "Start Time", index = 2)
     public String getStartTime() {
+        DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
         return DATE_TIME_FORMATTER.format(startTime);
     }
 
