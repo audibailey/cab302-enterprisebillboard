@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,7 +106,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 // Setting up start time spinner
                 SpinnerDateModel startModel = new SpinnerDateModel();
                 JSpinner startTime = new JSpinner(startModel);
-                startTime.setEditor(new JSpinner.DateEditor(startTime,"dd.MM.yyyy"));
+                startTime.setEditor(new JSpinner.DateEditor(startTime,"hh:mm dd.MM.yyyy"));
                 // Setting up duration spinner
                 Integer value = 1;
                 Integer min = 1;
@@ -141,7 +142,8 @@ public class SchedulePanel extends JPanel implements ActionListener {
                     } else {
                         Schedule schedule = new Schedule();
                         schedule.billboardName = ((String)billboards.getSelectedItem());
-                        schedule.startTime = (Instant) startTime.getValue();
+                        Date time = (Date) startTime.getValue();
+                        schedule.startTime = time.toInstant();
                         schedule.duration = (Integer) duration.getValue();
                         schedule.interval = (Integer) interval.getValue();
 
