@@ -10,7 +10,7 @@ import common.utils.ClientSocketFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleService extends DataService<Schedule> {
+public class ScheduleService {
 
     private List<Schedule> schedules;
 
@@ -34,6 +34,7 @@ public class ScheduleService extends DataService<Schedule> {
                 ScheduleServiceHolder.INSTANCE.schedules = (List<Schedule>) result.body;
             }
         }
+
         return ScheduleServiceHolder.INSTANCE.schedules;
     }
 
@@ -47,12 +48,5 @@ public class ScheduleService extends DataService<Schedule> {
         Session session = SessionService.getInstance();
         IActionResult res = new ClientSocketFactory("/schedule/delete", session.token, null, s).Connect();
         return refresh();
-    }
-
-    @Override
-    public Boolean update(Schedule schedule) {
-        Session session = SessionService.getInstance();
-        IActionResult res = new ClientSocketFactory("/schedule/update", session.token, null, schedule).Connect();
-        return !res.error;
     }
 }
