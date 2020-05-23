@@ -4,6 +4,7 @@ import client.components.table.*;
 import client.services.BillboardService;
 import client.services.ScheduleService;
 import client.services.SessionService;
+import common.models.Billboard;
 import common.models.Picture;
 import common.models.Schedule;
 import common.models.Session;
@@ -13,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SchedulePanel extends JPanel implements ActionListener {
 
@@ -35,6 +38,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
             createButton.setEnabled(false);
         }
 
+        createButton.addActionListener(this::actionPerformed);
         refreshButton.addActionListener(this::actionPerformed);
         deleteButton.addActionListener(this::actionPerformed);
         deleteButton.setEnabled(false);
@@ -94,7 +98,10 @@ public class SchedulePanel extends JPanel implements ActionListener {
         if(e.getSource() == createButton) {
             try {
                 // Setting up billboard dropdown menu
-                JComboBox billboards = new JComboBox((ComboBoxModel) BillboardService.getInstance().billboards);
+                List<Billboard> billboardList = BillboardService.getInstance().billboards;
+                List<String> billboardNames = billboardList.stream().map(b -> b.name).collect(Collectors.toList());
+
+                JComboBox billboards = new JComboBox(new DefaultComboBoxModel(billboardNames.toArray()));
                 // Setting up start time spinner
                 SpinnerDateModel startModel = new SpinnerDateModel();
                 JSpinner startTime = new JSpinner(startModel);
@@ -133,7 +140,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
                         // Else populate table
                     } else {
                         Schedule schedule = new Schedule();
-                        schedule.billboardName = (((String[])billboards.getSelectedItem())[0]);
+                        schedule.billboardName = ((String)billboards.getSelectedItem());
                         schedule.startTime = (Instant) startTime.getValue();
                         schedule.duration = (Integer) duration.getValue();
                         schedule.interval = (Integer) interval.getValue();
