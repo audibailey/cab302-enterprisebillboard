@@ -6,6 +6,8 @@ import common.utils.RandomFactory;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class consists of the Schedule object and its associated methods.
@@ -101,8 +103,9 @@ public class Schedule implements Serializable, Editable {
     }
 
     @DisplayAs(value = "Start Time", index = 2)
-    public Instant getStartTime() {
-        return startTime;
+    public String getStartTime() {
+        DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
+        return DATE_TIME_FORMATTER.format(startTime);
     }
 
     @DisplayAs(value = "Duration", index = 3)
