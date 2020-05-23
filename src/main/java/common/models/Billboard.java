@@ -24,7 +24,7 @@ import java.util.List;
  */
 @SQLITE(type="FOREIGN KEY(userId) REFERENCES User(id)")
 public class Billboard implements Serializable, Editable {
-//    private static final long serialVersionUID = 7002136681416053566L;
+    private static final long serialVersionUID = 7002136681416053566L;
     /**
      * The variables of the object billboard.
      */
@@ -136,6 +136,24 @@ public class Billboard implements Serializable, Editable {
         this.userId = userId;
     }
 
+    /**
+     * Generates a random billboard object with random variables
+     * @param userId: the id of the user creating the billboard
+     * @return a randomised billboard
+     */
+    public static Billboard Random(int userId) {
+        return new Billboard(
+            RandomFactory.String(),
+            RandomFactory.String(),
+            RandomFactory.Color(),
+            null,
+            RandomFactory.Color(),
+            RandomFactory.String(),
+            RandomFactory.Color(),
+            RandomFactory.Boolean(),
+            userId
+        );
+    }
 
     @DisplayAs(value = "Id", index = 0)
     public int getId() {
@@ -214,22 +232,22 @@ public class Billboard implements Serializable, Editable {
         return true;
     }
 
-    /**
-     * Generates a random billboard object with random variables
-     * @param userId: the id of the user creating the billboard
-     * @return a randomised billboard
-     */
-    public static Billboard Random(int userId) {
-        return new Billboard(
-            RandomFactory.String(),
-            RandomFactory.String(),
-            RandomFactory.Color(),
-            null,
-            RandomFactory.Color(),
-            RandomFactory.String(),
-            RandomFactory.Color(),
-            RandomFactory.Boolean(),
-            userId
-        );
+    public static Object[] toObjectArray(Billboard b) {
+        return new Object[]{ b.name, b.message, b.messageColor, b.information, b.informationColor };
     }
+
+    public static Object[][] objectify(List<Billboard> billboards) {
+        List<Object[]> bill = new ArrayList<>();
+
+        for (Billboard b : billboards) {
+            bill.add(toObjectArray(b));
+        }
+
+        if (bill.size() == 0) {
+            return new Object[2][0];
+        } else {
+            return (Object[][]) bill.toArray();
+        }
+    }
+
 }
