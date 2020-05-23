@@ -124,9 +124,9 @@ public class UserPanel extends JPanel implements ActionListener {
                 int result = JOptionPane.showConfirmDialog(this, components, "Create new User", JOptionPane.PLAIN_MESSAGE);
 
                 if (result == JOptionPane.OK_OPTION) {
-                    if (username.getText().equals("")) {
+                    if (username.getText().isEmpty()) {
                         Notification.display("Username cannot be null. Please try again");
-                    } else if (String.valueOf(password.getPassword()).equals("")) {
+                    } else if (String.valueOf(password.getPassword()).isEmpty()) {
                         Notification.display("Password cannot be null. Please try again");
                     } else {
                         User user = new User();
