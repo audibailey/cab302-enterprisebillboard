@@ -1,10 +1,8 @@
 package client.panels;
 
 import client.components.table.*;
-import client.services.BillboardService;
 import client.services.ScheduleService;
 import client.services.SessionService;
-import common.models.Billboard;
 import common.models.Picture;
 import common.models.Schedule;
 import common.models.Session;
@@ -12,13 +10,10 @@ import common.models.Session;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class SchedulePanel extends JPanel implements ActionListener {
 
-    ObjectTableModel<Billboard> tableModel;
+    ObjectTableModel<Schedule> tableModel;
     JTable table;
     Container buttonContainer = new Container();
     JButton createButton, refreshButton, deleteButton;
@@ -43,7 +38,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
 
         // Getting table data and configuring table
         tableModel = new DisplayableObjectTableModel(Schedule.class, null);
-        tableModel.setObjectRows(BillboardService.getInstance().refresh());
+        tableModel.setObjectRows(ScheduleService.getInstance().refresh());
         table = new JTable(tableModel);
         setupSelection();
         setupRenderersAndEditors();
