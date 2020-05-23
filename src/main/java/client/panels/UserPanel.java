@@ -51,8 +51,8 @@ public class UserPanel extends JPanel implements ActionListener {
         buttonContainer.setLayout(new FlowLayout());
         buttonContainer.add(createButton);
         buttonContainer.add(editButton);
-        buttonContainer.add(refreshButton);
         buttonContainer.add(deleteButton);
+        buttonContainer.add(refreshButton);
 
         setLayout(new BorderLayout());
         add(buttonContainer, BorderLayout.NORTH);
