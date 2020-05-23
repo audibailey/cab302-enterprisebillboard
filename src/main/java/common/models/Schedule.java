@@ -1,5 +1,6 @@
 package common.models;
 
+import client.components.table.DisplayAs;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
@@ -87,6 +88,33 @@ public class Schedule implements Serializable {
         this.duration = duration;
         this.interval = interval;
     }
+
+    @DisplayAs(value = "Id", index = 0)
+    public int getId() {
+        return id;
+    }
+
+    @DisplayAs(value = "Billboard Name", index = 1)
+    public String getName() {
+        return billboardName;
+    }
+
+    @DisplayAs(value = "Start Time", index = 2, editable = true)
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    @DisplayAs(value = "Duration", index = 3, editable = true)
+    public int getDuration() {
+        return duration;
+    }
+
+    @DisplayAs(value = "Interval", index = 4, editable = true)
+    public int getInterval() {
+        return interval;
+    }
+
+
 
     /**
      * Generates a random Schedule object with random variables
