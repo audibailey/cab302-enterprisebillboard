@@ -1,15 +1,18 @@
 package client.panels;
 
 import client.components.table.*;
+import client.services.BillboardService;
 import client.services.ScheduleService;
 import client.services.SessionService;
 import common.models.Picture;
 import common.models.Schedule;
 import common.models.Session;
+import common.swing.Notification;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.Instant;
 
 public class SchedulePanel extends JPanel implements ActionListener {
 
