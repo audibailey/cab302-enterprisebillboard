@@ -17,7 +17,6 @@ import java.util.List;
  */
 @SQLITE(type="FOREIGN KEY(id) REFERENCES User(id), FOREIGN KEY(username) REFERENCES User(username)")
 public class Permissions implements Serializable, Editable {
-//    private static final long serialVersionUID = -7328638906974868458L;
     /**
      * The variables of the object Permissions
      */

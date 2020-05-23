@@ -24,7 +24,6 @@ import java.util.List;
  */
 @SQLITE(type="FOREIGN KEY(userId) REFERENCES User(id)")
 public class Billboard implements Serializable, Editable {
-//    private static final long serialVersionUID = 7002136681416053566L;
     /**
      * The variables of the object billboard.
      */
