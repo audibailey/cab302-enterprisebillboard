@@ -48,8 +48,8 @@ public class SchedulePanel extends JPanel {
         // Add buttons to container
         buttonContainer.setLayout(new FlowLayout());
         buttonContainer.add(createButton);
-        buttonContainer.add(refreshButton);
         buttonContainer.add(deleteButton);
+        buttonContainer.add(refreshButton);
 
         // Add components to frame
         setLayout(new BorderLayout());

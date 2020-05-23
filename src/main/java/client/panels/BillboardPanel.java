@@ -75,9 +75,9 @@ public class BillboardPanel extends JPanel implements ActionListener {
         buttonContainer.setLayout(new FlowLayout());
         buttonContainer.add(createButton);
         buttonContainer.add(viewButton);
-        buttonContainer.add(refreshButton);
         buttonContainer.add(deleteButton);
         buttonContainer.add(importButton);
+        buttonContainer.add(refreshButton);
 
         setLayout(new BorderLayout());
         add(buttonContainer, BorderLayout.NORTH);
