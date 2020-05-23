@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class SchedulePanel extends JPanel implements ActionListener {
 
-    ObjectTableModel<Billboard> tableModel;
+    ObjectTableModel<Schedule> tableModel;
     JTable table;
     Container buttonContainer = new Container();
     JButton createButton, refreshButton, deleteButton;
@@ -44,7 +44,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
 
         // Getting table data and configuring table
         tableModel = new DisplayableObjectTableModel(Schedule.class, null);
-        tableModel.setObjectRows(BillboardService.getInstance().refresh());
+        tableModel.setObjectRows(ScheduleService.getInstance().refresh());
         table = new JTable(tableModel);
         setupSelection();
         setupRenderersAndEditors();
