@@ -124,15 +124,20 @@ public class UserPanel extends JPanel implements ActionListener {
                 int result = JOptionPane.showConfirmDialog(this, components, "Create new User", JOptionPane.PLAIN_MESSAGE);
 
                 if (result == JOptionPane.OK_OPTION) {
+                    if (username.getText().equals("")) {
+                        Notification.display("Username cannot be null. Please try again");
+                    } else if (String.valueOf(password.getPassword()).equals("")) {
+                        Notification.display("Password cannot be null. Please try again");
+                    } else {
+                        User user = new User();
+                        user.username = username.getText();
+                        user.password = HashingFactory.hashPassword(String.valueOf(password.getPassword()));
 
-                    User user = new User();
-                    user.username = username.getText();
-                    user.password = HashingFactory.hashPassword(String.valueOf(password.getPassword()));
+                        Permissions permissions = new Permissions(username.getText(), canCreateBillboard.isSelected(), canEditBillboard.isSelected(), canScheduleBillboard.isSelected(), canEditUser.isSelected());
 
-                    Permissions permissions = new Permissions(username.getText(), canCreateBillboard.isSelected(), canEditBillboard.isSelected(), canScheduleBillboard.isSelected(), canEditUser.isSelected());
-
-                    tableModel.setObjectRows(PermissionsService.getInstance().insert(new UserPermissions(user, permissions)));
-                    tableModel.fireTableDataChanged();
+                        tableModel.setObjectRows(PermissionsService.getInstance().insert(new UserPermissions(user, permissions)));
+                        tableModel.fireTableDataChanged();
+                    }
                 }
             } catch (Exception ex) {
                 Notification.display(ex.getMessage());
