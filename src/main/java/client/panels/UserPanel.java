@@ -97,43 +97,45 @@ public class UserPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Check if new user button is pressed
         if(e.getSource() == createButton){
-            String username = (String)JOptionPane.showInputDialog(
-                this,
-                "Input a username",
-                "Username",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                ""
-            );
+            try {
 
-            if (username != null) {
-                String password = (String)JOptionPane.showInputDialog(
-                    this,
-                    "Input a password for user: " + username,
-                    "Password",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    ""
-                );
+                JTextField username = new JTextField();
+                JPasswordField password = new JPasswordField();
+                JCheckBox canCreateBillboard = new JCheckBox();
+                JCheckBox canEditBillboard = new JCheckBox();
+                JCheckBox canScheduleBillboard = new JCheckBox();
+                JCheckBox canEditUser = new JCheckBox();
 
-                if (password != null) {
-                    // TODO: Get Permissions from dialog or something
+                final JComponent[] components = new JComponent[] {
+                    new JLabel("Username"),
+                    username,
+                    new JLabel("Password"),
+                    password,
+                    new JLabel("Can Create Billboards"),
+                    canCreateBillboard,
+                    new JLabel("Can Edit Billboards"),
+                    canEditBillboard,
+                    new JLabel("Can Schedule Billboards"),
+                    canScheduleBillboard,
+                    new JLabel("Can Edit Users"),
+                    canEditUser
+                };
 
-                    try {
-                        User user = new User();
-                        user.username = username;
-                        user.password = HashingFactory.hashPassword(password);
+                int result = JOptionPane.showConfirmDialog(this, components, "Create new User", JOptionPane.PLAIN_MESSAGE);
 
-                        Permissions permissions = Permissions.Random(0, username);
+                if (result == JOptionPane.OK_OPTION) {
 
-                        tableModel.setObjectRows(PermissionsService.getInstance().insert(new UserPermissions(user, permissions)));
-                        tableModel.fireTableDataChanged();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
+                    User user = new User();
+                    user.username = username.getText();
+                    user.password = HashingFactory.hashPassword(String.valueOf(password.getPassword()));
+
+                    Permissions permissions = new Permissions(username.getText(), canCreateBillboard.isSelected(), canEditBillboard.isSelected(), canScheduleBillboard.isSelected(), canEditUser.isSelected());
+
+                    tableModel.setObjectRows(PermissionsService.getInstance().insert(new UserPermissions(user, permissions)));
+                    tableModel.fireTableDataChanged();
                 }
+            } catch (Exception ex) {
+                Notification.display(ex.getMessage());
             }
         }
         // Check if edit user button is pressed
@@ -153,7 +155,7 @@ public class UserPanel extends JPanel implements ActionListener {
             try {
                 PermissionsService.getInstance().updatePassword(id, selected, result);
             } catch (Exception exception) {
-                exception.printStackTrace();
+                Notification.display(exception.getMessage());
             }
         }
 
