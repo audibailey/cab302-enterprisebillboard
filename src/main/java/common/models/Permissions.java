@@ -17,7 +17,6 @@ import java.util.List;
  */
 @SQLITE(type="FOREIGN KEY(id) REFERENCES User(id), FOREIGN KEY(username) REFERENCES User(username)")
 public class Permissions implements Serializable, Editable {
-    private static final long serialVersionUID = -7328638906974868458L;
     /**
      * The variables of the object Permissions
      */
@@ -82,23 +81,6 @@ public class Permissions implements Serializable, Editable {
         this.canEditUser = canEditUser;
     }
 
-    /**
-     * Generates a random permissions object with random variables
-     * @param id: the id of the user
-     * @param username: the user's username
-     * @return a randomised permissions object
-     */
-    public static Permissions Random(int id, String username) {
-        return new Permissions(
-            id,
-            username,
-            RandomFactory.Boolean(),
-            RandomFactory.Boolean(),
-            RandomFactory.Boolean(),
-            RandomFactory.Boolean()
-        );
-    }
-
     @DisplayAs(value = "Id", index = 0)
     public int getId() {
         return id;
@@ -140,5 +122,22 @@ public class Permissions implements Serializable, Editable {
     @Override
     public boolean isEditable() {
         return true;
+    }
+
+    /**
+     * Generates a random permissions object with random variables
+     * @param id: the id of the user
+     * @param username: the user's username
+     * @return a randomised permissions object
+     */
+    public static Permissions Random(int id, String username) {
+        return new Permissions(
+            id,
+            username,
+            RandomFactory.Boolean(),
+            RandomFactory.Boolean(),
+            RandomFactory.Boolean(),
+            RandomFactory.Boolean()
+        );
     }
 }
