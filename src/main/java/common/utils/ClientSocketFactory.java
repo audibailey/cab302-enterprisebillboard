@@ -50,7 +50,7 @@ public class ClientSocketFactory {
 
                 if (res.error) {
                     IActionResult finalRes = res;
-                    //SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
+                    SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
                     System.out.println(req.path);
                     System.out.println(res.status.toString());
                     System.out.println(res.message);
