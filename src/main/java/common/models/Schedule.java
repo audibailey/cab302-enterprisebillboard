@@ -1,6 +1,7 @@
 package common.models;
 
 import client.components.table.DisplayAs;
+import client.components.table.Editable;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.time.Instant;
  * @author Kevin Huynh
  */
 @SQLITE(type="FOREIGN KEY(billboardName) REFERENCES Billboard(name)")
-public class Schedule implements Serializable {
+public class Schedule implements Serializable, Editable {
     /**
      * The variables of the object schedule
      */
@@ -99,22 +100,25 @@ public class Schedule implements Serializable {
         return billboardName;
     }
 
-    @DisplayAs(value = "Start Time", index = 2, editable = true)
+    @DisplayAs(value = "Start Time", index = 2)
     public Instant getStartTime() {
         return startTime;
     }
 
-    @DisplayAs(value = "Duration", index = 3, editable = true)
+    @DisplayAs(value = "Duration", index = 3)
     public int getDuration() {
         return duration;
     }
 
-    @DisplayAs(value = "Interval", index = 4, editable = true)
+    @DisplayAs(value = "Interval", index = 4)
     public int getInterval() {
         return interval;
     }
 
-
+    @Override
+    public boolean isEditable() {
+        return false;
+    }
 
     /**
      * Generates a random Schedule object with random variables
