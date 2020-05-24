@@ -8,6 +8,7 @@ import common.utils.ClientSocketFactory;
 import common.utils.HashingFactory;
 import common.utils.RandomFactory;
 import server.controllers.UserPermissionsController;
+import server.sql.CollectionFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -138,7 +139,7 @@ public class ClientTest {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();
 //            HashMap<String, String> params = null;
-//            User testUser = new User(RandomFactory.String(), HashingFactory.hashPassword(RandomFactory.String()), null);
+//            User testUser = new User("kevin1", HashingFactory.hashPassword("1234"), null);
 //            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
 //            UserPermissions temp = new UserPermissions(testUser, testPerm);
 //
@@ -146,7 +147,20 @@ public class ClientTest {
 //
 //            System.out.println("Inserted user");
 //        }
+        // Test update password -- Worked
+        {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            HashMap<String, String> params = new HashMap<>();
 
+            String permUser = "kevin1";
+            String newPassword = HashingFactory.hashPassword("123");
+            params.put("username", permUser);
+            params.put("password", newPassword);
+
+            new ClientSocketFactory("/user/update/password", token, params, null).Connect();
+            System.out.println("Password changed");
+        }
         // Test delete user -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
@@ -156,7 +170,7 @@ public class ClientTest {
 //            User deleteUser = null;
 //            for (User temp: userList)
 //            {
-//                if (temp.username.equals("testDelete"))
+//                if (temp.username.equals("kevin"))
 //                {
 //                    deleteUser = temp;
 //                    break;
@@ -277,16 +291,16 @@ public class ClientTest {
 //        }
 
         // Test get current schedule -- Worked??
-        {
-            Scanner sc = new Scanner(System.in);
-            sc.nextLine();
-            HashMap<String, String> params = new HashMap<>();
-            IActionResult result = new ClientSocketFactory("/schedule/get/current", token, params, null).Connect();
-            if (result != null && result.body != null) {
-                Billboard resultBB = (Billboard) result.body;
-                System.out.println(resultBB.name + " with the message: " + resultBB.message);
-            }
-        }
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = new HashMap<>();
+//            IActionResult result = new ClientSocketFactory("/schedule/get/current", token, params, null).Connect();
+//            if (result != null && result.body != null) {
+//                Billboard resultBB = (Billboard) result.body;
+//                System.out.println(resultBB.name + " with the message: " + resultBB.message);
+//            }
+//        }
         // Test delete schedule -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
@@ -296,9 +310,8 @@ public class ClientTest {
 //            IActionResult result = new ClientSocketFactory("/schedule/get", token, params, null).Connect();
 //            if (result != null && result.body != null) {
 //                List<Schedule> scheduleList = (List<Schedule>) result.body;
-//                for (Schedule schedule: scheduleList) {
-//                    if (schedule.billboardName.equals("Something123"))
-//                    {
+//                for (Schedule schedule : scheduleList) {
+//                    if (schedule.billboardName.equals("Something1")) {
 //                        deleted = schedule;
 //                        break;
 //                    }
