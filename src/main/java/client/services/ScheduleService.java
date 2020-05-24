@@ -1,18 +1,18 @@
 package client.services;
 
-import common.models.Billboard;
+import common.models.DayOfWeek;
 import common.models.Schedule;
 import common.models.Session;
 import common.router.IActionResult;
 import common.router.Status;
 import common.utils.ClientSocketFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ScheduleService {
 
-    private List<Schedule> schedules;
+    public List<Schedule> schedules;
 
     protected ScheduleService() {
         this.schedules = new ArrayList<>();
@@ -36,6 +36,45 @@ public class ScheduleService {
         }
 
         return ScheduleServiceHolder.INSTANCE.schedules;
+    }
+
+    public static HashMap<DayOfWeek, String[]> getSchedule(List<Schedule> scheduleList) {
+        HashMap<DayOfWeek, String[]> daysOfWeek = new HashMap<>();
+
+        for (var day: DayOfWeek.values()) {
+            if (day != DayOfWeek.Every) {
+                String[] minutesInDay = new String[1440];
+                List<Schedule> todaysList = scheduleList.stream().filter(s -> s.dayOfWeek == 0 || day.ordinal() == s.dayOfWeek).collect(Collectors.toList());
+                todaysList.sort(Comparator.comparing(s -> s.createTime));
+
+                for (var schedule: todaysList) {
+                    for (int i = schedule.start; i < minutesInDay.length; i = i + schedule.interval) {
+                        int diff = schedule.duration;
+
+                        if (i + diff >= 1440) {
+                            diff = 1440 - i;
+                        }
+
+                        for (int j = i; j < i + diff; j++) {
+                            minutesInDay[j] = schedule.billboardName;
+                        }
+                        if (schedule.interval == 0) {
+                            break;
+                        }
+                    }
+                }
+
+                daysOfWeek.put(day, minutesInDay);
+            }
+        }
+
+        return daysOfWeek;
+    }
+
+    public static String minutesToTime(int minutes) {
+        int hours = minutes / 60;
+        int mins = minutes % 60;
+        return String.format("%02d:%02d", hours, mins);
     }
 
     public List<Schedule> insert(Schedule s) {

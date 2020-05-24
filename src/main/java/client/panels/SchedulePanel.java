@@ -7,11 +7,14 @@ import client.services.ScheduleService;
 import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
+import common.utils.RandomFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +64,8 @@ public class SchedulePanel extends JPanel implements ActionListener {
         add(buttonContainer, BorderLayout.NORTH);
         add(pane, BorderLayout.CENTER);
         setVisible(true);
+
+        var res = ScheduleService.getSchedule(ScheduleService.getInstance().schedules);
     }
 
     public void setupSelection() {
@@ -101,27 +106,29 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 List<String> billboardNames = billboardList.stream().map(b -> b.name).collect(Collectors.toList());
 
                 JComboBox billboards = new JComboBox(new DefaultComboBoxModel(billboardNames.toArray()));
+
+                JComboBox days = new JComboBox(new DefaultComboBoxModel(getNames(DayOfWeek.class)));
+
                 // Setting up start time spinner
-                SpinnerDateModel startModel = new SpinnerDateModel();
-                JSpinner startTime = new JSpinner(startModel);
-                startTime.setEditor(new JSpinner.DateEditor(startTime,"hh:mm dd.MM.yyyy"));
+//                SpinnerDateModel startModel = new SpinnerDateModel();
+//                JSpinner startTime = new JSpinner(startModel);
+//                startTime.setEditor(new JSpinner.DateEditor(startTime,"hh:mm dd.MM.yyyy"));
+                SpinnerNumberModel startModel = new SpinnerNumberModel(0, 0, 1440, 1);
+                JSpinner start = new JSpinner(startModel);
                 // Setting up duration spinner
-                Integer value = 1;
-                Integer min = 1;
-                Integer durMax = 30;
-                Integer step = 1;
-                SpinnerNumberModel durModel = new SpinnerNumberModel(value, min, durMax, step);
+                SpinnerNumberModel durModel = new SpinnerNumberModel(1, 1, 1440, 1);
                 JSpinner duration = new JSpinner(durModel);
                 // Setting up interval spinner
-                Integer intMax = 60;
-                SpinnerNumberModel intModel = new SpinnerNumberModel(value, min, intMax, step);
+                SpinnerNumberModel intModel = new SpinnerNumberModel(1, 0, 60, 1);
                 JSpinner interval = new JSpinner(intModel);
                 // Setting up components for Schedule dialog box
                 final JComponent[] components = new JComponent[]{
                     new JLabel("Select a billboard:"),
                     billboards,
+                    new JLabel("Select day to show"),
+                    days,
                     new JLabel("Billboard start time:"),
-                    startTime,
+                    start,
                     new JLabel("Billboard duration:"),
                     duration,
                     new JLabel("Billboard interval:"),
@@ -134,14 +141,14 @@ public class SchedulePanel extends JPanel implements ActionListener {
                     if (billboards.getSelectedItem() == null) {
                         Notification.display("Billboard was not selected. Please try again");
                         // If billboard is not selected, display warning message
-                    } else if (startTime.getValue() == null || duration == null || interval == null ) {
+                    } else if (start.getValue() == null || duration.getValue() == null || interval.getValue() == null ) {
                         Notification.display("One of the schedule values are empty. Please try again");
                         // Else populate table
                     } else {
                         Schedule schedule = new Schedule();
                         schedule.billboardName = ((String)billboards.getSelectedItem());
-                        Date time = (Date) startTime.getValue();
-                        schedule.startTime = time.toInstant();
+                        schedule.dayOfWeek = days.getSelectedIndex();
+                        schedule.start = (Integer) start.getValue();
                         schedule.duration = (Integer) duration.getValue();
                         schedule.interval = (Integer) interval.getValue();
 
@@ -167,5 +174,9 @@ public class SchedulePanel extends JPanel implements ActionListener {
             tableModel.setObjectRows(ScheduleService.getInstance().refresh());
             tableModel.fireTableDataChanged();
         }
+    }
+
+    public static String[] getNames(Class<? extends Enum<?>> e) {
+        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 }
