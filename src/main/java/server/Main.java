@@ -102,7 +102,7 @@ public class Main {
             // Add UserPermissions actions to router
             .ADD_AUTH("/userpermissions/insert", Permission.canEditUser.class, UserPermissionsController.Insert.class)
             // Add User actions to router
-            .ADD_AUTH("/user/update/password", Permission.isSelf.class, UserController.UpdatePassword.class)
+            .ADD_AUTH("/user/update/password", Permission.canChangePassword.class, UserController.UpdatePassword.class)
             .ADD_AUTH("/user/delete", Permission.canDeleteUser.class, UserController.Delete.class)
             // Add Schedule actions to router
             .ADD_AUTH("/schedule/get", Permission.canScheduleBillboard.class, ScheduleController.Get.class)

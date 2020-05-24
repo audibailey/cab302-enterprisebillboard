@@ -28,7 +28,8 @@ public class UserController {
      * This class extends action for logging in users. It "logs" the user in and generates a token.
      */
     public static class Login extends Action {
-        public Login(){}
+        public Login() {
+        }
 
         /**
          * Override the default execute function with the login of the user.
@@ -69,7 +70,8 @@ public class UserController {
      * This class extends action for logging out the user. It "logs" the user out and removes them from the session.
      */
     public static class Logout extends Action {
-        public Logout(){}
+        public Logout() {
+        }
 
         /**
          * Override the default execute function with the logging out of the user.
@@ -94,21 +96,28 @@ public class UserController {
      */
     public static class UpdatePassword extends Action {
         // Generic UpdatePassword action constructor.
-        public UpdatePassword() { }
+        public UpdatePassword() {
+        }
 
         // Override the execute to run the update function of the user collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type user.
-            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
+            if (req.params.get("username").isEmpty() || req.params.get("password").isEmpty())
+                return new BadRequest("No username or password");
+
+            String username = req.params.get("username");
+            List<User> userList = CollectionFactory.getInstance(User.class).get(user -> username.equals(String.valueOf(user.username)));
+
+            if (userList.isEmpty()) return new BadRequest("User doesn't exist");
+            User temp = userList.get(0);
 
             // Hash the password supplied and set the respective user objects for database insertion.
             byte[] salt = RandomFactory.String().getBytes();
-            byte[] password = hashAndSaltPassword(((User) req.body).password, salt);
-            ((User) req.body).salt = encodeHex(salt);
-            ((User) req.body).password = encodeHex(password);
-
-            CollectionFactory.getInstance(User.class).update((User) req.body);
+            byte[] newPass = hashAndSaltPassword(req.params.get("password"), salt);
+            temp.salt = encodeHex(salt);
+            temp.password = encodeHex(newPass);
+            CollectionFactory.getInstance(User.class).update(temp);
             return new Ok();
         }
     }
@@ -118,7 +127,8 @@ public class UserController {
      */
     public static class Delete extends Action {
         // Generic Delete action constructor.
-        public Delete() { }
+        public Delete() {
+        }
 
         // Override the execute to run the delete function of the user collection.
         @Override

@@ -67,11 +67,12 @@ public class Permission {
         }
     }
 
+
     /**
      * This is an Action class that ensures the user has self permissions on billboards.
      */
-    public static class isSelf extends Action {
-        public isSelf() {}
+    public static class canChangePassword extends Action {
+        public canChangePassword() {}
 
         /**
          * Override the default execute function with permission check.
@@ -82,13 +83,16 @@ public class Permission {
          */
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
-            if (req.session.userId != ((User) req.body).id) return new Unauthorised("Not authorised to edit password. ");
+            if (req.permissions.canEditUser) return new Ok();
+            else
+            {
+                if (!req.session.username.equals(req.params.get("username")) )
+                    return new Unauthorised("Not authorised to edit password.");
+            }
 
             return new Ok();
         }
     }
-
     /**
      * This is an Action class that ensures the user can create users.
      */
