@@ -1,15 +1,19 @@
 package server.controllers;
 
 import common.models.Billboard;
+import common.models.DayOfWeek;
 import common.models.Schedule;
 import common.router.*;
+import common.utils.Time;
 import server.router.*;
 import server.sql.CollectionFactory;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,7 +83,14 @@ public class ScheduleController {
             // Ensure the body is of type schedule.
             if (req.body instanceof Schedule) {
                 // Check if billboard exist
-                String sName = ((Schedule) req.body).billboardName;
+                Schedule s = (Schedule) req.body;
+
+                if (s.start > 7 || s.start < 0) return new BadRequest("Start must be between 0-7 as in 0 for Every day or Sun - Sat");
+                if (s.duration > s.interval) return new BadRequest("Duration cannot be longer than the interval");
+                if (s.duration > 1440 || s.duration < 1) return new BadRequest("Duration must be between 1 - 1440");
+                if (s.interval > 60 || s.interval < 0) return new BadRequest("Interval must be between 0 - 60");
+
+                String sName = s.billboardName;
 
                 List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
                     billboard -> sName.equals(String.valueOf(billboard.name)));
@@ -89,7 +100,6 @@ public class ScheduleController {
                 List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
                     schedule -> sName.equals(String.valueOf(schedule.billboardName)));
                 if (!scheduleList.isEmpty()) return new BadRequest("Schedule already exists.");
-
 
                 // Attempt to insert the schedule into the database then return a success IActionResult.
                 CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
@@ -134,26 +144,37 @@ public class ScheduleController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Get list of all schedules.
-            List<Schedule> allSchedule = CollectionFactory.getInstance(Schedule.class).get(x -> true);
-            List<Schedule> scheduleList = new ArrayList<>();
-            for ( Schedule temp: allSchedule)
+            String day = Instant.now().atZone(ZoneId.systemDefault()).getDayOfWeek().name();
+            DayOfWeek today = DayOfWeek.valueOf(day);
+
+            List<Schedule> todaysSchedule = CollectionFactory.getInstance(Schedule.class).get(s -> s.dayOfWeek == 0 || today.ordinal() == s.dayOfWeek);
+            todaysSchedule.sort(Comparator.comparing(s -> s.createTime));
+
+            Schedule[] minutesInDay = new Schedule[1440];
+
+            for (Schedule schedule: todaysSchedule)
             {
-//                Instant startTime = temp.startTime;
-//                Instant endTime = startTime.plus(temp.duration, ChronoUnit.MINUTES);
-//                Instant rightNow = Instant.now() ;
-//                int x= startTime.compareTo(rightNow);
-//                int y = rightNow.compareTo(endTime);
-//                if ( x*y>= 0) // start < now < end
-//                {
-//                    scheduleList.add(temp);
-//                }
+                for (int i = schedule.start; i < minutesInDay.length; i = i + schedule.interval) {
+                    int diff = schedule.duration;
+
+                    if (i + diff >= 1440) {
+                        diff = 1440 - i;
+                    }
+
+                    for (int j = i; j < i + diff; j++) {
+                        minutesInDay[j] = schedule;
+                    }
+                    if (schedule.interval == 0) {
+                        break;
+                    }
+                }
             }
 
-            if (scheduleList.isEmpty()) return new Ok();
+            int totalMinutes = Time.timeToMinute(Date.from(Instant.now()));
 
-            scheduleList.sort(Comparator.comparing(s -> s.createTime));
+            Schedule resultSchedule = minutesInDay[totalMinutes];
 
-            Schedule resultSchedule = scheduleList.get(scheduleList.size() - 1);
+            if (resultSchedule == null) return new Ok();
 
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
                 billboard -> resultSchedule.billboardName.equals(billboard.name)

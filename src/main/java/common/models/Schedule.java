@@ -4,6 +4,7 @@ import client.components.table.DisplayAs;
 import client.components.table.Editable;
 import client.services.ScheduleService;
 import common.utils.RandomFactory;
+import common.utils.Time;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -136,7 +137,7 @@ public class Schedule implements Serializable, Editable {
 
     @DisplayAs(value = "Start Time", index = 3)
     public String getStart() {
-        return ScheduleService.minutesToTime(start);
+        return Time.minutesToTime(start);
     }
 
     @DisplayAs(value = "Duration", index = 4)

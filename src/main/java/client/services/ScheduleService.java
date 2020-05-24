@@ -42,7 +42,7 @@ public class ScheduleService {
         HashMap<DayOfWeek, String[]> daysOfWeek = new HashMap<>();
 
         for (var day: DayOfWeek.values()) {
-            if (day != DayOfWeek.Every) {
+            if (day != DayOfWeek.EVERY) {
                 String[] minutesInDay = new String[1440];
                 List<Schedule> todaysList = scheduleList.stream().filter(s -> s.dayOfWeek == 0 || day.ordinal() == s.dayOfWeek).collect(Collectors.toList());
                 todaysList.sort(Comparator.comparing(s -> s.createTime));
@@ -69,12 +69,6 @@ public class ScheduleService {
         }
 
         return daysOfWeek;
-    }
-
-    public static String minutesToTime(int minutes) {
-        int hours = minutes / 60;
-        int mins = minutes % 60;
-        return String.format("%02d:%02d", hours, mins);
     }
 
     public List<Schedule> insert(Schedule s) {
