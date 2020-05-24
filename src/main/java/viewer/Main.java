@@ -1,6 +1,8 @@
 package viewer;
 
 import common.models.Billboard;
+import common.router.IActionResult;
+import common.utils.ClientSocketFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,17 @@ public class Main {
      */
     public static void createAndShowGUI(Billboard billboard) throws IOException {
         JFrame frame = new JFrame("Billboard Viewer"); // Constructing Billboard Viewer frame
+
+        if (billboard == null) {
+            IActionResult res = new ClientSocketFactory("/schedule/get/current", null, null).Connect();
+            if (res != null && res.body instanceof Billboard) {
+                billboard = (Billboard)res.body;
+            } else {
+                billboard = new Billboard();
+                billboard.message = "No billboard scheduled";
+                billboard.information = "Schedule a billboard to see it appear";
+            }
+        }
 
         // Check if billboard has a background colour attribute to add background colour
         if(billboard.backgroundColor != null){
@@ -64,14 +77,12 @@ public class Main {
      * Main class to run GUI Application and socket interface
      */
     public static void main(String[] args) throws InterruptedException {
-        Billboard billboard = Billboard.Random(1); // Creating new random Billboard object for testing. Comment out each line to test an attribute.
-
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    createAndShowGUI(billboard);
+                    createAndShowGUI(null);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

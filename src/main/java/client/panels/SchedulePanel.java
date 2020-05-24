@@ -8,6 +8,7 @@ import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
 import common.utils.RandomFactory;
+import common.utils.Time;
 
 import javax.swing.*;
 import java.awt.*;
@@ -110,11 +111,11 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 JComboBox days = new JComboBox(new DefaultComboBoxModel(getNames(DayOfWeek.class)));
 
                 // Setting up start time spinner
-//                SpinnerDateModel startModel = new SpinnerDateModel();
-//                JSpinner startTime = new JSpinner(startModel);
-//                startTime.setEditor(new JSpinner.DateEditor(startTime,"hh:mm dd.MM.yyyy"));
-                SpinnerNumberModel startModel = new SpinnerNumberModel(0, 0, 1440, 1);
-                JSpinner start = new JSpinner(startModel);
+                SpinnerDateModel startModel = new SpinnerDateModel();
+                JSpinner startTime = new JSpinner(startModel);
+                startTime.setEditor(new JSpinner.DateEditor(startTime,"H:mm"));
+//                SpinnerNumberModel startModel = new SpinnerNumberModel(0, 0, 1440, 1);
+//                JSpinner start = new JSpinner(startModel);
                 // Setting up duration spinner
                 SpinnerNumberModel durModel = new SpinnerNumberModel(1, 1, 1440, 1);
                 JSpinner duration = new JSpinner(durModel);
@@ -128,7 +129,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
                     new JLabel("Select day to show"),
                     days,
                     new JLabel("Billboard start time:"),
-                    start,
+                    startTime,
                     new JLabel("Billboard duration:"),
                     duration,
                     new JLabel("Billboard interval:"),
@@ -141,14 +142,14 @@ public class SchedulePanel extends JPanel implements ActionListener {
                     if (billboards.getSelectedItem() == null) {
                         Notification.display("Billboard was not selected. Please try again");
                         // If billboard is not selected, display warning message
-                    } else if (start.getValue() == null || duration.getValue() == null || interval.getValue() == null ) {
+                    } else if (startTime.getValue() == null || duration.getValue() == null || interval.getValue() == null ) {
                         Notification.display("One of the schedule values are empty. Please try again");
                         // Else populate table
                     } else {
                         Schedule schedule = new Schedule();
                         schedule.billboardName = ((String)billboards.getSelectedItem());
                         schedule.dayOfWeek = days.getSelectedIndex();
-                        schedule.start = (Integer) start.getValue();
+                        schedule.start = Time.timeToMinute((Date) startTime.getValue());
                         schedule.duration = (Integer) duration.getValue();
                         schedule.interval = (Integer) interval.getValue();
 

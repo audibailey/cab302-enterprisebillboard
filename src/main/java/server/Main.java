@@ -106,7 +106,7 @@ public class Main {
             .ADD_AUTH("/user/delete", Permission.canDeleteUser.class, UserController.Delete.class)
             // Add Schedule actions to router
             .ADD_AUTH("/schedule/get", Permission.canScheduleBillboard.class, ScheduleController.Get.class)
-            .ADD_AUTH("/schedule/get/current", Permission.canScheduleBillboard.class, ScheduleController.GetCurrent.class)
+            .ADD("/schedule/get/current", ScheduleController.GetCurrent.class)
             .ADD_AUTH("/schedule/insert", Permission.canScheduleBillboard.class, ScheduleController.Insert.class)
             .ADD_AUTH("/schedule/delete", Permission.canScheduleBillboard.class, ScheduleController.Delete.class)
             //Add Permission actions to router
