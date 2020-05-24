@@ -138,15 +138,15 @@ public class ScheduleController {
             List<Schedule> scheduleList = new ArrayList<>();
             for ( Schedule temp: allSchedule)
             {
-                Instant startTime = temp.startTime;
-                Instant endTime = startTime.plus(temp.duration, ChronoUnit.MINUTES);
-                Instant rightNow = Instant.now() ;
-                int x= startTime.compareTo(rightNow);
-                int y = rightNow.compareTo(endTime);
-                if ( x*y>= 0) // start < now < end
-                {
-                    scheduleList.add(temp);
-                }
+//                Instant startTime = temp.startTime;
+//                Instant endTime = startTime.plus(temp.duration, ChronoUnit.MINUTES);
+//                Instant rightNow = Instant.now() ;
+//                int x= startTime.compareTo(rightNow);
+//                int y = rightNow.compareTo(endTime);
+//                if ( x*y>= 0) // start < now < end
+//                {
+//                    scheduleList.add(temp);
+//                }
             }
 
             if (scheduleList.isEmpty()) return new Ok();

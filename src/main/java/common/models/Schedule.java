@@ -2,12 +2,11 @@ package common.models;
 
 import client.components.table.DisplayAs;
 import client.components.table.Editable;
+import client.services.ScheduleService;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 /**
  * This class consists of the Schedule object and its associated methods.
@@ -27,16 +26,23 @@ public class Schedule implements Serializable, Editable {
     @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String billboardName;
 
-    @SQLITE(type="DATETIME NOT NULL")
-    public Instant startTime = Instant.MIN;
+    // 0 - 7
+    // Every, Sun - Sat
+    @SQLITE(type="INTEGER NOT NULL")
+    public int dayOfWeek = 0;
+
+    // 0 - 1440 / 1439?
+    // 00:00 - 23:59
+    @SQLITE(type="INTEGER NOT NULL")
+    public int start = 0;
 
     @SQLITE(type="DATETIME NOT NULL")
     public Instant createTime = Instant.MIN; // Time when create the schedule
 
-    @SQLITE(type="INTEGER")
+    @SQLITE(type="INTEGER NOT NULL")
     public int duration;
 
-    @SQLITE(type="INTEGER")
+    @SQLITE(type="INTEGER NOT NULL")
     public int interval;
 
     /**
@@ -51,20 +57,22 @@ public class Schedule implements Serializable, Editable {
      *
      * @param id:            schedules id.
      * @param billboardName: schedules billboard name.
-     * @param startTime:     schedules billboard starting time.
+     * @param start:     schedules billboard starting time.
      * @param createTime:    schedules billboard creating time.
      * @param duration:      schedules billboard duration.
      * @param interval:      schedules billboard interval.
      */
     public Schedule(int id,
                     String billboardName,
-                    Instant startTime,
+                    int dayOfWeek,
+                    int start,
                     Instant createTime,
                     int duration,
                     int interval) {
         this.id = id;
         this.billboardName = billboardName;
-        this.startTime = startTime;
+        this.dayOfWeek = dayOfWeek;
+        this.start = start;
         this.createTime = createTime;
         this.duration = duration;
         this.interval = interval;
@@ -74,19 +82,21 @@ public class Schedule implements Serializable, Editable {
      * Schedule object constructor
      *
      * @param billboardName: schedules billboard name.
-     * @param startTime:     schedules billboard starting time.
+     * @param start:     schedules billboard starting time.
      * @param duration:      schedules billboard duration.
      * @param createTime:    schedules billboard create time.
      * @param interval:      schedules billboard interval.
      */
     public Schedule(
         String billboardName,
-        Instant startTime,
+        int dayOfWeek,
+        int start,
         Instant createTime,
         int duration,
         int interval) {
         this.billboardName = billboardName;
-        this.startTime = startTime;
+        this.dayOfWeek = dayOfWeek;
+        this.start = start;
         this.createTime = createTime;
         this.duration = duration;
         this.interval = interval;
@@ -102,18 +112,39 @@ public class Schedule implements Serializable, Editable {
         return billboardName;
     }
 
-    @DisplayAs(value = "Start Time", index = 2)
-    public String getStartTime() {
-        DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
-        return DATE_TIME_FORMATTER.format(startTime);
+    @DisplayAs(value = "Day Of Week", index = 2)
+    public String getDayOfWeek() {
+        switch (dayOfWeek) {
+            case 1:
+                return "Sunday";
+            case 2:
+                return "Monday";
+            case 3:
+                return "Tuesday";
+            case 4:
+                return "Wednesday";
+            case 5:
+                return "Thursday";
+            case 6:
+                return "Friday";
+            case 7:
+                return "Saturday";
+            default:
+                return "Every";
+        }
     }
 
-    @DisplayAs(value = "Duration", index = 3)
+    @DisplayAs(value = "Start Time", index = 3)
+    public String getStart() {
+        return ScheduleService.minutesToTime(start);
+    }
+
+    @DisplayAs(value = "Duration", index = 4)
     public int getDuration() {
         return duration;
     }
 
-    @DisplayAs(value = "Interval", index = 4)
+    @DisplayAs(value = "Interval", index = 5)
     public int getInterval() {
         return interval;
     }
@@ -132,7 +163,8 @@ public class Schedule implements Serializable, Editable {
     public static Schedule Random(String billboardName) {
         return new Schedule(
             billboardName,
-            RandomFactory.Instant(),
+            RandomFactory.Int(7),
+            RandomFactory.Int(1400),
             Instant.now(),
             RandomFactory.Int(30),
             RandomFactory.Int(60)
