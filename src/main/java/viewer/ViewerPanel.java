@@ -14,11 +14,9 @@ import java.io.*;
  *
  * @author Trevor Waturuocha
  */
-public class ViewerPanel {
+public class ViewerPanel extends Container {
     //Method to sort all billboard display components to display viewer. Pane parameter is used to add components to box layout
-    public ViewerPanel(Container pane, Billboard billboard) throws IOException {
-        new Picture(billboard, pane); // Display picture
-        new Message(billboard, pane); // Display message
-        new Information(billboard, pane); // Display information
+    public ViewerPanel(Billboard billboard) throws IOException {
+
     }
 }
