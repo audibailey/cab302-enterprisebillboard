@@ -1,6 +1,7 @@
 package server.controllers;
 
 import common.models.Billboard;
+import common.models.Schedule;
 import common.router.*;
 import server.router.*;
 import server.sql.CollectionFactory;
@@ -37,33 +38,6 @@ public class BillboardController {
     /**
      * This Action is the GetById Action for the billboards.
      */
-    public static class GetById extends Action {
-        public GetById() {
-        }
-
-        // Override the execute to run the get function of the billboard collection.
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            String id = req.params.get("id");
-
-            // Ensure ID field is not null.
-            if (id == null) {
-                return new BadRequest("Must specify a billboard ID.");
-            }
-
-            // Get list of billboards with the ID as specified. This should only return 1 billboard.
-            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> id.equals(String.valueOf(billboard.id))
-            );
-
-            // Return a success IActionResult with the list of billboards.
-            return new Ok(billboardList);
-        }
-    }
-
-    /**
-     * This Action is the GetById Action for the billboards.
-     */
     public static class GetByName extends Action {
         public GetByName() {
         }
@@ -80,13 +54,14 @@ public class BillboardController {
 
             // Get list of billboards with the ID as specified. This should only return 1 billboard.
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> name.equals(String.valueOf(billboard.name  ))
+                billboard -> name.equals(String.valueOf(billboard.name))
             );
 
             // Return a success IActionResult with the list of billboards.
             return new Ok(billboardList);
         }
     }
+
     /**
      * This Action is the GetByLock Action for the billboards.
      */
@@ -191,6 +166,16 @@ public class BillboardController {
         public IActionResult execute(Request req) throws Exception {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
+            Schedule temp = null;
+            if (((Billboard) req.body).locked)
+            {
+                String sName = ((Billboard) req.body).name;
+                List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
+                    schedule -> sName.equals(String.valueOf(schedule.billboardName)));
+                temp = scheduleList.get(0);
+                CollectionFactory.getInstance(Schedule.class).delete(temp);
+            }
+
 
             // Attempt to delete the billboard in the database then return a success IActionResult
             CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);

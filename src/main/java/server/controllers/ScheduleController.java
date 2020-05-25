@@ -4,17 +4,14 @@ import common.models.Billboard;
 import common.models.DayOfWeek;
 import common.models.Schedule;
 import common.router.*;
-import common.utils.Time;
 import server.router.*;
 import server.sql.CollectionFactory;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,33 +42,6 @@ public class ScheduleController {
         }
     }
 
-    /**
-     * This Action is the GetByID Action for the schedules.
-     */
-    public static class GetById extends Action {
-        // Generic GetById action constructor.
-        public GetById() {
-        }
-
-        // Override the execute to run the get function of the schedule collection
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            String id = req.params.get("id");
-
-            // Ensure id field is not null.
-            if (id == null) {
-                return new BadRequest("Must specify a schedule ID.");
-            }
-
-            // Get list of schedules with the ID as specified. This should only return 1 schedule.
-            List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
-                schedule -> id.equals(String.valueOf(schedule.id))
-            );
-
-            // Return a success IActionResult with the list of schedules.
-            return new Ok(scheduleList);
-        }
-    }
 
     /**
      * This Action is the Insert Action for the schedules.
@@ -108,9 +78,12 @@ public class ScheduleController {
 
                 // Attempt to insert the schedule into the database then return a success IActionResult.
                 CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
+
+                Billboard temp = billboardList.get(0);
+                temp.locked = true;
+                CollectionFactory.getInstance(Billboard.class).update(temp);
                 return new Ok();
             }
-
             // Return an error on incorrect body type.
             return new UnsupportedType(Schedule.class);
         }
