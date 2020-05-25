@@ -8,6 +8,7 @@ import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
 import client.services.BillboardService;
 import client.services.SessionService;
+import viewer.Main;
 import com.mysql.cj.log.Log;
 import common.models.Billboard;
 import common.models.Picture;
@@ -160,9 +161,9 @@ public class BillboardPanel extends JPanel implements ActionListener {
         if(e.getSource() == viewButton){
             SwingUtilities.invokeLater(() -> {
                 try {
-                    viewer.Main.createAndShowGUI(tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst().get());
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                   Main.createAndShowGUI(tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst().get());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             });
         }
