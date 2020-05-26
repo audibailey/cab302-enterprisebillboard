@@ -6,9 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Panel extends JPanel {
-    Billboard billboard = Main.getCurrent();
-
-    public Panel() throws Exception {
+    public Panel(Billboard billboard) throws Exception {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Check if billboard has a background colour attribute to add background colour
@@ -67,15 +65,6 @@ public class Panel extends JPanel {
             add(new Information(billboard, 4, 2));
             add(Box.createVerticalGlue());
         }
-
-        Timer timer = new Timer(1000, l -> {
-            System.out.println("Getting");
-            billboard = Main.getCurrent();
-            revalidate();
-            repaint();
-        });
-
-        timer.start();
     }
 
 }
