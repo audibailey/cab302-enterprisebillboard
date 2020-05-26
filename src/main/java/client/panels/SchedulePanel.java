@@ -65,8 +65,6 @@ public class SchedulePanel extends JPanel implements ActionListener {
         add(buttonContainer, BorderLayout.NORTH);
         add(pane, BorderLayout.CENTER);
         setVisible(true);
-
-        var res = ScheduleService.getSchedule(ScheduleService.getInstance().schedules);
     }
 
     public void setupSelection() {
@@ -81,7 +79,6 @@ public class SchedulePanel extends JPanel implements ActionListener {
 
             if (selected != null && session.permissions.canScheduleBillboard) {
                 deleteButton.setEnabled(true);
-                System.out.println(selected);
             } else {
                 deleteButton.setEnabled(false);
             }
@@ -114,8 +111,6 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 SpinnerDateModel startModel = new SpinnerDateModel();
                 JSpinner startTime = new JSpinner(startModel);
                 startTime.setEditor(new JSpinner.DateEditor(startTime,"H:mm"));
-//                SpinnerNumberModel startModel = new SpinnerNumberModel(0, 0, 1440, 1);
-//                JSpinner start = new JSpinner(startModel);
                 // Setting up duration spinner
                 SpinnerNumberModel durModel = new SpinnerNumberModel(1, 1, 1440, 1);
                 JSpinner duration = new JSpinner(durModel);
@@ -158,7 +153,6 @@ public class SchedulePanel extends JPanel implements ActionListener {
                     }
                 }
             }
-
             catch (Exception ex) {
                 Notification.display(ex.getMessage());
             }
