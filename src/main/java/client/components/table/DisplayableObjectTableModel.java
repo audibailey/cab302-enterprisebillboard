@@ -1,7 +1,9 @@
 package client.components.table;
 
 import client.services.DataService;
+import common.swing.Notification;
 
+import javax.swing.*;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -41,6 +43,7 @@ public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
             }
 
         } catch (Exception e) {
+            SwingUtilities.invokeLater(() -> Notification.display("Client error: Contact Administrator"));
             throw new RuntimeException(e);
         }
     }
@@ -59,6 +62,7 @@ public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
     public String getColumnName(int column) {
         ColumnInfo columnInfo = columnInfoMap.get(column);
         if (columnInfo == null) {
+            SwingUtilities.invokeLater(() -> Notification.display("Client error: Contact Administrator"));
             throw new RuntimeException("No column found for index " + column);
         }
         return columnInfo.displayName;
@@ -100,6 +104,7 @@ public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
                 }
             }
         } catch (Exception e) {
+            SwingUtilities.invokeLater(() -> Notification.display("Client error: Contact Administrator"));
             throw new RuntimeException(e);
         }
         return false;

@@ -55,35 +55,4 @@ public class SchemaBuilder {
         query.append(")");
         return query.toString();
     }
-
-//    public String tableStringSQL(Class classType) throws Exception {
-//        var query = new StringBuilder("CREATE TABLE IF NOT EXISTS " + classType.getSimpleName().toUpperCase() + " (");
-//        List<Field> fields = Arrays.asList(classType.getFields());
-//
-//        var classAnnotations = classType.getAnnotationsByType(SQL.class);
-//        var SQLAddition = (SQL) Arrays.stream(classAnnotations).findFirst().get();
-//
-//        for (int i = 0; i < fields.size(); i++) {
-//            fields.get(i).setAccessible(true);
-//            var field = fields.get(i);
-//
-//            var annotations = field.getAnnotationsByType(SQL.class);
-//            var annotation = Arrays.stream(annotations).findFirst();
-//
-//            if (annotation.isPresent()) {
-//                query.append(fields.get(i).getName() + " " + annotation.get().type());
-//
-//                if (i != fields.size() - 1 ) {
-//                    query.append(", ");
-//                }
-//            }
-//        }
-//
-//        if (!SQLAddition.type().equals("")) {
-//            query.append(", " + SQLAddition.type());
-//        }
-//
-//        query.append(")");
-//        return query.toString();
-//    }
 }

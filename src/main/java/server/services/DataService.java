@@ -1,11 +1,7 @@
 package server.services;
 
 import common.utils.Props;
-import server.sql.Schema;
-import server.sql.SchemaBuilder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -47,7 +43,6 @@ public class DataService {
      * @throws Exception: thrown when unable to configure database connection from props.
      */
     private static Connection startConnection() {
-        Connection new_dbconn = null;
         try {
             // Configure the database from the prop file, throws error if one
             Properties props = Props.getProps("./db.props");
@@ -57,15 +52,10 @@ public class DataService {
             String username = props.getProperty("jdbc.username");
             String password = props.getProperty("jdbc.password");
 
-            new_dbconn = DriverManager.getConnection(url, username, password);
-            // TODO: Put SchemaBuilder into each Collection, Still CREATE DB here though
-
+            return DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
-            System.out.println("Error connecting to the database");
-            e.printStackTrace();
-            System.exit(0);
+            throw new RuntimeException("Error connecting to the database" + e.getMessage());
         }
-        return new_dbconn;
     }
 
     /**
