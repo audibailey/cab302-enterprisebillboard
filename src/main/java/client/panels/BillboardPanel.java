@@ -115,7 +115,6 @@ public class BillboardPanel extends JPanel implements ActionListener {
                     deleteButton.setEnabled(true);
                     importButton.setEnabled(true);
                     exportButton.setEnabled(true);
-                    System.out.println(selected);
                 } else {
                     viewButton.setEnabled(false);
                     deleteButton.setEnabled(false);
