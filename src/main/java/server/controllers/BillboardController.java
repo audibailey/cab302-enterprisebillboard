@@ -62,34 +62,34 @@ public class BillboardController {
         }
     }
 
-    /**
-     * This Action is the GetByLock Action for the billboards.
-     */
-    public static class GetByLock extends Action {
-        public GetByLock() {
-        }
-
-        // Override the execute to run the get function of the billboard collection.
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            String lock = req.params.get("lock");
-
-            // Ensure lock field is not null.
-            if (lock == null || lock != "true" || lock != "false") {
-                return new BadRequest("Must specify a billboard boolean lock status.");
-            }
-
-            // Cast the lock string to a boolean
-            var lockBool = Boolean.getBoolean(lock);
-
-            // Get list of billboards with the lock status as specified. This should only return 1 billboard.
-            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> lockBool == billboard.locked);
-
-            // Return a success IActionResult with the list of billboards.
-            return new Ok(billboardList);
-        }
-    }
+//    /**
+//     * This Action is the GetByLock Action for the billboards.
+//     */
+//    public static class GetByLock extends Action {
+//        public GetByLock() {
+//        }
+//
+//        // Override the execute to run the get function of the billboard collection.
+//        @Override
+//        public IActionResult execute(Request req) throws Exception {
+//            String lock = req.params.get("lock");
+//
+//            // Ensure lock field is not null.
+//            if (lock == null || lock != "true" || lock != "false") {
+//                return new BadRequest("Must specify a billboard boolean lock status.");
+//            }
+//
+//            // Cast the lock string to a boolean
+//            var lockBool = Boolean.getBoolean(lock);
+//
+//            // Get list of billboards with the lock status as specified. This should only return 1 billboard.
+//            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
+//                billboard -> lockBool == billboard.locked);
+//
+//            // Return a success IActionResult with the list of billboards.
+//            return new Ok(billboardList);
+//        }
+//    }
 
     /**
      * This Action is the Insert Action for the billboards.
@@ -164,12 +164,17 @@ public class BillboardController {
         // Override the execute to run the delete function of the billboard collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
-            // Return an error on incorrect body type.
-            if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
+            // Return an error on incorrect params type.
+            if (! (req.params.get("bName") instanceof String) ) return new UnsupportedType(String.class);
             Schedule temp = null;
-            if (((Billboard) req.body).locked)
+            List<Billboard> bbList = CollectionFactory.getInstance(Billboard.class).get
+                ( bName -> bName.name.equals(req.params.get("bName")));
+
+            if (bbList.isEmpty()) return new BadRequest("Billboard doesn't exist");
+            Billboard deleted = bbList.get(0);
+            if (deleted.locked)
             {
-                String sName = ((Billboard) req.body).name;
+                String sName = deleted.name;
                 List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
                     schedule -> sName.equals(String.valueOf(schedule.billboardName)));
                 temp = scheduleList.get(0);
@@ -178,7 +183,7 @@ public class BillboardController {
 
 
             // Attempt to delete the billboard in the database then return a success IActionResult
-            CollectionFactory.getInstance(Billboard.class).delete((Billboard) req.body);
+            CollectionFactory.getInstance(Billboard.class).delete(deleted);
             return new Ok();
         }
     }
