@@ -29,9 +29,26 @@ public class Main {
      */
     public static void createAndShowGUI(Billboard b) throws Exception {
         if (b != null) {
-            new Frame(new Panel(), false);
+            new Frame(new Panel(b), false);
         } else {
-            new Frame(new Panel(), true);
+            new Thread(new Runnable() {
+                Frame frame = new Frame(new Panel(Main.getCurrent()), false);
+
+                @Override
+                public void run() {
+                    while(true) {
+                        try {
+                            Thread.sleep(15000);
+                            Frame temp = new Frame(new Panel(Main.getCurrent()), true);
+                            Thread.sleep(500);
+                            frame.dispose();
+                            frame = temp;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
         }
     }
 
