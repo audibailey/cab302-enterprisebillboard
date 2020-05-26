@@ -8,7 +8,7 @@ public class ColourRenderer extends JLabel
     implements TableCellRenderer {
 
     public ColourRenderer() {
-        setOpaque(true); //MUST do this for background to show up.
+        setOpaque(true);
     }
 
     public Component getTableCellRendererComponent(

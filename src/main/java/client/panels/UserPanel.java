@@ -72,8 +72,6 @@ public class UserPanel extends JPanel implements ActionListener {
             if (selected != null) {
                 editButton.setEnabled(true);
                 deleteButton.setEnabled(true);
-
-                System.out.println(selected);
             } else {
                 editButton.setEnabled(false);
                 deleteButton.setEnabled(false);

@@ -42,10 +42,8 @@ public class PictureEditor extends AbstractCellEditor
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 try {
-                    System.out.println(file.toPath());
                     byte[] fileContent = Files.readAllBytes(file.toPath());
                     currentPicture.data = Base64.getEncoder().encodeToString(fileContent);
-                    System.out.println(currentPicture.data);
                 } catch (IOException e1) {
                     JOptionPane.showMessageDialog(null, "Failed to load the file: " + e1.getMessage());
                     e1.printStackTrace();
