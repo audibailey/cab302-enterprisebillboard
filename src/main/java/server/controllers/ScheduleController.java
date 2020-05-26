@@ -153,32 +153,7 @@ public class ScheduleController {
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
                 billboard -> resultSchedule.billboardName.equals(billboard.name)
             );
-            //            Schedule[] minutesInDay = new Schedule[1440];
 
-//            for (Schedule schedule: todaySchedule)
-//            {
-//                for (int i = schedule.start; i < minutesInDay.length; i = i + schedule.interval) {
-//                    int diff = schedule.duration;
-//
-//                    if (i + diff >= 1440) {
-//                        diff = 1440 - i;
-//                    }
-//
-//                    for (int j = i; j < i + diff; j++) {
-//                        minutesInDay[j] = schedule;
-//                    }
-//                    if (schedule.interval == 0) {
-//                        break;
-//                    }
-//                }
-//            }
-//
-
-//            Schedule resultSchedule = minutesInDay[totalMinutes];
-
-//            if (resultSchedule == null) return new Ok();
-//            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-//                billboard -> scheduleList.billboardName.equals(billboard.name)
 
 
             // Return a success IActionResult with the list of billboard.

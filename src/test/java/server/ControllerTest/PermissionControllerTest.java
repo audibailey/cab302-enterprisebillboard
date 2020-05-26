@@ -2,6 +2,7 @@ package server.ControllerTest;
 
 import common.models.Billboard;
 import common.models.Permissions;
+import common.models.Session;
 import common.models.User;
 import common.router.IActionResult;
 import common.router.Request;
@@ -27,6 +28,7 @@ public class PermissionControllerTest {
         IActionResult result = new PermissionController.Get().execute(req);
         assertEquals(result.status, Status.SUCCESS);
     }
+
     @Test
     public void testGetPermissionsByName() throws Exception {
         // Create params
@@ -41,6 +43,7 @@ public class PermissionControllerTest {
         IActionResult result = new PermissionController.GetByUsername().execute(req);
         assertEquals(result.status, Status.SUCCESS);
     }
+
 //    @Test
 //    public void testUpdatePermissions() throws Exception {
 //        // Create params
@@ -53,10 +56,14 @@ public class PermissionControllerTest {
 //
 //        // Get all the permissions from database
 //        IActionResult result = new PermissionController.GetByUsername().execute(req);
-//        Permissions perm =(Permissions) ((ArrayList) result.body).get(0);
+//        Permissions perm = (Permissions) ((ArrayList) result.body).get(0);
 //        perm.canScheduleBillboard = true;
 //
 //        req = new Request(null, "blah", null, perm);
+//
+//        req.session = new Session(
+//            0, "kevin", perm
+//        );
 //
 //        result = new PermissionController.Update().execute(req);
 //        assertEquals(result.status, Status.SUCCESS);
