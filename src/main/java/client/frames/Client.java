@@ -12,6 +12,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class renders the Java Swing main client frame for the client.
+ *
+ * @author Jamie Martin
+ */
 public class Client extends JFrame implements ActionListener {
 
     Menu menu = new Menu();

@@ -20,6 +20,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class renders the Java Swing schedule panel for the client.
+ *
+ * @author Jamie Martin
+ */
 public class SchedulePanel extends JPanel implements ActionListener {
 
     ObjectTableModel<Schedule> tableModel;

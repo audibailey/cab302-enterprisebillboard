@@ -73,43 +73,15 @@ public class BillboardController {
         public IActionResult execute(Request req) throws Exception {
             String name = req.params.get("name");
 
-            // Ensure ID field is not null.
+            // Ensure name field is not null.
             if (name == null) {
                 return new BadRequest("Must specify a billboard name.");
             }
 
-            // Get list of billboards with the ID as specified. This should only return 1 billboard.
+            // Get list of billboards with the name as specified. This should only return 1 billboard.
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> name.equals(String.valueOf(billboard.name  ))
+                billboard -> name.equals(String.valueOf(billboard.name))
             );
-
-            // Return a success IActionResult with the list of billboards.
-            return new Ok(billboardList);
-        }
-    }
-    /**
-     * This Action is the GetByLock Action for the billboards.
-     */
-    public static class GetByLock extends Action {
-        public GetByLock() {
-        }
-
-        // Override the execute to run the get function of the billboard collection.
-        @Override
-        public IActionResult execute(Request req) throws Exception {
-            String lock = req.params.get("lock");
-
-            // Ensure lock field is not null.
-            if (lock == null || lock != "true" || lock != "false") {
-                return new BadRequest("Must specify a billboard boolean lock status.");
-            }
-
-            // Cast the lock string to a boolean
-            var lockBool = Boolean.getBoolean(lock);
-
-            // Get list of billboards with the lock status as specified. This should only return 1 billboard.
-            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-                billboard -> lockBool == billboard.locked);
 
             // Return a success IActionResult with the list of billboards.
             return new Ok(billboardList);

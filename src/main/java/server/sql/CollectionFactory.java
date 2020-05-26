@@ -14,7 +14,7 @@ public class CollectionFactory {
     public static Map<Class, Collection> collections = new HashMap<>();
 
     /**
-     * Returns an instance of a Collection<T> given the class
+     * Returns an instance of a Collection<T> given the class.
      * If there isn't a Collection, it creates one.
      *
      * @param className: The Class you want to manage.
