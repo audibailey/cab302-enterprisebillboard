@@ -14,6 +14,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
 
+/**
+ * This class makes the Java Swing picture for the client.
+ *
+ * @author Jamie Martin
+ */
 public class PictureEditor extends AbstractCellEditor
     implements TableCellEditor,
     ActionListener {

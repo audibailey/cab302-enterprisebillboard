@@ -65,6 +65,11 @@ public class IActionResult implements Serializable {
         this.body = body;
     }
 
+    /**
+     * Check if the IAction is an error or not.
+     *
+     * @param status: The status of the result.
+     */
     public void isError(Status status) {
         switch (status) {
             case SUCCESS:

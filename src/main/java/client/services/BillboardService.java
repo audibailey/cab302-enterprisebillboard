@@ -8,6 +8,11 @@ import common.utils.ClientSocketFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for the backend billboard service for the client/viewer.
+ *
+ * @author Jamie Martin
+ */
 public class BillboardService extends DataService<Billboard> {
     public List<Billboard> billboards;
 

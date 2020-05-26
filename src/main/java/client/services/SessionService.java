@@ -2,6 +2,11 @@ package client.services;
 
 import common.models.Session;
 
+/**
+ * This class is responsible for the backend sessions service for the client/viewer.
+ *
+ * @author Jamie Martin
+ */
 public class SessionService {
     private Session session;
 

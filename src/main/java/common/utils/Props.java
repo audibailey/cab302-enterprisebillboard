@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * This class is the props, fetches the props from a location and passes through the errors.
+ *
+ * @author Perdana Bailey
+ */
 public class Props {
     /**
      * Gets the properties from network.props for the socket port.

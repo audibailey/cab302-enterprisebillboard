@@ -2,6 +2,7 @@ package server.ControllerTest;
 
 import common.models.Billboard;
 import common.models.Permissions;
+import common.models.Session;
 import common.models.User;
 import common.router.IActionResult;
 import common.router.Request;
@@ -9,8 +10,10 @@ import common.router.Status;
 import org.junit.jupiter.api.Test;
 import server.controllers.BillboardController;
 import server.controllers.PermissionController;
+import server.middleware.Permission;
 import server.sql.CollectionFactory;
 
+import java.beans.PersistenceDelegate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,25 +44,27 @@ public class PermissionControllerTest {
         IActionResult result = new PermissionController.GetByUsername().execute(req);
         assertEquals(result.status, Status.SUCCESS);
     }
-//    @Test
-//    public void testUpdatePermissions() throws Exception {
-//        // Create params
-//        HashMap<String, String> params = new HashMap<>();
-//        String permUser = "kevin";
-//        params.put("username", permUser);
-//
-//        // Create new request.
-//        Request req = new Request(null, "blah", params, null);
-//
-//        // Get all the permissions from database
-//        IActionResult result = new PermissionController.GetByUsername().execute(req);
-//        Permissions perm =(Permissions) ((ArrayList) result.body).get(0);
-//        perm.canScheduleBillboard = true;
-//
-//        req = new Request(null, "blah", null, perm);
-//
-//        result = new PermissionController.Update().execute(req);
-//        assertEquals(result.status, Status.SUCCESS);
-//    }
+    @Test
+    public void testUpdatePermissions() throws Exception {
+        // Create params
+        HashMap<String, String> params = new HashMap<>();
+        String permUser = "kevin";
+        params.put("username", permUser);
+
+        // Create new request.
+        Request req = new Request(null, "blah", params, null);
+
+        // Get all the permissions from database
+        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Permissions perm = (Permissions) ((ArrayList) result.body).get(0);
+        perm.canScheduleBillboard = true;
+
+        req = new Request(null, "blah", null, perm);
+        req.session = new Session(
+            0, "kevin", perm
+        );
+        result = new PermissionController.Update().execute(req);
+        assertEquals(result.status, Status.SUCCESS);
+    }
 
 }

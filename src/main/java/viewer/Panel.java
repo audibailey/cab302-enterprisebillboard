@@ -5,6 +5,12 @@ import common.models.Billboard;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class consists of the Panel that shows the billboard.
+ *
+ * @author Trevor Waturuocha
+ * @author Jamie Martin
+ */
 public class Panel extends JPanel {
     public Panel(Billboard billboard) throws Exception {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
