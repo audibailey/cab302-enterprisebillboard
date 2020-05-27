@@ -38,7 +38,7 @@ public class Main {
                 public void run() {
                     while(true) {
                         try {
-                            Thread.sleep(15000);
+                            Thread.sleep(14500);
                             Frame temp = new Frame(new Panel(Main.getCurrent()), true);
                             Thread.sleep(500);
                             frame.dispose();
@@ -59,10 +59,10 @@ public class Main {
 
         if (res != null && res.status == Status.SUCCESS && res.body instanceof Billboard) {
             billboard = (Billboard)res.body;
-            billboard.information = billboard.information + " " + new SimpleDateFormat("K:mm:ss a z").format(Date.from(Instant.now()));
+            billboard.information = billboard.information + " " + new SimpleDateFormat("K:mm a z").format(Date.from(Instant.now()));
         } else {
             billboard.message = "No billboard scheduled";
-            billboard.information = new SimpleDateFormat("K:mm:ss a z").format(Date.from(Instant.now()));
+            billboard.information = new SimpleDateFormat("K:mm a z").format(Date.from(Instant.now()));
         }
 
         return billboard;
