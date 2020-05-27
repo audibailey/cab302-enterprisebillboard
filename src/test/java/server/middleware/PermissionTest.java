@@ -21,8 +21,7 @@ public class PermissionTest {
     Request req = new Request("/foo", "foo", null, null);
     Permissions permission = Permissions.Random(0, "user");
 
-    @Test
-    public void ValidCanEditUserTest() throws Exception {
+    @Test public void ValidCanEditUserTest() throws Exception {
         permission.canEditUser = true;
         req.permissions = permission;
 
@@ -30,8 +29,8 @@ public class PermissionTest {
         assertEquals(Status.SUCCESS, test.status);
     }
 
-    @Test
-    public void InvalidCanEditUserTest() throws Exception {
+
+    @Test public void InvalidCanEditUserTest() throws Exception {
         permission.canEditUser = false;
         req.permissions = permission;
 
