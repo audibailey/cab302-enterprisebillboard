@@ -165,8 +165,8 @@ public class BillboardController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Return an error on incorrect params type.
-            if (! (req.params.get("bName") instanceof String) ) return new UnsupportedType(String.class);
-
+            if (req.params.get("bName") == null) return new UnsupportedType(String.class);
+            if (req.params.get("bName").length() <1) return new BadRequest("Billboard name must not be empty.");
             Schedule temp = null;
             List<Billboard> bbList = CollectionFactory.getInstance(Billboard.class).get
                 ( bName -> bName.name.equals(req.params.get("bName")));

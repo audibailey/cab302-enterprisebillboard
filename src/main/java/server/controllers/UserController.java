@@ -135,6 +135,7 @@ public class UserController {
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type user.
             if (req.params.get("username") == null) return new UnsupportedType(String.class);
+            if (req.params.get("username").length() < 1) return new BadRequest("Username must not be empty.");
 
             // Get the correct user
             String Username = req.params.get("username");
