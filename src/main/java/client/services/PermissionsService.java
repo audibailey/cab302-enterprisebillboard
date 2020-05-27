@@ -7,6 +7,7 @@ import common.utils.ClientSocketFactory;
 import common.utils.HashingFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -55,7 +56,11 @@ public class PermissionsService extends DataService<Permissions> {
 
     public List<Permissions> delete(User u) {
         Session session = SessionService.getInstance();
-        IActionResult res = new ClientSocketFactory("/user/delete", session.token, null, u).Connect();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", u.username);
+
+        IActionResult res = new ClientSocketFactory("/user/delete", session.token, params).Connect();
         return refresh();
     }
 
