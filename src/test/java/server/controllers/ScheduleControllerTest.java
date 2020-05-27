@@ -1,17 +1,11 @@
-package server.ControllerTest;
+package server.controllers;
 
 import common.models.*;
 import common.router.IActionResult;
 import common.router.Request;
 import common.router.Status;
-import common.utils.HashingFactory;
 import org.junit.jupiter.api.Test;
-import server.controllers.BillboardController;
-import server.controllers.ScheduleController;
-import server.sql.CollectionFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
