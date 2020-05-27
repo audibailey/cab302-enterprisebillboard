@@ -1,15 +1,15 @@
 package server.ControllerTest;
 
-import common.models.Billboard;
-import common.models.Permissions;
-import common.models.Session;
-import common.models.User;
+import common.models.*;
 import common.router.IActionResult;
 import common.router.Request;
 import common.router.Status;
+import common.utils.HashingFactory;
+import common.utils.RandomFactory;
 import org.junit.jupiter.api.Test;
 import server.controllers.BillboardController;
 import server.controllers.PermissionController;
+import server.controllers.UserPermissionsController;
 import server.sql.CollectionFactory;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PermissionControllerTest {
     @Test
-    public void testGetAllPermissions() throws Exception {
+    public void GetAllPermissions() throws Exception {
         // Create new request.
         Request req = new Request(null, "blah", null, null);
 
@@ -30,10 +30,34 @@ public class PermissionControllerTest {
     }
 
     @Test
-    public void testGetPermissionsByName() throws Exception {
-        // Create params
+    public void GetPermissionsByName() throws Exception {
+        // Generate the user data to insert
+        User testUser = new User("kevin", HashingFactory.hashPassword("1234"), null);
+        Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
+        UserPermissions temp = new UserPermissions(testUser, testPerm);
+
+        // Create new request and insert the user data
+        Request req = new Request(null, "blah", null, temp);
+        new UserPermissionsController.Insert().execute(req);
+
+        // Create params to store username
         HashMap<String, String> params = new HashMap<>();
         String permUser = "kevin";
+        params.put("username", permUser);
+
+        // Create new request.
+        req = new Request(null, "blah", params, null);
+
+        // Get all the permissions from database
+        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        assertEquals(result.status, Status.SUCCESS);
+    }
+
+    @Test
+    public void GetPermissionsOfUnknownUser() throws Exception {
+        // Create params to store username
+        HashMap<String, String> params = new HashMap<>();
+        String permUser = "aRandomName";
         params.put("username", permUser);
 
         // Create new request.
@@ -41,32 +65,80 @@ public class PermissionControllerTest {
 
         // Get all the permissions from database
         IActionResult result = new PermissionController.GetByUsername().execute(req);
+        assertEquals(result.status, Status.BAD_REQUEST);
+    }
+
+    @Test
+    public void GetPermissionsWithEmptyParameters() throws Exception {
+        // Create params to store username
+        HashMap<String, String> params = new HashMap<>();
+
+        // Create new request.
+        Request req = new Request(null, "blah", params, null);
+
+        // Get all the permissions from database
+        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        assertEquals(result.status, Status.BAD_REQUEST);
+    }
+
+    @Test
+    public void UpdatePermissions() throws Exception {
+        // Generate the user data to insert
+        User testUser = new User("testUpdatePerm", HashingFactory.hashPassword("1234"), null);
+        Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
+        // Set permission Schedule Billboard to false
+        testPerm.canScheduleBillboard = false;
+        UserPermissions temp = new UserPermissions(testUser, testPerm);
+
+        // Create new request and insert the user data
+        Request req = new Request(null, "blah", null, temp);
+        new UserPermissionsController.Insert().execute(req);
+
+        // Create params
+        HashMap<String, String> params = new HashMap<>();
+        String permUser = "testUpdatePerm";
+        params.put("username", permUser);
+
+        // Create new request.
+        req = new Request(null, "blah",params, null);
+
+        // Get all the permissions from database
+        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Permissions perm = ((List<Permissions>) result.body).get(0);
+        perm.canScheduleBillboard = !perm.canScheduleBillboard;
+
+        req = new Request(null, "blah", null, perm);
+
+        req.session = new Session(
+            0, "kevin", perm
+        );
+
+        result = new PermissionController.Update().execute(req);
         assertEquals(result.status, Status.SUCCESS);
     }
 
-//    @Test
-//    public void testUpdatePermissions() throws Exception {
-//        // Create params
-//        HashMap<String, String> params = new HashMap<>();
-//        String permUser = "kevin";
-//        params.put("username", permUser);
-//
-//        // Create new request.
-//        Request req = new Request(null, "blah", params, null);
-//
-//        // Get all the permissions from database
-//        IActionResult result = new PermissionController.GetByUsername().execute(req);
-//        Permissions perm = (Permissions) ((ArrayList) result.body).get(0);
-//        perm.canScheduleBillboard = true;
-//
-//        req = new Request(null, "blah", null, perm);
-//
-//        req.session = new Session(
-//            0, "kevin", perm
-//        );
-//
-//        result = new PermissionController.Update().execute(req);
-//        assertEquals(result.status, Status.SUCCESS);
-//    }
+    @Test
+    public void RemoveOwnEditUser() throws  Exception
+    {
+        HashMap<String, String> params = new HashMap<>();
+        String permUser = "admin";
+        params.put("username", permUser);
 
+        // Create new request.
+        Request req = new Request(null, "blah",params, null);
+
+        // Get all the permissions from database
+        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Permissions perm = ((List<Permissions>) result.body).get(0);
+        perm.canEditUser = false;
+
+        req = new Request(null, "blah", null, perm);
+
+        req.session = new Session(
+            0, "admin", perm
+        );
+
+        result = new PermissionController.Update().execute(req);
+        assertEquals(result.status, Status.BAD_REQUEST);
+    }
 }
