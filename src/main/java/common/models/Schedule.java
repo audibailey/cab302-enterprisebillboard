@@ -103,6 +103,7 @@ public class Schedule implements Serializable, Editable {
         this.interval = interval;
     }
 
+    // Display annotation data relative to the objects fields
     @DisplayAs(value = "Id", index = 0)
     public int getId() {
         return id;

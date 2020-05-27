@@ -10,6 +10,11 @@ import common.utils.ClientSocketFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This class is responsible for the backend schedule service for the client/viewer.
+ *
+ * @author Jamie Martin
+ */
 public class ScheduleService {
 
     public List<Schedule> schedules;
