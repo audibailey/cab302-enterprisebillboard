@@ -18,7 +18,8 @@ public class DataService {
     private Connection connection;
 
     /**
-     * Generates a Dataservice Instance
+     * Generates a Dataservice Instance.
+     *
      * @throws Exception: thrown when unable to connect to database;
      */
     protected DataService() {
@@ -26,7 +27,7 @@ public class DataService {
     }
 
     /**
-     * Ensures the DataService is a singleton when getConnection() is called
+     * Ensures the DataService is a singleton when getConnection() is called.
      */
     private static class DataServiceHolder {
         private final static DataService INSTANCE = new DataService();
@@ -37,9 +38,9 @@ public class DataService {
     }
 
     /**
-     * Get a connection to database
+     * Get a connection to database.
      *
-     * @return Connection object
+     * @return Connection object.
      * @throws Exception: thrown when unable to configure database connection from props.
      */
     private static Connection startConnection() {

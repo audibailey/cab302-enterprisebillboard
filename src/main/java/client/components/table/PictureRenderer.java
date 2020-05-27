@@ -4,6 +4,11 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
+/**
+ * This class renders the Java Swing pictures for the client.
+ *
+ * @author Jamie Martin
+ */
 public class PictureRenderer extends JLabel
     implements TableCellRenderer {
 

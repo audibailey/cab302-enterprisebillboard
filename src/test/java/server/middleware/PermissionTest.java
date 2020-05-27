@@ -29,7 +29,6 @@ public class PermissionTest {
         assertEquals(Status.SUCCESS, test.status);
     }
 
-
     @Test public void InvalidCanEditUserTest() throws Exception {
         permission.canEditUser = false;
         req.permissions = permission;
