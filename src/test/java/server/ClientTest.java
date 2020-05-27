@@ -126,18 +126,18 @@ public class ClientTest {
 
 
         // Test insert user -- Worked
-//        {
-//            Scanner sc = new Scanner(System.in);
-//            sc.nextLine();
-//            HashMap<String, String> params = null;
-//            User testUser = new User("kevin1", HashingFactory.hashPassword("1234"), null);
-//            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
-//            UserPermissions temp = new UserPermissions(testUser, testPerm);
-//
-//            new ClientSocketFactory("/userpermissions/insert", token, params, temp).Connect();
-//
-//            System.out.println("Inserted user");
-//        }
+        {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            HashMap<String, String> params = null;
+            User testUser = new User("kevin2", HashingFactory.hashPassword("1234"), null);
+            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
+            UserPermissions temp = new UserPermissions(testUser, testPerm);
+
+            new ClientSocketFactory("/userpermissions/insert", token, params, temp).Connect();
+
+            System.out.println("Inserted user");
+        }
         // Test update password -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
