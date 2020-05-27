@@ -13,6 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+/**
+ * This class renders the Java Swing login client frame for the client.
+ *
+ * @author Jamie Martin
+ */
 public class Login extends JFrame implements ActionListener {
 
     Container container = getContentPane();

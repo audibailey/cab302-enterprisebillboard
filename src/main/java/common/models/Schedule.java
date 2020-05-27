@@ -24,7 +24,7 @@ public class Schedule implements Serializable, Editable {
     @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
 
-    @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
+    @SQLITE(type="VARCHAR(255) NOT NULL")
     public String billboardName;
 
     // 0 - 7
@@ -103,6 +103,7 @@ public class Schedule implements Serializable, Editable {
         this.interval = interval;
     }
 
+    // Display annotation data relative to the objects fields
     @DisplayAs(value = "Id", index = 0)
     public int getId() {
         return id;

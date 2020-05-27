@@ -1,15 +1,22 @@
 package client.services;
 
+import common.models.Day;
 import common.models.DayOfWeek;
 import common.models.Schedule;
 import common.models.Session;
 import common.router.IActionResult;
 import common.router.Status;
 import common.utils.ClientSocketFactory;
+import common.utils.Time;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This class is responsible for the backend schedule service for the client/viewer.
+ *
+ * @author Jamie Martin
+ */
 public class ScheduleService {
 
     public List<Schedule> schedules;
@@ -38,13 +45,13 @@ public class ScheduleService {
         return ScheduleServiceHolder.INSTANCE.schedules;
     }
 
-    public static HashMap<DayOfWeek, String[]> getSchedule(List<Schedule> scheduleList) {
-        HashMap<DayOfWeek, String[]> daysOfWeek = new HashMap<>();
+    public List<Day> getSchedule() {
+        List<Day> schedulesList = new ArrayList<>();
 
         for (var day: DayOfWeek.values()) {
             if (day != DayOfWeek.EVERY) {
                 String[] minutesInDay = new String[1440];
-                List<Schedule> todaysList = scheduleList.stream().filter(s -> s.dayOfWeek == 0 || day.ordinal() == s.dayOfWeek).collect(Collectors.toList());
+                List<Schedule> todaysList = schedules.stream().filter(s -> s.dayOfWeek == 0 || day.ordinal() == s.dayOfWeek).collect(Collectors.toList());
                 todaysList.sort(Comparator.comparing(s -> s.createTime));
 
                 for (var schedule: todaysList) {
@@ -64,11 +71,31 @@ public class ScheduleService {
                     }
                 }
 
-                daysOfWeek.put(day, minutesInDay);
+                List<String> listOfTimes = new ArrayList<>();
+
+                // iterate over minutes
+                for (int i = 0; i < minutesInDay.length; i++) {
+                    if (minutesInDay[i] == null) continue;
+
+                    // store the name
+                    String name = minutesInDay[i];
+
+                    int j = i;
+
+                    // go until the last index
+                    while(minutesInDay[j + 1] == name) j++;
+
+                    // add formatted string to listOfTimes
+                    listOfTimes.add(Time.minutesToTime(i) + " - " + Time.minutesToTime(j) + " " + name);
+
+                    i = j;
+                }
+
+                schedulesList.add(new Day(day, listOfTimes));
             }
         }
 
-        return daysOfWeek;
+        return schedulesList;
     }
 
     public List<Schedule> insert(Schedule s) {

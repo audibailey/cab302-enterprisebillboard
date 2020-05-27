@@ -227,7 +227,7 @@ public class Billboard implements Serializable, Editable {
             RandomFactory.Color(),
             RandomFactory.String(),
             RandomFactory.Color(),
-            RandomFactory.Boolean(),
+            false,
             userId
         );
     }

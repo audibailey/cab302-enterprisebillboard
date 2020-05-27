@@ -61,19 +61,6 @@ public class RandomFactory {
     }
 
     /**
-     * Creates a random array of bytes.
-     *
-     * @param length: the length of bytes to return.
-     * @return byte[]: an array of random bytes.
-     */
-    public static byte[] Bytes(int length) {
-        Random random = new Random();
-        byte[] b = new byte[length];
-        random.nextBytes(b);
-        return b;
-    }
-
-    /**
      * Creates a random HEX color as a string.
      *
      * @return String: a random HEX color.
@@ -82,14 +69,5 @@ public class RandomFactory {
         Random random = new Random();
         int rand_num = random.nextInt(0xffffff + 1);
         return String.format("#%06x", rand_num);
-    }
-
-    /**
-     * Creates a random timestamp as an Instant.
-     *
-     * @return Instant: a random time.
-     */
-    public static Instant Instant() {
-        return Instant.ofEpochSecond(Math.abs(ThreadLocalRandom.current().nextInt()));
     }
 }

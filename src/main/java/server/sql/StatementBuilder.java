@@ -22,6 +22,7 @@ public class StatementBuilder {
     /**
      * Creates a SELECT SQL statement based on given class type.
      *
+     * @param conn: The JDBC connection information.
      * @param className: The provided class type.
      * @return PreparedStatement: The SELECT SQL statement.
      * @throws Exception: A pass-through internal server exception.
@@ -40,20 +41,30 @@ public class StatementBuilder {
         return "SELECT * FROM " + className.getSimpleName().toUpperCase();
     }
 
+
+    /**
+     * Creates the INSERT SQL Statement based on a given object type.
+     *
+     * @param conn: The JDBC connection information.
+     * @param object: The object being inserted.
+     * @return PreparedStatement: The INSERT SQL statement.
+     * @throws Exception: A pass-through internal server exception.
+     */
     public static PreparedStatement insert(Connection conn, Object object) throws Exception {
-        Class clazz = object.getClass();
-        var fields = getFields(clazz);
-        PreparedStatement pstmt = conn.prepareStatement(createInsertStatement(clazz));
+        // Get the objects class and its fields then create the statement base.
+        Class className = object.getClass();
+        var fields = getFields(className);
+        PreparedStatement pstmt = conn.prepareStatement(createInsertStatement(className));
 
-        int j = 1;
-
+        // Match the objects fields with the statements base.
+        int i = 1;
         for (Object obj : fields) {
             var field = (Field) obj;
-            if (field.getName() != "id") {
+            if (!field.getName().equals("id")) {
                 Object value = field.get(object);
-                pstmt.setObject(j, value);
+                pstmt.setObject(i, value);
 
-                j++;
+                i++;
             }
         }
         return pstmt;
@@ -62,27 +73,29 @@ public class StatementBuilder {
     /**
      * Creates an INSERT SQL statement string based on given class type.
      *
-     * @param clazz: The provided class type.
+     * @param className: The provided class type.
      * @return String: The SELECT SQL statement string.
      */
-    public static String createInsertStatement(Class<?> clazz) {
-        var fields = getFields(clazz);
+    public static String createInsertStatement(Class<?> className) {
+        // Get the class fields and its length.
+        var fields = getFields(className);
         int lastField = fields.length - 1;
 
-        var names = new StringBuilder("INSERT INTO " + clazz.getSimpleName().toUpperCase() + " (");
+        // Create the statement base.
+        var names = new StringBuilder("INSERT INTO " + className.getSimpleName().toUpperCase() + " (");
         var values = new StringBuilder(" VALUES (");
 
+        // Loop through the fields and create the statement.
         int i = 1;
-
         for (Object obj : fields) {
             var field = (Field) obj;
-            if (field.getName() != "id") {
+            if (!field.getName().equals("id")) {
                 field.setAccessible(true);
                 if (i == lastField) {
-                    names.append(field.getName() + ")");
+                    names.append(field.getName()).append(")");
                     values.append("?)");
                 } else {
-                    names.append(field.getName() + ", ");
+                    names.append(field.getName()).append(", ");
                     values.append("?, ");
                 }
                 i++;
@@ -92,27 +105,39 @@ public class StatementBuilder {
         return names.toString() + values.toString();
     }
 
+    /**
+     * Creates the UPDATE SQL Statement based on a given object type.
+     *
+     * @param conn: The JDBC connection information.
+     * @param object: The object being updated.
+     * @return PreparedStatement: The UPDATE SQL statement.
+     * @throws Exception: A pass-through internal server exception.
+     */
     public static PreparedStatement update(Connection conn, Object object) throws Exception {
-        Class clazz = object.getClass();
-        var fields = getFields(clazz);
-        String statement = createUpdateStatement(clazz);
+        // Get the objects class and its fields then create the statement base.
+        Class className = object.getClass();
+        var fields = getFields(className);
+        String statement = createUpdateStatement(className);
 
         PreparedStatement pstmt = conn.prepareStatement(statement);
 
-        int id = clazz.getDeclaredField("id").getInt(object);
-        int j = 1;
+        // Save ID for later.
+        int id = className.getDeclaredField("id").getInt(object);
 
+        // Match the objects fields with the statements base.
+        int i = 1;
         for (Object obj : fields) {
             var field = (Field) obj;
-            if (field.getName() != "id") {
+            if (!field.getName().equals("id")) {
                 Object value = field.get(object);
-                pstmt.setObject(j, value);
+                pstmt.setObject(i, value);
 
-                j++;
+                i++;
             }
         }
 
-        pstmt.setObject(j, id);
+        // Set ID.
+        pstmt.setObject(i, id);
 
         return pstmt;
     }
@@ -120,27 +145,29 @@ public class StatementBuilder {
     /**
      * Creates an UPDATE SQL statement string based on given class type.
      *
-     * @param clazz: The provided class type.
+     * @param className: The provided class type.
      * @return String: The SELECT SQL statement string.
      */
-    public static String createUpdateStatement(Class<?> clazz) throws Exception {
-        var fields = getFields(clazz);
+    public static String createUpdateStatement(Class<?> className) {
+        // Get the class fields and its length.
+        var fields = getFields(className);
         int lastField = fields.length - 1;
 
-        StringBuilder names = new StringBuilder("UPDATE " + clazz.getSimpleName().toUpperCase() + " SET ");
+        // Create the statement base.
+        StringBuilder names = new StringBuilder("UPDATE " + className.getSimpleName().toUpperCase() + " SET ");
 
+        // Loop through the fields and create the statement.
         int i = 1;
-
         for (Object obj : fields) {
             var field = (Field) obj;
 
-            if (field.getName() != "id") {
+            if (!field.getName().equals("id")) {
                 field.setAccessible(true);
 
                 if (i == lastField)
-                    names.append(field.getName() + " = ?");
+                    names.append(field.getName()).append(" = ?");
                 else
-                    names.append(field.getName() + " = ?, ");
+                    names.append(field.getName()).append(" = ?, ");
 
                 i++;
             }
@@ -149,13 +176,19 @@ public class StatementBuilder {
         return names.append(" WHERE ID = ?").toString();
     }
 
+    /**
+     * Creates a DELETE SQL statement based on given object.
+     *
+     * @param conn: The JDBC connection information.
+     * @param object: The provided object.
+     * @return PreparedStatement: The DELETE SQL statement.
+     * @throws Exception: A pass-through internal server exception.
+     */
     public static PreparedStatement delete(Connection conn, Object object) throws Exception {
-        Class clazz = object.getClass();
-
-        int id = clazz.getDeclaredField("id").getInt(object);
-
-        PreparedStatement pstmt = conn.prepareStatement(createDeleteStatement(clazz));
-
+        // Check class, get ID field, get base statement, match ID to base statement ID.
+        Class className = object.getClass();
+        int id = className.getDeclaredField("id").getInt(object);
+        PreparedStatement pstmt = conn.prepareStatement(createDeleteStatement(className));
         pstmt.setObject(1, id);
 
         return pstmt;
@@ -164,19 +197,21 @@ public class StatementBuilder {
     /**
      * Creates a DELETE SQL statement string based on given class type.
      *
-     * @param clazz: The provided class type.
+     * @param className: The provided class type.
      * @return String: The SELECT SQL statement string.
      */
-    public static String createDeleteStatement(Class<?> clazz) {
-        return "DELETE FROM " + clazz.getSimpleName().toUpperCase() + " WHERE ID = ?";
+    public static String createDeleteStatement(Class<?> className) {
+        return "DELETE FROM " + className.getSimpleName().toUpperCase() + " WHERE ID = ?";
     }
 
     /* HELPER FUNCTIONS */
 
-    private static Object[] getFields(Class<?> clazz) {
-        return Arrays.asList(clazz.getDeclaredFields()).stream().filter(f -> hasSQLAnnotation(f) && f.getName() != "serialVersionUID").toArray();
+    // Gets the fields of the class and returns and array of fields.
+    private static Object[] getFields(Class<?> className) {
+        return Arrays.asList(className.getDeclaredFields()).stream().filter(f -> hasSQLAnnotation(f) && f.getName() != "serialVersionUID").toArray();
     }
 
+    // Ensures the field has the annotation to be parsed.
     public static boolean hasSQLAnnotation(Field field) {
         return field.getAnnotationsByType(SQLITE.class).length > 0;
     }
