@@ -19,7 +19,7 @@ public class AuthenticationTest {
     @Test
     public void ValidAuthenticationTest() throws Exception {
         // TODO: Determine whether to test here or test directly at TokenService.
-        
+
         //  TODO: Could also be that we insert into the TokenService instance and then test at the Controller level
         // String token = "123";
         // TokenService.getInstance().insertSession(new Session(..., token));
