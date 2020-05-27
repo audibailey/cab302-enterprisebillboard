@@ -1,18 +1,12 @@
-package server.ControllerTest;
+package server.controllers;
 
 import common.models.*;
 import common.router.IActionResult;
 import common.router.Request;
 import common.router.Status;
 import common.utils.HashingFactory;
-import common.utils.RandomFactory;
 import org.junit.jupiter.api.Test;
-import server.controllers.BillboardController;
-import server.controllers.PermissionController;
-import server.controllers.UserPermissionsController;
-import server.sql.CollectionFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

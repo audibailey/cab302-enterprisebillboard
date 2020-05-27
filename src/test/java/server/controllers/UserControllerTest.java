@@ -1,4 +1,4 @@
-package server.ControllerTest;
+package server.controllers;
 
 import common.models.Permissions;
 import common.models.User;
@@ -9,13 +9,8 @@ import common.router.Status;
 import common.utils.HashingFactory;
 import common.utils.RandomFactory;
 import org.junit.jupiter.api.Test;
-import server.controllers.PermissionController;
-import server.controllers.UserController;
-import server.controllers.UserPermissionsController;
-import server.sql.CollectionFactory;
 
 import java.util.HashMap;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

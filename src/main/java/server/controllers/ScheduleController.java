@@ -102,11 +102,6 @@ public class ScheduleController {
                     billboard -> sName.equals(String.valueOf(billboard.name)));
                 if (billboardList.isEmpty()) return new BadRequest("Billboard doesn't exists.");
 
-                // Check if the schedule already exists.
-                List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
-                    schedule -> sName.equals(String.valueOf(schedule.billboardName)));
-                if (!scheduleList.isEmpty()) return new BadRequest("Schedule already exists.");
-
                 // Attempt to insert the schedule into the database then return a success IActionResult.
                 CollectionFactory.getInstance(Schedule.class).insert((Schedule) req.body);
                 Billboard bb = billboardList.get(0);
