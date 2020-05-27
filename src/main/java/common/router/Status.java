@@ -7,7 +7,13 @@ package common.router;
  */
 public enum Status {
     BAD_REQUEST,
+    CREATED,
+
+    FAILED, // Generic Response
+
+    FORBIDDEN,
     INTERNAL_SERVER_ERROR,
+    METHOD_NOT_ALLOWED,
     NOT_FOUND,
     SUCCESS,
     UNAUTHORIZED,

@@ -19,11 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-/**
- * This class renders the Java Swing user panel for the client.
- *
- * @author Jamie Martin
- */
 public class UserPanel extends JPanel implements ActionListener {
 
     ObjectTableModel<Permissions> tableModel;

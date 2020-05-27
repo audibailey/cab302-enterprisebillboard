@@ -6,8 +6,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
-// TODO: test hashing
-
 /**
  * This class handles password hashing for both the front end and the backend.
  *
@@ -35,13 +33,6 @@ public class HashingFactory {
         return HashingStandard.generateSecret(HashingSpec).getEncoded();
     }
 
-    /**
-     * This function returns a SHA-1 hash of a string, commonly used for the client side hashing.
-     *
-     * @param password: The password the user has typed in the client.
-     * @return String: The hash of the password.
-     * @throws Exception: Pass through exception that gets handled by the client.
-     */
     public static String hashPassword(String password) throws Exception {
         MessageDigest crypt = MessageDigest.getInstance("SHA-1");
         crypt.reset();

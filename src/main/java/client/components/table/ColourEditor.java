@@ -6,11 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * This class makes the Java Swing colour editor for the client.
- *
- * @author Jamie Martin
- */
 public class ColourEditor extends AbstractCellEditor
     implements TableCellEditor,
     ActionListener {

@@ -13,7 +13,6 @@ import java.util.Optional;
  *
  * @author Jamie Martin
  * @author Perdana Bailey
- * @author Kevin Huynh
  */
 public class Permission {
 
@@ -38,6 +37,7 @@ public class Permission {
             return new Ok();
         }
     }
+
 
     /**
      * This is an Action class that ensures the user can edit billboards.
@@ -67,6 +67,7 @@ public class Permission {
         }
     }
 
+
     /**
      * This is an Action class that ensures the user has self permissions on billboards.
      */
@@ -88,6 +89,7 @@ public class Permission {
                 if (!req.session.username.equals(req.params.get("username")) )
                     return new Unauthorised("Not authorised to edit password.");
             }
+
             return new Ok();
         }
     }
@@ -116,6 +118,7 @@ public class Permission {
      */
     public static class canViewPermission extends Action {
         public canViewPermission() {}
+
         /**
          * Override the default execute function with permission check.
          *

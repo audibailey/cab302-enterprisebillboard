@@ -10,12 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-/**
- * This class consists of the main viewer frame.
- *
- * @author Trevor Waturuocha
- * @author Jamie Martin
- */
 public class Frame extends JFrame {
 
     public Frame(JPanel panel, boolean hardExit) {
