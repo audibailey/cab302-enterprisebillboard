@@ -28,11 +28,10 @@ public class UserControllerTest {
         Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
         UserPermissions temp = new UserPermissions(testUser, testPerm);
 
-        // Insert the user data new UserPermissionsController.Insert().execute(req);
+        // Create new request and Insert the user data
         Request req = new Request(null, "blah", null, temp);
-        // Get the user data
-
         IActionResult test = new UserPermissionsController.Insert().execute(req);
+
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -43,10 +42,8 @@ public class UserControllerTest {
         Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
         UserPermissions temp = new UserPermissions(testUser, testPerm);
 
-        // Create new request
+        // Create new request and insert the user data
         Request req = new Request(null, "blah", null, temp);
-        // Insert the user data
-
         IActionResult test = new UserPermissionsController.Insert().execute(req);
 
         User newOne = User.Random();
@@ -78,7 +75,7 @@ public class UserControllerTest {
         params.put("username", "DeleteUser");
 
         // Create new request
-         req = new Request(null, "blah", params, null);
+        req = new Request(null, "blah", params, null);
 
         // Delete the user
         IActionResult result = new UserController.Delete().execute(req);
@@ -110,12 +107,33 @@ public class UserControllerTest {
     }
 
     @Test
-    public void GetAllUsers() throws Exception
-    {
+    public void GetAllUsers() throws Exception {
         // Create new request
         Request req = new Request(null, "blah", null, null);
         IActionResult result = new PermissionController.Get().execute(req);
 
-        assertEquals(Status.SUCCESS,result.status);
+        assertEquals(Status.SUCCESS, result.status);
+    }
+
+    @Test
+    public void UpdatePassword() throws Exception {
+        // Generate the user data to insert
+        User testUser = new User("kevin", HashingFactory.hashPassword("1234"), null);
+        Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
+        UserPermissions temp = new UserPermissions(testUser, testPerm);
+
+        // Create new request and Insert the user data
+        Request req = new Request(null, "blah", null, temp);
+         new UserPermissionsController.Insert().execute(req);
+
+        HashMap<String, String> params = new HashMap<>();
+
+        String permUser = "kevin";
+        String newPassword = HashingFactory.hashPassword("123");
+        params.put("username", permUser);
+        params.put("password", newPassword);
+        req = new Request(null,"blah",params,null);
+        IActionResult result = new UserController.UpdatePassword().execute(req);
+        assertEquals(Status.SUCCESS, result.status);
     }
 }
