@@ -26,7 +26,7 @@ public class PermissionController {
         // Override the execute to run the get function of the permissions collection.
         @Override
         public IActionResult execute(Request req) throws Exception {
-            // Get list of all billboards.
+            // Get list of all permissions.
             List<Permissions> permissionsList = CollectionFactory.getInstance(Permissions.class).get(x -> true);
 
             // Return a success IActionResult with the list of permissions.

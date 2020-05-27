@@ -9,6 +9,11 @@ import common.utils.HashingFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for the backend permissions service for the client/viewer.
+ *
+ * @author Jamie Martin
+ */
 public class PermissionsService extends DataService<Permissions> {
     private List<Permissions> permissions;
 

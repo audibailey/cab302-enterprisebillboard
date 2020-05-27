@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * A router class to manage ActionLike actions on a Path. Http-Like
+ * A router class to manage ActionLike actions on a Path. Http-Like.
  *
  * @author Jamie Martin
  * @author Perdana Bailey
@@ -63,7 +63,7 @@ public abstract class GenericRouter<Path, ActionLike, RouterLike extends Generic
      *
      * @param path:    The Path you want to set, ie: String "/login".
      * @param actions: The actions you want to perform in order given, ie: Insert.class, GetSecret.class.
-     * @return Router: Returns self/this which allows chaining of ADD().ADD().
+     * @return RouterLike: Returns self/this which allows chaining of ADD().ADD().
      */
     public RouterLike ADD_AUTH(Path path, ActionLike... actions) {
         // Ensure there is an authentication class available.
