@@ -134,22 +134,13 @@ public class UserController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type user.
-            if (req.params.get("username") == null) return new UnsupportedType(String.class);
+            if (!(req.body instanceof User)) return new UnsupportedType(User.class);
 
-            // Get the correct user
-            String Username = req.params.get("username");
-            List<User> deleteUser = CollectionFactory.getInstance(User.class).get(users -> Username.equals(String.valueOf(users.username)));
-            if (deleteUser.isEmpty()) return new BadRequest("User not existed");
-            User temp = deleteUser.get(0);
-
-            // Get the correct permission
-            List<Permissions> deletePerm = CollectionFactory.getInstance(Permissions.class).get(perm -> Username.equals(String.valueOf(perm.username)));
-            if (deletePerm.isEmpty()) return new BadRequest("Permission not existed");
-            Permissions perm = deletePerm.get(0);
-
+            User temp = (User) req.body;
+            List<Permissions> deletePerm = CollectionFactory.getInstance(Permissions.class).get(permissions -> temp.username.equals(String.valueOf(permissions.username)));
             // Attempt to delete the user and permission in the database then return a success IActionResult.
-            CollectionFactory.getInstance(Permissions.class).delete(perm);
-            CollectionFactory.getInstance(User.class).delete(temp);
+            CollectionFactory.getInstance(Permissions.class).delete(deletePerm.get(0));
+            CollectionFactory.getInstance(User.class).delete((User) req.body);
             return new Ok();
         }
     }

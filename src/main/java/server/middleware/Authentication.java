@@ -19,7 +19,7 @@ public class Authentication {
      * This class extends action for authenticating users. It ensures the user is using a valid token.
      */
     public static class Authenticate extends Action {
-        public Authenticate() {}
+        public Authenticate(){}
 
         /**
          * Override the execution with the token validation check to authorise the user.
@@ -36,4 +36,8 @@ public class Authentication {
             return new Ok();
         }
     }
+
+
+
+    // TODO: NEW class to check when token expires
 }

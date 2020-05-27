@@ -117,41 +117,50 @@ public class ClientTest {
 //        {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();
-//            HashMap<String, String> params = new HashMap<>();
-//            params.put("bName", "Existed");
+//            HashMap<String, String> params = null;
+//            IActionResult result = new ClientSocketFactory("/billboard/get", token, params, null).Connect();
+//            Billboard deleted = null;
+//            if (result != null && result.body != null) {
+//                List<Billboard> billboards = (List<Billboard>) result.body;
 //
-//            IActionResult result = new ClientSocketFactory("/billboard/delete", token, params, null).Connect();
-//            System.out.println("Deleted billboard");
+//                for (Billboard billboard : billboards) {
+//                    if (billboard.userId == 2) {
+//                        deleted = billboard;
+//                        break;
+//                    }
+//                }
+//                result = new ClientSocketFactory("/billboard/delete", token, params, deleted).Connect();
+//                System.out.println("Deleted billboard");
+//            }
 //        }
 
-
         // Test insert user -- Worked
-        {
-            Scanner sc = new Scanner(System.in);
-            sc.nextLine();
-            HashMap<String, String> params = null;
-            User testUser = new User("kevin2", HashingFactory.hashPassword("1234"), null);
-            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
-            UserPermissions temp = new UserPermissions(testUser, testPerm);
-
-            new ClientSocketFactory("/userpermissions/insert", token, params, temp).Connect();
-
-            System.out.println("Inserted user");
-        }
-        // Test update password -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();
-//            HashMap<String, String> params = new HashMap<>();
+//            HashMap<String, String> params = null;
+//            User testUser = new User("kevin1", HashingFactory.hashPassword("1234"), null);
+//            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
+//            UserPermissions temp = new UserPermissions(testUser, testPerm);
 //
-//            String permUser = "kevin1";
-//            String newPassword = HashingFactory.hashPassword("123");
-//            params.put("username", permUser);
-//            params.put("password", newPassword);
+//            new ClientSocketFactory("/userpermissions/insert", token, params, temp).Connect();
 //
-//            new ClientSocketFactory("/user/update/password", token, params, null).Connect();
-//            System.out.println("Password changed");
+//            System.out.println("Inserted user");
 //        }
+        // Test update password -- Worked
+        {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            HashMap<String, String> params = new HashMap<>();
+
+            String permUser = "kevin1";
+            String newPassword = HashingFactory.hashPassword("123");
+            params.put("username", permUser);
+            params.put("password", newPassword);
+
+            new ClientSocketFactory("/user/update/password", token, params, null).Connect();
+            System.out.println("Password changed");
+        }
         // Test delete user -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
@@ -261,13 +270,13 @@ public class ClientTest {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();
 //            HashMap<String, String> params = new HashMap<>();
-//            Schedule temp = Schedule.Random("Something1");
+//            Schedule temp = Schedule.Random("Something2");
 //            new ClientSocketFactory("/schedule/insert", token, params, temp).Connect();
 //            System.out.println("Inserted schedule");
 //        }
 
 
-        // Test get all schedule -- Woprked
+        // Test get all schedule
 //        {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();

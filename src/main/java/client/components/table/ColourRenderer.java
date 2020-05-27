@@ -4,11 +4,6 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
-/**
- * This class renders the Java Swing colour renderer for the client.
- *
- * @author Jamie Martin
- */
 public class ColourRenderer extends JLabel
     implements TableCellRenderer {
 

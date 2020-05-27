@@ -6,14 +6,8 @@ import common.router.Status;
 import common.utils.ClientSocketFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-/**
- * This class is responsible for the backend billboard service for the client/viewer.
- *
- * @author Jamie Martin
- */
 public class BillboardService extends DataService<Billboard> {
     public List<Billboard> billboards;
 
@@ -55,11 +49,7 @@ public class BillboardService extends DataService<Billboard> {
 
     public List<Billboard> delete(Billboard b) {
         Session session = SessionService.getInstance();
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("bName", b.name);
-
-        IActionResult res = new ClientSocketFactory("/billboard/delete", session.token, params).Connect();
+        IActionResult res = new ClientSocketFactory("/billboard/delete", session.token, null, b).Connect();
         return refresh();
     }
 }

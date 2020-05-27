@@ -3,11 +3,6 @@ package common.system;
 import java.awt.*;
 import java.io.IOException;
 
-/**
- * This class consists of the notification engine for Java windows/tray to handle errors.
- *
- * @author Jamie Martin
- */
 public class Notification {
 
     public static void display(String caption, String text, TrayIcon.MessageType type) throws AWTException {

@@ -2,11 +2,6 @@ package common.utils;
 
 import java.util.Date;
 
-/**
- * Simple utility functions for time conversions.
- *
- * @author Jamie Martin
- */
 public class Time {
     public static String minutesToTime(int minutes) {
         int hours = minutes / 60;

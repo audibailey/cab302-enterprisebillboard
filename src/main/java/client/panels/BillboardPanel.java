@@ -40,11 +40,6 @@ import java.net.URLConnection;
 import java.util.Base64;
 import java.util.Optional;
 
-/**
- * This class renders the Java Swing billboard panel for the client.
- *
- * @author Jamie Martin
- */
 public class BillboardPanel extends JPanel implements ActionListener {
 
     ObjectTableModel<Billboard> tableModel;

@@ -7,14 +7,8 @@ import common.utils.ClientSocketFactory;
 import common.utils.HashingFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-/**
- * This class is responsible for the backend permissions service for the client/viewer.
- *
- * @author Jamie Martin
- */
 public class PermissionsService extends DataService<Permissions> {
     private List<Permissions> permissions;
 
@@ -56,11 +50,7 @@ public class PermissionsService extends DataService<Permissions> {
 
     public List<Permissions> delete(User u) {
         Session session = SessionService.getInstance();
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("username", u.username);
-
-        IActionResult res = new ClientSocketFactory("/user/delete", session.token, params).Connect();
+        IActionResult res = new ClientSocketFactory("/user/delete", session.token, null, u).Connect();
         return refresh();
     }
 

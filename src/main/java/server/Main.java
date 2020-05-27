@@ -94,7 +94,7 @@ public class Main {
             .ADD("/logout", UserController.Logout.class)
             // Add Billboard actions to router
             .ADD_AUTH("/billboard/get", BillboardController.Get.class)
-            //.ADD_AUTH("/billboard/get/lock", BillboardController.GetByLock.class)
+            .ADD_AUTH("/billboard/get/lock", BillboardController.GetByLock.class)
             .ADD_AUTH("/billboard/get/name", BillboardController.GetByName.class)
             .ADD_AUTH("/billboard/insert", Permission.canCreateBillboard.class, BillboardController.Insert.class)
             .ADD_AUTH("/billboard/update", Permission.canEditBillboard.class, BillboardController.Update.class)

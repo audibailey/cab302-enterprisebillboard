@@ -11,11 +11,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * This class renders the Java Swing table model for the client.
- *
- * @author Jamie Martin
- */
 public class DisplayableObjectTableModel<T> extends ObjectTableModel<T> {
     private Map<Integer, ColumnInfo> columnInfoMap;
     private DataService dataService;
