@@ -6,6 +6,7 @@ import common.router.Status;
 import common.utils.ClientSocketFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -54,7 +55,11 @@ public class BillboardService extends DataService<Billboard> {
 
     public List<Billboard> delete(Billboard b) {
         Session session = SessionService.getInstance();
-        IActionResult res = new ClientSocketFactory("/billboard/delete", session.token, null, b).Connect();
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("bName", b.name);
+
+        IActionResult res = new ClientSocketFactory("/billboard/delete", session.token, params).Connect();
         return refresh();
     }
 }
