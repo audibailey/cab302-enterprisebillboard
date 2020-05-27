@@ -1,8 +1,11 @@
 package server.controllers;
 
 import common.models.Permissions;
+import common.models.Schedule;
+import common.models.User;
 import common.router.*;
 import server.router.*;
+import server.sql.Collection;
 import server.sql.CollectionFactory;
 
 import java.util.List;
@@ -51,6 +54,9 @@ public class PermissionController {
                 return new BadRequest("Must specify a username.");
             }
 
+            List<User> userList = CollectionFactory.getInstance(User.class).get(
+                aUser -> username.equals(String.valueOf(aUser.username)));
+            if (userList.isEmpty()) return new BadRequest("User doesn't exist.");
             // Get list of permissions with the ID as specified. This should only return 1 permission.
             List<Permissions> permissionsList = CollectionFactory.getInstance(Permissions.class).get(
                 permissions -> username.equals(String.valueOf(permissions.username))

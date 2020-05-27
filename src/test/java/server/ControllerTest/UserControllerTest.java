@@ -9,6 +9,7 @@ import common.router.Status;
 import common.utils.HashingFactory;
 import common.utils.RandomFactory;
 import org.junit.jupiter.api.Test;
+import server.controllers.PermissionController;
 import server.controllers.UserController;
 import server.controllers.UserPermissionsController;
 import server.sql.CollectionFactory;
@@ -29,7 +30,7 @@ public class UserControllerTest {
 
         // Insert the user data new UserPermissionsController.Insert().execute(req);
         Request req = new Request(null, "blah", null, temp);
-        // Get the user data new UserController.GetUsername().execute(req);
+        // Get the user data
 
         IActionResult test = new UserPermissionsController.Insert().execute(req);
         assertEquals(Status.SUCCESS, test.status);
@@ -108,4 +109,13 @@ public class UserControllerTest {
         assertEquals(Status.BAD_REQUEST, result.status);
     }
 
+    @Test
+    public void GetAllUsers() throws Exception
+    {
+        // Create new request
+        Request req = new Request(null, "blah", null, null);
+        IActionResult result = new PermissionController.Get().execute(req);
+
+        assertEquals(Status.SUCCESS,result.status);
+    }
 }
