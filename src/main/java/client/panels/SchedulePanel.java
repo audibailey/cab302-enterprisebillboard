@@ -11,6 +11,7 @@ import common.utils.RandomFactory;
 import common.utils.Time;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.Instant;
@@ -25,7 +26,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
     ObjectTableModel<Schedule> tableModel;
     JTable table;
     Container buttonContainer = new Container();
-    JButton createButton, refreshButton, deleteButton;
+    JButton createButton, refreshButton, showButton, deleteButton;
     String selected;
 
 
@@ -36,6 +37,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
         createButton = new JButton("Create Schedule");
         refreshButton = new JButton("Refresh");
         deleteButton = new JButton("Delete Selected");
+        showButton = new JButton("Show Schedule");
         // Disable schedule button if user is not permitted
         if (!session.permissions.canScheduleBillboard) {
             createButton.setEnabled(false);
@@ -44,6 +46,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
         createButton.addActionListener(this::actionPerformed);
         refreshButton.addActionListener(this::actionPerformed);
         deleteButton.addActionListener(this::actionPerformed);
+        showButton.addActionListener(this::actionPerformed);
         deleteButton.setEnabled(false);
 
         // Getting table data and configuring table
@@ -58,6 +61,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
         buttonContainer.setLayout(new FlowLayout());
         buttonContainer.add(createButton);
         buttonContainer.add(deleteButton);
+        buttonContainer.add(showButton);
         buttonContainer.add(refreshButton);
 
         // Add components to frame
@@ -96,7 +100,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
     @Override
     // Adding listener events for the user panel buttons.
     public void actionPerformed(ActionEvent e) {
-        // Check if new user button is pressed
+        // Check if create schedule button is pressed
         if(e.getSource() == createButton) {
             try {
                 // Setting up billboard dropdown menu
@@ -157,14 +161,35 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 Notification.display(ex.getMessage());
             }
         }
-        
+        // Check if delete button is pressed
         if (e.getSource() == deleteButton) {
                 var scheduleList = tableModel.getObjectRows();
                 Schedule s = scheduleList.stream().filter(x -> x.billboardName.equals(selected)).findFirst().get();
                 tableModel.setObjectRows(ScheduleService.getInstance().delete(s));
                 tableModel.fireTableDataChanged();
         }
+        // Check if show button is pressed
+        if(e.getSource() == showButton){
+            try {
+                // Setting up calendar table
+                DefaultTableModel mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
+                JTable tblCalendar = new JTable(mtblCalendar);
+                String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
+                for (int i=0; i<7; i++){
+                    mtblCalendar.addColumn(headers[i]);
+                }
+                JScrollPane pane = new JScrollPane(tblCalendar);
+                int result = JOptionPane.showConfirmDialog(this, pane, "Calendar", JOptionPane.PLAIN_MESSAGE);
+                if (result == JOptionPane.OK_OPTION) {
 
+                }
+            }
+            catch (Exception ex) {
+                // Display pop-up message for any errors that arise
+                Notification.display(ex.getMessage());
+            }
+        }
+        // Check if refresh button is pressed
         if (e.getSource() == refreshButton) {
             tableModel.setObjectRows(ScheduleService.getInstance().refresh());
             tableModel.fireTableDataChanged();
