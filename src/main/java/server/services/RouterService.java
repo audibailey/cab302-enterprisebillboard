@@ -21,8 +21,7 @@ public class RouterService {
     }
 
     /**
-     * Generates a RouterService Instance.
-     *
+     * Generates a RouterService Instance
      * @throws Exception;
      * */
     protected RouterService() {
@@ -30,7 +29,7 @@ public class RouterService {
     }
 
     /**
-     * Ensures the RouterService is a singleton when getInstance() is called.
+     * Ensures the RouterService is a singleton when getInstance() is called
      */
     private static class RouterServiceHolder {
         private final static RouterService INSTANCE = new RouterService();

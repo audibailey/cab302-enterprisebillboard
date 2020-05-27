@@ -81,7 +81,6 @@ public class Permissions implements Serializable, Editable {
         this.canEditUser = canEditUser;
     }
 
-    // Display annotation data relative to the objects fields
     @DisplayAs(value = "Id", index = 0)
     public int getId() {
         return id;

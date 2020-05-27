@@ -14,6 +14,7 @@ import java.util.Base64;
  *
  * @author Trevor Waturuocha
  */
+
 public class Picture extends JLabel {
     // Picture class constructor. Takes billboard object and container to draw in as parameters.
     public Picture(Billboard billboard, int wFactor, int hFactor) throws IOException {

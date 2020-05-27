@@ -4,11 +4,6 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class makes the Java Swing table model for the client.
- *
- * @author Jamie Martin
- */
 public abstract class ObjectTableModel<T> extends AbstractTableModel {
     private List<T> objectRows = new ArrayList<>();
 

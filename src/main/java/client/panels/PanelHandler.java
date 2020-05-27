@@ -5,11 +5,6 @@ import common.models.Session;
 
 import javax.swing.*;
 
-/**
- * This class handles the different types of panels available for the client.
- *
- * @author Jamie Martin
- */
 public class PanelHandler extends JTabbedPane {
 
     public PanelHandler() {
