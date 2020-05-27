@@ -9,7 +9,7 @@ public class SchemaBuilderTests {
     // Once dynamic schema builder is built. Test the schema returns pstmt correctly
 
     @Test
-    public void TestStatement() throws Exception {
+    public void CreateSchemaOfObjectTest() throws Exception {
 
     }
 
