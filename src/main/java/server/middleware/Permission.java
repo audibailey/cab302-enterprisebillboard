@@ -33,7 +33,7 @@ public class Permission {
          */
         @Override
         public IActionResult execute(Request req) throws Exception {
-            if (!req.permissions.canCreateBillboard) return new Unauthorised("Cannot Create Billboards. ");
+            if (!req.permissions.canCreateBillboard) return new Unauthorised("Cannot Create Billboards.");
 
             return new Ok();
         }
@@ -128,12 +128,10 @@ public class Permission {
             if (req.permissions.canEditUser) return new Ok() ;
             else
             {
-                if (!(req.params.get("username") instanceof String)) return new UnsupportedType(String.class);
+                if (req.params.get("username") == null || (req.params.get("username").length() <1)) return new UnsupportedType(String.class);
                 Optional <User> user = CollectionFactory.getInstance(User.class).get(u -> (req.params.get("username")).equals(u.username)).stream().findFirst();
                 if (user.isEmpty()) return new BadRequest("User does not exist.");
-
                 if (user.get().id == req.session.userId) return new Ok();
-
             }
             return new Unauthorised(" Not authorised to view  other user's permissions.");
         }
