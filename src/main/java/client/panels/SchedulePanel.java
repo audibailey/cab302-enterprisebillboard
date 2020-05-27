@@ -70,6 +70,10 @@ public class SchedulePanel extends JPanel implements ActionListener {
         add(buttonContainer, BorderLayout.NORTH);
         add(pane, BorderLayout.CENTER);
         setVisible(true);
+
+        // TODO: Hookup to Schedule view on button press (call this within the spawned dialog/frame to get data)
+        var res = ScheduleService.getInstance().getSchedule();
+        System.out.println("Hello Trevor");
     }
 
     public void setupSelection() {
