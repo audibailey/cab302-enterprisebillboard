@@ -82,13 +82,6 @@ public class TokenService {
         return CollectionFactory.getInstance(User.class).get(u -> u.username.equals(username)).stream().findFirst();
     }
 
-    /**
-     * This function checks if the user exists and returns an optional user.
-     *
-     * @param username: The username of the user using the client.
-     * @return Optional<User>: The user optional after attempting to fetch the user based off username.
-     * @throws Exception: Pass through the server error.
-     */
     public Optional<Permissions> checkPermissionsExist(String username) throws Exception {
         return CollectionFactory.getInstance(Permissions.class).get(u -> u.username.equals(username)).stream().findFirst();
     }
@@ -153,7 +146,7 @@ public class TokenService {
 
         // If session is expired remove session and return true.
         if (session.get().expireTime.compareTo(LocalDateTime.now()) <= 0) {
-            sessions.remove(session.get());
+            sessions.remove(session);
             return true;
         }
 

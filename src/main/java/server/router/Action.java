@@ -5,7 +5,7 @@ import common.router.NotFound;
 import common.router.Request;
 
 /**
- * The Action Class, this is used in the Router to ensure given executions contain the necessary methods to run.
+ * The Action Class, this is used in the Router to ensure given executions contain the necessary methods to run
  *
  * @author Jamie Martin
  * @author Perdana Bailey

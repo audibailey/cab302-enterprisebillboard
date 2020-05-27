@@ -64,9 +64,26 @@ public class User extends Object implements Serializable {
     }
 
     /**
-     * Generates a User object with random variables.
+     * Change the password of the user
      *
-     * @return User: a randomised User object.
+     * @param newPass, the new password hash.
+     */
+    public void changePassword(String newPass) {
+        this.password = newPass;
+    }
+
+    /**
+     * Try login with the password for this user.
+     *
+     * @param pass, the password input
+     */
+    public boolean tryLogin(String pass) {
+        return this.password.equals(pass);
+    }
+    
+    /**
+     * Generates a User object with random variables
+     * @return a randomised User object
      */
     public static User Random() {
         return new User(

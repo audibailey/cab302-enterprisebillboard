@@ -2,11 +2,6 @@ package common.swing;
 
 import javax.swing.*;
 
-/**
- * This class consists of the notification engine for Java Swing to handle errors.
- *
- * @author Jamie Martin
- */
 public class Notification {
     public static void display(String message) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

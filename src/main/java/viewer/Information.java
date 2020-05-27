@@ -12,6 +12,7 @@ import java.io.IOException;
  *
  * @author Trevor Waturuocha
  */
+
 public class Information extends JLabel {
 
     // to draw information. Takes billboard object, container and label resize factors as parameters.

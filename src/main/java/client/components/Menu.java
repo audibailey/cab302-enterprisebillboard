@@ -3,11 +3,6 @@ package client.components;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * This class renders the menu for the client.
- *
- * @author Jamie Martin
- */
 public class Menu extends JMenuBar {
     Color bgColor = Color.WHITE;
 
