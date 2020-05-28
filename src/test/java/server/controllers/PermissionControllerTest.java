@@ -5,6 +5,7 @@ import common.router.IActionResult;
 import common.router.Request;
 import common.router.Status;
 import common.utils.HashingFactory;
+import common.utils.RandomFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -114,6 +115,14 @@ public class PermissionControllerTest {
     @Test
     public void RemoveOwnEditUser() throws  Exception
     {
+        User testUser = new User("admin", HashingFactory.hashPassword("1234"), null);
+        Permissions testPerm = new Permissions(0,testUser.username,true,true,true,true );
+        UserPermissions temp = new UserPermissions(testUser, testPerm);
+
+        Request newreq = new Request(null,"blah",null,temp);
+        IActionResult insertUser = new UserPermissionsController.Insert().execute(newreq);
+
+
         HashMap<String, String> params = new HashMap<>();
         String permUser = "admin";
         params.put("username", permUser);

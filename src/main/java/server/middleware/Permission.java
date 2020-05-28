@@ -131,7 +131,7 @@ public class Permission {
                 if (req.params.get("username") == null || (req.params.get("username").length() <1)) return new UnsupportedType(String.class);
                 Optional <User> user = CollectionFactory.getInstance(User.class).get(u -> (req.params.get("username")).equals(u.username)).stream().findFirst();
                 if (user.isEmpty()) return new BadRequest("User does not exist.");
-                if (user.get().id == req.session.userId) return new Ok();
+                if (user.get().username.equals(req.session.username)) return new Ok();
             }
             return new Unauthorised(" Not authorised to view  other user's permissions.");
         }
@@ -158,7 +158,7 @@ public class Permission {
                 Optional <User> user = CollectionFactory.getInstance(User.class).get(u -> ((User) req.body).id == u.id).stream().findFirst();
                 if (user.isEmpty()) return new BadRequest("User does not exist. ");
 
-                if (user.get().id == req.session.userId) return new Unauthorised("Not authorised to delete yourself.");
+                if (user.get().username.equals(req.session.username)) return new Unauthorised("Not authorised to delete yourself.");
             }
             return new Ok();
         }
