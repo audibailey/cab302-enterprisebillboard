@@ -20,6 +20,7 @@ public class ScheduleControllerTest {
         bb.locked = true;
 
         Schedule schedule = Schedule.Random(bb.name);
+        schedule.interval += schedule.duration;
         // Create new request.
         Request req = new Request(null, "blah", null, bb);
         // Generate a session
@@ -37,39 +38,11 @@ public class ScheduleControllerTest {
     }
 
     @Test
-    public void InsertExistedSchedule() throws Exception
-    {
-        // Generate the billboard data to insert
-        Billboard bb = Billboard.Random(1);
-        bb.name = "ExistedScheduled";
-        bb.locked = true;
-
-        Schedule schedule = Schedule.Random(bb.name);
-        // Create new request.
-        Request req = new Request(null, "blah", null, bb);
-        // Generate a session
-        req.session = new Session(
-            1, "kevin", null
-        );
-        // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
-
-        // Create new request and insert schedule
-        req = new Request(null, "blah", null, schedule);
-        test = new ScheduleController.Insert().execute(req);
-
-        Schedule schedule2 = Schedule.Random(bb.name);
-        req = new Request(null,"blah",null,schedule2);
-        IActionResult result = new ScheduleController.Insert().execute(req);
-        assertEquals(Status.BAD_REQUEST, result.status);
-    }
-
-    @Test
     public void DeleteSchedule() throws  Exception
     {
         // Generate the billboard data to insert
         Billboard bb = Billboard.Random(1);
-        bb.name = "DeleteSchedule";
+        bb.name = "SBD";
         bb.locked = true;
 
         // Generate schedule data to insert
@@ -81,22 +54,22 @@ public class ScheduleControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+         new BillboardController.Insert().execute(req);
 
         // Create new request and insert schedule
         req = new Request(null, "blah", null, schedule);
-        test = new ScheduleController.Insert().execute(req);
+        new ScheduleController.Insert().execute(req);
 
         //Create new request and get all schedules
         req = new  Request(null,"blah",null,null);
-        test = new ScheduleController.Get().execute(req);
+        IActionResult test = new ScheduleController.Get().execute(req);
         List<Schedule> scheduleList = (List<Schedule>) test.body;
 
         // Get the deleted schedule data
         Schedule deleted = null;
         for (Schedule sche: scheduleList)
         {
-            if (sche.billboardName.equals("DeleteSchedule"))
+            if (sche.billboardName.equals("SBD"))
             {
                 deleted = sche;
                 break;
