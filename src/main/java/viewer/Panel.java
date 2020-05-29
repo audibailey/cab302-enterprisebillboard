@@ -1,6 +1,9 @@
 package viewer;
 
 import common.models.Billboard;
+import viewer.components.Information;
+import viewer.components.Message;
+import viewer.components.Picture;
 
 import javax.swing.*;
 import java.awt.*;

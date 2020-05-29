@@ -1,9 +1,10 @@
 package server.controllers;
 
 import common.models.*;
-import common.router.IActionResult;
+import common.router.Response;
 import common.router.Request;
-import common.router.Status;
+import common.router.response.Status;
+import common.utils.session.Session;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ScheduleControllerTest {
         bb.locked = true;
 
         Schedule schedule = Schedule.Random(bb.name);
+        schedule.interval += schedule.duration;
         // Create new request.
         Request req = new Request(null, "blah", null, bb);
         // Generate a session
@@ -27,41 +29,13 @@ public class ScheduleControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+        Response test = new BillboardController.Insert().execute(req);
 
         // Create new request and insert schedule
         req = new Request(null, "blah", null, schedule);
-        IActionResult result = new ScheduleController.Insert().execute(req);
+        Response result = new ScheduleController.Insert().execute(req);
 
         assertEquals(Status.SUCCESS, result.status);
-    }
-
-    @Test
-    public void InsertExistedSchedule() throws Exception
-    {
-        // Generate the billboard data to insert
-        Billboard bb = Billboard.Random(1);
-        bb.name = "ExistedScheduled";
-        bb.locked = true;
-
-        Schedule schedule = Schedule.Random(bb.name);
-        // Create new request.
-        Request req = new Request(null, "blah", null, bb);
-        // Generate a session
-        req.session = new Session(
-            1, "kevin", null
-        );
-        // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
-
-        // Create new request and insert schedule
-        req = new Request(null, "blah", null, schedule);
-        test = new ScheduleController.Insert().execute(req);
-
-        Schedule schedule2 = Schedule.Random(bb.name);
-        req = new Request(null,"blah",null,schedule2);
-        IActionResult result = new ScheduleController.Insert().execute(req);
-        assertEquals(Status.BAD_REQUEST, result.status);
     }
 
     @Test
@@ -69,7 +43,7 @@ public class ScheduleControllerTest {
     {
         // Generate the billboard data to insert
         Billboard bb = Billboard.Random(1);
-        bb.name = "DeleteSchedule";
+        bb.name = "SBD";
         bb.locked = true;
 
         // Generate schedule data to insert
@@ -81,29 +55,29 @@ public class ScheduleControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+         new BillboardController.Insert().execute(req);
 
         // Create new request and insert schedule
         req = new Request(null, "blah", null, schedule);
-        test = new ScheduleController.Insert().execute(req);
+        new ScheduleController.Insert().execute(req);
 
         //Create new request and get all schedules
         req = new  Request(null,"blah",null,null);
-        test = new ScheduleController.Get().execute(req);
+        Response test = new ScheduleController.Get().execute(req);
         List<Schedule> scheduleList = (List<Schedule>) test.body;
 
         // Get the deleted schedule data
         Schedule deleted = null;
         for (Schedule sche: scheduleList)
         {
-            if (sche.billboardName.equals("DeleteSchedule"))
+            if (sche.billboardName.equals("SBD"))
             {
                 deleted = sche;
                 break;
             }
         }
         req = new Request(null,"blah",null,deleted);
-        IActionResult result = new ScheduleController.Delete().execute(req);
+        Response result = new ScheduleController.Delete().execute(req);
         assertEquals(Status.SUCCESS,result.status);
     }
 
@@ -115,7 +89,7 @@ public class ScheduleControllerTest {
 
         // Create new request and try to delete the schedule
         Request req = new Request(null,"blah",null,deleted);
-        IActionResult result = new ScheduleController.Delete().execute(req);
+        Response result = new ScheduleController.Delete().execute(req);
 
         assertEquals(Status.BAD_REQUEST,result.status);
     }
@@ -125,7 +99,16 @@ public class ScheduleControllerTest {
     {
         // Create new request and try to get all schedule
         Request req = new Request(null,"blah",null,null);
-        IActionResult result = new ScheduleController.Get().execute(req);
+        Response result = new ScheduleController.Get().execute(req);
+
+        assertEquals(Status.SUCCESS,result.status);
+    }
+
+    @Test
+    public void GetCurrentSchedule() throws  Exception
+    {
+        Request req = new Request(null,"blah",null,null);
+        Response result = new ScheduleController.GetCurrent().execute(req);
 
         assertEquals(Status.SUCCESS,result.status);
     }

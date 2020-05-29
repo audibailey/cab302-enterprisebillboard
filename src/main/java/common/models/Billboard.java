@@ -2,18 +2,12 @@ package common.models;
 
 import client.components.table.DisplayAs;
 import client.components.table.Editable;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.compiler.PluginProtos;
+import common.sql.SQLITE;
+import common.utils.Picture;
 import common.utils.RandomFactory;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 
 /**
  * This class consists of the billboard object and its associated methods.

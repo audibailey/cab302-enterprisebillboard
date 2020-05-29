@@ -2,25 +2,16 @@ package server;
 
 import common.models.*;
 import common.router.Request;
-import common.utils.ClientSocketFactory;
-import common.utils.HashingFactory;
+import common.utils.session.HashingFactory;
 import common.utils.Props;
-import common.utils.RandomFactory;
 import server.controllers.*;
 import server.middleware.*;
-import server.router.*;
-import server.services.DataService;
 import server.services.RouterService;
-import server.sql.CollectionFactory;
-import server.sql.SchemaBuilder;
+import common.sql.CollectionFactory;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
-
-import static common.utils.HashingFactory.encodeHex;
 
 /**
  * This class is the main class, used as the entry point for the server application.
@@ -98,7 +89,7 @@ public class Main {
             .ADD_AUTH("/billboard/get/name", BillboardController.GetByName.class)
             .ADD_AUTH("/billboard/insert", Permission.canCreateBillboard.class, BillboardController.Insert.class)
             .ADD_AUTH("/billboard/update", Permission.canEditBillboard.class, BillboardController.Update.class)
-            .ADD_AUTH("/billboard/delete", Permission.canEditBillboard.class, BillboardController.Delete.class)
+            .ADD_AUTH("/billboard/delete", Permission.canDeleteBillboard.class, BillboardController.Delete.class)
             // Add UserPermissions actions to router
             .ADD_AUTH("/userpermissions/insert", Permission.canEditUser.class, UserPermissionsController.Insert.class)
             // Add User actions to router

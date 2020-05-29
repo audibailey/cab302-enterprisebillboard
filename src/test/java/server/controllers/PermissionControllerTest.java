@@ -1,10 +1,11 @@
 package server.controllers;
 
 import common.models.*;
-import common.router.IActionResult;
+import common.router.Response;
 import common.router.Request;
-import common.router.Status;
-import common.utils.HashingFactory;
+import common.router.response.Status;
+import common.utils.session.HashingFactory;
+import common.utils.session.Session;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class PermissionControllerTest {
         Request req = new Request(null, "blah", null, null);
 
         // Get all the permissions from database
-        IActionResult result = new PermissionController.Get().execute(req);
+        Response result = new PermissionController.Get().execute(req);
         assertEquals(result.status, Status.SUCCESS);
     }
 
@@ -43,7 +44,7 @@ public class PermissionControllerTest {
         req = new Request(null, "blah", params, null);
 
         // Get all the permissions from database
-        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Response result = new PermissionController.GetByUsername().execute(req);
         assertEquals(result.status, Status.SUCCESS);
     }
 
@@ -58,7 +59,7 @@ public class PermissionControllerTest {
         Request req = new Request(null, "blah", params, null);
 
         // Get all the permissions from database
-        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Response result = new PermissionController.GetByUsername().execute(req);
         assertEquals(result.status, Status.BAD_REQUEST);
     }
 
@@ -71,7 +72,7 @@ public class PermissionControllerTest {
         Request req = new Request(null, "blah", params, null);
 
         // Get all the permissions from database
-        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Response result = new PermissionController.GetByUsername().execute(req);
         assertEquals(result.status, Status.BAD_REQUEST);
     }
 
@@ -97,7 +98,7 @@ public class PermissionControllerTest {
         req = new Request(null, "blah",params, null);
 
         // Get all the permissions from database
-        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Response result = new PermissionController.GetByUsername().execute(req);
         Permissions perm = ((List<Permissions>) result.body).get(0);
         perm.canScheduleBillboard = !perm.canScheduleBillboard;
 
@@ -114,6 +115,14 @@ public class PermissionControllerTest {
     @Test
     public void RemoveOwnEditUser() throws  Exception
     {
+        User testUser = new User("admin", HashingFactory.hashPassword("1234"), null);
+        Permissions testPerm = new Permissions(0,testUser.username,true,true,true,true );
+        UserPermissions temp = new UserPermissions(testUser, testPerm);
+
+        Request newreq = new Request(null,"blah",null,temp);
+        Response insertUser = new UserPermissionsController.Insert().execute(newreq);
+
+
         HashMap<String, String> params = new HashMap<>();
         String permUser = "admin";
         params.put("username", permUser);
@@ -122,7 +131,7 @@ public class PermissionControllerTest {
         Request req = new Request(null, "blah",params, null);
 
         // Get all the permissions from database
-        IActionResult result = new PermissionController.GetByUsername().execute(req);
+        Response result = new PermissionController.GetByUsername().execute(req);
         Permissions perm = ((List<Permissions>) result.body).get(0);
         perm.canEditUser = false;
 
