@@ -4,14 +4,14 @@ import common.models.Permissions;
 import common.models.User;
 import common.models.UserPermissions;
 import common.router.*;
+import common.utils.HashingFactory;
 import common.utils.RandomFactory;
 import server.router.Action;
 import server.sql.CollectionFactory;
 
 import java.util.List;
 
-import static common.utils.HashingFactory.encodeHex;
-import static common.utils.HashingFactory.hashAndSaltPassword;
+import static common.utils.HashingFactory.*;
 
 /**
  * This class acts as the controller with all the Actions related to the user permissions.
@@ -48,7 +48,7 @@ public class UserPermissionsController {
 
             Permissions permissions = userPermissions.permissions;
             // Hash the password supplied and set the respective user objects for database insertion.
-            byte[] salt = RandomFactory.String().getBytes();
+            byte[] salt = HashingFactory.getSalt();
             byte[] password = hashAndSaltPassword(user.password, salt);
             user.salt = encodeHex(salt);
             user.password = encodeHex(password);
