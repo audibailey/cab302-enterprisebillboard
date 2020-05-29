@@ -139,28 +139,30 @@ public class BillboardController {
         @Override
         public Response execute(Request req) throws Exception {
             // Return an error on incorrect params type.
-            if (req.params.get("bName") == null) return new UnsupportedType(String.class);
-            if (req.params.get("bName").length() < 1) return new BadRequest("Billboard name must not be empty.");
-            
-            Schedule temp = null;
-            List<Billboard> bbList = CollectionFactory.getInstance(Billboard.class).get
-                ( bName -> bName.name.equals(req.params.get("bName")));
+            if (req.params == null) return new BadRequest("Parameter required: bName");
+
+            String bName = req.params.get("bName");
+
+            if (bName == null) return new UnsupportedType(String.class);
+            if (bName.length() < 1) return new BadRequest("Billboard name must not be empty.");
+
+            List<Billboard> bbList = CollectionFactory.getInstance(Billboard.class).get(b -> b.name.equals(bName));
 
             if (bbList.isEmpty()) return new BadRequest("Billboard doesn't exist");
-            Billboard deleted = bbList.get(0);
 
-            if (deleted.locked)
+            Billboard toDelete = bbList.get(0);
+
+            if (toDelete.locked)
             {
-                String sName = deleted.name;
-                List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
-                    schedule -> sName.equals(String.valueOf(schedule.billboardName)));
-                temp = scheduleList.get(0);
-                CollectionFactory.getInstance(Schedule.class).delete(temp);
+                List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(schedule -> toDelete.name.equals(schedule.billboardName));
+
+                for (var schedule: scheduleList) {
+                    CollectionFactory.getInstance(Schedule.class).delete(schedule);
+                }
             }
 
-
             // Attempt to delete the billboard in the database then return a success IActionResult
-            CollectionFactory.getInstance(Billboard.class).delete(deleted);
+            CollectionFactory.getInstance(Billboard.class).delete(toDelete);
             return new Ok();
         }
     }
