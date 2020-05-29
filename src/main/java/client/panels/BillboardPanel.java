@@ -114,14 +114,18 @@ public class BillboardPanel extends JPanel implements ActionListener {
 
             Optional<Billboard> selectedValue = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
 
+            if (selected != null) {
+                viewButton.setEnabled(true);
+            } else {
+                viewButton.setEnabled(false);
+            }
+
             if (selectedValue.isPresent() && (session.permissions.canEditBillboard || session.userId == selectedValue.get().userId)) {
                 if (selected != null) {
-                    viewButton.setEnabled(true);
                     deleteButton.setEnabled(true);
                     importButton.setEnabled(true);
                     exportButton.setEnabled(true);
                 } else {
-                    viewButton.setEnabled(false);
                     deleteButton.setEnabled(false);
                     importButton.setEnabled(false);
                     exportButton.setEnabled(false);
