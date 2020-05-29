@@ -82,4 +82,8 @@ public class XMLTests {
         String xml = XML.toXML(billboard);
         assertEquals(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><billboard background=\"#000000\"><message colour=\"#FFFFFF\">What!!!</message><information colour=\"#c6299c\">THE</information></billboard>");
     }
+
+    // TODO: Test only picture?
+
+    // TODO: Test all cases for fromXML
 }
