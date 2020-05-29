@@ -89,7 +89,7 @@ public class Main {
             .ADD_AUTH("/billboard/get/name", BillboardController.GetByName.class)
             .ADD_AUTH("/billboard/insert", Permission.canCreateBillboard.class, BillboardController.Insert.class)
             .ADD_AUTH("/billboard/update", Permission.canEditBillboard.class, BillboardController.Update.class)
-            .ADD_AUTH("/billboard/delete", Permission.canEditBillboard.class, BillboardController.Delete.class)
+            .ADD_AUTH("/billboard/delete", Permission.canDeleteBillboard.class, BillboardController.Delete.class)
             // Add UserPermissions actions to router
             .ADD_AUTH("/userpermissions/insert", Permission.canEditUser.class, UserPermissionsController.Insert.class)
             // Add User actions to router
