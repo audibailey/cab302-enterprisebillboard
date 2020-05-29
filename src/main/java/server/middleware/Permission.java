@@ -59,10 +59,9 @@ public class Permission {
             if (!req.permissions.canEditBillboard) {
                 if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
                 if (((Billboard) req.body).locked) return new BadRequest("Can't change a scheduled billboard.");
-                Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(b -> ((Billboard) req.body).id == b.id).stream().findFirst();
-                if (billboard.isEmpty()) return new BadRequest("Billboard does not exist.");
+                Billboard billboard = (Billboard) req.body;
 
-                if (billboard.get().userId != req.session.userId)
+                if (billboard.userId != req.session.userId)
                     return new Unauthorised("Not authorised to edit billboards.");
             }
 
@@ -199,6 +198,8 @@ public class Permission {
         public Response execute(Request req) throws Exception {
             if (!req.permissions.canEditUser) return new Unauthorised("Not authorised to delete user. ");
             else {
+                if (req.params == null) {return new UnsupportedType(String.class);}
+                if (req.params.get("username") == null) {return new BadRequest("Username must not be empty.");}
                 Optional<User> user = CollectionFactory.getInstance(User.class).get(u -> req.params.get("username").equals(u.username)).stream().findFirst();
                 if (user.isEmpty()) return new BadRequest("User does not exist. ");
 
