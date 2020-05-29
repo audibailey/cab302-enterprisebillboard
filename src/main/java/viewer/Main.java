@@ -48,7 +48,7 @@ public class Main {
     public static Billboard getCurrent() {
         Billboard billboard = new Billboard();
 
-        Response res = new ClientSocketFactory("/schedule/get/current", null, null).Connect();
+        Response res = new ClientSocketFactory("/schedule/get/current", null, null).setMessageOnError(false).Connect();
 
         if (res != null && res.status == Status.SUCCESS && res.body instanceof Billboard) {
             billboard = (Billboard)res.body;

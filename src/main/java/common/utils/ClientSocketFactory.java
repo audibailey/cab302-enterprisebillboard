@@ -23,6 +23,7 @@ public class ClientSocketFactory {
     String token;
     HashMap<String, String> params;
     Object body;
+    boolean messageOnError = true;
 
     // Initialise the request information with no body.
     public ClientSocketFactory(String path, String token, HashMap<String, String> params) {
@@ -37,6 +38,11 @@ public class ClientSocketFactory {
         this.token = token;
         this.params = params;
         this.body = body;
+    }
+
+    public ClientSocketFactory setMessageOnError(boolean messageOnError) {
+        this.messageOnError = messageOnError;
+        return this;
     }
 
     // Connect to the server and send the request with then wait and receive a response.
@@ -65,7 +71,7 @@ public class ClientSocketFactory {
                 // Handle errors.
                 if (res.error) {
                     Response finalRes = res;
-                    SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
+                    if (messageOnError) SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
                 }
             }
 
@@ -76,8 +82,7 @@ public class ClientSocketFactory {
 
             return res;
         } catch (IOException | ClassNotFoundException ex) { // Handle errors.
-            Notification.display(ex.getMessage());
-            ex.printStackTrace();
+            if (messageOnError) Notification.display(ex.getMessage());
             return null;
         }
     }
