@@ -128,13 +128,29 @@ public class ScheduleController {
         public Response execute(Request req) throws Exception {
             // Ensure the body is of type schedule.
             if (req.body instanceof Schedule) {
-                String sName = ((Schedule) req.body).billboardName;
-                List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(
-                    schedule -> sName.equals(String.valueOf(schedule.billboardName)));
+                Schedule schedule = (Schedule) req.body;
+                int id = schedule.id;
+
+                List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(s -> id == s.id);
+
                 if (scheduleList.isEmpty()) return new BadRequest("Schedule doesn't exist.");
 
                 // Attempt to delete the schedule in the database then return a success IActionResult.
                 CollectionFactory.getInstance(Schedule.class).delete((Schedule) req.body);
+
+                // if this is the only schedule assigned to that billboard, remove lock
+                if (scheduleList.size() == 1) {
+                    List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(billboard -> billboard.name.equals(schedule.billboardName));
+
+                    if (!billboardList.isEmpty()) {
+                        Billboard billboard = billboardList.get(0);
+
+                        billboard.locked = false;
+
+                        CollectionFactory.getInstance(Billboard.class).update(billboard);
+                    }
+                }
+
                 return new Ok();
             }
 
