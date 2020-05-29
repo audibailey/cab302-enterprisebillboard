@@ -18,9 +18,8 @@ import java.util.Base64;
  *
  * @author Jamie Martin
  */
-public class PictureEditor extends AbstractCellEditor
-    implements TableCellEditor,
-    ActionListener {
+public class PictureEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+
     Picture currentPicture;
     JButton button;
     JFileChooser fileChooser;
@@ -28,16 +27,21 @@ public class PictureEditor extends AbstractCellEditor
     protected static final String EDIT = "edit";
 
     public PictureEditor() {
+        // prep the editor, a button.
         button = new JButton();
         button.setActionCommand(EDIT);
         button.addActionListener(this);
         button.setBorderPainted(false);
 
+        // Prep the file chooser
         fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", "BMP", "JPEG", "PNG"));
         dialog = new JDialog((Window) null);
     }
 
+    /**
+     * Handles events from the editor button and from the dialog's OK button.
+     */
     public void actionPerformed(ActionEvent e) {
         if (EDIT.equals(e.getActionCommand())) {
 
@@ -53,22 +57,30 @@ public class PictureEditor extends AbstractCellEditor
                     e1.printStackTrace();
                 }
             }
-            //Make the renderer reappear.
+
+            // prompts rerender
             fireEditingStopped();
         }
     }
 
-    //Implement the one CellEditor method that AbstractCellEditor doesn't.
+    /**
+     * Method for AbstractCellEditor extension
+     * @return
+     */
     public Object getCellEditorValue() {
         return currentPicture;
     }
 
-    //Implement the one method defined by TableCellEditor.
-    public Component getTableCellEditorComponent(JTable table,
-                                                 Object value,
-                                                 boolean isSelected,
-                                                 int row,
-                                                 int column) {
+    /**
+     * Method for TableCellEditor implementation
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param row
+     * @param column
+     * @return
+     */
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         currentPicture = (Picture) value;
         return button;
     }
