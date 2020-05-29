@@ -2,7 +2,7 @@ package common.utils;
 
 // TODO: USE PROPS FOR NETWORK ADDY AND PORT
 
-import common.router.IActionResult;
+import common.router.Response;
 import common.router.Request;
 import common.swing.Notification;
 
@@ -40,7 +40,7 @@ public class ClientSocketFactory {
     }
 
     // Connect to the server and send the request with then wait and receive a response.
-    public IActionResult Connect() {
+    public Response Connect() {
         try {
             // Initialise socket.
             Socket s = new Socket("127.0.0.1", 12345);
@@ -58,13 +58,13 @@ public class ClientSocketFactory {
             Object o = ois.readObject();
 
             // Ensure its the right response type.
-            IActionResult res = null;
-            if (o instanceof IActionResult) {
-                res = (IActionResult) o;
+            Response res = null;
+            if (o instanceof Response) {
+                res = (Response) o;
 
                 // Handle errors.
                 if (res.error) {
-                    IActionResult finalRes = res;
+                    Response finalRes = res;
                     SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
                 }
             }

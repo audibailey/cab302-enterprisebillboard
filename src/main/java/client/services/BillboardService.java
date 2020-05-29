@@ -1,9 +1,10 @@
 package client.services;
 
 import common.models.*;
-import common.router.IActionResult;
-import common.router.Status;
+import common.router.Response;
+import common.router.response.Status;
 import common.utils.ClientSocketFactory;
+import common.utils.session.Session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class BillboardService extends DataService<Billboard> {
         Session session = SessionService.getInstance();
 
         if (session != null) {
-            IActionResult result = new ClientSocketFactory("/billboard/get", session.token, null).Connect();
+            Response result = new ClientSocketFactory("/billboard/get", session.token, null).Connect();
 
             if (result != null && result.status == Status.SUCCESS && result.body instanceof List) {
                 BillboardServiceHolder.INSTANCE.billboards = (List<Billboard>) result.body;
@@ -43,13 +44,13 @@ public class BillboardService extends DataService<Billboard> {
 
     public List<Billboard> insert(Billboard b) {
         Session session = SessionService.getInstance();
-        IActionResult res = new ClientSocketFactory("/billboard/insert", session.token, null, b).Connect();
+        Response res = new ClientSocketFactory("/billboard/insert", session.token, null, b).Connect();
         return refresh();
     }
 
     public Boolean update(Billboard b) {
         Session session = SessionService.getInstance();
-        IActionResult res = new ClientSocketFactory("/billboard/update", session.token, null, b).Connect();
+        Response res = new ClientSocketFactory("/billboard/update", session.token, null, b).Connect();
         return !res.error;
     }
 
@@ -59,7 +60,7 @@ public class BillboardService extends DataService<Billboard> {
         HashMap<String, String> params = new HashMap<>();
         params.put("bName", b.name);
 
-        IActionResult res = new ClientSocketFactory("/billboard/delete", session.token, params).Connect();
+        Response res = new ClientSocketFactory("/billboard/delete", session.token, params).Connect();
         return refresh();
     }
 }

@@ -1,9 +1,8 @@
 package server.utils;
 
-import java.nio.charset.Charset;
 import java.util.Random;
 
-import common.utils.HashingFactory;
+import common.utils.session.HashingFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

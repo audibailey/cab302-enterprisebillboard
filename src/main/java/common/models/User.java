@@ -1,5 +1,6 @@
 package common.models;
 
+import common.sql.SQLITE;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;

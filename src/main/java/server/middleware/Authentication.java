@@ -1,10 +1,10 @@
 package server.middleware;
 
-import common.router.IActionResult;
-import common.router.Ok;
+import common.router.Response;
+import common.router.response.Ok;
 import common.router.Request;
-import common.router.Unauthorised;
-import server.router.*;
+import common.router.response.Unauthorised;
+import common.router.*;
 import server.services.TokenService;
 
 /**
@@ -29,7 +29,7 @@ public class Authentication {
          * @throws Exception: Pass through the server error from the verify function when checking the token.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // If the token is null or expired return an Unauthorised Result
             if (req.token == null || !TokenService.getInstance().verify(req.token)) return new Unauthorised("Token is invalid.");
 

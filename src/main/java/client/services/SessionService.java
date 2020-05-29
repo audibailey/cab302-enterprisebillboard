@@ -1,6 +1,6 @@
 package client.services;
 
-import common.models.Session;
+import common.utils.session.Session;
 
 /**
  * This class is responsible for the backend sessions service for the client/viewer.

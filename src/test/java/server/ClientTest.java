@@ -1,21 +1,11 @@
 package server;
 
 import common.models.*;
-import common.router.IActionResult;
-import common.router.Request;
-import common.router.Status;
+import common.router.response.Status;
 import common.utils.ClientSocketFactory;
-import common.utils.HashingFactory;
-import common.utils.RandomFactory;
-import server.controllers.UserPermissionsController;
-import server.sql.CollectionFactory;
+import common.utils.session.HashingFactory;
+import common.utils.session.Session;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.math.BigInteger;
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.*;
 
 public class ClientTest {
@@ -40,7 +30,7 @@ public class ClientTest {
             test.put("password", HashingFactory.hashPassword(password));
 
             System.out.println("Username from test: " + test.get("username"));
-            IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
+            common.router.Response result = new ClientSocketFactory("/login", null, test, null).Connect();
 
             if (result.status == Status.SUCCESS) {
                 System.out.println("Successfully logged in!");

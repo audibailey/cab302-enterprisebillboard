@@ -1,9 +1,10 @@
 package server.controllers;
 
 import common.models.*;
-import common.router.IActionResult;
+import common.router.Response;
 import common.router.Request;
-import common.router.Status;
+import common.router.response.Status;
+import common.utils.session.Session;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -28,11 +29,11 @@ public class ScheduleControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+        Response test = new BillboardController.Insert().execute(req);
 
         // Create new request and insert schedule
         req = new Request(null, "blah", null, schedule);
-        IActionResult result = new ScheduleController.Insert().execute(req);
+        Response result = new ScheduleController.Insert().execute(req);
 
         assertEquals(Status.SUCCESS, result.status);
     }
@@ -62,7 +63,7 @@ public class ScheduleControllerTest {
 
         //Create new request and get all schedules
         req = new  Request(null,"blah",null,null);
-        IActionResult test = new ScheduleController.Get().execute(req);
+        Response test = new ScheduleController.Get().execute(req);
         List<Schedule> scheduleList = (List<Schedule>) test.body;
 
         // Get the deleted schedule data
@@ -76,7 +77,7 @@ public class ScheduleControllerTest {
             }
         }
         req = new Request(null,"blah",null,deleted);
-        IActionResult result = new ScheduleController.Delete().execute(req);
+        Response result = new ScheduleController.Delete().execute(req);
         assertEquals(Status.SUCCESS,result.status);
     }
 
@@ -88,7 +89,7 @@ public class ScheduleControllerTest {
 
         // Create new request and try to delete the schedule
         Request req = new Request(null,"blah",null,deleted);
-        IActionResult result = new ScheduleController.Delete().execute(req);
+        Response result = new ScheduleController.Delete().execute(req);
 
         assertEquals(Status.BAD_REQUEST,result.status);
     }
@@ -98,7 +99,7 @@ public class ScheduleControllerTest {
     {
         // Create new request and try to get all schedule
         Request req = new Request(null,"blah",null,null);
-        IActionResult result = new ScheduleController.Get().execute(req);
+        Response result = new ScheduleController.Get().execute(req);
 
         assertEquals(Status.SUCCESS,result.status);
     }

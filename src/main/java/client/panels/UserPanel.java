@@ -6,12 +6,12 @@ import client.components.table.PictureEditor;
 import client.components.table.PictureRenderer;
 import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
-import client.services.BillboardService;
 import client.services.PermissionsService;
 import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
-import common.utils.HashingFactory;
+import common.utils.session.HashingFactory;
+import common.utils.session.Session;
 
 import javax.swing.*;
 import java.awt.*;

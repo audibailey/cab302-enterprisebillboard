@@ -2,20 +2,19 @@ package client.panels;
 
 import client.components.table.*;
 import client.services.BillboardService;
-import client.services.PermissionsService;
 import client.services.ScheduleService;
 import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
-import common.utils.RandomFactory;
-import common.utils.Time;
+import common.utils.Picture;
+import common.utils.scheduling.DayOfWeek;
+import common.utils.scheduling.Time;
+import common.utils.session.Session;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

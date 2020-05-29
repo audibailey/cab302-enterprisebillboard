@@ -4,14 +4,17 @@ import common.models.Permissions;
 import common.models.User;
 import common.models.UserPermissions;
 import common.router.*;
-import common.utils.HashingFactory;
-import common.utils.RandomFactory;
-import server.router.Action;
-import server.sql.CollectionFactory;
+import common.router.response.BadRequest;
+import common.router.Response;
+import common.router.response.Ok;
+import common.router.response.UnsupportedType;
+import common.utils.session.HashingFactory;
+import common.router.Action;
+import common.sql.CollectionFactory;
 
 import java.util.List;
 
-import static common.utils.HashingFactory.*;
+import static common.utils.session.HashingFactory.*;
 
 /**
  * This class acts as the controller with all the Actions related to the user permissions.
@@ -31,7 +34,7 @@ public class UserPermissionsController {
 
         // Override the execute to run the insert function of the user and permissions collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Ensure the body is of type userpermissions.
             if (!(req.body instanceof UserPermissions)) return new UnsupportedType(UserPermissions.class);
 

@@ -1,13 +1,13 @@
 package client.services;
 
-import common.models.Day;
-import common.models.DayOfWeek;
+import common.utils.scheduling.Day;
+import common.utils.scheduling.DayOfWeek;
 import common.models.Schedule;
-import common.models.Session;
-import common.router.IActionResult;
-import common.router.Status;
+import common.utils.session.Session;
+import common.router.Response;
+import common.router.response.Status;
 import common.utils.ClientSocketFactory;
-import common.utils.Time;
+import common.utils.scheduling.Time;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,7 +35,7 @@ public class ScheduleService {
         Session session = SessionService.getInstance();
 
         if (session != null) {
-            IActionResult result = new ClientSocketFactory("/schedule/get", session.token, null).Connect();
+            Response result = new ClientSocketFactory("/schedule/get", session.token, null).Connect();
 
             if (result != null && result.status == Status.SUCCESS && result.body instanceof List) {
                 ScheduleServiceHolder.INSTANCE.schedules = (List<Schedule>) result.body;
@@ -100,13 +100,13 @@ public class ScheduleService {
 
     public List<Schedule> insert(Schedule s) {
         Session session = SessionService.getInstance();
-        IActionResult res = new ClientSocketFactory("/schedule/insert", session.token, null, s).Connect();
+        Response res = new ClientSocketFactory("/schedule/insert", session.token, null, s).Connect();
         return refresh();
     }
 
     public List<Schedule> delete(Schedule s) {
         Session session = SessionService.getInstance();
-        IActionResult res = new ClientSocketFactory("/schedule/delete", session.token, null, s).Connect();
+        Response res = new ClientSocketFactory("/schedule/delete", session.token, null, s).Connect();
         return refresh();
     }
 }

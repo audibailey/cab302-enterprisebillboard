@@ -2,11 +2,11 @@ package client.frames;
 
 import client.Main;
 import client.services.SessionService;
-import common.models.Session;
-import common.router.IActionResult;
-import common.router.Status;
+import common.utils.session.Session;
+import common.router.Response;
+import common.router.response.Status;
 import common.utils.ClientSocketFactory;
-import common.utils.HashingFactory;
+import common.utils.session.HashingFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -95,7 +95,7 @@ public class Login extends JFrame implements ActionListener {
             HashMap<String, String> params = new HashMap<>();
             params.put("username", username.getText());
             params.put("password", HashingFactory.hashPassword(String.valueOf(password.getPassword())));
-            IActionResult res = new ClientSocketFactory("/login", null, params, null).Connect();
+            Response res = new ClientSocketFactory("/login", null, params, null).Connect();
 
             if (res != null && res.status == Status.SUCCESS && res.body instanceof Session) {
                 SessionService.setInstance((Session) res.body);
