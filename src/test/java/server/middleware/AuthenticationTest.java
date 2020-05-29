@@ -1,12 +1,11 @@
 package server.middleware;
 
 import common.models.Permissions;
-import common.models.Session;
-import common.router.IActionResult;
+import common.utils.session.Session;
+import common.router.Response;
 import common.router.Request;
-import common.router.Status;
+import common.router.response.Status;
 import org.junit.jupiter.api.Test;
-import server.services.TokenService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +30,7 @@ public class AuthenticationTest {
     @Test public void InvalidAuthenticationTest() throws Exception {
         session.token = null;
 
-        IActionResult test = new Authentication.Authenticate().execute(req);
+        Response test = new Authentication.Authenticate().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 }

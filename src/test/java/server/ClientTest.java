@@ -1,21 +1,11 @@
 package server;
 
 import common.models.*;
-import common.router.IActionResult;
-import common.router.Request;
-import common.router.Status;
+import common.router.response.Status;
 import common.utils.ClientSocketFactory;
-import common.utils.HashingFactory;
-import common.utils.RandomFactory;
-import server.controllers.UserPermissionsController;
-import server.sql.CollectionFactory;
+import common.utils.session.HashingFactory;
+import common.utils.session.Session;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.math.BigInteger;
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.*;
 
 public class ClientTest {
@@ -40,7 +30,7 @@ public class ClientTest {
             test.put("password", HashingFactory.hashPassword(password));
 
             System.out.println("Username from test: " + test.get("username"));
-            IActionResult result = new ClientSocketFactory("/login", null, test, null).Connect();
+            common.router.Response result = new ClientSocketFactory("/login", null, test, null).Connect();
 
             if (result.status == Status.SUCCESS) {
                 System.out.println("Successfully logged in!");
@@ -126,18 +116,18 @@ public class ClientTest {
 
 
         // Test insert user -- Worked
-        {
-            Scanner sc = new Scanner(System.in);
-            sc.nextLine();
-            HashMap<String, String> params = null;
-            User testUser = new User("kevin2", HashingFactory.hashPassword("1234"), null);
-            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
-            UserPermissions temp = new UserPermissions(testUser, testPerm);
-
-            new ClientSocketFactory("/userpermissions/insert", token, params, temp).Connect();
-
-            System.out.println("Inserted user");
-        }
+//        {
+//            Scanner sc = new Scanner(System.in);
+//            sc.nextLine();
+//            HashMap<String, String> params = null;
+//            User testUser = new User("kevin2", HashingFactory.hashPassword("1234"), null);
+//            Permissions testPerm = Permissions.Random(testUser.id, testUser.username);
+//            UserPermissions temp = new UserPermissions(testUser, testPerm);
+//
+//            new ClientSocketFactory("/userpermissions/insert", token, params, temp).Connect();
+//
+//            System.out.println("Inserted user");
+//        }
         // Test update password -- Worked
 //        {
 //            Scanner sc = new Scanner(System.in);
@@ -156,18 +146,10 @@ public class ClientTest {
 //        {
 //            Scanner sc = new Scanner(System.in);
 //            sc.nextLine();
-//            HashMap<String, String> params = null;
-//            List<User> userList = CollectionFactory.getInstance(User.class).get(user -> true);
-//            User deleteUser = null;
-//            for (User temp: userList)
-//            {
-//                if (temp.username.equals("kevin"))
-//                {
-//                    deleteUser = temp;
-//                    break;
-//                }
-//            }
-//            IActionResult result = new ClientSocketFactory("/user/delete", token, params, deleteUser).Connect();
+//            HashMap<String, String> params = new HashMap<>();
+//            params.put("username","audi");
+//
+//            IActionResult result = new ClientSocketFactory("/user/delete", token, params, null).Connect();
 //            System.out.println("Deleted");
 //        }
 

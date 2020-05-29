@@ -11,66 +11,63 @@ import java.awt.event.ActionListener;
  *
  * @author Jamie Martin
  */
-public class ColourEditor extends AbstractCellEditor
-    implements TableCellEditor,
-    ActionListener {
+public class ColourEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+
     Color currentColour;
     JButton button;
-    JColorChooser colourChooser;
+    JColorChooser colourPicker;
     JDialog dialog;
     protected static final String EDIT = "edit";
 
     public ColourEditor() {
-        //Set up the editor (from the table's point of view),
-        //which is a button.
-        //This button brings up the color chooser dialog,
-        //which is the editor from the user's point of view.
+        // Prep the editor, a button.
         button = new JButton();
         button.setActionCommand(EDIT);
         button.addActionListener(this);
         button.setBorderPainted(false);
 
-        //Set up the dialog that the button brings up.
-        colourChooser = new JColorChooser();
-        dialog = JColorChooser.createDialog(button,
-            "Pick a Color",
-            true,  //modal
-            colourChooser,
-            this,  //OK button handler
-            null); //no CANCEL button handler
+        // Prep the colour picker
+        colourPicker = new JColorChooser();
+        dialog = JColorChooser.createDialog(button,"Pick a Color",true, colourPicker, this, null);
     }
 
     /**
-     * Handles events from the editor button and from
-     * the dialog's OK button.
+     * Handles events from the editor button and from the dialog's OK button.
      */
     public void actionPerformed(ActionEvent e) {
         if (EDIT.equals(e.getActionCommand())) {
-            //The user has clicked the cell, so
-            //bring up the dialog.
+            // The user has clicked the cell, so spawn the colour picker.
             button.setBackground(currentColour);
-            colourChooser.setColor(currentColour);
+            colourPicker.setColor(currentColour);
             dialog.setVisible(true);
 
-            //Make the renderer reappear.
+            // prompts rerender
             fireEditingStopped();
 
-        } else { //User pressed dialog's "OK" button.
-            currentColour = colourChooser.getColor();
+        } else {
+            // user pressed OK button
+            currentColour = colourPicker.getColor();
         }
     }
 
-    //Implement the one CellEditor method that AbstractCellEditor doesn't.
+    /**
+     * Method for AbstractCellEditor extension
+     * @return
+     */
     public Object getCellEditorValue() {
         return currentColour;
     }
 
-    //Implement the one method defined by TableCellEditor.
-    public Component getTableCellEditorComponent(JTable table,
-                                                 Object value,
-                                                 boolean isSelected,
-                                                 int row,
-                                                 int column) {
+    /**
+     * Method for TableCellEditor implementation
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param row
+     * @param column
+     * @return
+     */
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         currentColour = (Color)value;
         return button;
     }

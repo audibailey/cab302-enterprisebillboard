@@ -1,7 +1,7 @@
 package client.panels;
 
 import client.services.SessionService;
-import common.models.Session;
+import common.utils.session.Session;
 
 import javax.swing.*;
 

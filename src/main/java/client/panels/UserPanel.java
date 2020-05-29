@@ -4,14 +4,14 @@ import client.components.table.ColourEditor;
 import client.components.table.ColourRenderer;
 import client.components.table.PictureEditor;
 import client.components.table.PictureRenderer;
-import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
-import client.services.BillboardService;
+import client.components.table.IObjectTableModel;
 import client.services.PermissionsService;
 import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
-import common.utils.HashingFactory;
+import common.utils.session.HashingFactory;
+import common.utils.session.Session;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
  */
 public class UserPanel extends JPanel implements ActionListener {
 
-    ObjectTableModel<Permissions> tableModel;
+    IObjectTableModel<Permissions> tableModel;
     JTable table;
     Container buttonContainer = new Container();
     JButton editButton, createButton, refreshButton, deleteButton;
@@ -44,7 +44,7 @@ public class UserPanel extends JPanel implements ActionListener {
         editButton.setEnabled(false);
         deleteButton.setEnabled(false);
 
-        tableModel = new DisplayableObjectTableModel<>(Permissions.class, PermissionsService.getInstance());
+        tableModel = new ObjectTableModel<>(Permissions.class, PermissionsService.getInstance());
         tableModel.setObjectRows(PermissionsService.getInstance().refresh());
         table = new JTable(tableModel);
 

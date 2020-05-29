@@ -5,9 +5,9 @@ import java.net.Socket;
 import java.util.List;
 
 import common.router.Request;
-import common.router.BadRequest;
-import common.router.IActionResult;
-import server.router.Action;
+import common.router.response.BadRequest;
+import common.router.Response;
+import common.router.Action;
 import server.services.RouterService;
 
 /**
@@ -55,7 +55,7 @@ public class SocketHandler implements Runnable {
             // use the router to try and find a response
             List<Class<? extends Action>> actions = RouterService.getInstance().route(req.path);
             // execute the request for the result
-            IActionResult res = RouteHandler.execute(req, actions);
+            Response res = RouteHandler.execute(req, actions);
 
             // send the response
             replyClient(res);
@@ -79,7 +79,7 @@ public class SocketHandler implements Runnable {
      *
      * @param resp: This is the response that will be sent to the client.
      */
-    private void replyClient(IActionResult resp) {
+    private void replyClient(Response resp) {
 
         // Attempt to send the response
         try {

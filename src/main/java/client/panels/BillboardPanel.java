@@ -4,40 +4,24 @@ import client.components.table.ColourEditor;
 import client.components.table.ColourRenderer;
 import client.components.table.PictureEditor;
 import client.components.table.PictureRenderer;
-import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
+import client.components.table.IObjectTableModel;
 import client.services.BillboardService;
 import client.services.SessionService;
+import common.utils.XML;
 import viewer.Main;
-import com.mysql.cj.log.Log;
 import common.models.Billboard;
-import common.models.Picture;
-import common.models.Session;
+import common.utils.Picture;
+import common.utils.session.Session;
 import common.swing.Notification;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Base64;
 import java.util.Optional;
 
 /**
@@ -47,7 +31,7 @@ import java.util.Optional;
  */
 public class BillboardPanel extends JPanel implements ActionListener {
 
-    ObjectTableModel<Billboard> tableModel;
+    IObjectTableModel<Billboard> tableModel;
     JTable table;
     Container buttonContainer = new Container();
     JButton viewButton, createButton, refreshButton, deleteButton, importButton, exportButton;
@@ -79,7 +63,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
         importButton.setEnabled(false);
         exportButton.setEnabled(false);
 
-        tableModel = new DisplayableObjectTableModel(Billboard.class, BillboardService.getInstance());
+        tableModel = new ObjectTableModel(Billboard.class, BillboardService.getInstance());
         tableModel.setObjectRows(BillboardService.getInstance().refresh());
         table = new JTable(tableModel);
 
@@ -114,14 +98,18 @@ public class BillboardPanel extends JPanel implements ActionListener {
 
             Optional<Billboard> selectedValue = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
 
+            if (selected != null) {
+                viewButton.setEnabled(true);
+            } else {
+                viewButton.setEnabled(false);
+            }
+
             if (selectedValue.isPresent() && (session.permissions.canEditBillboard || session.userId == selectedValue.get().userId)) {
                 if (selected != null) {
-                    viewButton.setEnabled(true);
                     deleteButton.setEnabled(true);
                     importButton.setEnabled(true);
                     exportButton.setEnabled(true);
                 } else {
-                    viewButton.setEnabled(false);
                     deleteButton.setEnabled(false);
                     importButton.setEnabled(false);
                     exportButton.setEnabled(false);
@@ -191,54 +179,15 @@ public class BillboardPanel extends JPanel implements ActionListener {
 
                 // get file
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
 
-                    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
-                        .newInstance();
-                    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-
-                    Document document = documentBuilder.parse(file);
-
-                    // parse variables
-                    String billboardColour = getAttributeValue("billboard", "background", document);
-                    String message = getTagValue("message", document);
-                    String messageColor = getAttributeValue("message", "colour", document);
-
-                    String pictureUrl = getAttributeValue("picture", "url", document);
-                    String pictureData = getAttributeValue("picture", "data", document);
-
-                    String information = getTagValue("information", document);
-                    String informationColour = getAttributeValue("information", "colour", document);
+                    String xml = XML.readFile(fileChooser.getSelectedFile().getPath());
 
                     // update selected billboard with variables
                     Optional<Billboard> selectedBillboard = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
 
                     if (selectedBillboard.isPresent()) {
-                        Billboard billboard = selectedBillboard.get();
 
-                        billboard.backgroundColor = billboardColour == null ? "#FFFFFF" : billboardColour;
-                        billboard.message = message;
-                        billboard.messageColor = messageColor == null ? "#000000" : messageColor;
-
-                        billboard.information = information;
-                        billboard.informationColor = informationColour == null ? "#FFFFFF" : informationColour;
-
-                        if (pictureUrl != null && pictureData != null) {
-                            throw new Exception("Picture cannot have both url and data");
-                        } else if (pictureUrl != null) {
-                            String encoded =  getByteArrayFromImageURL(pictureUrl);
-                            byte[] base64 = Base64.getDecoder().decode(encoded);
-                            BufferedImage pictureOutput = ImageIO.read(new ByteArrayInputStream(base64));
-
-                            if (pictureOutput != null) {
-                                billboard.picture = encoded;
-                            }
-
-                        } else if (pictureData != null) {
-                            billboard.picture = pictureData;
-                        } else {
-                            billboard.picture = null;
-                        }
+                        Billboard billboard = XML.fromXML(xml, selectedBillboard.get());
 
                         Boolean success = BillboardService.getInstance().update(billboard);
 
@@ -259,57 +208,20 @@ public class BillboardPanel extends JPanel implements ActionListener {
                 Optional<Billboard> selectedBillboard = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
 
                 if (selectedBillboard.isPresent()) {
-                    Billboard billboard = selectedBillboard.get();
-
-                    DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-
-                    DocumentBuilder documentBuilder = null;
-
-                    documentBuilder = documentFactory.newDocumentBuilder();
-
-                    Document document = documentBuilder.newDocument();
-
-                    // root element
-                    Element root = document.createElement("billboard");
-                    root.setAttribute("background", billboard.backgroundColor);
-                    document.appendChild(root);
-
-                    if (billboard.message != null && !billboard.message.isEmpty()) {
-                        Element element = document.createElement("message");
-                        element.setTextContent(billboard.message);
-                        element.setAttribute("colour", billboard.messageColor);
-
-                        root.appendChild(element);
-                    }
-
-                    if (billboard.picture != null && !billboard.picture.isEmpty()) {
-                        Element element = document.createElement("picture");
-                        element.setAttribute("data", billboard.picture);
-
-                        root.appendChild(element);
-                    }
-
-                    if (billboard.information != null && !billboard.information.isBlank()) {
-                        Element element = document.createElement("information");
-                        element.setTextContent(billboard.information);
-                        element.setAttribute("colour", billboard.informationColor);
-
-                        root.appendChild(element);
-                    }
-
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setFileFilter(new FileNameExtensionFilter("XML file", "xml"));
                     int returnVal = fileChooser.showSaveDialog(new JDialog((Window) null));
 
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                        Transformer transformer = transformerFactory.newTransformer();
-                        DOMSource domSource = new DOMSource(document);
-                        StreamResult streamResult = new StreamResult(fileChooser.getSelectedFile());
+                        Billboard billboard = selectedBillboard.get();
 
-                        transformer.transform(domSource, streamResult);
+                        String xml = XML.toXML(billboard);
+                        Document document = XML.toDocument(xml);
+                        File file = fileChooser.getSelectedFile();
 
-                        Notification.display("Successfully exported to " + fileChooser.getName(fileChooser.getSelectedFile()));
+                        XML.saveDocument(document, file);
+
+                        Notification.display("Successfully exported " + billboard.name + " to " + fileChooser.getName(fileChooser.getSelectedFile()));
                     }
                 }
             } catch (Exception ex) {
@@ -317,43 +229,5 @@ public class BillboardPanel extends JPanel implements ActionListener {
                 ex.printStackTrace();
             }
         }
-    }
-
-    private static String getTagValue(String tag, Document document) {
-        try {
-            NodeList nodeList = document.getElementsByTagName(tag).item(0).getChildNodes();
-            Node node = nodeList.item(0);
-            return node.getNodeValue();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private static String getAttributeValue(String tag, String attribute, Document document) {
-        try {
-            return document.getElementsByTagName(tag).item(0).getAttributes().getNamedItem(attribute).getNodeValue();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private String getByteArrayFromImageURL(String url) {
-
-        try {
-            URL imageUrl = new URL(url);
-            URLConnection ucon = imageUrl.openConnection();
-            InputStream is = ucon.getInputStream();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int read = 0;
-            while ((read = is.read(buffer, 0, buffer.length)) != -1) {
-                baos.write(buffer, 0, read);
-            }
-            baos.flush();
-            return Base64.getEncoder().encodeToString(baos.toByteArray());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

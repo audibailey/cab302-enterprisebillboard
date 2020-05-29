@@ -1,11 +1,10 @@
 package server.services;
 
 import common.models.Permissions;
-import common.models.Session;
+import common.utils.session.Session;
 import common.models.User;
-import common.utils.HashingFactory;
-import server.middleware.Permission;
-import server.sql.CollectionFactory;
+import common.utils.session.HashingFactory;
+import common.sql.CollectionFactory;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -65,9 +64,12 @@ public class TokenService {
         }
 
         // Generate new session and save it to sessions set
-        Session newSession = new Session(user.id, user.username, permissions);
-        sessions.add(newSession);
+        return createSession(user.id, user.username, permissions);
+    }
 
+    public Session createSession(int id, String username, Permissions permissions) {
+        Session newSession = new Session(id, username, permissions);
+        sessions.add(newSession);
         return newSession;
     }
 
@@ -110,6 +112,7 @@ public class TokenService {
      * @return boolean: Token valid or invalid.
      */
     public boolean verify(String token) {
+        if (token == null) return false;
         Optional<Session> session = sessions.stream().filter(sess -> token.equals(sess.token)).findFirst();
 
         // verify the session isn't empty or expired
@@ -124,7 +127,8 @@ public class TokenService {
      * @param username: The username of the logged-in user.
      * @return Optional<Session>: The Session object related to the logged-in user.
      */
-    private Optional<Session> getSessionByUsername(String username) {
+    public Optional<Session> getSessionByUsername(String username) {
+        if (username == null) return null;
         return sessions.stream().filter(sess -> username.equals(sess.username)).findFirst();
     }
 
@@ -135,6 +139,7 @@ public class TokenService {
      * @return Optional<Session>: The Session object related to the logged-in user.
      */
     public Optional<Session> getSessionByToken(String token) {
+        if (token == null) return null;
         return sessions.stream().filter(session -> token.equals(session.token)).findFirst();
     }
 
@@ -146,6 +151,7 @@ public class TokenService {
      */
     public boolean expired(String token) {
         // Get the session information from the token.
+        if (token == null) return true;
         Optional<Session> session = getSessionByToken(token);
 
         // Session is empty so logical equivalent of being expired.

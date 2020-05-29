@@ -1,19 +1,20 @@
 package server.controllers;
 
+import common.models.Billboard;
 import common.models.Permissions;
-import common.models.Session;
+import common.utils.session.Session;
 import common.models.User;
 import common.router.*;
+import common.router.response.*;
 import common.utils.RandomFactory;
-import server.router.*;
 import server.services.TokenService;
-import server.sql.CollectionFactory;
+import common.sql.CollectionFactory;
 
 import java.util.List;
 import java.util.Optional;
 
-import static common.utils.HashingFactory.encodeHex;
-import static common.utils.HashingFactory.hashAndSaltPassword;
+import static common.utils.session.HashingFactory.encodeHex;
+import static common.utils.session.HashingFactory.hashAndSaltPassword;
 
 /**
  * This class acts as the controller with all the Actions related to the user request path.
@@ -39,7 +40,7 @@ public class UserController {
          * @throws Exception: Pass through the server error from the checkUserExists or tryLogin function.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             String username = req.params.get("username");
             String password = req.params.get("password");
 
@@ -81,7 +82,7 @@ public class UserController {
          * @throws Exception: Pass through the server error from the tryLogout function.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Ensure the token is not null.
             if (req.token == null) return new Unauthorised("Must provide token to logout.");
 
@@ -101,8 +102,10 @@ public class UserController {
 
         // Override the execute to run the update function of the user collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Ensure the body is of type user.
+            if(req.params.get("username") == null || req.params.get("password") == null)
+            {return new BadRequest("Username and password must not be null.");}
             if (req.params.get("username").isEmpty() || req.params.get("password").isEmpty())
                 return new BadRequest("No username or password");
 
@@ -132,7 +135,7 @@ public class UserController {
 
         // Override the execute to run the delete function of the user collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Ensure the body is of type user.
             if (req.params.get("username") == null) return new UnsupportedType(String.class);
             if (req.params.get("username").length() < 1) return new BadRequest("Username must not be empty.");
@@ -147,6 +150,17 @@ public class UserController {
             List<Permissions> deletePerm = CollectionFactory.getInstance(Permissions.class).get(perm -> Username.equals(String.valueOf(perm.username)));
             if (deletePerm.isEmpty()) return new BadRequest("Permission not existed");
             Permissions perm = deletePerm.get(0);
+
+            // Get the list of billboards created by the delete user.
+            List<Billboard> bbList = CollectionFactory.getInstance(Billboard.class).get(bbID -> (temp.id == bbID.userId));
+            if (!bbList.isEmpty())
+            {
+                for (Billboard bb:bbList)
+                {
+                    bb.userId = req.session.userId;
+                    CollectionFactory.getInstance(Billboard.class).update(bb);
+                }
+            }
 
             // Attempt to delete the user and permission in the database then return a success IActionResult.
             CollectionFactory.getInstance(Permissions.class).delete(perm);

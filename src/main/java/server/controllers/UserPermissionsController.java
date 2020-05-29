@@ -4,14 +4,17 @@ import common.models.Permissions;
 import common.models.User;
 import common.models.UserPermissions;
 import common.router.*;
-import common.utils.RandomFactory;
-import server.router.Action;
-import server.sql.CollectionFactory;
+import common.router.response.BadRequest;
+import common.router.Response;
+import common.router.response.Ok;
+import common.router.response.UnsupportedType;
+import common.utils.session.HashingFactory;
+import common.router.Action;
+import common.sql.CollectionFactory;
 
 import java.util.List;
 
-import static common.utils.HashingFactory.encodeHex;
-import static common.utils.HashingFactory.hashAndSaltPassword;
+import static common.utils.session.HashingFactory.*;
 
 /**
  * This class acts as the controller with all the Actions related to the user permissions.
@@ -31,14 +34,14 @@ public class UserPermissionsController {
 
         // Override the execute to run the insert function of the user and permissions collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Ensure the body is of type userpermissions.
             if (!(req.body instanceof UserPermissions)) return new UnsupportedType(UserPermissions.class);
 
             // Ensure its not null.
             UserPermissions userPermissions = (UserPermissions)req.body;
             if (userPermissions.user == null || userPermissions.permissions == null) return new UnsupportedType(UserPermissions.class);
-
+            if(userPermissions.user.username.length() <1) {return new BadRequest("Username can not be empty.");}
             // Fetch the user and return if exists.
             User user = userPermissions.user;
             List<User> userList = CollectionFactory.getInstance(User.class).get(
@@ -48,7 +51,7 @@ public class UserPermissionsController {
 
             Permissions permissions = userPermissions.permissions;
             // Hash the password supplied and set the respective user objects for database insertion.
-            byte[] salt = RandomFactory.String().getBytes();
+            byte[] salt = HashingFactory.getSalt();
             byte[] password = hashAndSaltPassword(user.password, salt);
             user.salt = encodeHex(salt);
             user.password = encodeHex(password);

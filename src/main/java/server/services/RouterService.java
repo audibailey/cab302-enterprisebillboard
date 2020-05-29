@@ -1,7 +1,7 @@
 package server.services;
 
-import server.router.GenericRouter;
-import server.router.Action;
+import common.router.GenericRouter;
+import common.router.Action;
 
 /**
  * A singleton Class that handles all the router interactions for the server.

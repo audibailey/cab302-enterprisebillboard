@@ -1,9 +1,10 @@
 package server.controllers;
 
 import common.models.*;
-import common.router.IActionResult;
+import common.router.Response;
 import common.router.Request;
-import common.router.Status;
+import common.router.response.Status;
+import common.utils.session.Session;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class BillboardControllerTest {
         );
 
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+        Response test = new BillboardController.Insert().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -42,7 +43,7 @@ public class BillboardControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+       new BillboardController.Insert().execute(req);
 
         // Generate another billboard data with existed name
         bb = Billboard.Random(2);
@@ -56,8 +57,27 @@ public class BillboardControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        test = new BillboardController.Insert().execute(req);
+        Response test = new BillboardController.Insert().execute(req);
         assertEquals(Status.BAD_REQUEST, test.status);
+    }
+
+    @Test
+    public void InsertBillboardWithNoName() throws Exception {
+        // Generate the billboard data to insert.
+        Billboard bb = Billboard.Random(1);
+        bb.name = "";
+        // Create new request.
+        Request req = new Request(null, "blah", null, bb);
+
+        // Generate a session
+        req.session = new Session(
+            1, "kevin", null
+        );
+
+        // Insert the billboard to the database
+        Response test = new BillboardController.Insert().execute(req);
+        assertEquals(Status.BAD_REQUEST, test.status);
+        assertEquals(test.message,"Billboard name must not be empty.");
     }
 
     @Test
@@ -73,7 +93,7 @@ public class BillboardControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+        new BillboardController.Insert().execute(req);
 
         // Make a params with billboard name
         HashMap<String, String> params = new HashMap<>();
@@ -82,7 +102,7 @@ public class BillboardControllerTest {
         req = new Request(null, "blah", params, null);
 
         // Delete the billboard from the database
-        test = new BillboardController.Delete().execute(req);
+        Response test = new BillboardController.Delete().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -93,7 +113,7 @@ public class BillboardControllerTest {
         bb.name = "DeletedScheduled";
         bb.locked = true;
 
-        Schedule schedule = Schedule.Random("DeletedScheduled");
+        Schedule schedule = Schedule.Random(bb.name);
         // Create new request.
         Request req = new Request(null, "blah", null, bb);
         // Generate a session
@@ -101,11 +121,11 @@ public class BillboardControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+        new BillboardController.Insert().execute(req);
 
         // Create new request and insert schedule
         req = new Request(null, "blah", null, schedule);
-        test = new ScheduleController.Insert().execute(req);
+        new ScheduleController.Insert().execute(req);
 
         // Make a params with billboard name
         HashMap<String, String> params = new HashMap<>();
@@ -114,7 +134,7 @@ public class BillboardControllerTest {
         req = new Request(null, "blah", params, null);
 
         // Delete the billboard from the database
-        test = new BillboardController.Delete().execute(req);
+        Response test = new BillboardController.Delete().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -130,7 +150,7 @@ public class BillboardControllerTest {
             1, "kevin", null
         );
         // Delete the billboard from the database
-        IActionResult test = new BillboardController.Delete().execute(req);
+        Response test = new BillboardController.Delete().execute(req);
         assertEquals(Status.BAD_REQUEST, test.status);
     }
 
@@ -139,7 +159,7 @@ public class BillboardControllerTest {
         // Create new request.
         Request req = new Request(null, "blah", null, null);
         // Get all the billboard from database
-        IActionResult result = new BillboardController.Get().execute(req);
+        Response result = new BillboardController.Get().execute(req);
         assertEquals(Status.SUCCESS, result.status);
     }
 
@@ -156,7 +176,7 @@ public class BillboardControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+        Response test = new BillboardController.Insert().execute(req);
 
         HashMap<String, String> params = new HashMap<>();
         String billboardName = "BillboardTest";
@@ -165,7 +185,7 @@ public class BillboardControllerTest {
         req = new Request(null, "blah", params, null);
 
         // Get all the billboard from database
-        IActionResult result = new BillboardController.GetByName().execute(req);
+        Response result = new BillboardController.GetByName().execute(req);
         assertEquals(Status.SUCCESS, result.status);
     }
 
@@ -183,28 +203,26 @@ public class BillboardControllerTest {
             1, "kevin", null
         );
         // Insert the billboard to the database
-        IActionResult test = new BillboardController.Insert().execute(req);
+        Response test = new BillboardController.Insert().execute(req);
 
         // Create new request.
         req = new Request(null, "blah", null, null);
         // Get all the billboard from database
-        IActionResult result = new BillboardController.Get().execute(req);
+        Response result = new BillboardController.Get().execute(req);
         List<Billboard> bbList = (List<Billboard>) result.body;
 
         Billboard temp = null;
-        for (Billboard i: bbList)
-        {
-            if (i.name.equals("TestUpdate"))
-            {
+        for (Billboard i : bbList) {
+            if (i.name.equals("TestUpdate")) {
                 temp = i;
                 break;
             }
         }
         temp.message = "Updated message";
         // Create new request.
-        req = new Request(null,"blah",null,temp);
+        req = new Request(null, "blah", null, temp);
         // Get all the billboard from database
-         result = new BillboardController.Update().execute(req);
+        result = new BillboardController.Update().execute(req);
         assertEquals(Status.SUCCESS, result.status);
     }
 }

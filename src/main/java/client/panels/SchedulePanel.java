@@ -2,32 +2,27 @@ package client.panels;
 
 import client.components.table.*;
 import client.services.BillboardService;
-import client.services.PermissionsService;
 import client.services.ScheduleService;
 import client.services.SessionService;
 import common.models.*;
 import common.swing.Notification;
-import common.utils.RandomFactory;
-import common.utils.Time;
+import common.utils.Picture;
+import common.utils.scheduling.DayOfWeek;
+import common.utils.scheduling.Time;
+import common.utils.session.Session;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.Instant;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * This class renders the Java Swing user panel for the client.
- *
- * @author Trevor Waturuocha
- */
-
 public class SchedulePanel extends JPanel implements ActionListener {
 
-    ObjectTableModel<Schedule> tableModel;
+    IObjectTableModel<Schedule> tableModel;
     JTable table;
     Container buttonContainer = new Container();
     JButton createButton, refreshButton, showButton, deleteButton;
@@ -54,7 +49,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
         deleteButton.setEnabled(false);
 
         // Getting table data and configuring table
-        tableModel = new DisplayableObjectTableModel(Schedule.class, null);
+        tableModel = new ObjectTableModel(Schedule.class, null);
         tableModel.setObjectRows(ScheduleService.getInstance().refresh());
         table = new JTable(tableModel);
         setupSelection();
@@ -178,32 +173,10 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 // Setting up calendar table
                 DefaultTableModel mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
                 JTable tblCalendar = new JTable(mtblCalendar);
-                tblCalendar.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-                List<Day> day = ScheduleService.getInstance().getSchedule();
-                int max = 0;
-                for (Day time : day) {
-                    if (time.times.size() > max) {
-                        max = time.times.size(); // Getting maximum size for table
-                    }
-                }
-                String[] headers = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-                // Inserting columns
-                for (int i = 0; i < 7; i++){
+                String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
+                for (int i=0; i<7; i++){
                     mtblCalendar.addColumn(headers[i]);
                 }
-                // Inserting empty strings for uneven columns
-                for (int i = 0; i < 7; i++){
-                    for (int j = day.get(i).times.size(); j <= max; j++){
-                        if (j != max){
-                            day.get(i).times.add(" ");
-                        }
-                    }
-                }
-                // Inserting rows
-                for (int i = 0; i < max; i++) {
-                    mtblCalendar.addRow(new Object[]{day.get(0).times.get(i), day.get(1).times.get(i), day.get(2).times.get(i), day.get(3).times.get(i), day.get(4).times.get(i), day.get(5).times.get(i), day.get(6).times.get(i)});
-                }
-                // Adding components to pane
                 JScrollPane pane = new JScrollPane(tblCalendar);
                 int result = JOptionPane.showConfirmDialog(this, pane, "Calendar", JOptionPane.PLAIN_MESSAGE);
                 if (result == JOptionPane.OK_OPTION) {
