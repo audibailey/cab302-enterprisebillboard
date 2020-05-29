@@ -74,7 +74,7 @@ public class ScheduleService {
                 List<String> listOfTimes = new ArrayList<>();
 
                 // iterate over minutes
-                for (int i = 0; i < minutesInDay.length; i++) {
+                for (int i = 0; i < minutesInDay.length - 1; i++) {
                     if (minutesInDay[i] == null) continue;
 
                     // store the name
@@ -83,7 +83,7 @@ public class ScheduleService {
                     int j = i;
 
                     // go until the last index
-                    while(minutesInDay[j + 1] == name) j++;
+                    while(j + 1 < 1440 && minutesInDay[j + 1] == name) j++;
 
                     // add formatted string to listOfTimes
                     listOfTimes.add(Time.minutesToTime(i) + " - " + Time.minutesToTime(j) + " " + name);

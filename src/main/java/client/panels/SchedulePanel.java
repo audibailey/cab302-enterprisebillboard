@@ -214,6 +214,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
             }
             catch (Exception ex) {
                 // Display pop-up message for any errors that arise
+                ex.printStackTrace();
                 Notification.display(ex.getMessage());
             }
         }
