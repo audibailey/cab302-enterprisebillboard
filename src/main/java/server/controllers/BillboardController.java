@@ -65,35 +65,6 @@ public class BillboardController {
         }
     }
 
-//    /**
-//     * This Action is the GetByLock Action for the billboards.
-//     */
-//    public static class GetByLock extends Action {
-//        public GetByLock() {
-//        }
-//
-//        // Override the execute to run the get function of the billboard collection.
-//        @Override
-//        public IActionResult execute(Request req) throws Exception {
-//            String lock = req.params.get("lock");
-//
-//            // Ensure lock field is not null.
-//            if (lock == null || lock != "true" || lock != "false") {
-//                return new BadRequest("Must specify a billboard boolean lock status.");
-//            }
-//
-//            // Cast the lock string to a boolean
-//            var lockBool = Boolean.getBoolean(lock);
-//
-//            // Get list of billboards with the lock status as specified. This should only return 1 billboard.
-//            List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
-//                billboard -> lockBool == billboard.locked);
-//
-//            // Return a success IActionResult with the list of billboards.
-//            return new Ok(billboardList);
-//        }
-//    }
-
     /**
      * This Action is the Insert Action for the billboards.
      */
@@ -109,7 +80,7 @@ public class BillboardController {
 
             Billboard b = (Billboard) req.body;
             if (b.name == null) return new BadRequest("Billboard name not nullable");
-
+            if (b.name.length() <1) return new BadRequest("Billboard name must not be empty.");
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(
                 billboard -> b.name.equals(String.valueOf(billboard.name)));
 
