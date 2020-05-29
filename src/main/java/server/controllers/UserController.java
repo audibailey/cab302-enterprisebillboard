@@ -1,5 +1,6 @@
 package server.controllers;
 
+import common.models.Billboard;
 import common.models.Permissions;
 import common.models.Session;
 import common.models.User;
@@ -103,6 +104,8 @@ public class UserController {
         @Override
         public IActionResult execute(Request req) throws Exception {
             // Ensure the body is of type user.
+            if(req.params.get("username") == null || req.params.get("password") == null)
+            {return new BadRequest("Username and password must not be null.");}
             if (req.params.get("username").isEmpty() || req.params.get("password").isEmpty())
                 return new BadRequest("No username or password");
 
@@ -147,6 +150,17 @@ public class UserController {
             List<Permissions> deletePerm = CollectionFactory.getInstance(Permissions.class).get(perm -> Username.equals(String.valueOf(perm.username)));
             if (deletePerm.isEmpty()) return new BadRequest("Permission not existed");
             Permissions perm = deletePerm.get(0);
+
+            // Get the list of billboards created by the delete user.
+            List<Billboard> bbList = CollectionFactory.getInstance(Billboard.class).get(bbID -> (temp.id == bbID.userId));
+            if (!bbList.isEmpty())
+            {
+                for (Billboard bb:bbList)
+                {
+                    bb.userId = req.session.userId;
+                    CollectionFactory.getInstance(Billboard.class).update(bb);
+                }
+            }
 
             // Attempt to delete the user and permission in the database then return a success IActionResult.
             CollectionFactory.getInstance(Permissions.class).delete(perm);

@@ -124,7 +124,7 @@ public class UserControllerTest {
         HashMap<String, String> params = new HashMap<>();
 
         String permUser = "kevin";
-        String newPassword = HashingFactory.hashPassword("123");
+        String newPassword = HashingFactory.hashPassword("12");
         params.put("username", permUser);
         params.put("password", newPassword);
         req = new Request(null,"blah",params,null);

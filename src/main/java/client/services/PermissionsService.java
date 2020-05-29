@@ -67,19 +67,10 @@ public class PermissionsService extends DataService<Permissions> {
 
     public List<Permissions> updatePassword(int id, String username, String password) throws Exception {
         Session session = SessionService.getInstance();
-
-//        HashMap<String, String> params = new HashMap<>();
-//
-//        params.put("username", username);
-//        params.put("password", HashingFactory.hashPassword(password));
-
-        User u = new User();
-        u.id = id;
-        u.username = username;
-        u.password = HashingFactory.hashPassword(password);
-
-        IActionResult res = new ClientSocketFactory("/user/update/password", session.token, null, u).Connect();
-
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("password", HashingFactory.hashPassword(password));
+        IActionResult res = new ClientSocketFactory("/user/update/password", session.token, params, null).Connect();
         return refresh();
     }
 }
