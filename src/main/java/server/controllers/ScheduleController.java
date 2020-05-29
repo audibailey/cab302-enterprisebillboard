@@ -159,13 +159,12 @@ public class ScheduleController {
             // Get the list of schedules which the day is the same.
             DayOfWeek today = DayOfWeek.valueOf(day);
             List<Schedule> todaySchedule = CollectionFactory.getInstance(Schedule.class).get(s -> s.dayOfWeek == 0 || today.ordinal() == s.dayOfWeek);
-            todaySchedule.sort(Comparator.comparing(s -> s.createTime));
 
             // Get the list of schedules which should be shown now.
-            int totalMinutes = Instant.now().atZone(ZoneOffset.UTC).getHour() * 60 + Instant.now().atZone(ZoneOffset.UTC).getMinute();
+            int totalMinutes = Instant.now().atZone(ZoneOffset.systemDefault()).getHour() * 60 + Instant.now().atZone(ZoneOffset.UTC).getMinute();
             List<Schedule> scheduleList = new ArrayList<>();
             for (Schedule schedule : todaySchedule) {
-                int scheduleInterval = schedule.dayOfWeek == 0 ? 24 * 60 : schedule.interval;
+                int scheduleInterval = schedule.dayOfWeek == 0 ? (24 * 60) : schedule.interval;
                 int check = (totalMinutes - schedule.start) % scheduleInterval;
 
                 if (check < schedule.duration && check >= 0) {

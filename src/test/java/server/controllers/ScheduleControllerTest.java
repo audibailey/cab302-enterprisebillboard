@@ -103,4 +103,13 @@ public class ScheduleControllerTest {
         assertEquals(Status.SUCCESS,result.status);
     }
 
+    @Test
+    public void GetCurrentSchedule() throws  Exception
+    {
+        Request req = new Request(null,"blah",null,null);
+        IActionResult result = new ScheduleController.GetCurrent().execute(req);
+
+        assertEquals(Status.SUCCESS,result.status);
+    }
+
 }
