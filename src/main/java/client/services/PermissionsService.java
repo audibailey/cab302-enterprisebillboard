@@ -73,7 +73,7 @@ public class PermissionsService extends DataService<Permissions> {
         params.put("username", username);
         params.put("password", HashingFactory.hashPassword(password));
 
-        IActionResult res = new ClientSocketFactory("/user/update/password", session.token, params, null).Connect();
+        Response res = new ClientSocketFactory("/user/update/password", session.token, params, null).Connect();
         return refresh();
     }
 }

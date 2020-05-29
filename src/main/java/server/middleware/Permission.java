@@ -85,7 +85,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (!req.permissions.canEditBillboard) {
                 Optional<Billboard> billboard = CollectionFactory.getInstance(Billboard.class).get(
                     b -> req.params.get("bName").equals(b.name)).stream().findFirst();
@@ -162,7 +162,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (req.permissions.canEditUser) return new Ok();
             else {
                 if (req.params == null) return new BadRequest("Parameters required");
@@ -224,7 +224,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (!req.permissions.canScheduleBillboard)
                 return new Unauthorised("Not authorised to schedule billboards. ");
 
