@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class SchedulePanel extends JPanel implements ActionListener {
 
-    ObjectTableModel<Schedule> tableModel;
+    IObjectTableModel<Schedule> tableModel;
     JTable table;
     Container buttonContainer = new Container();
     JButton createButton, refreshButton, showButton, deleteButton;
@@ -49,7 +49,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
         deleteButton.setEnabled(false);
 
         // Getting table data and configuring table
-        tableModel = new DisplayableObjectTableModel(Schedule.class, null);
+        tableModel = new ObjectTableModel(Schedule.class, null);
         tableModel.setObjectRows(ScheduleService.getInstance().refresh());
         table = new JTable(tableModel);
         setupSelection();

@@ -11,6 +11,9 @@ import java.awt.*;
 public class Menu extends JMenuBar {
     Color bgColor = Color.WHITE;
 
+    /**
+     * The logout button
+     */
     private JMenuItem logout = new JMenuItem("Logout") {
         @Override
         public Dimension getMaximumSize() {
@@ -22,6 +25,9 @@ public class Menu extends JMenuBar {
         }
     };
 
+    /**
+     * The update password button
+     */
     private JMenuItem updatePassword = new JMenuItem("Update Password") {
         @Override
         public Dimension getMaximumSize() {
@@ -39,12 +45,24 @@ public class Menu extends JMenuBar {
         add(logout);
     }
 
+    /**
+     * Getter method for the logout button
+     * @return
+     */
     public JMenuItem getLogout() {
         return logout;
     }
 
+    /**
+     * Getter method for the update password button
+     * @return
+     */
     public JMenuItem getUpdatePassword() { return updatePassword; }
 
+    /**
+     * Called by the JMenuBar to adjust it's colour
+     * @param g
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -5,7 +5,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
 /**
- * This class renders the Java Swing pictures for the client.
+ * This class renders the Java Swing picture editor for the client.
  *
  * @author Jamie Martin
  */
@@ -17,11 +17,17 @@ public class PictureRenderer extends JLabel
         setText("Edit Picture");
     }
 
-    public Component getTableCellRendererComponent(
-        JTable table, Object image,
-        boolean isSelected, boolean hasFocus,
-        int row, int column) {
-
+    /**
+     * Method called by the Table to render the component
+     * @param table
+     * @param image
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return
+     */
+    public Component getTableCellRendererComponent(JTable table, Object image, boolean isSelected, boolean hasFocus, int row, int column) {
         return this;
     }
 }

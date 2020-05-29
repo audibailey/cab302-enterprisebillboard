@@ -9,26 +9,24 @@ import java.awt.*;
  *
  * @author Jamie Martin
  */
-public class ColourRenderer extends JLabel
-    implements TableCellRenderer {
+public class ColourRenderer extends JLabel implements TableCellRenderer {
 
     public ColourRenderer() {
         setOpaque(true);
     }
 
-    public Component getTableCellRendererComponent(
-        JTable table, Object colour,
-        boolean isSelected, boolean hasFocus,
-        int row, int column) {
-
-        if (colour != null) {
-            Color newColour = (Color)colour;
-            setBackground(newColour);
-
-            setToolTipText("RGB value: " + newColour.getRed() + ", "
-                + newColour.getGreen() + ", "
-                + newColour.getBlue());
-        }
+    /**
+     * Method called by the Table to render the component
+     * @param table
+     * @param colour
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return
+     */
+    public Component getTableCellRendererComponent(JTable table, Object colour, boolean isSelected, boolean hasFocus, int row, int column) {
+        if (colour != null) setBackground((Color)colour);
 
         return this;
     }

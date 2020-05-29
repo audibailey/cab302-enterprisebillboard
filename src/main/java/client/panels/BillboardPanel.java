@@ -4,8 +4,8 @@ import client.components.table.ColourEditor;
 import client.components.table.ColourRenderer;
 import client.components.table.PictureEditor;
 import client.components.table.PictureRenderer;
-import client.components.table.DisplayableObjectTableModel;
 import client.components.table.ObjectTableModel;
+import client.components.table.IObjectTableModel;
 import client.services.BillboardService;
 import client.services.SessionService;
 import common.utils.XML;
@@ -15,24 +15,13 @@ import common.utils.Picture;
 import common.utils.session.Session;
 import common.swing.Notification;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import javax.imageio.ImageIO;
-import javax.print.Doc;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Base64;
 import java.util.Optional;
 
 /**
@@ -42,7 +31,7 @@ import java.util.Optional;
  */
 public class BillboardPanel extends JPanel implements ActionListener {
 
-    ObjectTableModel<Billboard> tableModel;
+    IObjectTableModel<Billboard> tableModel;
     JTable table;
     Container buttonContainer = new Container();
     JButton viewButton, createButton, refreshButton, deleteButton, importButton, exportButton;
@@ -74,7 +63,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
         importButton.setEnabled(false);
         exportButton.setEnabled(false);
 
-        tableModel = new DisplayableObjectTableModel(Billboard.class, BillboardService.getInstance());
+        tableModel = new ObjectTableModel(Billboard.class, BillboardService.getInstance());
         tableModel.setObjectRows(BillboardService.getInstance().refresh());
         table = new JTable(tableModel);
 
