@@ -38,7 +38,7 @@ public class Schedule implements Serializable, Editable {
     public int start = 0;
 
     @SQLITE(type="DATETIME NOT NULL")
-    public Instant createTime = Instant.MIN; // Time when create the schedule
+    public Instant createTime = Instant.now(); // Time when create the schedule
 
     @SQLITE(type="INTEGER NOT NULL")
     public int duration;
