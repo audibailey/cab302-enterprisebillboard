@@ -62,6 +62,25 @@ public class BillboardControllerTest {
     }
 
     @Test
+    public void InsertBillboardWithNoName() throws Exception {
+        // Generate the billboard data to insert.
+        Billboard bb = Billboard.Random(1);
+        bb.name = "";
+        // Create new request.
+        Request req = new Request(null, "blah", null, bb);
+
+        // Generate a session
+        req.session = new Session(
+            1, "kevin", null
+        );
+
+        // Insert the billboard to the database
+        Response test = new BillboardController.Insert().execute(req);
+        assertEquals(Status.BAD_REQUEST, test.status);
+        assertEquals(test.message,"Billboard name must not be empty.");
+    }
+
+    @Test
     public void DeleteNotScheduled() throws Exception {
         // Generate the billboard data to insert
         Billboard bb = Billboard.Random(1);

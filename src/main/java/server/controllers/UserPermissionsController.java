@@ -41,7 +41,7 @@ public class UserPermissionsController {
             // Ensure its not null.
             UserPermissions userPermissions = (UserPermissions)req.body;
             if (userPermissions.user == null || userPermissions.permissions == null) return new UnsupportedType(UserPermissions.class);
-
+            if(userPermissions.user.username.length() <1) {return new BadRequest("Username can not be empty.");}
             // Fetch the user and return if exists.
             User user = userPermissions.user;
             List<User> userList = CollectionFactory.getInstance(User.class).get(
