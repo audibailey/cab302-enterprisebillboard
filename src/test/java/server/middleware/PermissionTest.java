@@ -19,7 +19,8 @@ public class PermissionTest {
     Request req = new Request("/foo", "foo", null, null);
     Permissions permission = Permissions.Random(0, "user");
 
-    @Test public void ValidCanEditUserTest() throws Exception {
+    @Test
+    public void ValidCanEditUserTest() throws Exception {
         permission.canEditUser = true;
         req.permissions = permission;
 
@@ -27,7 +28,8 @@ public class PermissionTest {
         assertEquals(Status.SUCCESS, test.status);
     }
 
-    @Test public void InvalidCanEditUserTest() throws Exception {
+    @Test
+    public void InvalidCanEditUserTest() throws Exception {
         permission.canEditUser = false;
         req.permissions = permission;
 
@@ -116,7 +118,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void ValidCanEditBillboardTest() throws Exception{
+    public void ValidCanEditBillboardTest() throws Exception {
         permission.canEditBillboard = true;
         req.permissions = permission;
 
@@ -125,7 +127,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void EditOwnBillboardThatIsNotScheduled() throws Exception{
+    public void EditOwnBillboardThatIsNotScheduled() throws Exception {
         permission.canEditBillboard = false;
 
         Billboard bb = Billboard.Random(1);
@@ -144,7 +146,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void InvalidRequestBody() throws Exception{
+    public void InvalidRequestBody() throws Exception {
         permission.canEditBillboard = false;
 
         Billboard bb = Billboard.Random(1);
@@ -163,7 +165,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void LockedBillboard() throws Exception{
+    public void LockedBillboard() throws Exception {
         permission.canEditBillboard = false;
 
         Billboard bb = Billboard.Random(1);
@@ -183,7 +185,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void UnknownBillboard() throws Exception{
+    public void UnknownBillboard() throws Exception {
         permission.canEditBillboard = false;
 
         Billboard bb = Billboard.Random(1);
@@ -197,12 +199,12 @@ public class PermissionTest {
         req.permissions = permission;
 
         Response test = new Permission.canEditBillboard().execute(req);
-        assertEquals(Status.BAD_REQUEST, test.status);
-        assertEquals("Billboard does not exist.", test.message);
+        assertEquals(Status.SUCCESS, test.status);
+
     }
 
     @Test
-    public void UnauthorizedToEditBillboard() throws Exception{
+    public void UnauthorizedToEditBillboard() throws Exception {
         permission.canEditBillboard = false;
 
         Billboard bb = Billboard.Random(1);
@@ -220,7 +222,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void  ViewPermission() throws Exception{
+    public void ViewPermission() throws Exception {
         permission.canEditUser = true;
         req.permissions = permission;
 
@@ -229,7 +231,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void  ViewOwnPermission() throws Exception{
+    public void ViewOwnPermission() throws Exception {
         permission.canEditUser = false;
         HashMap<String, String> params = new HashMap<>();
         params.put("username", "kevin");
@@ -241,7 +243,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void ViewPermissionWithInvalidParams() throws Exception{
+    public void ViewPermissionWithInvalidParams() throws Exception {
         permission.canEditUser = false;
         HashMap<String, String> params = new HashMap<>();
         params.put("username", "");
@@ -253,7 +255,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void  ViewPermissionUnknownUser() throws Exception{
+    public void ViewPermissionUnknownUser() throws Exception {
         permission.canEditUser = false;
         HashMap<String, String> params = new HashMap<>();
         params.put("username", "kevin1");
@@ -265,7 +267,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void  UnauthorziedToViewPermission() throws Exception{
+    public void UnauthorziedToViewPermission() throws Exception {
         permission.canEditUser = false;
         HashMap<String, String> params = new HashMap<>();
         params.put("username", "kevin");
@@ -277,7 +279,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void NoPermissionToDeleteUser() throws Exception{
+    public void NoPermissionToDeleteUser() throws Exception {
         permission.canEditUser = false;
         req.permissions = permission;
 
@@ -286,11 +288,11 @@ public class PermissionTest {
     }
 
     @Test
-    public void DeleteUser() throws Exception{
+    public void DeleteUser() throws Exception {
         permission.canEditUser = true;
-        User user = new User("kevin","1234",null);
-        user.id = 2;
-        req = new Request("/foo", "foo", null, user);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", "kevin");
+        req = new Request("/foo", "foo", params, null);
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
 
@@ -299,7 +301,7 @@ public class PermissionTest {
     }
 
     @Test
-    public void InvalidBodyDeleteTest() throws Exception{
+    public void InvalidBodyDeleteTest() throws Exception {
         permission.canEditUser = true;
         Billboard bb = Billboard.Random(1);
         req = new Request("/foo", "foo", null, bb);
@@ -311,10 +313,11 @@ public class PermissionTest {
     }
 
     @Test
-    public void DeleteUnknownUser() throws Exception{
+    public void DeleteUnknownUser() throws Exception {
         permission.canEditUser = true;
-        User user = new User("kevin123","1234",null);
-        req = new Request("/foo", "foo", null, user);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", "randomName");
+        req = new Request("/foo", "foo", params, null);
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
 
@@ -323,15 +326,18 @@ public class PermissionTest {
     }
 
     @Test
-    public void DeleteYourself() throws Exception{
+    public void DeleteYourself() throws Exception {
         permission.canEditUser = true;
-        User user = new User("admin","1234",null);
+        User user = new User("admin", "1234", null);
         user.id = 1;
-        req = new Request("/foo", "foo", null, user);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", "admin");
+        req = new Request("/foo", "foo", params, user);
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
 
         Response test = new Permission.canDeleteUser().execute(req);
+
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 }
