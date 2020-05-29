@@ -4,7 +4,6 @@ import common.models.Permissions;
 import common.models.Session;
 import common.models.User;
 import common.utils.HashingFactory;
-import server.middleware.Permission;
 import server.sql.CollectionFactory;
 
 import java.time.LocalDateTime;
@@ -65,9 +64,12 @@ public class TokenService {
         }
 
         // Generate new session and save it to sessions set
-        Session newSession = new Session(user.id, user.username, permissions);
-        sessions.add(newSession);
+        return createSession(user.id, user.username, permissions);
+    }
 
+    public Session createSession(int id, String username, Permissions permissions) {
+        Session newSession = new Session(id, username, permissions);
+        sessions.add(newSession);
         return newSession;
     }
 
