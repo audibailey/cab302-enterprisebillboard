@@ -1,17 +1,10 @@
 package viewer;
 
 import common.models.Billboard;
-import common.router.IActionResult;
-import common.router.Status;
+import common.router.Response;
+import common.router.response.Status;
 import common.utils.ClientSocketFactory;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -55,7 +48,7 @@ public class Main {
     public static Billboard getCurrent() {
         Billboard billboard = new Billboard();
 
-        IActionResult res = new ClientSocketFactory("/schedule/get/current", null, null).Connect();
+        Response res = new ClientSocketFactory("/schedule/get/current", null, null).Connect();
 
         if (res != null && res.status == Status.SUCCESS && res.body instanceof Billboard) {
             billboard = (Billboard)res.body;

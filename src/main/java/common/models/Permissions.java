@@ -2,11 +2,10 @@ package common.models;
 
 import client.components.table.DisplayAs;
 import client.components.table.Editable;
+import common.sql.SQLITE;
 import common.utils.RandomFactory;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class consists of the user's permissions object and its associated methods.

@@ -1,20 +1,20 @@
 package server.controllers;
 
 import common.models.Billboard;
-import common.models.DayOfWeek;
+import common.utils.scheduling.DayOfWeek;
 import common.models.Schedule;
 import common.router.*;
-import common.utils.Time;
-import server.router.*;
-import server.sql.CollectionFactory;
+import common.router.response.BadRequest;
+import common.router.Response;
+import common.router.response.Ok;
+import common.router.response.UnsupportedType;
+import common.sql.CollectionFactory;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,7 +36,7 @@ public class ScheduleController {
 
         // Override the execute to run the get function of the schedule collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Get list of all schedules.
             List<Schedule> scheduleList = CollectionFactory.getInstance(Schedule.class).get(x -> true);
 
@@ -55,7 +55,7 @@ public class ScheduleController {
 
         // Override the execute to run the get function of the schedule collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             String id = req.params.get("id");
 
             // Ensure id field is not null.
@@ -83,7 +83,7 @@ public class ScheduleController {
 
         // Override the execute to run the insert function of the schedule collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Ensure the body is of type schedule.
             if (req.body instanceof Schedule) {
                 // Check if schedule exists.
@@ -125,7 +125,7 @@ public class ScheduleController {
 
         // Override the execute to run the delete function of the schedule collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Ensure the body is of type schedule.
             if (req.body instanceof Schedule) {
                 String sName = ((Schedule) req.body).billboardName;
@@ -153,7 +153,7 @@ public class ScheduleController {
 
         // Override the execute to run the get function of the schedule collection
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Get list of all schedules.
             String day = Instant.now().atZone(ZoneId.systemDefault()).getDayOfWeek().name();
             // Get the list of schedules which the day is the same.

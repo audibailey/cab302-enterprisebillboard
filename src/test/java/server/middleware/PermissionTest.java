@@ -2,15 +2,13 @@ package server.middleware;
 
 import common.models.Billboard;
 import common.models.Permissions;
-import common.models.Session;
+import common.utils.session.Session;
 import common.models.User;
-import common.router.IActionResult;
+import common.router.Response;
 import common.router.Request;
-import common.router.Status;
-import common.utils.HashingFactory;
-import org.junit.jupiter.api.BeforeAll;
+import common.router.response.Status;
+import common.utils.session.HashingFactory;
 import org.junit.jupiter.api.Test;
-import server.controllers.BillboardController;
 
 import java.util.HashMap;
 
@@ -25,7 +23,7 @@ public class PermissionTest {
         permission.canEditUser = true;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditUser().execute(req);
+        Response test = new Permission.canEditUser().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -33,7 +31,7 @@ public class PermissionTest {
         permission.canEditUser = false;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditUser().execute(req);
+        Response test = new Permission.canEditUser().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 
@@ -42,7 +40,7 @@ public class PermissionTest {
         permission.canCreateBillboard = true;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canCreateBillboard().execute(req);
+        Response test = new Permission.canCreateBillboard().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -51,7 +49,7 @@ public class PermissionTest {
         permission.canCreateBillboard = false;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canCreateBillboard().execute(req);
+        Response test = new Permission.canCreateBillboard().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 
@@ -60,7 +58,7 @@ public class PermissionTest {
         permission.canScheduleBillboard = true;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canScheduleBillboard().execute(req);
+        Response test = new Permission.canScheduleBillboard().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -69,7 +67,7 @@ public class PermissionTest {
         permission.canScheduleBillboard = false;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canScheduleBillboard().execute(req);
+        Response test = new Permission.canScheduleBillboard().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 
@@ -78,7 +76,7 @@ public class PermissionTest {
         permission.canEditUser = true;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canChangePassword().execute(req);
+        Response test = new Permission.canChangePassword().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -96,7 +94,7 @@ public class PermissionTest {
 
         permission.canEditUser = false;
         req.permissions = permission;
-        IActionResult test = new Permission.canChangePassword().execute(req);
+        Response test = new Permission.canChangePassword().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -113,7 +111,7 @@ public class PermissionTest {
         );
         permission.canEditUser = false;
         req.permissions = permission;
-        IActionResult test = new Permission.canChangePassword().execute(req);
+        Response test = new Permission.canChangePassword().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 
@@ -122,7 +120,7 @@ public class PermissionTest {
         permission.canEditBillboard = true;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditBillboard().execute(req);
+        Response test = new Permission.canEditBillboard().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -141,7 +139,7 @@ public class PermissionTest {
         );
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditBillboard().execute(req);
+        Response test = new Permission.canEditBillboard().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -160,7 +158,7 @@ public class PermissionTest {
         );
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditBillboard().execute(req);
+        Response test = new Permission.canEditBillboard().execute(req);
         assertEquals(Status.UNSUPPORTED_TYPE, test.status);
     }
 
@@ -179,7 +177,7 @@ public class PermissionTest {
         );
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditBillboard().execute(req);
+        Response test = new Permission.canEditBillboard().execute(req);
         assertEquals(Status.BAD_REQUEST, test.status);
         assertEquals("Can't change a scheduled billboard.", test.message);
     }
@@ -198,7 +196,7 @@ public class PermissionTest {
         );
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditBillboard().execute(req);
+        Response test = new Permission.canEditBillboard().execute(req);
         assertEquals(Status.BAD_REQUEST, test.status);
         assertEquals("Billboard does not exist.", test.message);
     }
@@ -217,7 +215,7 @@ public class PermissionTest {
         );
         req.permissions = permission;
 
-        IActionResult test = new Permission.canEditBillboard().execute(req);
+        Response test = new Permission.canEditBillboard().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 
@@ -226,7 +224,7 @@ public class PermissionTest {
         permission.canEditUser = true;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canViewPermission().execute(req);
+        Response test = new Permission.canViewPermission().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -238,7 +236,7 @@ public class PermissionTest {
         req = new Request("/foo", "foo", params, null);
         req.session = new Session(2, "kevin", permission);
         req.permissions = permission;
-        IActionResult test = new Permission.canViewPermission().execute(req);
+        Response test = new Permission.canViewPermission().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -250,7 +248,7 @@ public class PermissionTest {
         req = new Request("/foo", "foo", params, null);
         req.session = new Session(2, "kevin", permission);
         req.permissions = permission;
-        IActionResult test = new Permission.canViewPermission().execute(req);
+        Response test = new Permission.canViewPermission().execute(req);
         assertEquals(Status.UNSUPPORTED_TYPE, test.status);
     }
 
@@ -262,7 +260,7 @@ public class PermissionTest {
         req = new Request("/foo", "foo", params, null);
         req.session = new Session(2, "kevin", permission);
         req.permissions = permission;
-        IActionResult test = new Permission.canViewPermission().execute(req);
+        Response test = new Permission.canViewPermission().execute(req);
         assertEquals(Status.BAD_REQUEST, test.status);
     }
 
@@ -274,7 +272,7 @@ public class PermissionTest {
         req = new Request("/foo", "foo", params, null);
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
-        IActionResult test = new Permission.canViewPermission().execute(req);
+        Response test = new Permission.canViewPermission().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 
@@ -283,7 +281,7 @@ public class PermissionTest {
         permission.canEditUser = false;
         req.permissions = permission;
 
-        IActionResult test = new Permission.canDeleteUser().execute(req);
+        Response test = new Permission.canDeleteUser().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 
@@ -296,7 +294,7 @@ public class PermissionTest {
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
 
-        IActionResult test = new Permission.canDeleteUser().execute(req);
+        Response test = new Permission.canDeleteUser().execute(req);
         assertEquals(Status.SUCCESS, test.status);
     }
 
@@ -308,7 +306,7 @@ public class PermissionTest {
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
 
-        IActionResult test = new Permission.canDeleteUser().execute(req);
+        Response test = new Permission.canDeleteUser().execute(req);
         assertEquals(Status.UNSUPPORTED_TYPE, test.status);
     }
 
@@ -320,7 +318,7 @@ public class PermissionTest {
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
 
-        IActionResult test = new Permission.canDeleteUser().execute(req);
+        Response test = new Permission.canDeleteUser().execute(req);
         assertEquals(Status.BAD_REQUEST, test.status);
     }
 
@@ -333,7 +331,7 @@ public class PermissionTest {
         req.session = new Session(1, "admin", permission);
         req.permissions = permission;
 
-        IActionResult test = new Permission.canDeleteUser().execute(req);
+        Response test = new Permission.canDeleteUser().execute(req);
         assertEquals(Status.UNAUTHORIZED, test.status);
     }
 }

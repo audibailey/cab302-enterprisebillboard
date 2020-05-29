@@ -3,10 +3,10 @@ package server.controllers;
 import common.models.Permissions;
 import common.models.User;
 import common.models.UserPermissions;
-import common.router.IActionResult;
+import common.router.Response;
 import common.router.Request;
-import common.router.Status;
-import common.utils.HashingFactory;
+import common.router.response.Status;
+import common.utils.session.HashingFactory;
 import common.utils.RandomFactory;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ public class UserControllerTest {
 
         // Create new request and Insert the user data
         Request req = new Request(null, "blah", null, temp);
-        IActionResult test = new UserPermissionsController.Insert().execute(req);
+        Response test = new UserPermissionsController.Insert().execute(req);
 
         assertEquals(Status.SUCCESS, test.status);
     }
@@ -39,7 +39,7 @@ public class UserControllerTest {
 
         // Create new request and insert the user data
         Request req = new Request(null, "blah", null, temp);
-        IActionResult test = new UserPermissionsController.Insert().execute(req);
+        Response test = new UserPermissionsController.Insert().execute(req);
 
         User newOne = User.Random();
         newOne.username = "ExistedUser";
@@ -48,7 +48,7 @@ public class UserControllerTest {
 
         req = new Request(null, "blah", null, new1);
 
-        IActionResult result = new UserPermissionsController.Insert().execute(req);
+        Response result = new UserPermissionsController.Insert().execute(req);
         assertEquals(Status.BAD_REQUEST, result.status);
 
     }
@@ -64,7 +64,7 @@ public class UserControllerTest {
         // Insert the user data new UserPermissionsController.Insert().execute(req);
         Request req = new Request(null, "blah", null, temp);
 
-        IActionResult test = new UserPermissionsController.Insert().execute(req);
+        Response test = new UserPermissionsController.Insert().execute(req);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("username", "DeleteUser");
@@ -73,7 +73,7 @@ public class UserControllerTest {
         req = new Request(null, "blah", params, null);
 
         // Delete the user
-        IActionResult result = new UserController.Delete().execute(req);
+        Response result = new UserController.Delete().execute(req);
         assertEquals(Status.SUCCESS, result.status);
     }
 
@@ -87,7 +87,7 @@ public class UserControllerTest {
         // Insert the user data new UserPermissionsController.Insert().execute(req);
         Request req = new Request(null, "blah", null, temp);
 
-        IActionResult test = new UserPermissionsController.Insert().execute(req);
+        Response test = new UserPermissionsController.Insert().execute(req);
 
 
         HashMap<String, String> params = new HashMap<>();
@@ -97,7 +97,7 @@ public class UserControllerTest {
         req = new Request(null, "blah", params, null);
 
         // Delete the user
-        IActionResult result = new UserController.Delete().execute(req);
+        Response result = new UserController.Delete().execute(req);
         assertEquals(Status.BAD_REQUEST, result.status);
     }
 
@@ -105,7 +105,7 @@ public class UserControllerTest {
     public void GetAllUsers() throws Exception {
         // Create new request
         Request req = new Request(null, "blah", null, null);
-        IActionResult result = new PermissionController.Get().execute(req);
+        Response result = new PermissionController.Get().execute(req);
 
         assertEquals(Status.SUCCESS, result.status);
     }
@@ -128,7 +128,7 @@ public class UserControllerTest {
         params.put("username", permUser);
         params.put("password", newPassword);
         req = new Request(null,"blah",params,null);
-        IActionResult result = new UserController.UpdatePassword().execute(req);
+        Response result = new UserController.UpdatePassword().execute(req);
         assertEquals(Status.SUCCESS, result.status);
     }
 }

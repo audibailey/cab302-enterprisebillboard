@@ -2,11 +2,12 @@ package server;
 
 import common.models.Permissions;
 import common.router.*;
-import common.router.InternalError;
-import server.router.Action;
-import common.models.Session;
+import common.router.response.*;
+import common.router.Action;
+import common.utils.session.Session;
+import common.router.response.InternalError;
 import server.services.TokenService;
-import server.sql.CollectionFactory;
+import common.sql.CollectionFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class RouteHandler {
      * @param r: The Request class.
      * @return IActionResult: The result from performing the given actions.
      */
-    public static IActionResult execute(Request r, List<Class<? extends Action>> actions) throws Exception {
+    public static Response execute(Request r, List<Class<? extends Action>> actions) throws Exception {
         // If there's no actions return NotFound.
         if (actions == null) return new NotFound("No path requests were specified.");
 
@@ -40,7 +41,7 @@ public class RouteHandler {
         }
 
         // Initialise the return object
-        IActionResult result = null;
+        Response result = null;
 
         // Loop through actions
         for (var action : actions) {

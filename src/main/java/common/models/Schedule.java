@@ -2,9 +2,9 @@ package common.models;
 
 import client.components.table.DisplayAs;
 import client.components.table.Editable;
-import client.services.ScheduleService;
+import common.sql.SQLITE;
 import common.utils.RandomFactory;
-import common.utils.Time;
+import common.utils.scheduling.Time;
 
 import java.io.Serializable;
 import java.time.Instant;

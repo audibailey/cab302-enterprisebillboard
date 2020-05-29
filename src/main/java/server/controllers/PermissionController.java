@@ -1,12 +1,13 @@
 package server.controllers;
 
 import common.models.Permissions;
-import common.models.Schedule;
 import common.models.User;
 import common.router.*;
-import server.router.*;
-import server.sql.Collection;
-import server.sql.CollectionFactory;
+import common.router.response.BadRequest;
+import common.router.Response;
+import common.router.response.Ok;
+import common.router.response.UnsupportedType;
+import common.sql.CollectionFactory;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class PermissionController {
 
         // Override the execute to run the get function of the permissions collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Get list of all permissions.
             List<Permissions> permissionsList = CollectionFactory.getInstance(Permissions.class).get(x -> true);
 
@@ -46,7 +47,7 @@ public class PermissionController {
 
         // Override the execute to run the get function of the permissions collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             String username = req.params.get("username");
             
             // Ensure id field is not null.
@@ -77,7 +78,7 @@ public class PermissionController {
 
         // Override the execute to run the update function of the permissions collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Permissions)) return new UnsupportedType(Permissions.class);
 

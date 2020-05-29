@@ -3,8 +3,11 @@ package server.controllers;
 import common.models.Billboard;
 import common.models.Schedule;
 import common.router.*;
-import server.router.*;
-import server.sql.CollectionFactory;
+import common.router.response.BadRequest;
+import common.router.Response;
+import common.router.response.Ok;
+import common.router.response.UnsupportedType;
+import common.sql.CollectionFactory;
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class BillboardController {
 
         // Override the execute to run the get function of the billboard collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Get list of all billboards.
             List<Billboard> billboardList = CollectionFactory.getInstance(Billboard.class).get(billboard -> true);
 
@@ -44,7 +47,7 @@ public class BillboardController {
 
         // Override the execute to run the get function of the billboard collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             String name = req.params.get("name");
 
             // Ensure ID field is not null.
@@ -100,7 +103,7 @@ public class BillboardController {
 
         // Override the execute to run the insert function of the billboard collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
 
@@ -134,7 +137,7 @@ public class BillboardController {
 
         // Override the execute to run the update function of the billboard collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Return an error on incorrect body type.
             if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
 
@@ -163,7 +166,7 @@ public class BillboardController {
 
         // Override the execute to run the delete function of the billboard collection.
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             // Return an error on incorrect params type.
             if (req.params.get("bName") == null) return new UnsupportedType(String.class);
             if (req.params.get("bName").length() < 1) return new BadRequest("Billboard name must not be empty.");

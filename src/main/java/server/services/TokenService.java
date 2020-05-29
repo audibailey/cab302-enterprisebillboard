@@ -1,10 +1,10 @@
 package server.services;
 
 import common.models.Permissions;
-import common.models.Session;
+import common.utils.session.Session;
 import common.models.User;
-import common.utils.HashingFactory;
-import server.sql.CollectionFactory;
+import common.utils.session.HashingFactory;
+import common.sql.CollectionFactory;
 
 import java.time.LocalDateTime;
 import java.util.*;

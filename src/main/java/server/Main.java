@@ -2,25 +2,16 @@ package server;
 
 import common.models.*;
 import common.router.Request;
-import common.utils.ClientSocketFactory;
-import common.utils.HashingFactory;
+import common.utils.session.HashingFactory;
 import common.utils.Props;
-import common.utils.RandomFactory;
 import server.controllers.*;
 import server.middleware.*;
-import server.router.*;
-import server.services.DataService;
 import server.services.RouterService;
-import server.sql.CollectionFactory;
-import server.sql.SchemaBuilder;
+import common.sql.CollectionFactory;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
-
-import static common.utils.HashingFactory.encodeHex;
 
 /**
  * This class is the main class, used as the entry point for the server application.

@@ -1,7 +1,7 @@
 package server.services;
 
 import common.models.Permissions;
-import common.models.Session;
+import common.utils.session.Session;
 import org.junit.jupiter.api.Test;
 
 import java.time.temporal.ChronoUnit;

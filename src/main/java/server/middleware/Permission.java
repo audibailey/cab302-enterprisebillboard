@@ -3,8 +3,8 @@ package server.middleware;
 import common.models.Billboard;
 import common.models.User;
 import common.router.*;
-import server.router.*;
-import server.sql.CollectionFactory;
+import common.router.response.*;
+import common.sql.CollectionFactory;
 
 import java.util.Optional;
 
@@ -32,7 +32,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (!req.permissions.canCreateBillboard) return new Unauthorised("Cannot Create Billboards.");
 
             return new Ok();
@@ -53,7 +53,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (!req.permissions.canEditBillboard) {
                 if (!(req.body instanceof Billboard)) return new UnsupportedType(Billboard.class);
                 if (((Billboard) req.body).locked) return new BadRequest("Can't change a scheduled billboard.");
@@ -81,7 +81,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (req.permissions.canEditUser) return new Ok();
             else
             {
@@ -105,7 +105,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (!req.permissions.canEditUser) return new Unauthorised("Not authorised to edit user. ");
             return new Ok();
         }
@@ -124,7 +124,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (req.permissions.canEditUser) return new Ok() ;
             else
             {
@@ -151,7 +151,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (!req.permissions.canEditUser) return new Unauthorised("Not authorised to delete user. ");
             else {
                 if (!(req.body instanceof User)) return new UnsupportedType(User.class);
@@ -178,7 +178,7 @@ public class Permission {
          * @throws Exception: Pass through server error.
          */
         @Override
-        public IActionResult execute(Request req) throws Exception {
+        public Response execute(Request req) throws Exception {
             if (!req.permissions.canScheduleBillboard) return new Unauthorised("Not authorised to schedule billboards. ");
 
             return new Ok();
