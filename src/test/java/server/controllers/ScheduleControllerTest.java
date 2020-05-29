@@ -108,7 +108,7 @@ public class ScheduleControllerTest {
     public void GetCurrentSchedule() throws  Exception
     {
         Request req = new Request(null,"blah",null,null);
-        IActionResult result = new ScheduleController.GetCurrent().execute(req);
+        Response result = new ScheduleController.GetCurrent().execute(req);
 
         assertEquals(Status.SUCCESS,result.status);
     }
