@@ -51,6 +51,9 @@ public class ScheduleControllerTest {
 
         // Generate schedule data to insert
         Schedule schedule = Schedule.Random(bb.name);
+        while (schedule.duration < 1) schedule.duration = RandomFactory.Int(15);
+        while (schedule.interval < schedule.duration) schedule.interval = RandomFactory.Int(60);
+
         // Create new request to insert billboard
         Request req = new Request(null, "blah", null, bb);
         // Generate a session
@@ -61,9 +64,7 @@ public class ScheduleControllerTest {
         // Create new request and insert schedule
         req = new Request(null, "blah", null, schedule);
         new ScheduleController.Insert().execute(req);
-
-        Thread.sleep(1000);
-
+        
         //Create new request and get all schedules
         req = new  Request(null,"blah",null,null);
         Response test = new ScheduleController.Get().execute(req);
