@@ -54,9 +54,7 @@ public class ScheduleControllerTest {
         // Create new request to insert billboard
         Request req = new Request(null, "blah", null, bb);
         // Generate a session
-        req.session = new Session(
-            1, "kevin", null
-        );
+        req.session = new Session(1, "kevin", null);
         // Insert the billboard to the database
          new BillboardController.Insert().execute(req);
 
@@ -69,6 +67,8 @@ public class ScheduleControllerTest {
         Response test = new ScheduleController.Get().execute(req);
         List<Schedule> scheduleList = (List<Schedule>) test.body;
 
+        Thread.sleep(1000);
+
         // Get the deleted schedule data
         Schedule deleted = null;
         for (Schedule sche: scheduleList)
@@ -79,6 +79,7 @@ public class ScheduleControllerTest {
                 break;
             }
         }
+
         req = new Request(null,"blah",null,deleted);
         Response result = new ScheduleController.Delete().execute(req);
         assertEquals(Status.SUCCESS,result.status);
