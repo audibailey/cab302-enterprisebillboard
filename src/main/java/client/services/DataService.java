@@ -1,7 +1,7 @@
 package client.services;
 
 /**
- * This class adds a specific type for frame updating in java.
+ * This class adds a specific type for table updating in java.
  *
  * @author Jamie Martin
  */
