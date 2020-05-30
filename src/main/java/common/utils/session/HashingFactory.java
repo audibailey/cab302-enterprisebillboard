@@ -8,8 +8,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
-// TODO: test hashing
-
 /**
  * This class handles password hashing for both the front end and the backend.
  *
