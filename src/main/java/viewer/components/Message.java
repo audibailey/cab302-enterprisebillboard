@@ -15,7 +15,10 @@ import java.io.IOException;
  */
 
 public class Message extends JLabel {
-    // Message class constructor. Takes billboard object and container to draw in as parameters.
+    /**
+     * Message class constructor. Takes billboard object and container to draw in as parameters.
+     * @param billboard
+     */
     public Message(Billboard billboard) {
         setText(billboard.message);
         CalcMsgWidth(billboard); // Formatting message for billboard width
@@ -28,22 +31,25 @@ public class Message extends JLabel {
 
     /**
      * Method to calculate the largest possible message to fit the screen in one line
+     * @param billboard
      */
     public void CalcMsgWidth(Billboard billboard){
-        Font labelFont = getFont(); // Get the font used for the label
-        String labelText = getText(); // Get the string used for the label
-        int stringWidth = getFontMetrics(labelFont).stringWidth(labelText); // Getting the width of the string
-        int labelWidth = Toolkit.getDefaultToolkit().getScreenSize().width; // Getting the width of the label
-        int maxHeight = Toolkit.getDefaultToolkit().getScreenSize().height / 3; // Maximum label height
-        // Checking to see how much the font can grow in width.
-        double largestWidth = (double)labelWidth / (double)stringWidth; // Calculate largest width by taking label width/string width
-        int finalSize = (int)(labelFont.getSize() * largestWidth); // Set final font size by multiplying font size with scale factor
+        Font labelFont = getFont();
+        String labelText = getText();
+        int stringWidth = getFontMetrics(labelFont).stringWidth(labelText);
+        int labelWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int maxHeight = Toolkit.getDefaultToolkit().getScreenSize().height / 3;
+
+        // Calculating largest width
+        double largestWidth = (double)labelWidth / (double)stringWidth;
+        int finalSize = (int)(labelFont.getSize() * largestWidth);
 
         // Set the final plain font size to use for the message label
         setFont(new Font(labelFont.getName(), Font.PLAIN, finalSize));
-        // Check if font is larger than max height
+
+        // Resize font if it is larger than max height
         if (finalSize > maxHeight){
-            setFont(new Font(labelFont.getName(), Font.PLAIN, maxHeight)); // Set font size to fit maximum label height
+            setFont(new Font(labelFont.getName(), Font.PLAIN, maxHeight));
         }
     }
 }

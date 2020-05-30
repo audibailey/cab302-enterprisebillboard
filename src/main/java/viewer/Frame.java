@@ -17,7 +17,11 @@ import java.io.IOException;
  * @author Jamie Martin
  */
 public class Frame extends JFrame {
-
+    /**
+     * Frame constructor used to add panel contents to the Viewer JFrame as well as event listeners.
+     * @param panel
+     * @param hardExit
+     */
     public Frame(JPanel panel, boolean hardExit) {
         setTitle("Billboard Viewer");
 
@@ -25,11 +29,11 @@ public class Frame extends JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         // Setting the frame dimensions
-        final int screen_Width = dim.width; // Screen width
-        final int screen_Height = dim.height; // Screen height
-        setSize(screen_Width, screen_Height); // Setting frame size
+        final int screen_Width = dim.width;
+        final int screen_Height = dim.height;
+        setSize(screen_Width, screen_Height);
 
-        // Setting the frame event listeners
+        // Adding key listener
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -40,7 +44,9 @@ public class Frame extends JFrame {
                     }
                 }
             }
-        }); // Adding key listener
+        });
+
+        // Adding mouse listener
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (hardExit) {
@@ -49,15 +55,14 @@ public class Frame extends JFrame {
                     dispose();
                 }
             }
-        }); // Adding mouse listener
+        });
 
         // Setting frame properties
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set frame to exit on close
-        setExtendedState(Frame.MAXIMIZED_BOTH); // Setting frame size to maximise to full screen
-        setUndecorated(true); // Removing the frame title bar including default buttons
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+        setUndecorated(true);
         setLayout(new BorderLayout());
         add(panel);
-
-        setVisible(true); // Show frame
+        setVisible(true);
     }
 }

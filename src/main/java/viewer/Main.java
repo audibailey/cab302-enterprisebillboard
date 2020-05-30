@@ -19,11 +19,17 @@ import java.time.Instant;
 public class Main {
     /**
      * Create the Billboard Viewer GUI and show it.
+     * @param b
+     * @throws Exception
      */
     public static void createAndShowGUI(Billboard b) throws Exception {
+        // If billboard is selected, add it to viewer
         if (b != null) {
             new Frame(new Panel(b), false);
-        } else {
+        }
+
+        // Otherwise display the most recently selected billboard
+        else {
             new Thread(new Runnable() {
                 Frame frame = new Frame(new Panel(Main.getCurrent()), true);
 
@@ -48,11 +54,16 @@ public class Main {
         }
     }
 
+    /**
+     * Retrieves the most recently selected billboard
+     * @return
+     */
     public static Billboard getCurrent() {
         Billboard billboard = new Billboard();
 
         Response res = new ClientSocketFactory("/schedule/get/current", null, null).setMessageOnError(false).Connect();
 
+        // Check if there is an active billboard
         if (res != null && res.status == Status.SUCCESS && res.body instanceof Billboard) {
             billboard = (Billboard)res.body;
         } else {
@@ -65,6 +76,8 @@ public class Main {
 
     /**
      * Main class to run GUI Application and socket interface
+     * @param args
+     * @throws Exception
      */
     public static void main(String[] args) throws Exception {
         // Schedule a job for the event-dispatching thread:
