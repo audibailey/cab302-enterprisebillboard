@@ -4,6 +4,7 @@ import common.models.*;
 import common.router.Response;
 import common.router.Request;
 import common.router.response.Status;
+import common.utils.RandomFactory;
 import common.utils.session.Session;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,8 @@ public class ScheduleControllerTest {
         bb.locked = true;
 
         Schedule schedule = Schedule.Random(bb.name);
-        schedule.interval += schedule.duration;
+        while (schedule.interval < schedule.duration) schedule.interval = RandomFactory.Int(60);
+
         // Create new request.
         Request req = new Request(null, "blah", null, bb);
         // Generate a session
