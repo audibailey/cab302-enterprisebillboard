@@ -36,12 +36,16 @@ public class ScheduleService {
 
     /**
      * get the schedule service instance
+     *
      * @return
      */
-    public static ScheduleService getInstance() { return ScheduleServiceHolder.INSTANCE; }
+    public static ScheduleService getInstance() {
+        return ScheduleServiceHolder.INSTANCE;
+    }
 
     /**
      * refreshes the schedule list
+     *
      * @return
      */
     public List<Schedule> refresh() {
@@ -60,13 +64,14 @@ public class ScheduleService {
 
     /**
      * get the schedule view data
+     *
      * @return
      */
     public List<Day> getSchedule() {
         List<Day> schedulesList = new ArrayList<>();
 
         // iterates over days of the week
-        for (var day: DayOfWeek.values()) {
+        for (var day : DayOfWeek.values()) {
             if (day != DayOfWeek.EVERY) {
                 String[] minutesInDay = new String[1440];
                 // get the schedules that exist for today
@@ -75,7 +80,7 @@ public class ScheduleService {
                 todaysList.sort(Comparator.comparing(s -> s.createTime));
 
                 // iterate over each schedule
-                for (var schedule: todaysList) {
+                for (var schedule : todaysList) {
                     // iterate over the minutes in a day
                     for (int i = schedule.start; i < minutesInDay.length; i = i + schedule.interval) {
                         int diff = schedule.duration;
@@ -106,7 +111,7 @@ public class ScheduleService {
                     int j = i;
 
                     // go until the last index
-                    while(j + 1 < 1440 && minutesInDay[j + 1] == name) j++;
+                    while (j + 1 < 1440 && minutesInDay[j + 1] != null  && minutesInDay[j + 1].equals(name)) j++;
 
                     // add formatted string to listOfTimes
                     listOfTimes.add(Time.minutesToTime(i) + " - " + Time.minutesToTime(j + 1) + " " + name);
@@ -123,6 +128,7 @@ public class ScheduleService {
 
     /**
      * attempts to insert the given schedule on the server
+     *
      * @param s
      * @return
      */
@@ -134,6 +140,7 @@ public class ScheduleService {
 
     /**
      * attempts to delete the given schedule on the server
+     *
      * @param s
      * @return
      */
