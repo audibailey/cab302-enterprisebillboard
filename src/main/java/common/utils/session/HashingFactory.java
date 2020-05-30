@@ -42,12 +42,18 @@ public class HashingFactory {
      * @return String: The hash of the password.
      * @throws Exception: Pass through exception that gets handled by the client.
      */
-    public static String hashPassword(String password) throws Exception {
-        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-        crypt.reset();
-        crypt.update(password.getBytes("UTF-8"));
+    public static String hashPassword(String password) {
+        try {
+            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+            crypt.reset();
+            crypt.update(password.getBytes("UTF-8"));
 
-        return encodeHex(crypt.digest());
+            return encodeHex(crypt.digest());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     /**

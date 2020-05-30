@@ -32,27 +32,27 @@ public class SchedulePanel extends JPanel implements ActionListener {
     IObjectTableModel<Schedule> tableModel;
     JTable table;
     Container buttonContainer = new Container();
-    JButton createButton, refreshButton, showButton, deleteButton;
+    JButton createButton = new JButton("Create Schedule"),
+        refreshButton = new JButton("Refresh"),
+        showButton = new JButton("Delete Selected"),
+        deleteButton = new JButton("Show Schedule");
     String selected;
 
 
     public SchedulePanel() {
         // Get session
         Session session = SessionService.getInstance();
-        // Adding button labels
-        createButton = new JButton("Create Schedule");
-        refreshButton = new JButton("Refresh");
-        deleteButton = new JButton("Delete Selected");
-        showButton = new JButton("Show Schedule");
-        // Disable schedule button if user is not permitted
-        if (!session.permissions.canScheduleBillboard) {
-            createButton.setEnabled(false);
-        }
 
+        // add the action listeners
         createButton.addActionListener(this::actionPerformed);
         refreshButton.addActionListener(this::actionPerformed);
         deleteButton.addActionListener(this::actionPerformed);
         showButton.addActionListener(this::actionPerformed);
+
+        // Disable schedule button if user is not permitted
+        if (!session.permissions.canScheduleBillboard) {
+            createButton.setEnabled(false);
+        }
         deleteButton.setEnabled(false);
 
         // Getting table data and configuring table
@@ -60,7 +60,6 @@ public class SchedulePanel extends JPanel implements ActionListener {
         tableModel.setObjectRows(ScheduleService.getInstance().refresh());
         table = new JTable(tableModel);
         setupSelection();
-        setupRenderersAndEditors();
         JScrollPane pane = new JScrollPane(table);
 
         // Add buttons to container
@@ -77,6 +76,9 @@ public class SchedulePanel extends JPanel implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * set up the table selection logic
+     */
     public void setupSelection() {
         table.setAutoCreateRowSorter(true);
         table.setCellSelectionEnabled(true);
@@ -87,20 +89,13 @@ public class SchedulePanel extends JPanel implements ActionListener {
             selected = (String)table.getModel().getValueAt(table.getSelectedRow(), 1);
             Session session = SessionService.getInstance();
 
+            // if the current session can schedule billboards then allow them to delete
             if (selected != null && session.permissions.canScheduleBillboard) {
                 deleteButton.setEnabled(true);
             } else {
                 deleteButton.setEnabled(false);
             }
         });
-    }
-
-    public void setupRenderersAndEditors() {
-        //Set up renderer and editor for the Favourite Colour column.
-        table.setDefaultRenderer(Color.class, new ColourRenderer());
-        table.setDefaultEditor(Color.class, new ColourEditor());
-        table.setDefaultEditor(Picture.class, new PictureEditor());
-        table.setDefaultRenderer(Picture.class, new PictureRenderer());
     }
 
     @Override

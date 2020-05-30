@@ -15,6 +15,12 @@ import java.awt.*;
  * @author Jamie Martin
  */
 public class Panel extends JPanel {
+
+    /**
+     * Class to arrange the given Billboard contents appropriately to the specification
+     * @param billboard
+     * @throws Exception
+     */
     public Panel(Billboard billboard) throws Exception {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
