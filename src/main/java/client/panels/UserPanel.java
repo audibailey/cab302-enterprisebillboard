@@ -174,7 +174,7 @@ public class UserPanel extends JPanel implements ActionListener {
 
                     try {
                         // try update the password
-                        PermissionsService.getInstance().updatePassword(id, selected, result);
+                        PermissionsService.getInstance().updatePassword(selected, result);
                     } catch (Exception exception) {
                         Notification.display(exception.getMessage());
                     }
