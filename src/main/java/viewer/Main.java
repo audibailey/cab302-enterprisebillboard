@@ -25,16 +25,19 @@ public class Main {
             new Frame(new Panel(b), false);
         } else {
             new Thread(new Runnable() {
-                Frame frame = new Frame(new Panel(Main.getCurrent()), false);
+                Frame frame = new Frame(new Panel(Main.getCurrent()), true);
 
                 @Override
                 public void run() {
                     while(true) {
                         try {
+
                             Thread.sleep(14500);
                             Frame temp = new Frame(new Panel(Main.getCurrent()), true);
                             Thread.sleep(500);
+
                             frame.dispose();
+
                             frame = temp;
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -48,11 +51,10 @@ public class Main {
     public static Billboard getCurrent() {
         Billboard billboard = new Billboard();
 
-        Response res = new ClientSocketFactory("/schedule/get/current", null, null).Connect();
+        Response res = new ClientSocketFactory("/schedule/get/current", null, null).setMessageOnError(false).Connect();
 
         if (res != null && res.status == Status.SUCCESS && res.body instanceof Billboard) {
             billboard = (Billboard)res.body;
-            billboard.information = billboard.information + " " + new SimpleDateFormat("K:mm a z").format(Date.from(Instant.now()));
         } else {
             billboard.message = "No billboard scheduled";
             billboard.information = new SimpleDateFormat("K:mm a z").format(Date.from(Instant.now()));
