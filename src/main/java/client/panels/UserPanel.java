@@ -26,33 +26,36 @@ import java.awt.image.BufferedImage;
  */
 public class UserPanel extends JPanel implements ActionListener {
 
+    // initialise components
     IObjectTableModel<Permissions> tableModel;
     JTable table;
     Container buttonContainer = new Container();
-    JButton editButton, createButton, refreshButton, deleteButton;
+    JButton editButton = new JButton("Edit Password"),
+        createButton = new JButton("Create User"),
+        refreshButton = new JButton("Refresh"),
+        deleteButton = new JButton("Delete Selected");
     String selected;
 
     public UserPanel() {
-        createButton = new JButton("Create User");
-        editButton = new JButton("Edit Password");
-        refreshButton = new JButton("Refresh");
-        deleteButton = new JButton("Delete Selected");
+        // add the action listeners
         createButton.addActionListener(this::actionPerformed);
         editButton.addActionListener(this::actionPerformed);
         refreshButton.addActionListener(this::actionPerformed);
         deleteButton.addActionListener(this::actionPerformed);
+
+        // default enable/disabled for buttons
         editButton.setEnabled(false);
         deleteButton.setEnabled(false);
 
+        // initialise the table
         tableModel = new ObjectTableModel<>(Permissions.class, PermissionsService.getInstance());
         tableModel.setObjectRows(PermissionsService.getInstance().refresh());
         table = new JTable(tableModel);
 
         setupSelection();
-        setupRenderersAndEditors();
-
         JScrollPane pane = new JScrollPane(table);
 
+        // add the buttons to the container
         buttonContainer.setLayout(new FlowLayout());
         buttonContainer.add(createButton);
         buttonContainer.add(editButton);
@@ -65,6 +68,9 @@ public class UserPanel extends JPanel implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * sets up the selection logic for the table
+     */
     public void setupSelection() {
         table.setAutoCreateRowSorter(true);
         table.setCellSelectionEnabled(true);
@@ -85,23 +91,16 @@ public class UserPanel extends JPanel implements ActionListener {
 
     }
 
-    public void setupRenderersAndEditors() {
-        //Set up renderer and editor for the Favorite Color column.
-        table.setDefaultRenderer(Color.class,
-            new ColourRenderer());
-        table.setDefaultEditor(Color.class,
-            new ColourEditor());
-        table.setDefaultEditor(BufferedImage.class, new PictureEditor());
-        table.setDefaultRenderer(BufferedImage.class, new PictureRenderer());
-    }
-
+    /**
+     * Adding listener events for the user panel buttons.
+     * @param e
+     */
     @Override
-    // Adding listener events for the user panel buttons.
     public void actionPerformed(ActionEvent e) {
-        // Check if new user button is pressed
+        // Check if create button is pressed
         if(e.getSource() == createButton){
             try {
-
+                // initialise create user components
                 JTextField username = new JTextField();
                 JPasswordField password = new JPasswordField();
                 JCheckBox canCreateBillboard = new JCheckBox();
@@ -109,6 +108,7 @@ public class UserPanel extends JPanel implements ActionListener {
                 JCheckBox canScheduleBillboard = new JCheckBox();
                 JCheckBox canEditUser = new JCheckBox();
 
+                // build component container
                 final JComponent[] components = new JComponent[] {
                     new JLabel("Username"),
                     username,
@@ -124,6 +124,7 @@ public class UserPanel extends JPanel implements ActionListener {
                     canEditUser
                 };
 
+                // get the result from the inputs
                 int result = JOptionPane.showConfirmDialog(this, components, "Create new User", JOptionPane.PLAIN_MESSAGE);
 
                 if (result == JOptionPane.OK_OPTION) {
@@ -132,12 +133,14 @@ public class UserPanel extends JPanel implements ActionListener {
                     } else if (String.valueOf(password.getPassword()).isEmpty()) {
                         Notification.display("Password cannot be null. Please try again");
                     } else {
+                        // convert values to User + Permission object
                         User user = new User();
                         user.username = username.getText();
                         user.password = HashingFactory.hashPassword(String.valueOf(password.getPassword()));
 
                         Permissions permissions = new Permissions(username.getText(), canCreateBillboard.isSelected(), canEditBillboard.isSelected(), canScheduleBillboard.isSelected(), canEditUser.isSelected());
 
+                        // send insert to server and fire updates to table model
                         tableModel.setObjectRows(PermissionsService.getInstance().insert(new UserPermissions(user, permissions)));
                         tableModel.fireTableDataChanged();
                     }
@@ -146,8 +149,9 @@ public class UserPanel extends JPanel implements ActionListener {
                 Notification.display(ex.getMessage());
             }
         }
-        // Check if edit user button is pressed
+        // Check if edit button is pressed
         if(e.getSource() == editButton){
+            // get new password
             String result = (String)JOptionPane.showInputDialog(
                 this,
                 "Input a new password for user: " + selected,
@@ -161,21 +165,23 @@ public class UserPanel extends JPanel implements ActionListener {
             int id = tableModel.getObjectRows().stream().filter(x -> x.username.equals(selected)).findFirst().get().id;
 
             try {
+                // try update the password
                 PermissionsService.getInstance().updatePassword(id, selected, result);
             } catch (Exception exception) {
                 Notification.display(exception.getMessage());
             }
         }
-
+        // Check if refresh button is pressed
         if (e.getSource() == refreshButton) {
             tableModel.setObjectRows(PermissionsService.getInstance().refresh());
             tableModel.fireTableDataChanged();
         }
-
+        // Check if delete button is pressed
         if (e.getSource() == deleteButton) {
             Session session = SessionService.getInstance();
             var permissionList = tableModel.getObjectRows();
 
+            // handle edge cases
             if (session.username.equals(selected)) {
                 Notification.display("Cannot delete yourself!");
             } else if (permissionList.size() == 1) {
@@ -186,7 +192,7 @@ public class UserPanel extends JPanel implements ActionListener {
                 User u = new User();
                 u.id = permissions.id;
                 u.username = permissions.username;
-
+                // send a delete to the controller service for the selected user
                 tableModel.setObjectRows(PermissionsService.getInstance().delete(u));
                 tableModel.fireTableDataChanged();
             }
