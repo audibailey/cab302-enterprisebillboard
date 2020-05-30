@@ -17,10 +17,12 @@ public class PanelHandler extends JTabbedPane {
 
         add("Billboards", new BillboardPanel());
 
+        // only render if the current session has canScheduleBillboard
         if (session.permissions.canScheduleBillboard) {
             add("Schedule", new SchedulePanel());
         }
 
+        // only render if the current session has canEditUser
         if (session.permissions.canEditUser) {
             add("Users", new UserPanel());
         }
