@@ -17,11 +17,12 @@ import java.io.IOException;
 public class Message extends JLabel {
     /**
      * Message class constructor. Takes billboard object and container to draw in as parameters.
-     * @param billboard
+     *
+     * @param billboard The billboard being viewed.
      */
     public Message(Billboard billboard) {
         setText(billboard.message);
-        CalcMsgWidth(billboard); // Formatting message for billboard width
+        CalcMsgWidth(); // Formatting message for billboard width
         // Check if message string has a message colour attribute to add colour
         if(billboard.messageColor != null){
             setForeground(Color.decode(billboard.messageColor));
@@ -30,10 +31,9 @@ public class Message extends JLabel {
     }
 
     /**
-     * Method to calculate the largest possible message to fit the screen in one line
-     * @param billboard
+     * Method to calculate the largest possible message to fit the screen in one line.
      */
-    public void CalcMsgWidth(Billboard billboard){
+    public void CalcMsgWidth(){
         Font labelFont = getFont();
         String labelText = getText();
         int stringWidth = getFontMetrics(labelFont).stringWidth(labelText);

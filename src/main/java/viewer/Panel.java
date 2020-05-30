@@ -18,7 +18,8 @@ public class Panel extends JPanel {
 
     /**
      * Class to arrange the given Billboard contents appropriately to the specification
-     * @param billboard
+     *
+     * @param billboard The billboard to render
      * @throws Exception
      */
     public Panel(Billboard billboard) throws Exception {

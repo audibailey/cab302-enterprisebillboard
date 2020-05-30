@@ -13,14 +13,15 @@ import java.io.IOException;
  * @author Trevor Waturuocha
  */
 public class Information extends JLabel {
+
     /**
      * Information class constructor. Takes billboard object and container to draw in as parameters.
-     * @param billboard
-     * @param wFactor
-     * @param hFactor
-     * @throws IOException
+     *
+     * @param billboard The billboard being viewed.
+     * @param wFactor The width factor for the frame.
+     * @param hFactor The height factor for the frame.
      */
-    public Information(Billboard billboard, int wFactor, int hFactor) throws IOException {
+    public Information(Billboard billboard, int wFactor, int hFactor) {
         setText(billboard.information);
         FormatInfo(wFactor, hFactor);
 
@@ -32,8 +33,9 @@ public class Information extends JLabel {
 
     /**
      * Method to format the information text to the correct size.
-     * @param wFactor
-     * @param hFactor
+     *
+     * @param wFactor The width factor for the frame.
+     * @param hFactor The height factor for the frame.
      */
     public void FormatInfo(int wFactor, int hFactor){
         // Setting information text dimensions

@@ -17,10 +17,12 @@ import java.io.IOException;
  * @author Jamie Martin
  */
 public class Frame extends JFrame {
+
     /**
      * Frame constructor used to add panel contents to the Viewer JFrame as well as event listeners.
-     * @param panel
-     * @param hardExit
+     *
+     * @param panel The JPanel to be rendered
+     * @param hardExit Whether the Frame should hard exit (System.exit) or just dispose.
      */
     public Frame(JPanel panel, boolean hardExit) {
         setTitle("Billboard Viewer");

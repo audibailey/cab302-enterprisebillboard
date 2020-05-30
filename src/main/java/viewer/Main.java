@@ -19,13 +19,14 @@ import java.time.Instant;
 public class Main {
     /**
      * Create the Billboard Viewer GUI and show it.
-     * @param b
+     *
+     * @param billboard The billboard to inject for the View Selected on Control Panel
      * @throws Exception
      */
-    public static void createAndShowGUI(Billboard b) throws Exception {
+    public static void createAndShowGUI(Billboard billboard) throws Exception {
         // If billboard is selected, add it to viewer
-        if (b != null) {
-            new Frame(new Panel(b), false);
+        if (billboard != null) {
+            new Frame(new Panel(billboard), false);
         }
 
         // Otherwise display the most recently selected billboard
@@ -56,7 +57,8 @@ public class Main {
 
     /**
      * Retrieves the most recently selected billboard
-     * @return
+     *
+     * @return The currently scheduled billboard from the server
      */
     public static Billboard getCurrent() {
         Billboard billboard = new Billboard();
@@ -75,11 +77,9 @@ public class Main {
     }
 
     /**
-     * Main class to run GUI Application and socket interface
-     * @param args
-     * @throws Exception
+     * Main class to run Viewer GUI Application
      */
-    public static void main(String[] args) throws Exception {
+    public static void main() {
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
