@@ -51,14 +51,16 @@ public class Client extends JFrame {
                 ""
             );
 
-            if (result.isEmpty()) {
-                Notification.display("Password cannot be blank");
-            } else if (result != null) {
-                try {
-                    // try update on server
-                    PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            if (result != null) {
+                if (result.isEmpty()) {
+                    Notification.display("Password cannot be blank");
+                } else {
+                    try {
+                        // try update on server
+                        PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
             }
         });
