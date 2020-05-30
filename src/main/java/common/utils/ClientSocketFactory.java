@@ -1,15 +1,17 @@
 package common.utils;
 
-// TODO: USE PROPS FOR NETWORK ADDY AND PORT
-
+import common.models.Billboard;
 import common.router.Response;
 import common.router.Request;
+import common.router.response.Status;
 import common.swing.Notification;
 
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.time.Instant;
 import java.util.HashMap;
+import java.util.Properties;
 
 /**
  * This class deals with client side socket stateless requests and receiving of the response.
@@ -49,39 +51,57 @@ public class ClientSocketFactory {
     public Response Connect() {
         try {
             // Initialise socket.
-            Socket s = new Socket("127.0.0.1", 12345);
+            Properties props = Props.getProps("./network.props");
 
-            // Open up an object output stream and write the request to it.
-            OutputStream outputStream = s.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-            Request req = new Request(path, token, params, body);
-            oos.writeObject(req);
-            oos.flush();
+            if (props.containsKey("server.address") && props.containsKey("server.port")) {
+                String host = props.getProperty("server.address");
+                int port = Integer.parseInt(props.getProperty("server.port"));
 
-            // Open up the input stream and wait for a response.
-            InputStream inputStream = s.getInputStream();
-            ObjectInputStream ois = new ObjectInputStream(inputStream);
-            Object o = ois.readObject();
+                Socket s = new Socket(host, port);
 
-            // Ensure its the right response type.
-            Response res = null;
-            if (o instanceof Response) {
-                res = (Response) o;
+                // Open up an object output stream and write the request to it.
+                OutputStream outputStream = s.getOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+                Request req = new Request(path, token, params, body);
+                oos.writeObject(req);
+                oos.flush();
 
-                // Handle errors.
-                if (res.error) {
-                    Response finalRes = res;
-                    if (messageOnError) SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
+                // Open up the input stream and wait for a response.
+                InputStream inputStream = s.getInputStream();
+                ObjectInputStream ois = new ObjectInputStream(inputStream);
+                Object o = ois.readObject();
+
+                // Ensure its the right response type.
+                Response res = null;
+                if (o instanceof Response) {
+                    res = (Response) o;
+
+                    // Handle errors.
+                    if (res.error) {
+                        Response finalRes = res;
+                        if (messageOnError) SwingUtilities.invokeLater(() -> Notification.display(finalRes.message));
+                    }
                 }
+
+                // Clean up.
+                ois.close();
+                oos.close();
+                s.close();
+
+                return res;
+            } else {
+                Notification.display("Please configure network.props file");
+                return null;
             }
-
-            // Clean up.
-            ois.close();
-            oos.close();
-            s.close();
-
+        } catch (IOException ex) { // Handle errors.
+            if (messageOnError) {
+                Notification.display(ex.getMessage());
+                return null;
+            }
+            Response res = new Response(Status.SUCCESS, "Cannot connect to server");
+            res.body = new Billboard("Cannot connect to server", "Cannot connect to server", "#000000", null, "#FFFFFF", "Please ensure the server is running", "#000000", false, 0);
             return res;
-        } catch (IOException | ClassNotFoundException ex) { // Handle errors.
+        } catch ( ClassNotFoundException ex) {
             if (messageOnError) Notification.display(ex.getMessage());
             return null;
         }
