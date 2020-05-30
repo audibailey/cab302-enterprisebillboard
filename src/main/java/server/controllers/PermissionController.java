@@ -15,7 +15,7 @@ import java.util.List;
  * This class acts as the controller with all the Actions related to the permissions request path.
  *
  * @author Jamie Martin
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Perdana Bailey
  */
 public class PermissionController {

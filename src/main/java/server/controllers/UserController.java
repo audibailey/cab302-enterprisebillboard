@@ -20,7 +20,7 @@ import static common.utils.session.HashingFactory.hashAndSaltPassword;
  * This class acts as the controller with all the Actions related to the user request path.
  *
  * @author Jamie Martin
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Perdana Bailey
  */
 public class UserController {

@@ -7,7 +7,7 @@ import common.router.Action;
  * A singleton Class that handles all the router interactions for the server.
  *
  * @author Jamie Martin
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Perdana Bailey
  */
 public class RouterService {

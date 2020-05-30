@@ -13,7 +13,7 @@ import java.util.Optional;
  *
  * @author Jamie Martin
  * @author Perdana Bailey
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  */
 public class Permission {
 

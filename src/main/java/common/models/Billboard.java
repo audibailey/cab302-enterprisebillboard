@@ -13,7 +13,7 @@ import java.io.*;
  * This class consists of the billboard object and its associated methods.
  *
  * @author Perdana Bailey
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Jamie Martin
  */
 @SQLITE(type="FOREIGN KEY(userId) REFERENCES User(id)")

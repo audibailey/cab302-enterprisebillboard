@@ -6,7 +6,7 @@ import java.io.Serializable;
  * This class consists of the user and permission combined object.
  *
  * @author Perdana Bailey
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Jamie Martin
  */
 public class UserPermissions implements Serializable {

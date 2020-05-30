@@ -11,7 +11,7 @@ import java.io.Serializable;
  * This class consists of the user's permissions object and its associated methods.
  *
  * @author Perdana Bailey
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Jamie Martin
  */
 @SQLITE(type="FOREIGN KEY(id) REFERENCES User(id), FOREIGN KEY(username) REFERENCES User(username)")
