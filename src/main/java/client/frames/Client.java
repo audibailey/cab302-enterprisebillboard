@@ -13,11 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * This class renders the Java Swing main client frame for the client.
+ * This class renders the Java Swing main client frame for the Client.
  *
  * @author Jamie Martin
  */
-public class Client extends JFrame implements ActionListener {
+public class Client extends JFrame {
 
     Menu menu = new Menu();
 
@@ -28,15 +28,18 @@ public class Client extends JFrame implements ActionListener {
 
         setLocationAndSize();
 
+        // add listener functionality for the logout button
         menu.getLogout().addActionListener(e -> {
             SessionService.setInstance(null);
             client.Main.createAndShowLogin();
             dispose();
         });
 
+        // add update password functionality for the logout button
         menu.getUpdatePassword().addActionListener(e -> {
             Session session = SessionService.getInstance();
 
+            // get the new password
             String result = (String)JOptionPane.showInputDialog(
                 this,
                 "Input a new password for user: " + session.username,
@@ -48,6 +51,7 @@ public class Client extends JFrame implements ActionListener {
             );
 
             try {
+                // try update on server
                 PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -56,12 +60,16 @@ public class Client extends JFrame implements ActionListener {
 
         setJMenuBar(menu);
 
+        // add the panel handler
         add(new PanelHandler(), BorderLayout.CENTER);
 
         setVisible(true);
 
     }
 
+    /**
+     * sets the location and size for the frame
+     */
     public void setLocationAndSize() {
         // Get the screen dimensions
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -76,11 +84,5 @@ public class Client extends JFrame implements ActionListener {
         int y = (height - getHeight()) / 2;
         // Set the new frame location and show GUI
         setLocation(x, y);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        dispose();
-        Main.createAndShowLogin();
     }
 }

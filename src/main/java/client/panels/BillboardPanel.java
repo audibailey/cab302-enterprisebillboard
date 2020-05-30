@@ -31,38 +31,38 @@ import java.util.Optional;
  */
 public class BillboardPanel extends JPanel implements ActionListener {
 
+    // initialise components
     IObjectTableModel<Billboard> tableModel;
     JTable table;
     Container buttonContainer = new Container();
-    JButton viewButton, createButton, refreshButton, deleteButton, importButton, exportButton;
+    JButton viewButton = new JButton("View Selected"),
+        createButton = new JButton("Create Billboard"),
+        refreshButton = new JButton("Refresh"),
+        deleteButton = new JButton("Delete Selected"),
+        importButton = new JButton("Import into Selected"),
+        exportButton = new JButton("Export Selected");
     String selected;
 
     public BillboardPanel() {
         Session session = SessionService.getInstance();
-
-        createButton = new JButton("Create Billboard");
-        viewButton = new JButton("View Selected");
-        refreshButton = new JButton("Refresh");
-        deleteButton = new JButton("Delete Selected");
-        importButton = new JButton("Import into Selected");
-        exportButton = new JButton("Export Selected");
-
+        // add action listeners for buttons
         createButton.addActionListener(this::actionPerformed);
-
-        if (!session.permissions.canCreateBillboard) {
-            createButton.setEnabled(false);
-        }
-
         viewButton.addActionListener(this::actionPerformed);
         refreshButton.addActionListener(this::actionPerformed);
         deleteButton.addActionListener(this::actionPerformed);
         importButton.addActionListener(this::actionPerformed);
         exportButton.addActionListener(this::actionPerformed);
+
+        // selectively enable disabled buttons
+        if (!session.permissions.canCreateBillboard) {
+            createButton.setEnabled(false);
+        }
         viewButton.setEnabled(false);
         deleteButton.setEnabled(false);
         importButton.setEnabled(false);
         exportButton.setEnabled(false);
 
+        // initialise the table model with billboard data
         tableModel = new ObjectTableModel(Billboard.class, BillboardService.getInstance());
         tableModel.setObjectRows(BillboardService.getInstance().refresh());
         table = new JTable(tableModel);
@@ -72,6 +72,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
 
         JScrollPane pane = new JScrollPane(table);
 
+        // add the buttons to the container
         buttonContainer.setLayout(new FlowLayout());
         buttonContainer.add(createButton);
         buttonContainer.add(viewButton);
@@ -86,6 +87,9 @@ public class BillboardPanel extends JPanel implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * manages the logic when a user selects cells on the table
+     */
     public void setupSelection() {
         table.setAutoCreateRowSorter(true);
         table.setCellSelectionEnabled(true);
@@ -118,18 +122,23 @@ public class BillboardPanel extends JPanel implements ActionListener {
         });
     }
 
+    /**
+     * set up the default renderers and editors for particular classes
+     */
     public void setupRenderersAndEditors() {
-        //Set up renderer and editor for the Favourite Colour column.
         table.setDefaultRenderer(Color.class, new ColourRenderer());
         table.setDefaultEditor(Color.class, new ColourEditor());
         table.setDefaultEditor(Picture.class, new PictureEditor());
         table.setDefaultRenderer(Picture.class, new PictureRenderer());
     }
 
+    /**
+     * Adding listener events for the user panel buttons
+     * @param e
+     */
     @Override
-    // Adding listener events for the user panel buttons.
     public void actionPerformed(ActionEvent e) {
-        // Check if new user button is pressed
+        // Check if create button is pressed
         if(e.getSource() == createButton){
             String result = (String)JOptionPane.showInputDialog(
                 this,
@@ -149,7 +158,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
                 tableModel.fireTableDataChanged();
             }
         }
-        // Check if edit user button is pressed
+        // Check if view button is pressed
         if(e.getSource() == viewButton){
             SwingUtilities.invokeLater(() -> {
                 try {
@@ -159,17 +168,19 @@ public class BillboardPanel extends JPanel implements ActionListener {
                 }
             });
         }
-
+        // check if the refresh button is pressed
         if (e.getSource() == refreshButton) {
+            // refresh the billboard list and update the table
             tableModel.setObjectRows(BillboardService.getInstance().refresh());
             tableModel.fireTableDataChanged();
         }
-
+        // check if the delete button is pressed
         if (e.getSource() == deleteButton) {
+            // delete the currently selected billboard and update the table
             tableModel.setObjectRows(BillboardService.getInstance().delete(tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst().get()));
             tableModel.fireTableDataChanged();
         }
-
+        // check if the import button is pressed
         if (e.getSource() == importButton) {
             try {
                 // open file picker for xml
@@ -186,9 +197,10 @@ public class BillboardPanel extends JPanel implements ActionListener {
                     Optional<Billboard> selectedBillboard = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
 
                     if (selectedBillboard.isPresent()) {
-
+                        // convert the xml string to a billboard
                         Billboard billboard = XML.fromXML(xml, selectedBillboard.get());
 
+                        // only if successful does it re-fire the table
                         Boolean success = BillboardService.getInstance().update(billboard);
 
                         if (success) {
@@ -205,20 +217,26 @@ public class BillboardPanel extends JPanel implements ActionListener {
 
         if (e.getSource() == exportButton) {
             try {
+                // try get the selected billboard
                 Optional<Billboard> selectedBillboard = tableModel.getObjectRows().stream().filter(x -> x.name.equals(selected)).findFirst();
 
                 if (selectedBillboard.isPresent()) {
+                    // spawn the file save dialog
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setFileFilter(new FileNameExtensionFilter("XML file", "xml"));
                     int returnVal = fileChooser.showSaveDialog(new JDialog((Window) null));
 
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        // get the billboard
                         Billboard billboard = selectedBillboard.get();
 
+                        // convert the billboard to an xml string
                         String xml = XML.toXML(billboard);
+                        // convert the string to a document
                         Document document = XML.toDocument(xml);
-                        File file = fileChooser.getSelectedFile();
 
+                        // save the file to the selected file
+                        File file = fileChooser.getSelectedFile();
                         XML.saveDocument(document, file);
 
                         Notification.display("Successfully exported " + billboard.name + " to " + fileChooser.getName(fileChooser.getSelectedFile()));

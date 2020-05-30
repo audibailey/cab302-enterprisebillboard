@@ -20,6 +20,7 @@ import java.util.HashMap;
  */
 public class Login extends JFrame implements ActionListener {
 
+    // initialise components
     Container container = getContentPane();
     JLabel usernameLabel = new JLabel("USERNAME");
     JLabel passwordLabel = new JLabel("PASSWORD");
@@ -44,6 +45,9 @@ public class Login extends JFrame implements ActionListener {
         container.setLayout(new GridBagLayout());
     }
 
+    /**
+     * organises the components in a gridbag layout
+     */
     public void addComponentsToContainer() {
         GridBagConstraints c = new GridBagConstraints();
         Insets i = new Insets(5, 5, 5, 5);
@@ -67,6 +71,9 @@ public class Login extends JFrame implements ActionListener {
         container.add(login, c);
     }
 
+    /**
+     * sets the size and location of the frame and it's components
+     */
     public void setLocationAndSize() {
         // Get the screen dimensions
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -89,21 +96,26 @@ public class Login extends JFrame implements ActionListener {
         login.setSize(100, 30);
     }
 
+    /**
+     * Action for selecting login button
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            HashMap<String, String> params = new HashMap<>();
-            params.put("username", username.getText());
-            params.put("password", HashingFactory.hashPassword(String.valueOf(password.getPassword())));
-            Response res = new ClientSocketFactory("/login", null, params, null).Connect();
+        HashMap<String, String> params = new HashMap<>();
 
-            if (res != null && res.status == Status.SUCCESS && res.body instanceof Session) {
-                SessionService.setInstance((Session) res.body);
-                Main.createAndShowClient();
-                dispose();
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        // get the values from the components
+        params.put("username", username.getText());
+        params.put("password", HashingFactory.hashPassword(String.valueOf(password.getPassword())));
+
+        // await a response from the server
+        Response res = new ClientSocketFactory("/login", null, params, null).Connect();
+
+        if (res != null && res.status == Status.SUCCESS && res.body instanceof Session) {
+            // set the session and render client main menu
+            SessionService.setInstance((Session) res.body);
+            Main.createAndShowClient();
+            dispose();
         }
     }
 }
