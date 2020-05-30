@@ -11,7 +11,7 @@ import java.util.Properties;
  * A singleton Class that handles all the database interactions for the server.
  *
  * @author Jamie Martin
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Perdana Bailey
  */
 public class DataService {

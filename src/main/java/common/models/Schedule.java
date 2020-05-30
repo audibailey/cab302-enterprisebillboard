@@ -14,7 +14,7 @@ import java.time.Instant;
  *
  * @author Perdana Bailey
  * @author Jamie Martin
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  */
 @SQLITE(type="FOREIGN KEY(billboardName) REFERENCES Billboard(name)")
 public class Schedule implements Serializable, Editable {

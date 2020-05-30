@@ -20,7 +20,7 @@ import static common.utils.session.HashingFactory.*;
  * This class acts as the controller with all the Actions related to the user permissions.
  *
  * @author Jamie Martin
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Perdana Bailey
  */
 public class UserPermissionsController {

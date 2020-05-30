@@ -9,7 +9,7 @@ import java.io.Serializable;
  * This class consists of the user object and its associated methods.
  *
  * @author Perdana Bailey
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  * @author Jamie Martin
  */
 @SQLITE

@@ -13,7 +13,7 @@ import java.util.*;
  * This class handles the how the server responds to the authenticated required requests.
  *
  * @author Perdana Bailey
- * @author Kevin Huynh
+ * @author Hieu Nghia Huynh
  */
 public class TokenService {
 
