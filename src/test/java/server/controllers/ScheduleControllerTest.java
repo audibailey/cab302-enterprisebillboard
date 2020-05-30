@@ -62,12 +62,12 @@ public class ScheduleControllerTest {
         req = new Request(null, "blah", null, schedule);
         new ScheduleController.Insert().execute(req);
 
+        Thread.sleep(1000);
+
         //Create new request and get all schedules
         req = new  Request(null,"blah",null,null);
         Response test = new ScheduleController.Get().execute(req);
         List<Schedule> scheduleList = (List<Schedule>) test.body;
-
-        Thread.sleep(1000);
 
         // Get the deleted schedule data
         Schedule deleted = null;
@@ -80,7 +80,7 @@ public class ScheduleControllerTest {
             }
         }
 
-        req = new Request(null,"blah",null,deleted);
+        req = new Request(null,"blah",null, deleted);
         Response result = new ScheduleController.Delete().execute(req);
         assertEquals(Status.SUCCESS,result.status);
     }
