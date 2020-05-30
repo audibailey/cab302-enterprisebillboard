@@ -22,6 +22,7 @@ public class ScheduleControllerTest {
         bb.locked = true;
 
         Schedule schedule = Schedule.Random(bb.name);
+        while (schedule.duration < 1) schedule.duration = RandomFactory.Int(15);
         while (schedule.interval < schedule.duration) schedule.interval = RandomFactory.Int(60);
 
         // Create new request.
