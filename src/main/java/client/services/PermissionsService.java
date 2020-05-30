@@ -19,16 +19,30 @@ import java.util.List;
 public class PermissionsService extends DataService<Permissions> {
     private List<Permissions> permissions;
 
+    /**
+     * initialise new permissions service
+     */
     protected PermissionsService() {
         this.permissions = new ArrayList<>();
     }
 
+    /**
+     * static singleton holder for permissions service
+     */
     private static class PermissionsServiceHolder {
         private final static PermissionsService INSTANCE = new PermissionsService();
     }
 
+    /**
+     * get the permissions service instance
+     * @return
+     */
     public static PermissionsService getInstance() { return PermissionsServiceHolder.INSTANCE; }
 
+    /**
+     * refreshes the permissions list
+     * @return
+     */
     public List<Permissions> refresh() {
         Session session = SessionService.getInstance();
 
@@ -43,18 +57,33 @@ public class PermissionsService extends DataService<Permissions> {
         return PermissionsServiceHolder.INSTANCE.permissions;
     }
 
+    /**
+     * attempts to insert the given permissions on the server
+     * @param b
+     * @return
+     */
     public List<Permissions> insert(UserPermissions up) {
         Session session = SessionService.getInstance();
         Response res = new ClientSocketFactory("/userpermissions/insert", session.token, null, up).Connect();
         return refresh();
     }
 
+    /**
+     * attempts to update the given permissions on the server
+     * @param b
+     * @return
+     */
     public Boolean update(Permissions p) {
         Session session = SessionService.getInstance();
         Response res = new ClientSocketFactory("/permission/update", session.token, null, p).Connect();
         return !res.error;
     }
 
+    /**
+     * attempts to delete the given permissions on the server
+     * @param u
+     * @return
+     */
     public List<Permissions> delete(User u) {
         Session session = SessionService.getInstance();
 
@@ -65,7 +94,14 @@ public class PermissionsService extends DataService<Permissions> {
         return refresh();
     }
 
-
+    /**
+     * attempts to update the password of the given user id on the server
+     * @param id
+     * @param username
+     * @param password
+     * @return
+     * @throws Exception
+     */
     public List<Permissions> updatePassword(int id, String username, String password) throws Exception {
         Session session = SessionService.getInstance();
         
