@@ -109,7 +109,7 @@ public class ScheduleService {
                     while(j + 1 < 1440 && minutesInDay[j + 1] == name) j++;
 
                     // add formatted string to listOfTimes
-                    listOfTimes.add(Time.minutesToTime(i) + " - " + Time.minutesToTime(j) + " " + name);
+                    listOfTimes.add(Time.minutesToTime(i) + " - " + Time.minutesToTime(j + 1) + " " + name);
 
                     i = j;
                 }
