@@ -34,8 +34,8 @@ public class SchedulePanel extends JPanel implements ActionListener {
     Container buttonContainer = new Container();
     JButton createButton = new JButton("Create Schedule"),
         refreshButton = new JButton("Refresh"),
-        showButton = new JButton("Delete Selected"),
-        deleteButton = new JButton("Show Schedule");
+        showButton = new JButton("Show Schedule"),
+        deleteButton = new JButton("Delete Selected");
     String selected;
 
 
