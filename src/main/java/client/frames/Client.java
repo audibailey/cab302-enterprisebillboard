@@ -50,11 +50,13 @@ public class Client extends JFrame {
                 ""
             );
 
-            try {
-                // try update on server
-                PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            if (result != null) {
+                try {
+                    // try update on server
+                    PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
 
