@@ -20,7 +20,7 @@ public class DataService {
     /**
      * Generates a Dataservice Instance.
      *
-     * @throws Exception: thrown when unable to connect to database;
+     * @throws Exception Thrown when unable to connect to database.
      */
     protected DataService() {
         this.connection = startConnection();
@@ -41,7 +41,7 @@ public class DataService {
      * Get a connection to database.
      *
      * @return Connection object.
-     * @throws Exception: thrown when unable to configure database connection from props.
+     * @throws Exception Thrown when unable to configure database connection from props.
      */
     private static Connection startConnection() {
         try {
@@ -62,7 +62,7 @@ public class DataService {
     /**
      * This closes an active database connection.
      *
-     * @throws SQLException: thrown when unable to close connection to database.
+     * @throws SQLException Thrown when unable to close connection to database.
      */
     public void closeConnection() throws SQLException {
         if (connection != null) {

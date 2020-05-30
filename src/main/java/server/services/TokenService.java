@@ -30,11 +30,11 @@ public class TokenService {
     /**
      * This is the function called when a client attempts to login.
      *
-     * @param user: This is the user object of the user trying to login
-     * @param permissions: These are the permissions of the user trying to login
-     * @param password: The attempted password
-     * @return String token: Null if failed, token if valid Session exists or new Session created.
-     * @throws Exception: Pass through the server error from the tryLogout function.
+     * @param user This is the user object of the user trying to login.
+     * @param permissions These are the permissions of the user trying to login.
+     * @param password The attempted password.
+     * @return String token Null if failed, token if valid Session exists or new Session created.
+     * @throws Exception Pass through the server error from the tryLogout function.
      */
     public Session tryLogin(User user, Permissions permissions, String password) throws Exception {
         // Convert the users saved password and salt as a hex to a byte array
@@ -76,9 +76,9 @@ public class TokenService {
     /**
      * This function checks if the user exists and returns an optional user.
      *
-     * @param username: The username of the user using the client.
-     * @return Optional<User>: The user optional after attempting to fetch the user based off username.
-     * @throws Exception: Pass through the server error.
+     * @param username The username of the user using the client.
+     * @return Optional<User> The user optional after attempting to fetch the user based off username.
+     * @throws Exception Pass through the server error.
      */
     public Optional<User> checkUserExists(String username) throws Exception {
         return CollectionFactory.getInstance(User.class).get(u -> u.username.equals(username)).stream().findFirst();
@@ -87,9 +87,9 @@ public class TokenService {
     /**
      * This function checks if the user exists and returns an optional user.
      *
-     * @param username: The username of the user using the client.
-     * @return Optional<User>: The user optional after attempting to fetch the user based off username.
-     * @throws Exception: Pass through the server error.
+     * @param username The username of the user using the client.
+     * @return Optional<User> The user optional after attempting to fetch the user based off username.
+     * @throws Exception Pass through the server error.
      */
     public Optional<Permissions> checkPermissionsExist(String username) throws Exception {
         return CollectionFactory.getInstance(Permissions.class).get(u -> u.username.equals(username)).stream().findFirst();
@@ -99,7 +99,7 @@ public class TokenService {
      * This function logs the user out by removing the token from the session and removing them
      * from the logged in list.
      *
-     * @param token: The supplied user token.
+     * @param token The supplied user token.
      */
     public void tryLogout(String token) {
         sessions.remove(token);
@@ -108,8 +108,8 @@ public class TokenService {
     /**
      * This function ensures the token is valid.
      *
-     * @param token: The supplied user token.
-     * @return boolean: Token valid or invalid.
+     * @param token The supplied user token.
+     * @return boolean Token valid or invalid.
      */
     public boolean verify(String token) {
         if (token == null) return false;
@@ -124,8 +124,8 @@ public class TokenService {
     /**
      * This function gets the session details by username.
      *
-     * @param username: The username of the logged-in user.
-     * @return Optional<Session>: The Session object related to the logged-in user.
+     * @param username The username of the logged-in user.
+     * @return Optional<Session> The Session object related to the logged-in user.
      */
     public Optional<Session> getSessionByUsername(String username) {
         if (username == null) return null;
@@ -135,8 +135,8 @@ public class TokenService {
     /**
      * This function gets the session details by token.
      *
-     * @param token: The token of the logged-in user.
-     * @return Optional<Session>: The Session object related to the logged-in user.
+     * @param token The token of the logged-in user.
+     * @return Optional<Session> The Session object related to the logged-in user.
      */
     public Optional<Session> getSessionByToken(String token) {
         if (token == null) return null;
@@ -146,8 +146,8 @@ public class TokenService {
     /**
      * This function ensures the token is not expired.
      *
-     * @param token: The token of the logged-in/ex-logged in user.
-     * @return boolean: True if expired, False is not expired.
+     * @param token The token of the logged-in/ex-logged in user.
+     * @return boolean True if expired, False is not expired.
      */
     public boolean expired(String token) {
         // Get the session information from the token.

@@ -24,9 +24,9 @@ public class Authentication {
         /**
          * Override the execution with the token validation check to authorise the user.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router to determine the users authentication.
-         * @throws Exception: Pass through the server error from the verify function when checking the token.
+         * @param req The user request.
+         * @return IActionResult This object is for the router to determine the users authentication.
+         * @throws Exception Pass through the server error from the verify function when checking the token.
          */
         @Override
         public Response execute(Request req) throws Exception {

@@ -35,9 +35,9 @@ public class UserController {
         /**
          * Override the default execute function with the login of the user.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns a token or a Unauthenticated.
-         * @throws Exception: Pass through the server error from the checkUserExists or tryLogin function.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns a token or a Unauthenticated.
+         * @throws Exception Pass through the server error from the checkUserExists or tryLogin function.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -77,9 +77,9 @@ public class UserController {
         /**
          * Override the default execute function with the logging out of the user.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that ensures a successful logout.
-         * @throws Exception: Pass through the server error from the tryLogout function.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that ensures a successful logout.
+         * @throws Exception Pass through the server error from the tryLogout function.
          */
         @Override
         public Response execute(Request req) throws Exception {

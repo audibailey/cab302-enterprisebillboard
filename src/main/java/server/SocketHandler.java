@@ -23,7 +23,7 @@ public class SocketHandler implements Runnable {
     /**
      * The SocketHandler Constructor.
      *
-     * @param client:          This is the socket connection from the client.
+     * @param client This is the socket connection from the client.
      */
     public SocketHandler(Socket client) {
         this.client = client;
@@ -77,7 +77,7 @@ public class SocketHandler implements Runnable {
     /**
      * This is a helper function to make replying to client easier.
      *
-     * @param resp: This is the response that will be sent to the client.
+     * @param resp This is the response that will be sent to the client.
      */
     private void replyClient(Response resp) {
 

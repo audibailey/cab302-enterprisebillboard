@@ -18,8 +18,8 @@ public class RouteHandler {
      * Routes a given request and returns the result.
      * All exceptions inside the actions are handled here and returned to the client.
      *
-     * @param r: The Request class.
-     * @return IActionResult: The result from performing the given actions.
+     * @param r The Request class.
+     * @return IActionResult The result from performing the given actions.
      */
     public static Response execute(Request r, List<Class<? extends Action>> actions) throws Exception {
         // If there's no actions return NotFound.

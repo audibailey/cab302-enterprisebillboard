@@ -24,8 +24,8 @@ public class Main {
     /**
      * This is the main function.
      *
-     * @param args: command line arguments.
-     * @throws Exception: Automatically critical fail if an error is thrown.
+     * @param args Command line arguments.
+     * @throws Exception Automatically critical fail if an error is thrown.
      */
     public static void main(String[] args) throws Exception {
         System.out.println("Billboard Server");
@@ -58,7 +58,10 @@ public class Main {
         }
     }
 
-
+    /**
+     * This function initialises the database for the application.
+     * @throws Exception Pass through the server error.
+     */
     public static void initDatabase() throws Exception {
         // Connect and populate the database
         CollectionFactory.getInstance(Billboard.class);
@@ -78,6 +81,9 @@ public class Main {
         }
     }
 
+    /**
+     * This function initialises the router for the application.
+     */
     public static void initRouter() {
         // ADD THE ROUTER
         RouterService.getInstance().SET_AUTH(Authentication.Authenticate.class)

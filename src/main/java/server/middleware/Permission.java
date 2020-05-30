@@ -28,9 +28,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -50,9 +50,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -79,9 +79,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -110,9 +110,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -135,9 +135,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -156,9 +156,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -190,9 +190,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
@@ -220,9 +220,9 @@ public class Permission {
         /**
          * Override the default execute function with permission check.
          *
-         * @param req: The user request.
-         * @return IActionResult: This object is for the router that returns whether they have the specified permission.
-         * @throws Exception: Pass through server error.
+         * @param req The user request.
+         * @return IActionResult This object is for the router that returns whether they have the specified permission.
+         * @throws Exception Pass through server error.
          */
         @Override
         public Response execute(Request req) throws Exception {
