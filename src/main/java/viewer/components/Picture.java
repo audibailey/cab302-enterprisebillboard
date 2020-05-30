@@ -17,9 +17,10 @@ import java.util.Base64;
 public class Picture extends JLabel {
     /**
      * Picture class constructor. Takes billboard object and container to draw in as parameters.
-     * @param billboard
-     * @param wFactor
-     * @param hFactor
+     *
+     * @param billboard The billboard being viewed.
+     * @param wFactor The width factor of the frame.
+     * @param hFactor The height factor of the frame.
      * @throws IOException
      */
     public Picture(Billboard billboard, int wFactor, int hFactor) throws IOException {
@@ -36,59 +37,24 @@ public class Picture extends JLabel {
     }
 
     /**
-     * Method to calculate and resize image appropriately inside panel. Takes buffered image and label boundaries as parameters.
-     * @param pic
-     * @param picBoundsWidth
-     * @param picBoundsHeight
-     * @return ByteArray
-     * @throws IOException
-     */
-    public byte[] calcPicSize(BufferedImage pic, int picBoundsWidth, int picBoundsHeight) throws IOException {
-        int pic_width = pic.getWidth();
-        int pic_height = pic.getHeight();
-        int bound_width = picBoundsWidth;
-        int bound_height = picBoundsHeight;
-        int new_width = pic_width;
-        int new_height = pic_height;
-
-        // Checking if scaling the width is needed
-        if (pic_width > bound_width) {
-            new_width = bound_width;
-            new_height = (new_width * pic_height) / pic_width;
-        }
-
-        // Checking if scaling the height is needed
-        if (new_height > bound_height) {
-            new_height = bound_height;
-            new_width = (new_height * pic_width) / pic_height;
-        }
-        // Formatting image with new dimensions
-        BufferedImage resizedPic = new BufferedImage(new_width, new_height, pic.getType());
-        Graphics g = resizedPic.getGraphics();
-        g.drawImage(pic, 0, 0, resizedPic.getWidth(), resizedPic.getHeight(), null);
-        g.dispose();
-        ByteArrayOutputStream finalPicture = new ByteArrayOutputStream();
-        ImageIO.write(resizedPic, "jpg", finalPicture);
-        return finalPicture.toByteArray();
-    }
-
-    /**
      * Method to calculate and resize an ImageIcon appropriately inside panel. Takes the ImageIcon and label boundaries as parameters.
-     * @param icon
-     * @param w
-     * @param h
-     * @return ImageIcon
+     * @param icon The picture icon to be displayed
+     * @param w The width of the component
+     * @param h The height of the component
+     * @return ImageIcon The scaled image
      */
     public ImageIcon scaleImage(ImageIcon icon, int w, int h)
     {
         int nw = icon.getIconWidth();
         int nh = icon.getIconHeight();
+
         // Checking if scaling the width is needed
         if(icon.getIconWidth() > w)
         {
             nw = w;
             nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
         }
+
         // Checking if scaling the height is needed
         if(nh > h)
         {
