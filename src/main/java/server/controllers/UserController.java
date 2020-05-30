@@ -106,7 +106,7 @@ public class UserController {
             // Ensure the body is of type user.
             if(req.params.get("username") == null || req.params.get("password") == null)
             {return new BadRequest("Username and password must not be null.");}
-            if (req.params.get("username").isEmpty() || req.params.get("password").isEmpty())
+            if (req.params.get("username").length() < 1 || req.params.get("password").length() < 1)
                 return new BadRequest("No username or password");
 
             String username = req.params.get("username");
