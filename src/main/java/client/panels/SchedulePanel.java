@@ -180,7 +180,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 // Setting up calendar table
                 DefaultTableModel mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
                 JTable tblCalendar = new JTable(mtblCalendar);
-                tblCalendar.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+                tblCalendar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Turn off auto resizing so user can scroll through data
                 List<Day> day = ScheduleService.getInstance().getSchedule();
                 int max = 0;
                 for (Day time : day) {
@@ -204,6 +204,12 @@ public class SchedulePanel extends JPanel implements ActionListener {
                 // Inserting rows
                 for (int i = 0; i < max; i++) {
                     mtblCalendar.addRow(new Object[]{day.get(0).times.get(i), day.get(1).times.get(i), day.get(2).times.get(i), day.get(3).times.get(i), day.get(4).times.get(i), day.get(5).times.get(i), day.get(6).times.get(i)});
+                }
+                // Resizing column widths
+                for (int i = 0; i < 7; i++){
+                    tblCalendar.getColumnModel().getColumn(i).setPreferredWidth(200);
+                    tblCalendar.getColumnModel().getColumn(i).setMinWidth(200);
+                    tblCalendar.getColumnModel().getColumn(i).setMaxWidth(400);
                 }
                 // Adding components to pane
                 JScrollPane pane = new JScrollPane(tblCalendar);
