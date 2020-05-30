@@ -25,6 +25,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
 
+/**
+ * This class holds all XML and File based logic
+ */
 public class XML {
 
     public static String readFile(String path) throws Exception {

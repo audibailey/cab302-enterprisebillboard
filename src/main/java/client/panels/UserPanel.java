@@ -162,13 +162,19 @@ public class UserPanel extends JPanel implements ActionListener {
                 ""
             );
 
-            int id = tableModel.getObjectRows().stream().filter(x -> x.username.equals(selected)).findFirst().get().id;
+            if (result != null) {
+                if (result.isEmpty()) {
+                    Notification.display("Password cannot be blank");
+                } else {
+                    int id = tableModel.getObjectRows().stream().filter(x -> x.username.equals(selected)).findFirst().get().id;
 
-            try {
-                // try update the password
-                PermissionsService.getInstance().updatePassword(id, selected, result);
-            } catch (Exception exception) {
-                Notification.display(exception.getMessage());
+                    try {
+                        // try update the password
+                        PermissionsService.getInstance().updatePassword(id, selected, result);
+                    } catch (Exception exception) {
+                        Notification.display(exception.getMessage());
+                    }
+                }
             }
         }
         // Check if refresh button is pressed
