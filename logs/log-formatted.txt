@@ -1,0 +1,484 @@
+2020-05-30 17:43:10 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b53208a comments-viewer
+2020-05-30 17:32:45 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 997eed2 fix-schedule-controller-test
+2020-05-30 16:51:03 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d6804b4 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-30 16:48:13 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ef0a53d refactor-Kevin-to-Hyunh
+2020-05-30 16:07:05 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 8041d95 feat-Fixed-schedule-viewer
+2020-05-30 15:40:54 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ced5115 fix-schedule-time-fix
+2020-05-30 15:38:12 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 97db727 feat-Push-database
+2020-05-30 15:31:50 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 781c6f7 fix-switch-names
+2020-05-30 15:23:42 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 45d2e0b fix-UserPanel-password-edit-comment-XML
+2020-05-30 14:57:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f2e212e fix-cancel-handle
+2020-05-30 14:47:00 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 31b5a20 fix-password-cannot-be-blank
+2020-05-30 14:32:51 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8d58fb2 fix-allow-cancel-for-update-password
+2020-05-30 14:23:03 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 0543179 feat-Added-more-test-case-for-XMLTests
+2020-05-30 14:21:21 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> f3ccf59 Merge-remote-tracking-branch-origin-client-framing-into-client-framing
+2020-05-30 14:20:58 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 1b8f8f5 feat-Added-more-test-case-for-XMLTests
+2020-05-30 13:38:20 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 6284953 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-30 13:37:50 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 2e757f8 feat-Commenting-viewer-classes
+2020-05-30 13:20:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 015eeac comments-client
+2020-05-30 10:24:07 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 93878e8 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-30 10:23:52 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 026d2b1 feat-Change-calendar-column-widths
+2020-05-30 10:15:43 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5a6b08f fix-ensure-duration-isn-t-0
+2020-05-30 10:09:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 9e11391 fix-test-occasionally-errors
+2020-05-30 10:04:14 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3b2d1df remove-hashing-test-todo
+2020-05-30 10:03:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6fb940a feat-use-network-props-for-ClientFactory-Viewer-cannot-connect-BB
+2020-05-30 09:13:42 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 08c755d fixes-viewer-suppress-notification
+2020-05-30 08:50:51 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 9daacf9 fix
+2020-05-30 08:42:15 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ccc672c fix-schedule-service-get-schedule
+2020-05-30 08:41:57 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4cd1472 comments-add-todo
+2020-05-30 08:41:42 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5c7c5f2 fixes-controller-logic
+2020-05-30 07:39:05 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> cfb9898 feat-Calendar-view-with-populated-rows-remerge
+2020-05-30 07:24:55 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 37d5c80 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-30 07:23:23 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 87fc495 feat-Calendar-view-with-populated-rows
+2020-05-29 22:01:32 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> fbbff22 feat-Fix-empty-billboard-username-and-added-XML-tests
+2020-05-29 21:14:23 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4b60098 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-29 21:14:08 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> fdce46a comments-client-components
+2020-05-29 21:12:11 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> e2c7f4e feat-Fix-permission-test
+2020-05-29 20:32:47 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 13960bc fixes-IActionResult-to-Response
+2020-05-29 20:20:10 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 29f8a1f Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-29 20:17:26 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 64f501a refactor-major-refactor-abstraction-to-various-classes
+2020-05-29 17:53:27 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 72b5a63 feat-Some-fixes-idk
+2020-05-29 16:06:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> fbf4cee Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-29 16:06:11 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c41d82b fix-allow-view
+2020-05-29 15:30:12 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 52833f8 feat-Fixed-minor-issues-added-TokenService-and-HashingFactory-tests
+2020-05-29 14:20:04 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 21815d8 refactor-TokenService
+2020-05-29 11:55:46 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 24f337a feat-Added-Schema-Builder-Tests
+2020-05-28 13:40:36 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 99fda72 feat-Updated-tests
+2020-05-28 07:49:07 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4a45072 revert-revert
+2020-05-28 07:44:38 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5275bb5 revert-revert
+2020-05-28 00:10:02 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 16ecad2 Merge-remote-tracking-branch-origin-client-framing-into-client-framing
+2020-05-28 00:09:13 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> c111a00 feat-Added-PermissionTest-and-added-checking-for-non-empty-params
+2020-05-28 00:06:39 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> f90fa12 feat-Added-PermissionTest-and-added-checking-for-non-empty-params
+2020-05-27 23:18:00 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 0ae60f4 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-27 23:13:38 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> b7b0f9b feat-Scheduler-basic-calendar-view
+2020-05-27 22:22:27 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> d765511 Revert-Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-27 22:08:51 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 45447ba Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-27 22:06:13 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 89945a2 Feat-Schedule-calendar-view-template
+2020-05-27 21:27:29 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 0caf5ab fixes-tests
+2020-05-27 20:59:03 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5864959 feat-Authentication-tests-example
+2020-05-27 20:58:49 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ca0eeb9 refactor-delete-perms-service-test-no-perms-service-anymore
+2020-05-27 20:46:30 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5af1048 feat-init-Permission-middleware-test
+2020-05-27 20:37:52 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 545f094 commnet-Day
+2020-05-27 20:37:09 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 536ebb2 feat-schedule-view-data-fix
+2020-05-27 20:20:20 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6a6c927 new-db
+2020-05-27 20:20:11 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 78d2efa fix-viewer-time
+2020-05-27 20:19:58 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ea19803 fix-schedule-billboard-name-not-unique
+2020-05-27 20:19:41 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e6188a1 fix-services-to-reflect-server
+2020-05-27 20:19:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 581b0e1 refactor-controller-tests
+2020-05-27 17:06:08 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> ca2c7b1 feat-Added-updatePassword-testing
+2020-05-27 15:30:09 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 11c7927 feat-Added-more-cases-for-UserControllerTest-Permission-Schedule-controller-tests
+2020-05-27 11:28:07 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> fabf57d Merge-remote-tracking-branch-origin-client-framing-into-client-framing
+2020-05-27 11:24:15 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> e5c1a80 feat-Added-UserController-test-and-change-User-delete-to-using-params
+2020-05-27 00:48:55 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b859b67 docs-refactor-Mainly-fixed-documentation-with-the-occasional-refactor-optimisation
+2020-05-26 22:51:47 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 1c079a2 feat-Changed-for-delete-billboard-BillboardControllerTest
+2020-05-26 20:39:38 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 836444d Merge-remote-tracking-branch-origin-client-framing-into-client-framing
+2020-05-26 19:03:00 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 060c25b refactor-cleanup
+2020-05-26 19:02:53 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 65c24d9 fix-viewer-panel-refresh-15s
+2020-05-25 21:44:05 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 27253e6 refactor-viewer-cleanup-preliminary-hookup
+2020-05-25 21:43:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c72ea15 fix-schedule-controller
+2020-05-25 21:41:21 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4fb38fb remove-exit-events
+2020-05-25 21:41:07 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6fc9830 refactor-generic-exxceptio
+2020-05-25 18:40:20 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 436bfb1 feat-Some-cleanup-change-delete-billboard
+2020-05-24 23:39:57 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 35b5a2f feat-Change-update-password-to-use-params-instead-of-new-object.-Added-canChangePassword-permission
+2020-05-24 18:22:10 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 6458274 feat-Change-the-algo-for-getCurrent
+2020-05-24 16:06:54 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6329129 feat-schedule-refactor-get-current-fixes
+2020-05-24 15:25:46 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8955c12 refactor-Schedule-fix-for-calendar-view
+2020-05-24 15:25:24 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d044ca4 take-out-the-trash
+2020-05-23 20:17:52 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> f611d4e Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-23 20:17:16 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 5657e40 Feat-Schedule-panel-button-listeners
+2020-05-23 19:40:19 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c49dd13 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-23 19:39:50 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 2bc2700 refactor-remove-serial-id
+2020-05-23 19:19:18 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> b2c4c54 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-23 19:18:54 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 1bb95e1 Feat-Changed-schedule-date-formatting
+2020-05-23 19:06:10 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 706e28f fix-serial-update
+2020-05-23 19:03:38 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3ffaa05 remove-redundant-files
+2020-05-23 18:42:36 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c56f362 refactor-token-uuid
+2020-05-23 18:11:47 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e25625c fixes-combobox
+2020-05-23 18:00:50 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8b74be8 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-23 18:00:37 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c1b641e fix-imports
+2020-05-23 17:59:49 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> fe0e4c8 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-23 17:59:41 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> b610368 Update-Schedule-Panel
+2020-05-23 17:58:03 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 505bcec Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-23 17:57:24 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 7110b43 fix-tableModel-to-Schedule
+2020-05-23 17:48:51 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 4f7eec7 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-23 17:48:44 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 8ad120b Feat-Dialog-box-for-Schedule-Panel
+2020-05-23 17:44:58 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 2ba7a64 fix-ScheduleService
+2020-05-23 17:39:39 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 9bf274a feat-billboard-export
+2020-05-23 14:04:45 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 06090d3 refactor-more-semantic
+2020-05-23 14:03:01 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e33d85c fix-error-handling-for-null-values-uncomment-notification
+2020-05-23 13:56:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 55d65c2 feat-Create-user-pick-values
+2020-05-23 12:05:18 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d043261 feat-ActionListerner-for-schedule-panel-naming-convention-for-buttons
+2020-05-23 11:50:55 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> a442899 Fix-Rearranged-refresh-buttons
+2020-05-23 11:43:47 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3d14bcd fix-Schedule-not-editable
+2020-05-23 11:42:08 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 65e5c4b feat-Schedule-getters
+2020-05-23 11:41:54 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b8189f4 remove-old-schedule-button
+2020-05-22 22:23:40 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 81fd34e Feat-Schedule-Panel-Buttons-and-Table
+2020-05-22 12:23:51 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 5fe6c26 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-22 12:23:44 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 012a279 Feat-Fixed-viewerpanel-for-smaller-messages
+2020-05-22 12:02:19 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c2a26a2 Merge-branch-client-framing-into-router-services-sql-refactoring
+2020-05-22 12:02:07 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 87d0ec5 fix-db
+2020-05-22 12:01:34 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 13fcfc5 fix-remove-canViewBillboard-not-in-spec-lol
+2020-05-22 11:52:38 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 80a023e feat-import-xml-into-a-selected-billboard
+2020-05-21 22:47:10 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 1315a61 Merge-remote-tracking-branch-origin-router-services-sql-refactoring-into-router-services-sql-refactoring
+2020-05-21 22:43:44 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> c005c60 feat-added-more-tests-in-ClientTest
+2020-05-21 22:08:54 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f4e1661 feat-update-own-password
+2020-05-21 21:30:42 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4e2d86a fix-Instant-from-SQL
+2020-05-21 21:30:30 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 1990cc7 comment-broke-test
+2020-05-21 21:15:23 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 0b80758 Merge-remote-tracking-branch-origin-router-services-sql-refactoring-into-router-services-sql-refactoring
+2020-05-21 21:15:14 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> eed3b96 Merge-remote-tracking-branch-origin-router-services-sql-refactoring-into-router-services-sql-refactoring
+2020-05-21 21:13:01 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 97c4ae1 feat-test-Schedule
+2020-05-21 21:12:43 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 961522e hide-tests-for-now
+2020-05-21 21:07:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> dd4ed36 fix-Capitalize
+2020-05-21 21:06:05 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 438636d fix-capitalize
+2020-05-21 21:02:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6e5ad78 fix-merge-issues
+2020-05-21 21:01:59 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> fbd6839 fix-merge-issues
+2020-05-21 21:00:05 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 7ee405b delete-cab302
+2020-05-21 20:59:27 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 0a8d0a3 fix-merge-issues
+2020-05-21 20:58:13 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> aa598ee schedule-frame
+2020-05-21 20:58:04 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ec57262 capitalize
+2020-05-21 20:57:08 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b029be5 chore-add-sqlite
+2020-05-21 20:56:42 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 997c3ab fixes-Viewer-Picture-to-scale
+2020-05-21 20:55:59 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 9a31011 refactor-move-old-panels-to-trash
+2020-05-21 20:55:46 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3cacd64 refactor-Service-fixes-cleanup-feats
+2020-05-21 20:55:29 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6ec985f refactor-Panel-changes
+2020-05-21 20:55:10 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 64f06d1 refactor-Editable-table-whatnot
+2020-05-21 20:55:00 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ecff759 refactor-Editable-Table-whatnot
+2020-05-21 20:52:56 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ecc220d refactor-cleanup
+2020-05-21 20:52:24 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 18e37de fix-TokenService-update-permissions-on-get
+2020-05-21 20:52:11 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 2cf4d78 fix-Permission-more-verbose
+2020-05-21 20:51:49 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> a958807 fix-default-values
+2020-05-21 20:51:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 33a82c9 fix-ClientSocketFactory-fix
+2020-05-21 20:51:06 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 694a24e refactor-move-to-trash
+2020-05-21 18:33:54 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> e3e2f07 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-21 18:23:37 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> c46db2d Update-cab302.db
+2020-05-21 18:03:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> aed1f01 fixes-Picture-editing-Statement-builder
+2020-05-21 16:44:07 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c6a17b4 fix-add-setters-to-Billboard
+2020-05-21 16:30:45 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 3c3147c Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-21 16:30:24 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 626d001 cleanup
+2020-05-21 16:29:48 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 8bc4687 refactor-Changed-casing-on-CreateEditUserFrame
+2020-05-21 16:27:38 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 57e6517 fix-hide-serial-version-on-SQL
+2020-05-21 16:15:58 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> ac21b94 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-21 16:15:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ebb9158 feat-service-implementations
+2020-05-21 13:42:06 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f24aef2 feat-implement-button-functionality-for-panels-hook-up-service
+2020-05-21 13:22:57 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c00c511 Merge-branch-feat-billboardViewerTests-into-client-framing
+2020-05-21 13:21:58 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 52b50a9 feat-Test-User-Billboard-Panel
+2020-05-21 12:26:56 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 67fef89 feat-Client-Table-Editor-Renderers
+2020-05-21 10:53:39 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 298ed5c Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-21 10:50:52 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> d3d4781 Feat-Schedule-Frame
+2020-05-21 10:46:12 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 186748c fix-nullable-session-for-now-while-UI-dev-still-in-happening
+2020-05-20 21:51:40 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 0e7e1d0 feat-implement-various-state-management-techniques
+2020-05-19 22:42:08 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> e1db739 Merge-branch-client-framing-of-https-bitbucket.org-30221-cab302majorassessment-into-client-framing
+2020-05-19 22:41:44 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> e39a933 Feat-Fixed-edit-user-frame
+2020-05-19 17:05:02 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d9a6355 feat-Client-login-cleanup-permissions-injection
+2020-05-19 17:03:36 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 45da5f1 refactor-add-permissions-to-Session
+2020-05-19 17:03:20 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 7aab137 fix-exception-handle-in-ClientSocketFactory
+2020-05-19 17:02:50 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> beaed3d feat-Permissions-on-Session-for-Client
+2020-05-19 15:48:09 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f10b7a3 Merge-branch-router-services-sql-refactoring-into-client-framing
+2020-05-19 11:23:17 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> dfb54bd Feat-Basic-Create-Edit-User-Frames
+2020-05-18 17:20:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 05e9e48 refactor-cleanup-statementbuilder
+2020-05-18 17:07:05 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e7ae62e Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-18 17:06:47 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 05b7d77 refactor-remove-cleanup-Maria-server-Main-cleanup
+2020-05-18 17:05:05 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 86a8211 unhide-db.props-cab302.db
+2020-05-18 16:50:15 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 2be1dd9 feat-Added-Billboard-user-controller-test
+2020-05-18 16:44:27 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4a14450 refactor-client-test
+2020-05-18 16:44:19 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> da8d33e fix-ROUTER-FIX
+2020-05-18 15:52:51 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 369a98e fix-client-test
+2020-05-18 15:45:46 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5c82474 feat-basic-Login-func
+2020-05-18 15:45:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b7c8b20 feat-Client-Session-Service-to-hold-Users-Session
+2020-05-18 15:45:09 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 243ece2 refactor-move-Session-to-common-fix-up-Permissions-Request
+2020-05-18 15:44:39 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8f94974 refactor-HashingFactory-hashAndSalt-vs-just-hash
+2020-05-18 15:43:51 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8c20580 refactor-ensure-Admin-exists
+2020-05-18 15:43:31 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5d17960 refactor-TokenService-Session-return-fix
+2020-05-18 15:41:24 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> aba9eef fix-throw-all-Exception
+2020-05-18 14:37:13 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 5d203ed feat-Added-insert-Admin
+2020-05-18 12:25:52 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6222061 Merge-branch-router-services-sql-refactoring-into-client-framing
+2020-05-18 12:01:21 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5106104 refactor-cleanup-Router-Main-Server-etc
+2020-05-18 11:00:46 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d2d2369 feat-More-RouterTests
+2020-05-18 10:51:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 29b11bf fix-add-address-for-client-and-viewer-to-network.props
+2020-05-18 10:51:07 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b34d0e2 feat-GenericRouter-easier-to-test-push-RouterHandler-to-own-class
+2020-05-18 10:50:41 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6a4ce39 TESTS-GenericRouter-String-String-map
+2020-05-18 00:25:00 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> e57d9a9 feat-Added-more-test-added-some-code-for-BillboardController
+2020-05-16 16:47:31 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 400d1e9 feat-Added-canDeleteUser-more-test-code-in-ClientTest
+2020-05-15 21:07:29 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5444ed7 fix-clientsocket-fac
+2020-05-15 21:05:42 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> db6d1b3 fix-client-notification
+2020-05-15 21:03:30 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 89c69f0 FIX-JAVA-SWING-NOTIFICATIONNN
+2020-05-14 21:39:46 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 1d640d6 fixes-Billboard-Controller-Client-Test-CLient-Socket-Factory
+2020-05-14 21:03:38 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 05d1293 Merge-branch-master-into-client-framing
+2020-05-14 21:03:11 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 0b61285 Merge-branch-master-into-feat-billboardViewerTests
+2020-05-14 21:02:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b6f3e2e Merge-branch-master-into-router-services-sql-refactoring
+2020-05-14 21:01:13 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6e57623 fix-hide-cab302.db-master
+2020-05-14 20:59:40 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 16a3f89 fix-remove-.idea-master
+2020-05-14 20:48:58 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 82f669c refactor-iml
+2020-05-14 20:41:44 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d3fdff7 refactor-remove-success
+2020-05-14 20:36:00 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ec66946 fix-ClientSocketFactory-reset-not-close
+2020-05-13 22:13:01 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f924fa1 refactor-ClientTest
+2020-05-13 22:01:34 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c8b3f61 test-ClientSocketFactory
+2020-05-13 21:56:55 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 88ebec9 refactor-ClientSocketFactory-for-new-Result-Requst
+2020-05-13 21:56:38 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ac54cb3 refactor-cleanup-Controllers-IACtion-Result
+2020-05-13 16:59:56 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b0c684f fix-return-bilboard-for-get-time
+2020-05-11 17:38:02 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 14141cb refactor-shorten-Schedule-check
+2020-05-11 17:23:37 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 40059ec feat-Added-function-to-get-current-schedule
+2020-05-11 14:10:03 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> ea1c631 feat-Fix-all-the-classes-to-static
+2020-05-11 12:31:16 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 009f3e3 Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-11 12:29:37 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d687fd6 fixes-static-class-for-Insert-StatementBuilder-remove-BinaryStream-TokenService-fix-string.equals
+2020-05-11 12:13:40 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 9386de9 fix-Various-small-bug-fixes
+2020-05-11 12:02:58 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f0ddc23 fix-Boolean-conversion-from-sqlite-INTEGER
+2020-05-11 01:39:29 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 99f836d fix-Hotfix-a-compile-error
+2020-05-11 01:27:46 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d6ede98 fix-Import-hotfix
+2020-05-11 01:27:28 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> c37cf1b feat-New-way-to-manage-hashing
+2020-05-11 01:27:11 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 252d0a2 refactor-Bring-this-back-for-testing
+2020-05-11 01:26:26 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d6c980b refactor-MariaDB-is-no-more-SQLite-is-in
+2020-05-11 01:25:59 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 58707ff docs-Added-Documentation
+2020-05-11 01:25:32 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> bd3c409 docs-Updated-Documentation
+2020-05-11 01:24:58 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 08034a8 refactor-Move-function-to-new-factory
+2020-05-11 01:23:38 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> ef917e2 refactor-Changed-the-checks-to-be-clearer
+2020-05-11 01:22:55 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 4c7fabf fix-Small-SQL-issue
+2020-05-11 01:22:43 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> bc1f1e3 fix-Allow-user-in-ClientTest-to-log-in
+2020-05-10 22:38:11 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 44e8a1e fix-lockBool
+2020-05-10 22:35:19 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e6a5867 Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-10 22:30:28 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 9ef98e1 refactor-cleanup-controllers-middleware
+2020-05-10 22:26:14 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d4db5a3 docs-Added-documentation
+2020-05-10 20:56:49 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6d17abe fix-INT
+2020-05-10 20:55:43 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> a38944b fix-sqlite
+2020-05-10 20:53:26 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4bfb60e Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-10 20:53:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f860511 refactor-SchemaBuilder
+2020-05-10 20:52:42 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> aa784d4 refactor-delete-handler
+2020-05-10 20:52:09 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 2eec5fc fix-gitignore
+2020-05-10 18:02:09 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d00f55b fix-Minor-fix-with-Collection-incorrect-variable-name
+2020-05-10 17:58:27 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> adffc3e refactor-docs-Variable-change.-Minor-documentation-update
+2020-05-10 17:57:02 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 86d3057 Merge-remote-tracking-branch-origin-router-services-sql-refactoring-into-router-services-sql-refactoring
+2020-05-10 17:52:02 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 6ce23f6 Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-10 17:48:43 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> eefc321 fixes-Controller-SQL-package-tests-SQL-tests
+2020-05-10 17:48:05 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 9f1985e refactor-docs-Refactor-some-variables-and-started-adding-documentation
+2020-05-10 16:58:46 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> a9db9a5 feat-Fix-Permission.java
+2020-05-10 16:57:02 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 15b9098 Merge-remote-tracking-branch-origin-router-services-sql-refactoring-into-router-services-sql-refactoring
+2020-05-10 16:56:08 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 6e56175 feat-Added-controller-permissions
+2020-05-10 16:25:12 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3ca3aa7 fix-add-messsage-to-unauth
+2020-05-10 16:23:07 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 65b38c3 tests-StatementBuilder
+2020-05-10 16:22:54 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b2849b2 refactor-Collection-StatementBuilder
+2020-05-10 16:22:15 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ea1f8ec fix-add-.idea
+2020-05-10 16:02:04 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 1a2823b fix-Actually-import-the-libraries
+2020-05-10 15:59:06 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 2f1aeb4 Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-10 15:56:04 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 45e3011 feat-Billboard-User-permissions
+2020-05-10 15:53:03 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 22fe5c1 Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-10 15:51:08 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 6258924 fix-Added-network.props-for-the-new-feature
+2020-05-10 15:49:37 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 2106201 refactor-No-longer-used.-Permissions-are-handled-in-middleware
+2020-05-10 15:49:15 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> ce86a34 feat-Read-port-from-network.props-file
+2020-05-10 15:47:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 80ae9ef remove-.idea
+2020-05-10 15:46:19 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8605c22 Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-10 15:46:12 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d2ebc67 feat-router-Authenticate-route
+2020-05-10 15:34:51 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 16a39d0 docs-Documentation-for-the-classes
+2020-05-10 15:23:35 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 640d10a refactor-IntelliJ-will-no-longer-IntelliJ
+2020-05-10 15:21:59 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 71830ec fix-docs-expired-function-is-no-longer-a-tautologoly.-Added-documentation
+2020-05-10 15:10:29 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 21937cc Merge-branch-router-services-sql-refactoring-of-https-bitbucket.org-30221-cab302majorassessment-into-router-services-sql-refactoring
+2020-05-10 15:10:16 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b459710 refactor-Rearrange-and-abstract-some-functions
+2020-05-10 15:09:33 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 8bf617d refactor-Consistency-of-errors
+2020-05-10 15:07:48 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> be9b7d5 feat-refactor-docs-Added-error-message-for-server.-Changed-some-client-responses.-Added-documentation
+2020-05-10 15:06:02 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 4cad183 docs-Added-documentation
+2020-05-10 15:05:04 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> fdb847a feat-New-class-for-a-not-found-IActionResult-with-a-method
+2020-05-10 15:04:47 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> b0e2e28 fix-Permission-controller-implementation
+2020-05-10 15:04:33 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> cc99f00 refactor-docs-Abstract-some-of-the-Token-service-into-here-and-add-documentation
+2020-05-10 15:03:54 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 7127e90 refactor-Change-default-IActionResult-response
+2020-05-10 15:00:04 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 2af654f feat-Finished-4-controllers
+2020-05-10 14:39:58 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8e24266 feat-UnsupportedType
+2020-05-10 14:11:36 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 66b3cd6 fix-if-null
+2020-05-10 14:10:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3271a5f remove-old-controllers
+2020-05-10 14:10:14 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> eadd673 fix-UserController
+2020-05-10 13:54:48 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 4be70de Merge-remote-tracking-branch-origin-router-services-sql-refactoring-into-router-services-sql-refactoring
+2020-05-10 13:52:48 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 3cfdb25 feat-Added-User-methods
+2020-05-10 13:27:54 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 07b83e5 feat-internal-error
+2020-05-10 13:21:27 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f928250 fix-Billboard-class
+2020-05-10 12:58:29 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3bb23d7 refactor-TokenService-comment-sql-package-router-package-feat-middleware
+2020-05-10 11:29:45 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> bc60a21 refactor-flesh-out-TokenService-and-hook-up-to-Actions
+2020-05-09 22:06:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3af73d2 fix-add-constructors-to-tests
+2020-05-09 22:04:02 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 94dc7e6 intelliJ
+2020-05-09 22:02:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f525f3b cleanup-remove-redundant-code
+2020-05-09 22:02:14 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 957ea9a refactor-server-main-method-to-implement-new-features-cleanup
+2020-05-09 22:01:30 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f96f32a refactor-comment-out-old-handlers
+2020-05-09 22:00:54 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 1140c43 refactor-comment-out-old-monolithic-handlers
+2020-05-09 22:00:19 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 59a0e7e refactor-Remove-old-MiddlewareHandler
+2020-05-09 21:59:59 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> edd4c15 feat-TokenService-PermisssionsService
+2020-05-09 21:59:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4315946 fix-comment-out-old-tests-redundant
+2020-05-09 21:58:48 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 2e65540 feat-new-dataservice-singleton-with-StatementBuilder-Collections-CollectionFactory
+2020-05-09 21:57:39 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ce2ff31 feat-Router-implementation
+2020-05-09 21:13:09 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 65bcaf0 feat-BillboardFrame
+2020-05-08 21:02:50 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> a854292 feat-Added-permission-endpoints-add-function-to-check-token-s-user-against-request.data-user-in-MiddlewareHandler.java
+2020-05-07 23:03:15 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> ffd1dcf feat-Fix-the-test
+2020-05-07 22:49:50 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 5fcbe8e feat-Minor-fix
+2020-05-07 22:44:46 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 2524501 feat-Minor-fix
+2020-05-07 22:38:46 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> d46377d feat-Added-endpoints-and-handler-for-ScheduleHandler
+2020-05-07 12:11:53 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 81f4dc9 feat-Implementing-color-attribute-features
+2020-05-04 23:16:14 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 56987a1 feat-Display-combinations-of-billboard-attributes
+2020-05-04 21:13:40 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> 53d0a1c feat-add-msg-only-pic-only-info-only
+2020-05-02 22:08:31 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> cfd437a feat-Added-endpoints-and-handler-for-UserHandler
+2020-05-02 00:15:06 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 6562b71 feat-Fixed-checkOwnBillboard
+2020-05-02 00:07:39 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> f165361 feat-user-endpoint-boilerplate-and-some-small-touch-ups
+2020-04-25 01:40:40 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 6cff8f1 feat-Added-endpoints-for-UPdate-delete-billboard.-Fix-some-comments-in-handler-files-and-add-checkOwnBillboard-function-in-MiddlewareHandler.java
+2020-04-24 15:34:25 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 3cd95a0 Merge-remote-tracking-branch-remotes-origin-master-into-xmlTesting
+2020-04-24 14:50:50 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 7a7510d chore-IntelliJ-be-IntelliJ
+2020-04-24 14:50:36 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 3b1355b refactor-Update-the-responses-to-better-match-the-new-statuses
+2020-04-24 14:43:03 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d511f40 feat-New-enums-to-better-describe-the-statuses
+2020-04-24 14:41:33 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 725b6d5 feat-New-function-that-generates-a-random-token
+2020-04-24 14:41:06 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b620e6e docs-Commented-the-file
+2020-04-24 14:40:26 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 6396d93 refactor-Improve-the-status-of-responses
+2020-04-24 14:40:10 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d6fb33d refactor-Improve-the-status-of-responses
+2020-04-24 09:35:52 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> e0d3405 Merge-branch-xmlTesting-of-https-bitbucket.org-30221-cab302majorassessment-into-xmlTesting
+2020-04-22 14:51:50 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 9c84814 Add-endpoints-handler-for-get-post-update-delete
+2020-04-21 13:30:05 +0000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 7d991c5 Merged-in-fixSQLCode-pull-request-6
+2020-04-21 23:27:10 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 81adabc fix-Hotfix-to-ensure-CI-runs
+2020-04-21 23:22:59 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 8e3a5be feat-Implemented-the-first-iteration-of-middleware-with-a-client-example
+2020-04-21 18:10:58 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 10927f8 refactor-change-gets-to-prepared-statment-change-sql-picture-to-BLOB
+2020-04-21 13:36:06 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 2536ba1 feat-Fix-delete-to-use-executeUpdate
+2020-04-21 01:50:54 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 7850d4a feat-Fix-update-insert-to-using-executeUpdate
+2020-04-20 15:43:21 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b7b6f0f chore-IntelliJ-be-IntelliJ
+2020-04-20 15:43:11 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 5486ab8 fix-Updated-the-test-file-to-the-changes-provides-a-client-example
+2020-04-20 15:42:16 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 2bc8ec4 refactor-Move-the-object-initialisations-to-the-correct-place
+2020-04-20 15:41:27 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 5cb9b0d docs-Added-a-single-comment
+2020-04-20 15:41:10 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 9cba806 refactor-Standardise-the-Request-and-Response-object-formats
+2020-04-20 15:35:04 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> a1e8920 refactor-Remove-the-enum-function-implementation
+2020-04-20 15:34:27 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 75bca08 feat-Create-the-boilerplate-and-an-example-for-how-endpoints-work
+2020-04-20 15:33:33 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 618de0d fix-Comment-out-the-file-as-a-temporary-hot-fix
+2020-04-20 15:32:43 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> c257b3b fix-Throw-the-correct-type-of-exception
+2020-04-16 11:36:12 +0000 Jamie Martin <jamie.martin@connect.qut.edu.au> 899ad08 fix-comment-out-client-test
+2020-04-16 11:30:55 +0000 Jamie Martin <jamie.martin@connect.qut.edu.au> 07ad60f Merged-master-into-feat-billboardViewerTests
+2020-04-16 18:22:30 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> fdf5bef feat-ClientSocket-Boilerplate-Request-Method-Enum-Response-Status-ENUM-ROUTING-FTW
+2020-04-16 17:07:27 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c890cd9 fix-thread-bomb
+2020-04-16 00:14:24 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> f32d83f chore-IntelliJ-be-IntelliJ
+2020-04-16 00:14:09 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 06f6205 feat-Implement-boilerplate-for-server-side-socket-code-and-a-test
+2020-04-16 00:12:55 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 7aa17cc refactor-Removed-old-XML-testing-code
+2020-04-15 18:34:25 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 1654bdc refactor-slim-down-cast
+2020-04-15 18:31:39 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d333628 feat-Client-Server-Req-Res-Type-Casting
+2020-04-15 17:33:11 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 91e5e9d Merge-branch-master-into-xmlTesting
+2020-04-15 17:09:06 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b8e6e21 feat-Implementation-of-the-Viewer-and-Control-Panel
+2020-04-15 16:29:29 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f296eff feat-Notifcation-button-tests
+2020-04-15 06:18:51 +0000 Jamie Martin <jamie.martin@connect.qut.edu.au> f51f4dd Merged-in-unit-test-randomiser-pull-request-5
+2020-04-15 16:16:29 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> ca0fb1c docs-Added-comments-and-documentation-for-the-new-functions
+2020-04-15 15:18:01 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5c61b9c feat-delete-all-for-unit-test-cleanliness
+2020-04-15 14:59:45 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 423594f feat-1-refactor-2
+2020-04-15 12:57:14 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 5f96517 refactor-delete-unneccessary-components
+2020-04-15 01:46:48 +0000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 623adfd Merged-in-databaseProto-pull-request-3
+2020-04-15 11:27:13 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 06c8459 fix-Typo-that-called-the-wrong-method-in-Schedule-has-been-fixed
+2020-04-14 11:05:33 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 88e6775 docs-Proof-read-comments
+2020-04-13 13:53:49 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 1421948 Add-comments-in-PermissionsTests.java
+2020-04-13 12:26:26 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 74605ce Add-comments-in-ScheduleTests.java
+2020-04-12 22:15:29 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 34c0e42 chore-IntelliJ-be-IntelliJ
+2020-04-12 22:15:17 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 51122d6 refactor-Deprecated
+2020-04-12 22:15:07 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 0239e96 refactor-Update-the-object-to-reflect-new-SQL-changes
+2020-04-12 22:14:48 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 94f00a0 fix-Small-bug-fixes-with-SQL-code
+2020-04-12 22:14:19 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 06a8f93 refactor-Ensure-all-tests-are-working-properly
+2020-04-12 22:12:45 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 36aa2dd fix-Major-bug-fixes
+2020-04-12 21:49:09 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 65f4d98 refactor-Req-Res-Objects
+2020-04-12 21:43:40 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 2f33987 feat-Serializable-Objects-Generic-Req-Response-Objects-remove-unnecessary-XML-functions
+2020-04-10 18:18:25 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 53f28b1 mutiple-see-description
+2020-04-10 00:20:22 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 518edc0 chore-Add-insert-update-schedule-in-ScheduleHandler-fix-interval-in-Schema
+2020-04-09 23:24:13 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 9b2fa8a chore-Add-PermissionsTests
+2020-04-09 23:20:20 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> fd385ed chore-IntelliJ-be-IntelliJ
+2020-04-09 23:20:09 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 28f6643 docs-Updated-documentation-to-better-reflect-changes
+2020-04-09 22:46:10 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> a6df18a chore-IntelliJ-be-IntelliJ
+2020-04-09 22:45:55 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 38a77e5 style-Remove-redundant-libraries
+2020-04-09 22:45:35 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 883b58f refactor-Finish-the-Permissions-Handler-implementation
+2020-04-09 22:44:57 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> dc14721 docs-Comment-changes
+2020-04-09 22:44:28 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> c62fbb6 style-Removed-redundant-libraries
+2020-04-09 21:50:59 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b5ce0c1 chore-IntelliJ-being-IntelliJ
+2020-04-09 21:50:38 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 3b052cb fix-Fix-the-schema-to-stop-causing-SQL-errors
+2020-04-09 21:49:58 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 0c7a4b4 fix-Fixed-all-tests-and-ensure-it-runs-both-mock-and-real-data
+2020-04-09 21:49:25 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 319f2de feat-Implement-mock-database-ID-increment
+2020-04-09 21:48:15 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 85c1936 feat-Implement-a-user-permission-handler
+2020-04-09 21:47:26 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b11647a feat-Added-a-close-connection-function
+2020-04-09 21:46:49 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> f713392 fix-Fix-SQL-the-correct-table-names
+2020-04-09 17:57:28 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 6c54a64 feat-login-form-and-main-frame-implementation
+2020-04-09 17:43:28 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 075fa40 Add-tests-in-UserTests
+2020-04-09 15:03:28 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ec3e812 feat-UserDbTests-example-for-Kevin
+2020-04-09 15:03:10 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f087ed4 refactor-comment-out-BillboardTests-so-we-can-get-a-clean-up-pray-Schedule-and-User-handler-cleanup
+2020-04-09 14:39:55 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3a4ef40 fix-Permissions-schema
+2020-04-09 14:37:35 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 1012f29 fixes-id
+2020-04-09 14:20:26 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 31394d0 refactor-merge-conflicts
+2020-04-09 14:05:26 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c8c4e15 Merge-branch-databaseProto-of-https-bitbucket.org-30221-cab302majorassessment-into-databaseProto
+2020-04-09 13:55:05 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 0296d5d chore-intelliJ
+2020-04-09 13:54:55 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 46e2b7b refactor-Dataservice-cleanup-and-consolidation
+2020-04-09 13:54:34 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 38cde1f refactor-Objects-cleanup
+2020-04-09 13:54:06 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 9f1b135 refactor-change-userPermissions-to-Permissions-implement-PermissionsHandler
+2020-04-09 13:53:31 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3d2975e refactor-billboard-object-class
+2020-04-09 12:18:16 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> c4be848 chore-IntelliJ-being-IntelliJ
+2020-04-09 12:17:59 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> da4ed50 style-Couple-small-cosmetic-changes
+2020-04-09 12:17:07 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d15e3f9 fix-Couple-of-hot-fixes-to-allow-compilation.-Review-at-a-later-date
+2020-04-09 12:16:35 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 06304f5 refactor-Start-of-overhaul-for-user-and-user-permissions
+2020-04-08 23:57:33 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 1eb6fc4 refactor-Add-Schedulehandler
+2020-04-08 23:12:50 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 0a915a2 chore-IntelliJ-doing-it-s-thing
+2020-04-08 23:12:35 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> e222285 refactor-Update-the-example-to-match-the-refactor-of-billboard-database-handler
+2020-04-08 23:11:58 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> a6a99a7 fix-Temporarily-change-some-code-to-ensure-it-works-at-a-later-date-revise
+2020-04-08 23:11:08 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 676e869 fix-Couple-of-fixes-with-the-schema-to-ensure-it-is-valid
+2020-04-08 23:10:24 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> a8ceca4 refactor-Overhaul-of-the-database-billboard-related-classes
+2020-04-08 17:20:24 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 23d059e refactor-Reimplemented-database-handler-based-on-DAO
+2020-04-08 09:25:22 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 923e4b3 refactor-AppNotification-SystemNotif
+2020-04-08 09:23:37 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> a072aec feat-Req-Res-object-classes-refactor-ConnectionFactory-to-Dataservice-DB.java-to-garbage
+2020-04-08 09:22:23 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 1515794 refactor-Object-classes-XML-parsing
+2020-04-07 14:13:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e9d3e0d fixes-rename-ObjectHandler-to-abstract-class-hold-connection-there
+2020-04-06 23:30:26 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 5f33d8d refactor-Reimplemented-database-handler-based-on-DAO
+2020-04-06 23:04:50 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 488c8c0 feat-you-fukin-Audi
+2020-04-06 22:56:09 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> a6771aa feat-f-k-you-Audi
+2020-04-06 21:15:26 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 5c95439 feat-Some-magical-changes
+2020-04-06 19:01:57 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 0adf228 feat-Change-user-s-variables-to-public-and-add-deleteUser-listUser-method-in-DB.java
+2020-04-06 15:12:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f07bc20 feat-Sys-Notif-and-App-Notif
+2020-04-06 14:04:32 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e0cc2ab Merge-branch-feat-billboardViewerTests-into-feat-controlPanelMenu
+2020-04-06 09:35:59 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f2707ea chore-regulatory-javadoc
+2020-04-05 22:43:45 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 013b85b chore-IntelliJ-be-IntelliJ-more-files-automagically-changed
+2020-04-05 22:43:19 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 40cb3c9 refactor-Lots-of-changes-with-how-error-handling-works-and-many-comment-changes
+2020-04-05 22:41:48 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> aced7f1 feat-Prepare-database-module-to-become-inheritance-based
+2020-04-05 22:39:44 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> b81fc65 Fix-billboard.picture-to-Array.toString
+2020-04-05 22:23:14 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 481d7bc Merge-remote-tracking-branch-origin-databaseProto-into-databaseProto
+2020-04-05 22:22:27 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 4e6081e feat-Add-some-database-methods
+2020-04-05 20:27:00 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 4d135b9 chore-jdk-automagic-what-not
+2020-04-05 20:20:05 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> a01660e Merge-branch-feat-billboardViewerTests-of-https-bitbucket.org-30221-cab302majorassessment-into-feat-billboardViewerTests
+2020-04-05 20:19:13 +1000 Trevor Waturuocha <trevor.waturuocha@connect.qut.edu.au> b2d6a68 feat-Fullscreen-application-and-Escape-key-Click-to-Exit
+2020-04-05 20:19:04 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d31a1fc Merge-branch-databaseProto-of-https-bitbucket.org-30221-cab302majorassessment-into-databaseProto
+2020-04-05 20:18:44 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 16714f3 fix-background-color
+2020-04-05 19:20:28 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> a985c3e Merge-remote-tracking-branch-origin-databaseProto-into-databaseProto
+2020-04-05 19:16:51 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 5b8e449 feat-Add-Schedule-and-ISchedule
+2020-04-05 17:12:01 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8bfc46d Merge-branch-databaseProto-of-https-bitbucket.org-30221-cab302majorassessment-into-databaseProto
+2020-04-05 17:11:21 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 21665e5 feat-separate-Billboard-and-Schedule-to-fit-Database-Design
+2020-04-05 17:03:38 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 8597f12 refactor-Handled-exceptions-differently-for-the-getProps-function
+2020-04-05 16:42:35 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> ecbb46e chore-intelliJ-automagical-file-creaton
+2020-04-05 15:52:19 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> e76390c Merge-branch-master-into-xmlTesting
+2020-04-05 15:51:50 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 49b3ca1 Merge-branch-master-into-feat-billboardViewerTests
+2020-04-05 15:51:30 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> d2dd2ee Merge-branch-master-into-feat-controlPanelMenu
+2020-04-05 15:50:48 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 50be5d8 Merge-branch-master-into-databaseProto
+2020-04-05 15:50:13 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> deb82d4 fix-ignore-db.props
+2020-04-05 15:40:09 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 12e606e chore-ignore-db.props-comment-out-DBTests-for-pipeline-success
+2020-04-05 15:34:21 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3b20fbc chore-intelliJ-automagic-file
+2020-04-05 15:34:07 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> a154cd9 fix-wrong-var-name
+2020-04-05 15:33:30 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 56c7c67 feat-read-from-db.props-to-create-database-connection
+2020-04-05 15:32:43 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 754a7d3 chore-intelliJ-.idea-files
+2020-04-04 23:42:47 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> dd18d9d chore-IntelliJ-automagical-change-of-files
+2020-04-04 23:42:24 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> e0358c7 feat-new-getBillboard-method-from-the-database
+2020-04-04 23:40:27 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> af43b3a feat-Re-add-the-common-package-from-another-branch-for-consistency
+2020-04-04 23:09:08 +1000 Hieu Nghia Huynh <hieunghia.huynh@connect.qut.edu.au> 5d4f9e4 feat-Create-3-tables-we-gucci
+2020-04-04 22:06:18 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 3ebb125 fix-remove-unneccessary-code
+2020-04-04 22:06:07 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> af30a1a chore-IntelliJ-automagical-change-of-files
+2020-04-04 22:05:41 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 29da314 chore-Add-mysql-dependancy-for-maven
+2020-04-04 22:04:37 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 8667e87 refactor-Changed-the-way-creation-of-a-new-database-object-works
+2020-04-04 22:03:03 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> adf7508 test-Add-a-basic-database-handler-test
+2020-04-04 21:57:13 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 443d394 fix-separate-functions-to-classes
+2020-04-04 18:53:17 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f78ee39 fix-adjust-location-and-size
+2020-04-04 18:40:39 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> c67a431 fix-remove-unneccessary-Frame-class
+2020-04-04 18:22:43 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> 8113c8e feat-Control-Panel-menu-bar-implementation-and-some-general-clean-up
+2020-04-03 21:58:44 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> cdafcaa test-added-some-files-for-testing-xml-parsing
+2020-04-03 21:50:57 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> cc4a4f4 feat-Added-database-handling-package
+2020-03-23 02:50:37 +0000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 04e6532 Merged-in-test_feature-pull-request-2
+2020-03-23 12:42:40 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 5768f37 chore-Update-developer-information
+2020-03-20 12:39:54 +0000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> b5fe6c0 Merged-in-ci-test-pull-request-1
+2020-03-20 22:38:50 +1000 Jamie Martin <jamie.martin@connect.qut.edu.au> f0baf8a Automagically-refactored-config-from-IntelliJ
+2020-03-20 18:17:12 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 0770669 chore-Fix-pipeline-to-use-latest-maven-version
+2020-03-20 18:09:54 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 46ed23a chore-IntelliJ-automagic-project-files
+2020-03-20 18:08:41 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 3368662 refactor-Add-official-IntelliJ-gitignore-contents
+2020-03-20 18:07:54 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> d23d8c8 refactor-Reimplement-CI-as-per-Maven-and-BitBucket-specifications
+2020-03-20 18:04:30 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> fde2f13 chore-IntelliJ-automagic-project-files
+2020-03-20 15:49:06 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 1006d4a Add-verbosity-to-the-CI-pipeline-results
+2020-03-20 15:47:27 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 33f971d Automagically-altered-file-from-IntelliJ
+2020-03-20 15:41:39 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 1309aac Automagically-altered-file-from-IntelliJ
+2020-03-20 15:40:56 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 5db82b3 Add-support-for-Maven-based-CI-using-Bitbucket-Pipelines
+2020-03-20 15:39:26 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 2791564 Alter-files-to-support-an-example-for-tests
+2020-03-20 15:37:51 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 5217a53 Automatically-generated-altered-files-for-QOL-improvements-and-CI-support
+2020-03-20 15:35:37 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> cf4d0b0 Add-some-QOL-improvements-to-the-repository
+2020-03-20 14:16:05 +1000 Perdana Bailey <perdana.bailey@connect.qut.edu.au> 6967300 Ported-from-Github
+2020-03-18 07:09:41 +0000 Jamie Martin <jamie.martin@connect.qut.edu.au> 2b2cd95 Initial-commit
