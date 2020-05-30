@@ -32,10 +32,13 @@ public class Panel extends JPanel {
 
         // Check if information string is not empty and message and picture are empty
         if (billboard.information != null && billboard.message == null && billboard.picture == null) {
+            add(Box.createVerticalGlue());
             add(new Information(billboard, 4, 2)); // Drawing information
+            add(Box.createVerticalGlue());
         }
         // Check if information string and picture byte array are not empty
         if (billboard.information != null && billboard.message == null && billboard.picture != null) {
+            add(Box.createVerticalGlue());
             add(new Picture(billboard,2, 3));
             add(Box.createVerticalGlue());
             add(new Information(billboard, 4, 3));
@@ -44,7 +47,9 @@ public class Panel extends JPanel {
 
         // Check if picture byte array is not empty
         if (billboard.picture != null && billboard.information == null && billboard.message == null) {
+            add(Box.createVerticalGlue());
             add(new Picture(billboard, 2, 4));
+            add(Box.createVerticalGlue());
         }
         // Check if picture byte array, information and message are not empty
         if (billboard.information != null && billboard.message != null && billboard.picture != null) {
@@ -69,8 +74,8 @@ public class Panel extends JPanel {
             add(Box.createVerticalGlue());
             add(new Message(billboard));
             add(Box.createVerticalGlue());
-
-            add(new Picture(billboard, 2, 3));
+            add(new Picture(billboard, 2, 4));
+            add(Box.createVerticalGlue());
         }
 
         // Check if message string and information are not empty

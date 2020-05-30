@@ -28,7 +28,7 @@ public class Picture extends JLabel {
         BufferedImage pictureOutput = ImageIO.read(new ByteArrayInputStream(base64));
 
         // Converting image byte array to a buffered image to calculation new size
-        int labelWidth = (Toolkit.getDefaultToolkit().getScreenSize().width / wFactor);
+        int labelWidth = Toolkit.getDefaultToolkit().getScreenSize().width / wFactor;
         int labelHeight = Toolkit.getDefaultToolkit().getScreenSize().height * 2 / hFactor;
 
         setIcon(scaleImage(new ImageIcon(pictureOutput), labelWidth, labelHeight));
@@ -49,14 +49,14 @@ public class Picture extends JLabel {
         int nh = icon.getIconHeight();
 
         // Checking if scaling the width is needed
-        if(icon.getIconWidth() > w)
+        if(nw > w || w > nw)
         {
             nw = w;
             nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
         }
 
         // Checking if scaling the height is needed
-        if(nh > h)
+        if(nh > h || h > nh)
         {
             nh = h;
             nw = (icon.getIconWidth() * nh) / icon.getIconHeight();

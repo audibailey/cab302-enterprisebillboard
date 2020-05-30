@@ -64,7 +64,7 @@ public class ScheduleControllerTest {
         // Create new request and insert schedule
         req = new Request(null, "blah", null, schedule);
         new ScheduleController.Insert().execute(req);
-        
+
         //Create new request and get all schedules
         req = new  Request(null,"blah",null,null);
         Response test = new ScheduleController.Get().execute(req);

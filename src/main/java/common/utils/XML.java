@@ -123,7 +123,7 @@ public class XML {
         billboard.messageColor = messageColor == null ? "#000000" : messageColor;
 
         billboard.information = information;
-        billboard.informationColor = informationColour == null ? "#FFFFFF" : informationColour;
+        billboard.informationColor = informationColour == null ? "#000000" : informationColour;
 
         if (pictureUrl != null && pictureData != null) throw new Exception("Picture cannot have both url and data");
         else if (pictureUrl != null) {
