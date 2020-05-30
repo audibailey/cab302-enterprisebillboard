@@ -20,28 +20,30 @@ public class PermissionsService extends DataService<Permissions> {
     private List<Permissions> permissions;
 
     /**
-     * initialise new permissions service
+     * Initialise new permissions service.
      */
     protected PermissionsService() {
         this.permissions = new ArrayList<>();
     }
 
     /**
-     * static singleton holder for permissions service
+     * Static singleton holder for permissions service.
      */
     private static class PermissionsServiceHolder {
         private final static PermissionsService INSTANCE = new PermissionsService();
     }
 
     /**
-     * get the permissions service instance
-     * @return
+     * Get the permissions service instance.
+     *
+     * @return The permissions service instance from the singleton.
      */
     public static PermissionsService getInstance() { return PermissionsServiceHolder.INSTANCE; }
 
     /**
-     * refreshes the permissions list
-     * @return
+     * Refreshes the permissions list.
+     *
+     * @return The new list of permissions from the server.
      */
     public List<Permissions> refresh() {
         Session session = SessionService.getInstance();
@@ -58,51 +60,53 @@ public class PermissionsService extends DataService<Permissions> {
     }
 
     /**
-     * attempts to insert the given permissions on the server
-     * @param b
-     * @return
+     * Attempts to insert the given permissions on the server.
+     *
+     * @param userPerm The user permission that is being sent to the server.
+     * @return The new list of permissions from the server.
      */
-    public List<Permissions> insert(UserPermissions up) {
+    public List<Permissions> insert(UserPermissions userPerm) {
         Session session = SessionService.getInstance();
-        Response res = new ClientSocketFactory("/userpermissions/insert", session.token, null, up).Connect();
+        Response res = new ClientSocketFactory("/userpermissions/insert", session.token, null, userPerm).Connect();
         return refresh();
     }
 
     /**
-     * attempts to update the given permissions on the server
-     * @param b
-     * @return
+     * Attempts to update the given permissions on the server.
+     *
+     * @param userPerm The user permission that is being updated on the server.
+     * @return A boolean whether the user permission was updated or not.
      */
-    public Boolean update(Permissions p) {
+    public Boolean update(Permissions userPerm) {
         Session session = SessionService.getInstance();
-        Response res = new ClientSocketFactory("/permission/update", session.token, null, p).Connect();
+        Response res = new ClientSocketFactory("/permission/update", session.token, null, userPerm).Connect();
         return !res.error;
     }
 
     /**
-     * attempts to delete the given permissions on the server
-     * @param u
-     * @return
+     * Attempts to delete the given user on the server.
+     *
+     * @param user The user that is being deleted from the server.
+     * @return The new list of permissions from the server.
      */
-    public List<Permissions> delete(User u) {
+    public List<Permissions> delete(User user) {
         Session session = SessionService.getInstance();
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("username", u.username);
+        params.put("username", user.username);
 
         Response res = new ClientSocketFactory("/user/delete", session.token, params).Connect();
         return refresh();
     }
 
     /**
-     * attempts to update the password of the given user id on the server
-     * @param id
-     * @param username
-     * @param password
-     * @return
-     * @throws Exception
+     * Attempts to update the password of the given user id on the server.
+     *
+     * @param username The username as a string of the user that's password is being updated.
+     * @param password The password as a string of the user that's password is being updated.
+     * @return The new list of permissions from the server.
      */
-    public List<Permissions> updatePassword(int id, String username, String password) throws Exception {
+    public List<Permissions> updatePassword(String username, String password){
         Session session = SessionService.getInstance();
         
         HashMap<String, String> params = new HashMap<>();

@@ -17,10 +17,10 @@ public class CollectionFactory {
      * Returns an instance of a Collection<T> given the class.
      * If there isn't a Collection, it creates one.
      *
-     * @param className: The Class you want to manage.
-     * @param <T>: T the type of the Class you want to manage.
-     * @return Collection<T>: The collection instance.
-     * @throws Exception: A pass-through internal server exception.
+     * @param className The Class you want to manage.
+     * @param <T> T the type of the Class you want to manage.
+     * @return Collection<T> The collection instance.
+     * @throws Exception A pass-through internal server exception.
      */
     public static <T> Collection<T> getInstance(Class<T> className) throws Exception {
 

@@ -14,16 +14,18 @@ import java.util.Arrays;
  * @author Perdana Bailey
  */
 public class HashingFactory {
-    // Hashing Iterations
+    /**
+     * A constant that represents the amount of iterations to hash over.
+     */
     private final static int ITERATIONS = 1000;
 
     /**
      * This function creates a PBKDF2WithHmacSHA1 hash using the password, the a byte array as the salt and a length.
      *
-     * @param password: The password to hash.
-     * @param salt: The salt to combine with the password.
-     * @return byte[]: A byte array with the hex of the hashed and salted password.
-     * @throws Exception: Pass through the server error.
+     * @param password The password to hash.
+     * @param salt The salt to combine with the password.
+     * @return byte[] A byte array with the hex of the hashed and salted password.
+     * @throws Exception Pass through the server error.
      */
     public static byte[] hashAndSaltPassword(String password, byte[] salt) throws Exception {
         // Creating a hashing spec based on the supplied login password, the users saved salt, iterations and length
@@ -38,9 +40,9 @@ public class HashingFactory {
     /**
      * This function returns a SHA-1 hash of a string, commonly used for the client side hashing.
      *
-     * @param password: The password the user has typed in the client.
-     * @return String: The hash of the password.
-     * @throws Exception: Pass through exception that gets handled by the client.
+     * @param password The password the user has typed in the client.
+     * @return String The hash of the password.
+     * @throws Exception Pass through exception that gets handled by the client.
      */
     public static String hashPassword(String password) {
         try {
@@ -59,8 +61,8 @@ public class HashingFactory {
     /**
      * This function creates a random salt.
      *
-     * @return byte[]: A byte array salt.
-     * @throws Exception: Pass through the server error.
+     * @return byte[] A byte array salt.
+     * @throws Exception Pass through the server error.
      */
     public static byte[] getSalt() {
         return RandomFactory.String().getBytes();
@@ -69,8 +71,8 @@ public class HashingFactory {
     /**
      * This function is a helper function that converts a hex string to a byte array.
      *
-     * @param hex: The hex string to be converted to a byte array.
-     * @return byte[]: The byte array after converting the hex string.
+     * @param hex The hex string to be converted to a byte array.
+     * @return byte[] The byte array after converting the hex string.
      */
     public static byte[] decodeHex(String hex) {
         // Convert using BigInteger then turn into a byte array
@@ -84,8 +86,8 @@ public class HashingFactory {
 
     /**
      * This function is a helper function that converts a byte array to a hex string.
-     * @param byteArray: The byte array to be converted to a hex string.
-     * @return String: The byte array after converting the hex string.
+     * @param byteArray The byte array to be converted to a hex string.
+     * @return String The byte array after converting the hex string.
      */
     public static String encodeHex(byte[] byteArray) {
         return new BigInteger(1, byteArray).toString(16);

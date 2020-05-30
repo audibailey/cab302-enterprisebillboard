@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
  *
  * @author Trevor Waturuocha
  */
-
 public class SchedulePanel extends JPanel implements ActionListener {
 
     IObjectTableModel<Schedule> tableModel;
@@ -38,16 +37,18 @@ public class SchedulePanel extends JPanel implements ActionListener {
         deleteButton = new JButton("Delete Selected");
     String selected;
 
-
+    /**
+     * The Schedule Panel constructor that generates the SchedulePanel GUI.
+     */
     public SchedulePanel() {
         // Get session
         Session session = SessionService.getInstance();
 
         // add the action listeners
-        createButton.addActionListener(this::actionPerformed);
-        refreshButton.addActionListener(this::actionPerformed);
-        deleteButton.addActionListener(this::actionPerformed);
-        showButton.addActionListener(this::actionPerformed);
+        createButton.addActionListener(this);
+        refreshButton.addActionListener(this);
+        deleteButton.addActionListener(this);
+        showButton.addActionListener(this);
 
         // Disable schedule button if user is not permitted
         if (!session.permissions.canScheduleBillboard) {
@@ -77,7 +78,7 @@ public class SchedulePanel extends JPanel implements ActionListener {
     }
 
     /**
-     * set up the table selection logic
+     * Set up the table selection logic.
      */
     public void setupSelection() {
         table.setAutoCreateRowSorter(true);
@@ -98,6 +99,11 @@ public class SchedulePanel extends JPanel implements ActionListener {
         });
     }
 
+    /**
+     * Adding listener events for the schedule panel buttons.
+     *
+     * @param e Pass through the action event to manage the respective action.
+     */
     @Override
     // Adding listener events for the user panel buttons.
     public void actionPerformed(ActionEvent e) {
@@ -226,7 +232,13 @@ public class SchedulePanel extends JPanel implements ActionListener {
         }
     }
 
-    public static String[] getNames(Class<? extends Enum<?>> e) {
-        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
+    /**
+     * A helper function for the getting the enum names.
+     *
+     * @param enumType The enum based on a class.
+     * @return Returns a string list of all the enum names from the enum.
+     */
+    public static String[] getNames(Class<? extends Enum<?>> enumType) {
+        return Arrays.stream(enumType.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 }

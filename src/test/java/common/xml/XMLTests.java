@@ -12,9 +12,9 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class XMLTests {
-
     Billboard billboard = Billboard.Random(0);
     static String picture ="";
+
     @BeforeAll
     public static void getPic() throws Exception {
         picture = new String(Files.readAllBytes(Paths.get("./src/test/java/common/xml/picture.txt")));

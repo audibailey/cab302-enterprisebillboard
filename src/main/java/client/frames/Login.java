@@ -28,6 +28,9 @@ public class Login extends JFrame implements ActionListener {
     JPasswordField password = new JPasswordField(15);
     JButton login = new JButton("LOGIN");
 
+    /**
+     * The constructor that creates the login frame.
+     */
     public Login() {
         setTitle("Control Panel: Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,13 +43,15 @@ public class Login extends JFrame implements ActionListener {
         setResizable(false);
         setVisible(true);
     }
-
+    /**
+     * Sets the layout manager of the frame to a GridBagLayout.
+     */
     public void setLayoutManager() {
         container.setLayout(new GridBagLayout());
     }
 
     /**
-     * organises the components in a gridbag layout
+     * Organises the components in the frame to the GridBagLayout.
      */
     public void addComponentsToContainer() {
         GridBagConstraints c = new GridBagConstraints();
@@ -72,7 +77,7 @@ public class Login extends JFrame implements ActionListener {
     }
 
     /**
-     * sets the size and location of the frame and it's components
+     * Sets the size and location of the frame and it's components to the center.
      */
     public void setLocationAndSize() {
         // Get the screen dimensions
@@ -97,8 +102,9 @@ public class Login extends JFrame implements ActionListener {
     }
 
     /**
-     * Action for selecting login button
-     * @param e
+     * Action for selecting the login button.
+     *
+     * @param e Pass through the action event to manage the respective action.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -36,12 +36,15 @@ public class UserPanel extends JPanel implements ActionListener {
         deleteButton = new JButton("Delete Selected");
     String selected;
 
+    /**
+     * The User Panel constructor that generates the UserPanel GUI.
+     */
     public UserPanel() {
         // add the action listeners
-        createButton.addActionListener(this::actionPerformed);
-        editButton.addActionListener(this::actionPerformed);
-        refreshButton.addActionListener(this::actionPerformed);
-        deleteButton.addActionListener(this::actionPerformed);
+        createButton.addActionListener(this);
+        editButton.addActionListener(this);
+        refreshButton.addActionListener(this);
+        deleteButton.addActionListener(this);
 
         // default enable/disabled for buttons
         editButton.setEnabled(false);
@@ -69,7 +72,7 @@ public class UserPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * sets up the selection logic for the table
+     * Sets up the selection logic for the table.
      */
     public void setupSelection() {
         table.setAutoCreateRowSorter(true);
@@ -93,7 +96,8 @@ public class UserPanel extends JPanel implements ActionListener {
 
     /**
      * Adding listener events for the user panel buttons.
-     * @param e
+     *
+     * @param e Pass through the action event to manage the respective action.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

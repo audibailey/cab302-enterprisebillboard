@@ -22,7 +22,7 @@ public class Response implements Serializable {
     /**
      * Constructor for the Response object.
      *
-     * @param status: An enum that determines if the request was successful.
+     * @param status An enum that determines if the request was successful.
      */
     public Response(Status status) {
         this.status = status;
@@ -32,8 +32,8 @@ public class Response implements Serializable {
     /**
      * Constructor for the Response object.
      *
-     * @param status:  An enum that determines if the request was successful.
-     * @param message: the message given.
+     * @param status An enum that determines if the request was successful.
+     * @param message The message given.
      */
     public Response(Status status, String message) {
         this.status = status;
@@ -44,8 +44,8 @@ public class Response implements Serializable {
     /**
      * Constructor for the Response object.
      *
-     * @param status: An enum that determines if the request was successful.
-     * @param body: the body Object of the return.
+     * @param status An enum that determines if the request was successful.
+     * @param body The body Object of the return.
      */
     public Response(Status status, Object body) {
         this.status = status;
@@ -56,9 +56,9 @@ public class Response implements Serializable {
     /**
      * Constructor for the Response object.
      *
-     * @param status: An enum that determines if the request was successful.
-     * @param message: the message given.
-     * @param body:   This acts as the result of the request.
+     * @param status An enum that determines if the request was successful.
+     * @param message The message given.
+     * @param body This acts as the result of the request.
      */
     public Response(Status status, String message, Object body) {
         this.status = status;
@@ -70,7 +70,7 @@ public class Response implements Serializable {
     /**
      * Check if the IAction is an error or not.
      *
-     * @param status: The status of the result.
+     * @param status The status of the result.
      */
     public void isError(Status status) {
         switch (status) {

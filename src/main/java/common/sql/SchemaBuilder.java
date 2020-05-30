@@ -17,9 +17,9 @@ public class SchemaBuilder {
     /**
      * Entry point to build the schema.
      *
-     * @param connection: JDBC connection to insert the schema.
-     * @param className: The class to generate the schema from.
-     * @throws Exception: Pass through exception that gets handled up stream.
+     * @param connection JDBC connection to insert the schema.
+     * @param className The class to generate the schema from.
+     * @throws Exception Pass through exception that gets handled up stream.
      */
     public static void build(Connection connection, Class<?> className) throws Exception {
         // Create statement.
@@ -38,8 +38,8 @@ public class SchemaBuilder {
     /**
      * This function uses the class fields with SQLite annotations to generate the schema as a string.
      *
-     * @param classType: The class to generate the schema from.
-     * @return String: Schema of class as a string.
+     * @param classType The class to generate the schema from.
+     * @return String Schema of class as a string.
      */
     public static String tableStringSQL(Class classType) {
         // Ensure the table is created.

@@ -21,32 +21,32 @@ public class ScheduleService {
     public List<Schedule> schedules;
 
     /**
-     * initialise new schedule service
+     * Initialise new schedule service.
      */
     protected ScheduleService() {
         this.schedules = new ArrayList<>();
     }
 
     /**
-     * static singleton holder for schedule service
+     * Static singleton holder for schedule service.
      */
     private static class ScheduleServiceHolder {
         private final static ScheduleService INSTANCE = new ScheduleService();
     }
 
     /**
-     * get the schedule service instance
+     * Get the schedule service instance.
      *
-     * @return
+     * @return The schedule service instance from the singleton.
      */
     public static ScheduleService getInstance() {
         return ScheduleServiceHolder.INSTANCE;
     }
 
     /**
-     * refreshes the schedule list
+     * Refreshes the schedule list.
      *
-     * @return
+     * @return The new list of schedules from the server.
      */
     public List<Schedule> refresh() {
         Session session = SessionService.getInstance();
@@ -63,9 +63,9 @@ public class ScheduleService {
     }
 
     /**
-     * get the schedule view data
+     * Get the schedule view data.
      *
-     * @return
+     * @return The list of days from the schedule for viewing.
      */
     public List<Day> getSchedule() {
         List<Day> schedulesList = new ArrayList<>();
@@ -89,7 +89,7 @@ public class ScheduleService {
                             diff = 1440 - i;
                         }
 
-                        // assign the schedule name for each minute of the day that mathces
+                        // assign the schedule name for each minute of the day that matches
                         for (int j = i; j < i + diff; j++) {
                             minutesInDay[j] = schedule.billboardName;
                         }
@@ -127,26 +127,26 @@ public class ScheduleService {
     }
 
     /**
-     * attempts to insert the given schedule on the server
+     * Attempts to insert the given schedule on the server.
      *
-     * @param s
-     * @return
+     * @param schedule The schedule that is being sent to the server.
+     * @return The new list of schedules from the server.
      */
-    public List<Schedule> insert(Schedule s) {
+    public List<Schedule> insert(Schedule schedule) {
         Session session = SessionService.getInstance();
-        Response res = new ClientSocketFactory("/schedule/insert", session.token, null, s).Connect();
+        Response res = new ClientSocketFactory("/schedule/insert", session.token, null, schedule).Connect();
         return refresh();
     }
 
     /**
-     * attempts to delete the given schedule on the server
+     * Attempts to delete the given schedule on the server.
      *
-     * @param s
-     * @return
+     * @param schedule The schedule that is being deleted from the server.
+     * @return The new list of schedules from the server.
      */
-    public List<Schedule> delete(Schedule s) {
+    public List<Schedule> delete(Schedule schedule) {
         Session session = SessionService.getInstance();
-        Response res = new ClientSocketFactory("/schedule/delete", session.token, null, s).Connect();
+        Response res = new ClientSocketFactory("/schedule/delete", session.token, null, schedule).Connect();
         return refresh();
     }
 }

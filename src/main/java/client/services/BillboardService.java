@@ -19,28 +19,30 @@ public class BillboardService extends DataService<Billboard> {
     public List<Billboard> billboards;
 
     /**
-     * initialise new billboard service
+     * Initialise new billboard service.
      */
     protected BillboardService() {
         this.billboards = new ArrayList<>();
     }
 
     /**
-     * static singleton holder for billboard service
+     * Static singleton holder for a billboard service.
      */
     private static class BillboardServiceHolder {
         private final static BillboardService INSTANCE = new BillboardService();
     }
 
     /**
-     * get the billboard service instance
-     * @return
+     * Get the billboard service instance.
+     *
+     * @return The billboard service instance from the singleton.
      */
     public static BillboardService getInstance() { return BillboardServiceHolder.INSTANCE; }
 
     /**
-     * refreshes the billboard list
-     * @return
+     * Refreshes the billboard list.
+     *
+     * @return The new list of billboards from the server.
      */
     public List<Billboard> refresh() {
         Session session = SessionService.getInstance();
@@ -57,37 +59,40 @@ public class BillboardService extends DataService<Billboard> {
     }
 
     /**
-     * attempts to insert the given billboard on the server
-     * @param b
-     * @return
+     * Attempts to insert the given billboard on the server.
+     *
+     * @param billboard The billboard that is being sent to the server.
+     * @return The new list of billboards from the server.
      */
-    public List<Billboard> insert(Billboard b) {
+    public List<Billboard> insert(Billboard billboard) {
         Session session = SessionService.getInstance();
-        Response res = new ClientSocketFactory("/billboard/insert", session.token, null, b).Connect();
+        Response res = new ClientSocketFactory("/billboard/insert", session.token, null, billboard).Connect();
         return refresh();
     }
 
     /**
-     * attempts to update the given billboard on the server
-     * @param b
-     * @return
+     * Attempts to update the given billboard on the server.
+     *
+     * @param billboard The billboard that is being updated on the server.
+     * @return A boolean whether the billboard was updated or not.
      */
-    public Boolean update(Billboard b) {
+    public Boolean update(Billboard billboard) {
         Session session = SessionService.getInstance();
-        Response res = new ClientSocketFactory("/billboard/update", session.token, null, b).Connect();
+        Response res = new ClientSocketFactory("/billboard/update", session.token, null, billboard).Connect();
         return !res.error;
     }
 
     /**
-     * attempts to delete the given billboard on the server
-     * @param b
-     * @return
+     * Attempts to delete the given billboard on the server.
+     *
+     * @param billboard The billboard that is being deleted from the server.
+     * @return The new list of billboards from the server.
      */
-    public List<Billboard> delete(Billboard b) {
+    public List<Billboard> delete(Billboard billboard) {
         Session session = SessionService.getInstance();
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("bName", b.name);
+        params.put("bName", billboard.name);
 
         Response res = new ClientSocketFactory("/billboard/delete", session.token, params).Connect();
         return refresh();

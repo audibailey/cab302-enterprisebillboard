@@ -35,10 +35,10 @@ public class Request implements Serializable {
     /**
      * Constructor for the Request object.
      *
-     * @param path: Determines the route the clients request will take.
-     * @param token: A token to authenticate the clients request.
-     * @param params: This acts as the parameters of the request.
-     * @param body: This is the body, similar to a HTTP request
+     * @param path Determines the route the clients request will take.
+     * @param token A token to authenticate the clients request.
+     * @param params This acts as the parameters of the request.
+     * @param body This is the body, similar to a HTTP request.
      */
     public Request(String path, String token, HashMap<String, String> params, Object body) {
         this.path = path;

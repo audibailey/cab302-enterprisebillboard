@@ -43,15 +43,18 @@ public class BillboardPanel extends JPanel implements ActionListener {
         exportButton = new JButton("Export Selected");
     String selected;
 
+    /**
+     * The Billboard Panel constructor that generates the BillboardPanel GUI.
+     */
     public BillboardPanel() {
         Session session = SessionService.getInstance();
         // add action listeners for buttons
-        createButton.addActionListener(this::actionPerformed);
-        viewButton.addActionListener(this::actionPerformed);
-        refreshButton.addActionListener(this::actionPerformed);
-        deleteButton.addActionListener(this::actionPerformed);
-        importButton.addActionListener(this::actionPerformed);
-        exportButton.addActionListener(this::actionPerformed);
+        createButton.addActionListener(this);
+        viewButton.addActionListener(this);
+        refreshButton.addActionListener(this);
+        deleteButton.addActionListener(this);
+        importButton.addActionListener(this);
+        exportButton.addActionListener(this);
 
         // selectively enable disabled buttons
         if (!session.permissions.canCreateBillboard) {
@@ -88,7 +91,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * manages the logic when a user selects cells on the table
+     * Manages the logic when a user selects cells on the table.
      */
     public void setupSelection() {
         table.setAutoCreateRowSorter(true);
@@ -123,7 +126,7 @@ public class BillboardPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * set up the default renderers and editors for particular classes
+     * Set up the default renderers and editors for particular classes.
      */
     public void setupRenderersAndEditors() {
         table.setDefaultRenderer(Color.class, new ColourRenderer());
@@ -133,8 +136,9 @@ public class BillboardPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Adding listener events for the user panel buttons
-     * @param e
+     * Adding listener events for the user panel buttons.
+     *
+     * @param e Pass through the action event to manage the respective action.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

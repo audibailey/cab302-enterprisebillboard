@@ -6,5 +6,12 @@ package client.services;
  * @author Jamie Martin
  */
 public abstract class DataService<T> {
-   public abstract Boolean update(T t);
+
+    /**
+     * Class function for updating a class in the data service.
+     *
+     * @param typeClass The class type for the data service.
+     * @return A boolean that represents whether the class object was updated.
+     */
+   public abstract Boolean update(T typeClass);
 }

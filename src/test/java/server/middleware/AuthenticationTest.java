@@ -11,23 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AuthenticationTest {
 
-    Request req = new Request("/foo", "foo", null, null);
-    Permissions permission = Permissions.Random(0, "user");
-    Session session = new Session(0, "user", permission);
-
     @Test
-    public void ValidAuthenticationTest() throws Exception {
-        // TODO: Determine whether to test here or test directly at TokenService.
-
-        //  TODO: Could also be that we insert into the TokenService instance and then test at the Controller level
-        // String token = "123";
-        // TokenService.getInstance().insertSession(new Session(..., token));
-        // session.token = token;
-        // ActionResult test = new Authentication.Authenticate().execute(req);
-        // assertEquals(Status.SUCCESS, test.status);
-    }
-
-    @Test public void InvalidAuthenticationTest() throws Exception {
+    public void InvalidAuthenticationTest() throws Exception {
+        Permissions permission = Permissions.Random(0, "user");
+        Session session = new Session(0, "user", permission);
+        Request req = new Request("/foo", "foo", null, null);
         session.token = null;
 
         Response test = new Authentication.Authenticate().execute(req);

@@ -22,6 +22,9 @@ public class Client extends JFrame {
 
     Menu menu = new Menu();
 
+    /**
+     * The constructor that creates the main client frame.
+     */
     public Client() {
         setTitle("Control Panel");
 
@@ -57,7 +60,7 @@ public class Client extends JFrame {
                 } else {
                     try {
                         // try update on server
-                        PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
+                        PermissionsService.getInstance().updatePassword(session.username, result);
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
@@ -75,7 +78,7 @@ public class Client extends JFrame {
     }
 
     /**
-     * sets the location and size for the frame
+     * Sets the location and size for the frame to be centered.
      */
     public void setLocationAndSize() {
         // Get the screen dimensions

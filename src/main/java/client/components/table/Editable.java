@@ -6,5 +6,11 @@ package client.components.table;
  * @author Jamie Martin
  */
 public interface Editable {
+
+    /**
+     * Returns if the field is editable.
+     *
+     * @return A boolean that determines whether the displayed field is editable.
+     */
     boolean isEditable();
 }

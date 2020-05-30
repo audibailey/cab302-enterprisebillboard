@@ -24,7 +24,7 @@ public class HashingFactoryTests {
     @Test
     public void testingGetSalt() throws Exception {
         byte[] result = HashingFactory.getSalt();
-        byte[] array = new byte[32]; // length is bounded by 7
+        byte[] array = new byte[32];
         new Random().nextBytes(array);
         assertNotEquals(array, result);
     }

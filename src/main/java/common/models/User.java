@@ -13,19 +13,32 @@ import java.io.Serializable;
  * @author Jamie Martin
  */
 @SQLITE
-public class User extends Object implements Serializable {
+public class User extends Object implements Serializable{
     /**
-     * The variables of the object User
+     * The users ID.
      */
     @SQLITE(type="INTEGER PRIMARY KEY AUTOINCREMENT")
     public int id;
 
+    /**
+     * The users username.
+     */
     @SQLITE(type="VARCHAR(255) NOT NULL UNIQUE")
     public String username;
 
+    /**
+     * The users password.
+     *
+     * <b>This value is only stored as a hash and temporarily to avoid a data breach.</b>
+     */
     @SQLITE(type="VARCHAR(255)")
     public String password;
 
+    /**
+     * The users password salt.
+     *
+     * <b>This value is only stored temporarily to avoid a data breach.</b>
+     */
     @SQLITE(type="VARCHAR(255)")
     public String salt;
 
@@ -37,11 +50,11 @@ public class User extends Object implements Serializable {
     }
 
     /**
-     * User object constructor
+     * User object constructor.
      *
-     * @param username: users username.
-     * @param password: users password hash.
-     * @param salt:     users password salt.
+     * @param username Users username.
+     * @param password Users password hash.
+     * @param salt Users password salt.
      */
     public User(String username, String password, String salt) {
         this.username = username;
@@ -52,10 +65,10 @@ public class User extends Object implements Serializable {
     /**
      * User object constructor
      *
-     * @param id: users id.
-     * @param username: users username.
-     * @param password: users password.
-     * @param salt: users salt.
+     * @param id Users id.
+     * @param username Users username.
+     * @param password Users password.
+     * @param salt Users salt.
      */
     public User(int id, String username, String password, String salt) {
         this.id = id;
@@ -67,7 +80,7 @@ public class User extends Object implements Serializable {
     /**
      * Generates a User object with random variables.
      *
-     * @return User: a randomised User object.
+     * @return A randomised User object.
      */
     public static User Random() {
         return new User(

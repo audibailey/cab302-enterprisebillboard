@@ -14,9 +14,9 @@ public class Props {
     /**
      * Gets the properties from network.props for the socket port.
      *
-     * @return Properties: The port.
-     * @throws IOException :          Thrown when props file not found or when unable to read props file or close prop file stream.
-     * @throws NullPointerException: Thrown when props file stream is empty.
+     * @return Properties The port.
+     * @throws IOException Thrown when props file not found or when unable to read props file or close prop file stream.
+     * @throws NullPointerException Thrown when props file stream is empty.
      */
     public static Properties getProps(String fileLocation) throws IOException, NullPointerException {
 

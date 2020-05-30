@@ -9,10 +9,16 @@ import common.router.Response;
  */
 public class Ok extends Response {
 
-    // Generic Constructor which just gives the IActionResult a success parameter
+    /**
+     * Generic Constructor which just gives the IActionResult a success parameter
+     */
     public Ok() { super(Status.SUCCESS); }
 
-    // A constructor with an object in the body that gets returned to the client.
+    /**
+     * A constructor with an object in the body that gets returned to the client.
+     *
+     * @param body The object that gets return to the client.
+     */
     public Ok(Object body) {
         super(Status.SUCCESS, body);
     }

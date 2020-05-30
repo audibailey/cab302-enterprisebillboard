@@ -24,7 +24,7 @@ public class Collection<T> {
     /**
      * Constructor that sets the collection type to the specified class.
      *
-     * @param className: Specified class to set the collection type to.
+     * @param className Specified class to set the collection type to.
      */
     public Collection(Class<T> className) throws Exception {
         this.className = className;
@@ -35,9 +35,9 @@ public class Collection<T> {
     /**
      * Get all items from the DataService.
      *
-     * @param predicate: Used to filter out specific items. Example: x -> true, for all.
+     * @param predicate Used to filter out specific items. Example: x -> true, for all.
      * @return A list of the retrieved collection object type from the database.
-     * @throws Exception: A pass-through internal server exception.
+     * @throws Exception A pass-through internal server exception.
      */
     public List<T> get(Predicate<T> predicate) throws Exception {
         // Prepares the statement using the StatementBuilder
@@ -71,8 +71,8 @@ public class Collection<T> {
     /**
      * Inserts a specified collection object into the DataService.
      *
-     * @param object: The collection object you want inserted.
-     * @throws Exception: A pass-through internal server exception.
+     * @param object The collection object you want inserted.
+     * @throws Exception A pass-through internal server exception.
      */
     public void insert(T object) throws Exception {
         // Prepares the statement using the StatementBuilder
@@ -88,8 +88,8 @@ public class Collection<T> {
     /**
      * Updates a specified collection object into the DataService
      *
-     * @param object: The collection object you want updated.
-     * @throws Exception: A pass-through internal server exception.
+     * @param object The collection object you want updated.
+     * @throws Exception A pass-through internal server exception.
      */
     public void update(T object) throws Exception {
         // Prepares the statement using the StatementBuilder
@@ -105,8 +105,8 @@ public class Collection<T> {
     /**
      * Deletes a specified collection object from the DataService.
      *
-     * @param object: The collection object you want deleted.
-     * @throws Exception: A pass-through internal server exception.
+     * @param object The collection object you want deleted.
+     * @throws Exception A pass-through internal server exception.
      */
     public void delete(T object) throws Exception {
         // Prepares the statement using the StatementBuilder
@@ -122,9 +122,9 @@ public class Collection<T> {
     /**
      * Parses the SQL result set and returns the collection object.
      *
-     * @param resultSet: The result set from an SQL query.
-     * @return T: The collection object after converting from SQL.
-     * @throws SQLException: A pass-through internal server exception.
+     * @param resultSet The result set from an SQL query.
+     * @return T The collection object after converting from SQL.
+     * @throws SQLException A pass-through internal server exception.
      */
     public T fromSQL(ResultSet resultSet) throws Exception {
         // Create a list of fields from the class reference through reflection.
@@ -147,7 +147,7 @@ public class Collection<T> {
 
                 if (field.get(collectionObject) instanceof Boolean) {
                     // Set the field of the collection object with the value fetched.
-                    field.set(collectionObject, (int)value == 1 ? true : false);
+                    field.set(collectionObject, (int) value == 1);
                 } else if (field.get(collectionObject) instanceof Instant) {
                     field.set(collectionObject, Instant.parse((String) value));
                 } else {

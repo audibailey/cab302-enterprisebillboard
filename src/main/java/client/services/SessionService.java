@@ -11,26 +11,27 @@ public class SessionService {
     private Session session;
 
     /**
-     * initialise new session service
+     * Initialise new session service.
      */
     protected SessionService() {}
 
     /**
-     * static singleton holder for session service
+     * Static singleton holder for session service
      */
     private static class SessionServiceHolder {
         private final static SessionService INSTANCE = new SessionService();
     }
 
     /**
-     * get the session service instance
-     * @return
+     * Get the session service instance.
+     * @return The session service instance from the singleton.
      */
     public static Session getInstance() { return SessionServiceHolder.INSTANCE.session; }
 
     /**
-     * set the session service instance
-     * @return
+     * Set the session service instance.
+     *
+     * @param session the session service for the instance.
      */
     public static void setInstance(Session session) { SessionServiceHolder.INSTANCE.session = session; }
 }

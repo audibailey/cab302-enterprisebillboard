@@ -1,5 +1,7 @@
 package common.utils;
 
+import common.swing.Notification;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -13,14 +15,27 @@ import java.util.Base64;
  * @author Jamie Martin
  */
 public class Picture {
+    /**
+     * The picture as a string.
+     */
     public String data;
 
+    /**
+     * Generic constructor that creates the object.
+     *
+     * @param data The picture as a string.
+     */
     public Picture(String data) {
         this.data = data;
     }
 
+    /**
+     * Helper function that converts a URL to an image as a byte array base64 string.
+     *
+     * @param url The URL as a string.
+     * @return The string of the image byte array in base64.
+     */
     public static String getByteArrayFromImageURL(String url) {
-
         try {
             URL imageUrl = new URL(url);
             URLConnection ucon = imageUrl.openConnection();
@@ -34,7 +49,7 @@ public class Picture {
             baos.flush();
             return Base64.getEncoder().encodeToString(baos.toByteArray());
         } catch (Exception e) {
-            e.printStackTrace();
+            Notification.display("Failed to download image.");
         }
         return null;
     }

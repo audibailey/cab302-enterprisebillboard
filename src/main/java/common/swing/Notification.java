@@ -8,6 +8,11 @@ import javax.swing.*;
  * @author Jamie Martin
  */
 public class Notification {
+    /**
+     * A helper function to display the notification for the java swing.
+     *
+     * @param message The message that wants to be displayed.
+     */
     public static void display(String message) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override

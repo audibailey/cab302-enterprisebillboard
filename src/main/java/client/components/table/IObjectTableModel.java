@@ -14,24 +14,27 @@ public abstract class IObjectTableModel<T> extends AbstractTableModel {
     private List<T> objectRows = new ArrayList<>();
 
     /**
-     * Get the list
-     * @return
+     * Get the list of all the rows from the table.
+     *
+     * @return A list of the specific type for each row.
      */
     public List<T> getObjectRows() {
         return objectRows;
     }
 
     /**
-     * Set the list
-     * @param objectRows
+     * Set the list of all the rows from the table.
+     *
+     * @param objectRows A list of the specific type for each row.
      */
     public void setObjectRows(List<T> objectRows) {
         this.objectRows = objectRows;
     }
 
     /**
-     * Get row count
-     * @return
+     * Get row count from the list of all rows.
+     *
+     * @return The count of rows.
      */
     @Override
     public int getRowCount() {
@@ -39,10 +42,11 @@ public abstract class IObjectTableModel<T> extends AbstractTableModel {
     }
 
     /**
-     * Get the value of the given cell row, col integers
-     * @param rowIndex
-     * @param columnIndex
-     * @return
+     * Get the value of the given cell row and integer.
+     *
+     * @param rowIndex The row index of the cell.
+     * @param columnIndex The column index of the cell.
+     * @return The object value that is in the cell.
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -55,10 +59,11 @@ public abstract class IObjectTableModel<T> extends AbstractTableModel {
     }
 
     /**
-     * Determines if the cell is editable
-     * @param rowIndex
-     * @param columnIndex
-     * @return
+     * Determines if the cell is editable.
+     *
+     * @param rowIndex The row index of the cell.
+     * @param columnIndex The column index of the cell.
+     * @return A boolean which determines if the cell is editable.
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -72,10 +77,11 @@ public abstract class IObjectTableModel<T> extends AbstractTableModel {
     }
 
     /**
-     * Sets the value using the given object at the cell row, col integers
-     * @param value
-     * @param row
-     * @param column
+     * Sets the value using the given object at the cell row and integer.
+     *
+     * @param value This is the value to set the cell to.
+     * @param row The row index of the cell.
+     * @param column The column index of the cell.
      */
     public void setValueAt(Object value, int row, int column) {
         if(!isCellEditable(row, column)){
@@ -88,31 +94,47 @@ public abstract class IObjectTableModel<T> extends AbstractTableModel {
     }
 
     /**
-     * Must implement if a cell is editable
-     * @param columnIndex
-     * @return
+     * Must implement if a column is editable.
+     *
+     * @param columnIndex The column index of the cell.
+     * @return A boolean which determines if the column is editable.
      */
-    public abstract  boolean isColumnEditable(int columnIndex);
+    public abstract boolean isColumnEditable(int columnIndex);
 
     /**
-     * Must implement a getter for the list value
-     * @param t
-     * @param columnIndex
-     * @return
-     * @throws Exception
+     * The method that gets the field value.
+     *
+     * @param type The object type of the value.
+     * @param columnIndex The column index location of the value.
+     * @return The value object.
+     * @throws Exception Generic exception thrown when calling this function.
      */
-    public abstract Object getValueAt(T t, int columnIndex) throws Exception;
+    public abstract Object getValueAt(T type, int columnIndex) throws Exception;
 
     /**
-     * Must implement a setter for a list value
-     * @param t
-     * @param column
-     * @param value
-     * @return
+     * The method that sets the field value.
+     *
+     * @param type The object type of the value.
+     * @param columnIndex The column index location of the value.
+     * @param value The value object being set.
+     * @return A boolean representing if the field was set.
      */
-    public abstract boolean setObjectFieldValue(T t, int column, Object value);
+    public abstract boolean setObjectFieldValue(T type, int columnIndex, Object value);
 
+    /**
+     * The method that retrieves the column name.
+     *
+     * @param columnIndex The column index location of the name.
+     * @return The string of the column name.
+     */
     @Override
-    public abstract String getColumnName(int column);
-    public abstract String getFieldName(int column);
+    public abstract String getColumnName(int columnIndex);
+
+    /**
+     * The method that retrieves the field name.
+     *
+     * @param columnIndex The column index location of the field.
+     * @return The string of the field name.
+     */
+    public abstract String getFieldName(int columnIndex);
 }

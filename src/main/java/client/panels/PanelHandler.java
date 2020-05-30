@@ -12,6 +12,9 @@ import javax.swing.*;
  */
 public class PanelHandler extends JTabbedPane {
 
+    /**
+     * The Panel constructor that generates the Panel GUI.
+     */
     public PanelHandler() {
         Session session = SessionService.getInstance();
 

@@ -8,6 +8,7 @@ import common.router.Response;
 import common.router.Request;
 import common.router.response.Status;
 import common.utils.session.HashingFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -16,8 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PermissionTest {
 
-    Request req = new Request("/foo", "foo", null, null);
-    Permissions permission = Permissions.Random(0, "user");
+    Request req = null;
+    Permissions permission = null;
+
+    @BeforeEach
+    public void PermissionInitialiseTest() {
+        req = new Request("/foo", "foo", null, null);
+        permission = Permissions.Random(0, "user");
+    }
 
     @Test
     public void ValidCanEditUserTest() throws Exception {

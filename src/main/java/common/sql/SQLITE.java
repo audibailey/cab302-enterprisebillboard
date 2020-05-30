@@ -11,5 +11,10 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SQLITE {
+    /**
+     * Ensure the data types for the SQL.
+     *
+     * @return A string that is the datatype.
+     */
     String type() default "";
 }

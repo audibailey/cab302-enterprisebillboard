@@ -9,7 +9,11 @@ import common.router.Response;
  */
 public class BadRequest extends Response {
 
-    // A constructor with the message in the body that gets returned to the client.
+    /**
+     * A constructor with the message in the body that gets returned to the client.
+     *
+     * @param message The body of the response.
+     */
     public BadRequest(String message) {
         super(Status.BAD_REQUEST, message);
     }

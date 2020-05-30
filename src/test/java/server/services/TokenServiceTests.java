@@ -11,13 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TokenServiceTests {
     // Test assigning Tokens, generating hashes, mock logging out, etc
 
-
-    // TODO: Create a new session, truthy verify, falsy verify (DONE)
-
-    // TODO: Test expired (DONE)
-
-    // TODO: Test nullables(put in a null) (DONE)
-
     @Test
     public void TestVerifyingToken() throws Exception {
         Permissions perm = Permissions.Random(1,"kevin");
