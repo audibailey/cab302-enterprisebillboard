@@ -51,7 +51,7 @@ public class StatementBuilder {
         PreparedStatement pstmt = conn.prepareStatement(createInsertStatement(className));
 
         // Match the objects fields with the statements base.
-        int i = 0;
+        int i = 1;
         for (Object obj : fields) {
             var field = (Field) obj;
             if (!field.getName().equals("id")) {
@@ -80,7 +80,7 @@ public class StatementBuilder {
         var values = new StringBuilder(" VALUES (");
 
         // Loop through the fields and create the statement.
-        int i = 0;
+        int i = 1;
         for (Object obj : fields) {
             var field = (Field) obj;
             if (!field.getName().equals("id")) {
@@ -119,7 +119,7 @@ public class StatementBuilder {
         int id = className.getDeclaredField("id").getInt(object);
 
         // Match the objects fields with the statements base.
-        int i = 0;
+        int i = 1;
         for (Object obj : fields) {
             var field = (Field) obj;
             if (!field.getName().equals("id")) {
@@ -151,7 +151,7 @@ public class StatementBuilder {
         StringBuilder names = new StringBuilder("UPDATE " + className.getSimpleName().toUpperCase() + " SET ");
 
         // Loop through the fields and create the statement.
-        int i = 0;
+        int i = 1;
         for (Object obj : fields) {
             var field = (Field) obj;
 
