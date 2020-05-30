@@ -5,6 +5,7 @@ import client.components.Menu;
 import client.panels.PanelHandler;
 import client.services.PermissionsService;
 import client.services.SessionService;
+import common.swing.Notification;
 import common.utils.session.Session;
 
 import javax.swing.*;
@@ -50,7 +51,9 @@ public class Client extends JFrame {
                 ""
             );
 
-            if (result != null) {
+            if (result.isEmpty()) {
+                Notification.display("Password cannot be blank");
+            } else if (result != null) {
                 try {
                     // try update on server
                     PermissionsService.getInstance().updatePassword(session.userId, session.username, result);
