@@ -93,8 +93,8 @@ public class ScheduleController {
                 if (s.dayOfWeek > 7 || s.dayOfWeek < 0)
                     return new BadRequest("Start must be between 0-7 as in 0 for Every day or Sun - Sat");
                 if (s.interval != 0 && s.duration > s.interval) return new BadRequest("Duration cannot be longer than the interval");
-                if (s.duration > 1440 || s.duration < 1) return new BadRequest("Duration must be between 1 - 1440");
-                if (s.interval > 60 || s.interval < 0) return new BadRequest("Interval must be between 0 - 60");
+                if (s.duration > 1440 || s.duration < 1) return new BadRequest("Duration must be between 1 - 1440 inclusive");
+                if (s.interval > 60 || s.interval < 0) return new BadRequest("Interval must be between 0 - 60 inclusive");
 
                 // Make sure the billboard exists.
                 String sName = s.billboardName;
